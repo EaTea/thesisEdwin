@@ -43,6 +43,34 @@
 %worthwhile solving? Who has already done some work in this area,
 %and what have they achieved?
 
+Epistemology, in the philosophical sense, concerns the study of knowledge.
+Answering questions and issues about the nature, potential and semantics of knowledge have been explored since the times of Ancient Greece.
+To answer these questions in an objective fashion, we turn to epistemic logic, the logic of knowledge.
+Epistemic logic provides axiomatisations of knowledge that capture its properties.
+We can formally reason about an agent's knowledge, its knowledge of its knowledge and (in a system with multiple agents) other agents' knowledge.\\
+\\
+Agents can be be uncertain about the value for a proposition, resulting in multiple worlds that are consistent with the state of the world.
+This ``multiple worlds" agent model is a description of the Kripke model that can be described succintly by a Kripke model. \footnote{Kripke models can describe more logics than just epistemic logic, depending upon the properties of the relation $R$.}
+Kripke models are theoretical constructs that describe for a set of agents $A = \{a_1, a_2, \ldots\}$ and propositions $P = \{p_1, p_2, \ldots \}$
+\begin{itemize}
+  \item a finite set of states, $S$
+  \item a function $R: A \to S \times S$ that yields a relation between states (the accessibility relation for an agent $a$)
+  \item a valuation function $V: P \to \mathbb{P}(S)$ that yields for a proposition $p$ the subset of $S$ where $p$ is true
+\end{itemize}
+Kripke models can be written as a tuple $(S, R, V)$.\\
+\\
+Kripke models can be updated via informative updates, which change the knowledge state of an agent or agents.
+An update consists of some action that produces, from model $M = (S, R, V)$ an updated model $M' = (S', R', V')$.
+We can encode our action into an action model.
+Action models resemble Kripke models in their structure, and consist of a tuple $A = (\bar(S), \bar(R), \bar(pre))$ such that
+\begin{itemize}
+  \item $\bar{S}$ is the set of action model states
+  \item $\bar{R}$ is the accessibility relations that for that action; semantically, they represent the uncertainty in taking an action
+  \item $\bar{pre}$ is a function that maps a state $s \in \bar{S}$ to a propositional formula that represents the preconditions for that action state to be fulfilled
+\end{itemize}
+The execution of an action model $A$ to update a Kripke model $M$ to produce $M'$ is a well-understood but expensive process.
+It involves taking the Cartesian Product of 
+
 \begin {itemize}
   \item What is epistemic logic?
   \item What is a Kripke model?
@@ -103,8 +131,14 @@
 %What even the fuck.
 
 \begin{enumerate}
-  \item literacy review
-  \item 
+  \item literature review
+  \item example specification
+  \item model verification/proof
+  \item model implementation outline and design
+  \item implementation plan
+  \item implementation development
+  \item implementation testing
+  \item paper writeup
 \end{enumerate}
 
 %Overall, you should aim to produce roughly a two page document
