@@ -1,4 +1,5 @@
 \documentclass[12pt, a4paper]{article}
+\usepackage {amsfonts}
 \setlength{\oddsidemargin}{0.5cm}
 \setlength{\evensidemargin}{0.5cm}
 \setlength{\topmargin}{-1.6cm}
@@ -37,6 +38,41 @@
 	Associate Professor Tim French
 \end{namelist}
 
+\section*{Aim}
+%Now state explicitly the hypothesis you aim to
+%test. Make references to the items listed in the Reference section
+%that back up your arguments for why this is a reasonable
+%hypothesis to test, for example the work of Knuth~\cite{knuth}.
+%Explain what you expect will be accomplished by undertaking this
+%particular project.  Moreover, is it likely to have any other
+%applications?
+
+Epistemology (the study of knowledge) presents a useful way to specify the possession and transfer of knowledge.
+Its representation has become integral to computational applications such as natural language processing and artificial intelligence.
+Epistemic models have been developed to describe multi-agent systems that have found usage in games and economics.
+Share trading and auctions are just some of the areas where these models are being developed and further improved.\\
+\\
+Action models are one way to specify how a multi-agent system is to be updated.
+They encapsulate the uncertainty in taking an action and when executed on a multi-agent system, update it to a new state of knowledge.
+Recent investigations have synthesised an action model to update a pre- to a post-execution state of knowledge.
+These executions appear to involve an expensive number of operations to naively implement for a multi-agent system.\\
+\\
+We propose an investigation into a formal language that can specify an informative update for a multi-agent system.
+Our aim is to be able to transform an action model into a series of local informative updates for a single agent of the system.
+To test the usefulness of our specification we will explore a message passing implementation of this language to update multiple agents.
+This will allow us to evaluate and discuss the advantages, flaws and further development we can propose for this specification.
+%
+%\begin{itemize}
+%  \item Discuss action model updates
+%  \item Discuss taking an action model that updates many local agents
+%  \item Outline how we will derive a series of local updates for agents
+%  \item Outline how we this will be implemented
+%  \item Outline how we'd like to implement the model
+%  \item We want to investigate whether this is a feasibly computed model
+%  \item We want to investigate whether an intermediate specification of updates
+%    makes action models useful
+%\end{itemize}
+
 \section*{Background}
 %In this section you should give some background to your
 %research area. What is the problem you are tackling, and why is it
@@ -50,7 +86,7 @@ Epistemic logic provides axiomatisations of knowledge that capture its propertie
 We can formally reason about an agent's knowledge, its knowledge of its knowledge and (in a system with multiple agents) other agents' knowledge.\\
 \\
 Agents can be be uncertain about the value for a proposition, resulting in multiple worlds that are consistent with the state of the world.
-This ``multiple worlds" agent model is a description of the Kripke model that can be described succintly by a Kripke model. \footnote{Kripke models can describe more logics than just epistemic logic, depending upon the properties of the relation $R$.}
+This ``multiple worlds" agent model is a description of the Kripke model that can be described succintly by a Kripke model.\footnote{Kripke models can describe more logics than just epistemic logic, depending upon the properties of the relation $R$.}
 Kripke models are theoretical constructs that describe for a set of agents $A = \{a_1, a_2, \ldots\}$ and propositions $P = \{p_1, p_2, \ldots \}$
 \begin{itemize}
   \item a finite set of states, $S$
@@ -68,36 +104,18 @@ Action models resemble Kripke models in their structure, and consist of a tuple 
   \item $\bar{R}$ is the accessibility relations that for that action; semantically, they represent the uncertainty in taking an action
   \item $\bar{pre}$ is a function that maps a state $s \in \bar{S}$ to a propositional formula that represents the preconditions for that action state to be fulfilled
 \end{itemize}
-The execution of an action model $A$ to update a Kripke model $M$ to produce $M'$ is a well-understood but expensive process.
-It involves taking the Cartesian Product of 
-
-\begin {itemize}
-  \item What is epistemic logic?
-  \item What is a Kripke model?
-  \item What is an informative update?
-  \item What is an action model?
-  \item What are the problems with action models?
-\end {itemize}
-
-\section*{Aim}
-%Now state explicitly the hypothesis you aim to
-%test. Make references to the items listed in the Reference section
-%that back up your arguments for why this is a reasonable
-%hypothesis to test, for example the work of Knuth~\cite{knuth}.
-%Explain what you expect will be accomplished by undertaking this
-%particular project.  Moreover, is it likely to have any other
-%applications?
-
-\begin{itemize}
-  \item Discuss action model updates
-  \item Discuss taking an action model that updates many local agents
-  \item Outline how we will derive a series of local updates for agents
-  \item Outline how we this will be implemented
-  \item Outline how we'd like to implement the model
-  \item We want to investigate whether this is a feasibly computed model
-  \item We want to investigate whether an intermediate specification of updates
-    makes action models useful
-\end{itemize}
+The execution of an action model $A$ to update a Kripke model $M$ to produce $M'$ is a well-understood process.
+An update involves taking the Cartesian Product $\bar{S} \times S$ to form the states of $M'$.
+The number of states then dramatically decreases by reduction of the valid states.
+This presents a problem in utilising action models to represent an informative update in a computer, due to the expensive nature of an operation like the Cartesian product.
+%
+%\begin {itemize}
+%  \item What is epistemic logic?
+%  \item What is a Kripke model?
+%  \item What is an informative update?
+%  \item What is an action model?
+%  \item What are the problems with action models?
+%\end {itemize}
  
 \section*{Method}
 %In this section you should outline how you intend to go
@@ -107,39 +125,93 @@ It involves taking the Cartesian Product of
 %spend on each task, and draw up a timetable for each
 %sub-task.
 
-\begin{enumerate}
-  \item list out different action models, exploring how they update
-    different agents (see Baltag and Moss for a similar exercise)
-  \item specify a model in $\pi$-calculus to update agents
-  \item try and verify model's correctness in replicating action model update
-  \item implement model
-  \item demonstrate its results with the initially explored action models
-  \item test models and find out disadvantages and advantages of models
-\end{enumerate}
+To begin with, we propose a review of action models and their updates.
+We would like to classify action models in terms of the kind of update they describe.
+From this review of action models, we would aim to achieve
+\begin{itemize}
+	\item a basic classification scheme of informative updates from action models
+	\item examples of how action models update systems of multiple agents
+\end{itemize}
 
+Such a classification would aid us in constructing a formal language of agent updates that can build an informative update.
+This would involve the use of a $\pi$-calculus to describe agent updates.
+In undertaking this, we will have a formal language to describe an informative update in terms of local updates to a single agent.
+This allows us to take an action model describing an informative update and use it to theoretically build a series of local updates.\\
+\\
+The formal specification will then be verified.
+We will attempt to prove that both specifications will update the same model to the same final state.
+In doing so, we can also compare both of our update specifications (pure actions models versus formal language) against each other using our initially reviewed models.\\
+\\
+Our final stage will be the implementation and testing of our specification as a message passing system.
+We will attempt to model these updates that we first reviewed and test how useful our system is to specify complex updates.
+This allows us to answer the question of how useful action models are as an informative update.
+We can also discuss how expensive it is to implement an action model execution.
+In particular, we can explore what benefits our formal language as as a series of informative updates to specify a single, multi-agent informative update.
+
+%\begin{enumerate}
+%  \item list out different action models, exploring how they update
+%    different agents (see Baltag and Moss for a similar exercise)
+%  \item specify a model in $\pi$-calculus to update agents
+%  \item try and verify model's correctness in replicating action model update
+%  \item implement model
+%  \item demonstrate its results with the initially explored action models
+%  \item test models and find out disadvantages and advantages of models
+%\end{enumerate}
+%
 \section*{Software and Hardware Requirements}
 %Outline what your specific requirements will be with regard
 %to software and hardware, but note that any special requests
 %might need to be approved by your supervisor and the Head of
 %Department.
-
-\begin{itemize}
-  \item nothing$\ldots$?
-\end{itemize}
+At this time, my project does not appear to require any software or hardware.
+Instead, a whiteboard, some whiteboard cleaning liquid and full whiteboard markers would be much appreciated.
 
 \section*{Timeline}
-%What even the fuck.
 
-\begin{enumerate}
-  \item literature review
-  \item example specification
-  \item model verification/proof
-  \item model implementation outline and design
-  \item implementation plan
-  \item implementation development
-  \item implementation testing
-  \item paper writeup
-\end{enumerate}
+\begin{center}
+	\begin{tabular}{ | l | p{5cm} | p{5cm} |}
+		\hline
+		Date & Task & Description \\
+		\hline
+		14 March 2013 & Hand in project proposal/summary & The project proposal and summary will be due today.\\
+		\hline
+		25 April 2013 & Hand in draft Literature Review and Project Proposal & A literature review should be finished; this should allow me time to discuss and edit my project proposal as see fit.\\
+		\hline
+		2 May 2013 & Construct a draft introduction & The introduction is based mostly off the project proposal; it should succintly describe the project purpose and background.\\
+		\hline
+		16 May 2013 & Re-edit literature review & Edit the literature review to be in line with the new proposal.\\
+		\hline
+		23 May 2013 & Resubmit literature review & For further marking and analysis\\
+		\hline
+		June 2013 & & Construct a specification for informative updates \\
+		\hline
+		July 2013 & & Write about the specification for informative updates \\
+		\hline
+		July 2013 & & Prove the specification for informative updates \\
+		\hline
+		Early August 2013 & & Design and implement message passing informative update \\
+		\hline
+		Early August 2013 & & Write about message passing and its implementation/design details \\
+		\hline
+		Late August 2013 & & Evaluate the implementation and whether action models are still useful informative updates\\
+		\hline
+		Early September 2013 & & Begin writing about specification and the results we have achieved \\
+		\hline
+		19 September 2013 & & Draft thesis due \\
+		\hline
+	\end{tabular}
+\end{center}
+
+%\begin{enumerate}
+%  \item literature review
+%  \item example specification
+%  \item model verification/proof
+%  \item model implementation outline and design
+%  \item implementation plan
+%  \item implementation development
+%  \item implementation testing
+%  \item paper writeup
+%\end{enumerate}
 
 %Overall, you should aim to produce roughly a two page document
 %(and certainly no more than four pages)
