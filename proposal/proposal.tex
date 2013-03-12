@@ -1,0 +1,114 @@
+\documentclass[12pt, a4paper]{article}
+\setlength{\oddsidemargin}{0.5cm}
+\setlength{\evensidemargin}{0.5cm}
+\setlength{\topmargin}{-1.6cm}
+\setlength{\leftmargin}{0.5cm}
+\setlength{\rightmargin}{0.5cm}
+\setlength{\textheight}{24.00cm} 
+\setlength{\textwidth}{15.00cm}
+\parindent 0pt
+\parskip 5pt
+\pagestyle{plain}
+
+\title{Research Proposal --- Bachelor of Software Engineering}
+\date{14th March 2013}
+
+\newcommand{\namelistlabel}[1]{\mbox{#1}\hfil}
+\newenvironment{namelist}[1]{%1
+\begin{list}{}
+    {
+        \let\makelabel\namelistlabel
+        \settowidth{\labelwidth}{#1}
+        \setlength{\leftmargin}{1.1\labelwidth}
+    }
+  }{%1
+\end{list}}
+
+\begin{document}
+\maketitle
+
+\begin{namelist}{}
+\item[{\bf Title:}]
+	A formal language for building informative updates and a process (via
+  action models) for executing them
+  \item[{\bf Author:}]
+	Edwin Tay, 20529864
+\item[{\bf Supervisor:}]
+	Associate Professor Tim French
+\end{namelist}
+
+\section*{Background}
+%In this section you should give some background to your
+%research area. What is the problem you are tackling, and why is it
+%worthwhile solving? Who has already done some work in this area,
+%and what have they achieved?
+
+\begin {itemize}
+  \item What is epistemic logic?
+  \item What is a Kripke model?
+  \item What is an informative update?
+  \item What is an action model?
+  \item What are the problems with action models?
+\end {itemize}
+
+\section*{Aim}
+%Now state explicitly the hypothesis you aim to
+%test. Make references to the items listed in the Reference section
+%that back up your arguments for why this is a reasonable
+%hypothesis to test, for example the work of Knuth~\cite{knuth}.
+%Explain what you expect will be accomplished by undertaking this
+%particular project.  Moreover, is it likely to have any other
+%applications?
+
+\begin{itemize}
+  \item Discuss action model updates
+  \item Discuss taking an action model that updates many local agents
+  \item Outline how we will derive a series of local updates for agents
+  \item Outline how we this will be implemented
+  \item Outline how we'd like to implement the model
+  \item We want to investigate whether this is a feasibly computed model
+  \item We want to investigate whether an intermediate specification of updates
+    makes action models useful
+\end{itemize}
+ 
+\section*{Method}
+%In this section you should outline how you intend to go
+%about accomplishing the aims you have set in the previous
+%section. Try to break your grand aims down into small,
+%achievable tasks. Try to estimate how long you will
+%spend on each task, and draw up a timetable for each
+%sub-task.
+
+\begin{enumerate}
+  \item list out different action models, exploring how they update
+    different agents (see Baltag and Moss for a similar exercise)
+  \item specify a model in $\pi$-calculus to update agents
+  \item try and verify model's correctness in replicating action model update
+  \item implement model
+  \item demonstrate its results with the initially explored action models
+  \item test models and find out disadvantages and advantages of models
+\end{enumerate}
+
+\section*{Software and Hardware Requirements}
+%Outline what your specific requirements will be with regard
+%to software and hardware, but note that any special requests
+%might need to be approved by your supervisor and the Head of
+%Department.
+
+\begin{itemize}
+  \item nothing$\ldots$?
+\end{itemize}
+
+\section*{Timeline}
+%What even the fuck.
+
+\begin{enumerate}
+  \item literacy review
+  \item 
+\end{enumerate}
+
+%Overall, you should aim to produce roughly a two page document
+%(and certainly no more than four pages)
+%outlining your plan for the year.
+
+\end{document}
