@@ -1,5 +1,6 @@
 \documentclass[12pt, a4paper]{article}
 \usepackage {amsfonts}
+\usepackage[round,authoryear]{natbib}
 \setlength{\oddsidemargin}{0.5cm}
 \setlength{\evensidemargin}{0.5cm}
 \setlength{\topmargin}{-1.6cm}
@@ -30,12 +31,11 @@
 
 \begin{namelist}{}
 \item[{\bf Title:}]
-	A formal language for building informative updates and a process (via
-  action models) for executing them
+  Executing updates in Epistemic Systems
   \item[{\bf Author:}]
 	Edwin Tay, 20529864
 \item[{\bf Supervisor:}]
-	Associate Professor Tim French
+	Assistant Professor Tim French
 \end{namelist}
 
 \section*{Aim}
@@ -48,19 +48,21 @@
 %applications?
 
 Epistemology (the study of knowledge) presents a useful way to specify the possession and transfer of knowledge.
-Its representation has become integral to computational applications such as natural language processing and artificial intelligence.
-Epistemic models have been developed to describe multi-agent systems that have found usage in games and economics.
-Share trading and auctions are just some of the areas where these models are being developed and further improved.\\
+Its representation has become integral to computational applications such as artificial intelligence.
+Systems involving multiple actors (including economics and games) have been described by epistemic models.
+Share trading and auctions are just some of the areas where these models are being developed and further improved.
+Epistemic models can also describe communications and protocols, namely message passing systems.\\
 \\
 Action models are one way to specify how a multi-agent system is to be updated.
-They encapsulate the uncertainty in taking an action and when executed on a multi-agent system, update it to a new state of knowledge.
+They encapsulate the uncertainty and potential outcomes in taking an action.
+When executed on a multi-agent system, an action model updates the system to a new state of knowledge.
 Recent investigations have synthesised an action model to update a pre- to a post-execution state of knowledge.
-These executions appear to involve an expensive number of operations to naively implement for a multi-agent system.\\
+However, these executions can involve an extensive number of messages in a practical message passing system.\\
 \\
 We propose an investigation into a formal language that can specify an informative update for a multi-agent system.
-Our aim is to be able to transform an action model into a series of local informative updates for a single agent of the system.
-To test the usefulness of our specification we will explore a message passing implementation of this language to update multiple agents.
-This will allow us to evaluate and discuss the advantages, flaws and further development we can propose for this specification.
+Our aim is to transform an action model into a series of local informative updates for a single agent of the system.
+These local updates are announcements or messages between actors in our message passing system.
+We want to explore whether the kind of update an action model represents can be taken advantage of to lessen the number of messages needed to update the system.
 %
 %\begin{itemize}
 %  \item Discuss action model updates
@@ -83,7 +85,7 @@ Epistemology, in the philosophical sense, concerns the study of knowledge.
 Answering questions and issues about the nature, potential and semantics of knowledge have been explored since the times of Ancient Greece.
 To answer these questions in an objective fashion, we turn to epistemic logic, the logic of knowledge.
 Epistemic logic provides axiomatisations of knowledge that capture its properties.
-We can formally reason about an agent's knowledge, its knowledge of its knowledge and (in a system with multiple agents) other agents' knowledge.\\
+We can formally reason about an agent's knowledge, its knowledge of its knowledge and (in a system with multiple agents) other agents' knowledge. \cite{van2008dynamic}\\
 \\
 Agents can be be uncertain about the value for a proposition, resulting in multiple worlds that are consistent with the state of the world.
 This ``multiple worlds" agent model is a description of the Kripke model that can be described succintly by a Kripke model.\footnote{Kripke models can describe more logics than just epistemic logic, depending upon the properties of the relation $R$.}
@@ -95,19 +97,31 @@ Kripke models are theoretical constructs that describe for a set of agents $A = 
 \end{itemize}
 Kripke models can be written as a tuple $(S, R, V)$.\\
 \\
-Kripke models can be updated via informative updates, which change the knowledge state of an agent or agents.
-An update consists of some action that produces, from model $M = (S, R, V)$ an updated model $M' = (S', R', V')$.
+Epistemic logc only allows us to reason about the state of knowledge, but does not provide us with tools to change or update knowledge.
+The study of how the state of information changes is Dynamic Epistemic Logic.
+It provides a logical framework of reasoning about how an agent's information and knowledge have changed due to actions.
+Recent work in this area includes reasoning about revising beliefs (where an agent's knowledge is invalidated).
+Other concepts in this area include public announcements and epistemic actions.
+These are informative updates that have specified methods of changing the state of knowledge.
+We will focus on a different kind of update: an action model.\\
+\\
+An epistemic update consists of some action that produces, from model $M = (S, R, V)$ an updated model $M' = (S', R', V')$.
 We can encode our action into an action model.
-Action models resemble Kripke models in their structure, and consist of a tuple $A = (\bar(S), \bar(R), \bar(pre))$ such that
+Action models resemble Kripke models in their structure, and consist of a tuple $A = (\bar(S), \bar(R), \bar(pre))$ where
 \begin{itemize}
   \item $\bar{S}$ is the set of action model states
   \item $\bar{R}$ is the accessibility relations that for that action; semantically, they represent the uncertainty in taking an action
   \item $\bar{pre}$ is a function that maps a state $s \in \bar{S}$ to a propositional formula that represents the preconditions for that action state to be fulfilled
 \end{itemize}
 The execution of an action model $A$ to update a Kripke model $M$ to produce $M'$ is a well-understood process.
-An update involves taking the Cartesian Product $\bar{S} \times S$ to form the states of $M'$.
+An update involves taking the Cartesian Product $\bar{S} \times S$ to form the states of $M'$. \cite{van2008dynamic}
 The number of states then dramatically decreases by reduction of the valid states.
-This presents a problem in utilising action models to represent an informative update in a computer, due to the expensive nature of an operation like the Cartesian product.
+This presents a problem in utilising action models to represent an informative update in a computer, due to the expensive nature of an operation like the Cartesian product.\\
+\\
+There have been attempts to specify formalisations of message passing.
+Sietsma suggests a modal logic for reasoning about communication and message passing. \cite{Sietsma:2011:MPD:2000378.2000404}
+$\pi$-calculus is another method for program specification and communication in a multi-agent system. \cite{Milner91thepolyadic}
+$\pi$-calculus allows us to discuss how programs pass messages between themselves.
 %
 %\begin {itemize}
 %  \item What is epistemic logic?
@@ -125,7 +139,8 @@ This presents a problem in utilising action models to represent an informative u
 %spend on each task, and draw up a timetable for each
 %sub-task.
 
-To begin with, we propose a review of action models and their updates.
+To begin with, we propose a review of action models and the informative updates they represent in multi-agent systems.
+This would be similar in content to a review by Baltag and Moss. \cite{logicsForEpistemicPrograms}
 We would like to classify action models in terms of the kind of update they describe.
 From this review of action models, we would aim to achieve
 \begin{itemize}
@@ -144,7 +159,8 @@ In doing so, we can also compare both of our update specifications (pure actions
 \\
 Our final stage will be the implementation and testing of our specification as a message passing system.
 We will attempt to model these updates that we first reviewed and test how useful our system is to specify complex updates.
-This allows us to answer the question of how useful action models are as an informative update.
+This allows us to answer the question of whether we can use less messages to execute an action model in a message passing context.
+It also allows us to discuss what action models this is possible for, 
 We can also discuss how expensive it is to implement an action model execution.
 In particular, we can explore what benefits our formal language as as a series of informative updates to specify a single, multi-agent informative update.
 
@@ -163,41 +179,39 @@ In particular, we can explore what benefits our formal language as as a series o
 %to software and hardware, but note that any special requests
 %might need to be approved by your supervisor and the Head of
 %Department.
-At this time, my project does not appear to require any software or hardware.
-Instead, a whiteboard, some whiteboard cleaning liquid and full whiteboard markers would be much appreciated.
+At this time, my project does not appear to require any special software or hardware.
 
 \section*{Timeline}
 
 \begin{center}
-	\begin{tabular}{ | l | p{5cm} | p{5cm} |}
+	\begin{tabular}{ | l | p{10cm} |}
 		\hline
-		Date & Task & Description \\
+		Date & Task \\
 		\hline
-		14 March 2013 & Hand in project proposal/summary & The project proposal and summary will be due today.\\
+		25 April 2013 & Hand in draft Literature Review and Project Proposal;
+    this should allow time to discuss and edit my project proposal as necessary\\
 		\hline
-		25 April 2013 & Hand in draft Literature Review and Project Proposal & A literature review should be finished; this should allow me time to discuss and edit my project proposal as see fit.\\
+		2 May 2013 & Construct a draft introduction that succintly describes the project purpose and background.\\
 		\hline
-		2 May 2013 & Construct a draft introduction & The introduction is based mostly off the project proposal; it should succintly describe the project purpose and background.\\
+		16 May 2013 & Edit literature review in line with revised proposal.\\
 		\hline
-		16 May 2013 & Re-edit literature review & Edit the literature review to be in line with the new proposal.\\
+		23 May 2013 & Resubmit literature review \\
 		\hline
-		23 May 2013 & Resubmit literature review & For further marking and analysis\\
+		June 2013 & Construct a specification for informative updates \\
 		\hline
-		June 2013 & & Construct a specification for informative updates \\
+		July 2013 & Write about the specification for informative updates \\
 		\hline
-		July 2013 & & Write about the specification for informative updates \\
+		July 2013 & Prove the specification for informative updates \\
 		\hline
-		July 2013 & & Prove the specification for informative updates \\
+		Early August 2013 & Design and implement message passing informative update \\
 		\hline
-		Early August 2013 & & Design and implement message passing informative update \\
+		Early August 2013 & Discuss about message passing and its implementation/design details \\
 		\hline
-		Early August 2013 & & Write about message passing and its implementation/design details \\
+		Late August 2013 & Evaluate the implementation and whether goal of making informative updates from action models cheaper in a message passing system has been achieved\\
 		\hline
-		Late August 2013 & & Evaluate the implementation and whether action models are still useful informative updates\\
+		Early September 2013 & Begin writing about specification and the results we have achieved \\
 		\hline
-		Early September 2013 & & Begin writing about specification and the results we have achieved \\
-		\hline
-		19 September 2013 & & Draft thesis due \\
+		19 September 2013 & Draft thesis due \\
 		\hline
 	\end{tabular}
 \end{center}
@@ -216,5 +230,8 @@ Instead, a whiteboard, some whiteboard cleaning liquid and full whiteboard marke
 %Overall, you should aim to produce roughly a two page document
 %(and certainly no more than four pages)
 %outlining your plan for the year.
+
+\bibliographystyle{plainnat}
+\bibliography{proposal}
 
 \end{document}
