@@ -1,0 +1,12 @@
+Project: Executing updates in Epistemic Systems
+Supervisor: Assistant Professor Tim French
+Informative updates have been used in systems involving multiple actors to
+update the state of actors’ knowledge. These updates can be specified using an
+action model, which captures the any uncertainty of the outcome of an action. In
+a message passing context, such executing an action model update on an agent’s
+state of knowledge can be expensive, involving a large expansion of the number
+of potentially valid outcomes, followed by a reduction of these states through
+constraints on the outcomes and their relationships. Our aim is to implement a
+message passing system that explores whether we can reduce the number of
+messages needed to execute an action model and assess their practicality in
+updating systems of multiple actors.
