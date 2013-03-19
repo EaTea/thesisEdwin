@@ -1,0 +1,249 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{ulem}
+\usepackage{hyperref}
+
+%Gra$\phi$cs Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\vspace*{10cm}
+\Huge{Modal Logic: Chapter One} \\[1cm]
+\LARGE{Blackburn, de Rijke and Venema} \\[1cm]
+\large{Notes: {\bf Edwin Tay, 20529864}}\\[1cm]
+\today
+\end{center}
+\end{titlepage}
+\pagebreak
+
+\section{Basic Modal Logic}
+\begin{itemize}
+  \item propositional modal logic is a propositional language which a modal operator has been added (modal operator === modality)
+  \item useful for reasoning about relational structures
+  \item modal languages are essentially ways of accessing information in relational structures
+  \item local and internal access methods reason about many interesting/important aspects of relational structures
+\end{itemize}
+\subsection{Def 1.1 --- a relational structure}
+A tuple $R$ consisting of a nonempty domain set, $W$ and a set of relations on $W$ (relational structures will be assumed to have relations)
+
+\begin{itemize}
+  \item Strict Partial Orders are transitive and irreflexive, whilst partial orders are the reflexive closure of a strict partial order
+  \item A deterministic transition (state) model is a relational structure
+\end{itemize}
+
+\subsection{Def 1.6 --- Closures}
+Let's say a closure is the smallest subset that has a given Mathematical Property and the original set
+\begin{itemize}
+  \item We say that the transitive closure of a set of relations $R$ is $R^+$ =   intersection of all transitive relations that contain $R$. It should be clear to see that this intersection yields $R$ plus the smallest amount of necessary transitive relations
+  \item Similarly, we define the reflexive transitive closure of a set of relations $R$ to be $R*$ which is the intersection of all transitive and reflexive relations that contain $R$
+\end{itemize}
+\subsection{Def 1.7 --- Trees}
+As defined normally, might be the tuple $(T, S)$
+\begin{itemize}
+  \item nodes, which we call $T$, and a root in $T$, namely $r$ such that $rSt$ always holds
+  \item every element of $T$ that isn’t $r$ has a unique predecessor such that there's only one element $t'$ such that $t'St$
+  \item $S$ is acyclic, that is $S$ is irreflexive
+\end{itemize}
+
+\subsection{Def 1.9 --- Basic modal language}
+Is defined (in BNF) as
+\[
+\phi \Eqqcolon p | \bot | \neg \phi | \gamma v \phi | \lozenge \phi
+\]
+
+\begin{itemize}
+  \item $\square$ is the dual of $\lozenge$
+  \item $\square$ $\phi$ = $\neg$ $\lozenge$ $\neg$ $\phi$
+  \item $\lozenge$ $\phi$ = $\neg$ $\square$ $\neg$ $\phi$
+  \item we add in the following abbreviations
+  \begin{itemize}
+    \item and
+    \item imply
+    \item equivalence
+    \item truth = $\neg$ $\bot$
+  \end{itemize}
+\end{itemize}
+\begin{itemize}
+  \item $\lozenge$ and $\square$ can be read in many d$\iff$erent ways
+  \item $\lozenge$ $\phi$ can be read as 'it is possibly the case that $\phi$'
+  \item $\square$ $\phi$ can be read as 'necessarily $\phi$'
+  \item we can get interesting results like
+
+  \item $\square$ $\phi$ $\implies$ $\lozenge$ $\phi$ (necessary $\implies$ possible)
+
+  \item $\phi$ $\implies$ $\lozenge$ $\phi$ (to be implies possibility)
+  \item but what about whatever is is necessarily possible? or whatever is possible is necessarily possible
+  \item in epistemic logic $\square$ $\phi$ means that an agent knows $\phi$ (usually K $\phi$)
+  \item similarly $\lozenge$ $\phi$ means an agent suspects $\phi$
+\end{itemize}
+\subsection{Def 1.11 --- A modal similarity type}
+If a pair $(O, p)$ where $O$ is a nonempty set and $p$ is a function $O \rightarrow \mathbb{N}$. $O$'s elements are the modal operators, denoted by $\nabla$, $\nabla$, etc.
+\begin{itemize}
+  \item p assigns each $\nabla$ to a finite arity, indicating the number of arguments that can be applied to a $\nabla$
+\end{itemize}
+\subsection{Def 1.12 --- A modal language}
+Is built up using a modal similarity and a set of proposition letters so that you can do things like
+\begin{itemize}
+  \item $\phi$ $\eqqcolon p$ | $bot$ | $\neg$ $\phi$ | $\phi_1$ $\lor$ $\phi_2$ | $\nabla_1$($\phi_1$, $\phi_2$, $\ldots$) | $\nabla_2$($\ldots$)| $\ldots$
+  \item N.B.: It’s possible to get nullary modalities or modal constants (things
+      that take no arguments)
+  \item they aren’t very focused but they are useful, and are almost like
+  propositional constants
+\end{itemize}
+\subsection{Def 1.13 --- dual operators}
+for non-nullary $\nabla$s, so that the dual of $\nabla$ is the $\bigtriangleup$ and is defined as $\nabla_1$ ($\phi_1$, $\phi_2$, $\ldots$) = $\neg \bigtriangleup$($\neg$ $\phi_1$, $\neg$ $\phi_2$, $\ldots$)
+\begin{itemize}
+  \item Some discussions follow on basic temporal logic and other stuff:
+  \item temporal logic has two operators
+  \item $F$ and $P$
+  \item $\phi$ will be true at some point in the Future
+  \item $\phi$ was true at some point in the Past
+  \item with duals $G$ and $H$
+  \item $\phi$ was always Going to be true
+  \item $\phi$ always Has been true
+  \item in effect, we’re going to say that we express concrete unmovable facts with the duals, and transient facts with $F$ and $P$
+  \item interesting results include
+  \begin{itemize}
+    \item $P$$\phi$ $\implies$ $G P$ $\phi$
+    \item $F$ $\phi$ $\implies$ $F F$ $\phi$ (?): so there’s a time slice that’s in between that you can think about?!
+    \item $G F$ $\phi$ $\implies$ $F G$ $\phi$: the McKinsey formula! (implies that if something is going to be true at some point in the future it makes it forever true!)
+  \end{itemize}
+  \item PDL
+  \item $\lozenge$ === <$\pi$>$\phi$ := some execution of program $\pi$ yields $\phi$
+  \item $\square$ === [$\pi$] $\phi$ := all executions of program $\pi$ yield $\phi$
+  \item execution MUST terminate
+  \item supposing we can choose which program to execute (union), we can compose
+  programs ($\pi$1 ; $\pi$2) indicates execution of $\pi_1$ followed by execution of $\pi_2$
+  and iteration to $\pi$* to execute a finite/possibly zero number of times
+  \item this is regular PDL, but we can make it more powerful by adding in intersection, which yields parallel execution and test, which is an assert (test is denoted by a ? after a formula)
+  \item There’s also arrow logic
+  \item three operators, converse, identity and composition
+  \item arrow logic is a bit odd?
+  \item A Note: A partial function is a function that only maps a subset of its domain out to a range
+\end{itemize}
+\subsection{Def 1.19 --- A frame}
+A pair $(W, R)$ such that $W$ is a non-empty set and $R$ is a binary relation on $W$
+\begin{itemize}
+  \item we say that a model is a tuple $(F, V)$ where $F$ is a frame and $V$ is a function that takes a proposition $\phi$ and maps it to a subset of $W$, so $V$: $\phi$ $\rightarrow$ $\mathbb{P}(W)$
+  \item Notice that a frame is a structure, and a model is an enhanced frame, enriched by a set of unary relations
+  \item frames and models are very d$\iff$erent
+  \item the frames give you a picture that is interesting, and add precision to the fundamental assumptions
+  \item models assign meaning to frames; they are a frame with a valuation, and dress our frames with contingent information
+\end{itemize}
+\subsection{Def 1.20 --- Satisfaction}
+Supposing w is a state in a model $M = (W, R, V)$. We say a formula $\phi$ is satisfied or true in $M$ at state $w$ as follows:
+\begin{itemize}
+  \item $M, w$ $\Vdash$ $p \iff w \in V(p)$ where $p \in$ propositions of model
+  \item $M, w \Vdash$ $\bot$ is never true
+  \item $M, w \Vdash$ $\neg$ $\phi$ $\iff$ $\neg$ $M, w$ $\Vdash$ $\phi$
+  \item $M, w \Vdash$ $\phi$ or $\gamma$ $\iff$ $M, w$ $\Vdash$ $\phi$ or $M, w$ $\Vdash$ $\gamma$
+  \item $M, w \Vdash$ $\lozenge$ $\phi$ $\iff$ for some $v \in W$ and $vRw$ we have $M, v$ $\Vdash$ $\phi$
+  \item $M, w \Vdash$ $\square$ $\phi$ $\iff$ for all $v \in W$ s.t. $wRv$ then $M, v$ $\Vdash$ $\phi$
+  \item we say a set of formulas $\Pi$ are true at $M, w$ $\Vdash$ $\Pi$ $\iff$ all members of $\Pi$ are true at $w$
+  \item N.B.: this notion of satisfaction is intrinsically local and internal; we evaluate formulas inside models at a state $w$ (the current state).
+\end{itemize}
+\begin{itemize}
+  \item $\lozenge$ works locally, where its definition is to scan all accessible states to find a candidate good state
+  \item We say $M, w$ ||/- $\phi$ means $\phi$ is $\neg$ satisfied in $M, w$
+  \item Note that $V$ tends to be extended to evaluate formulae, rather than propositions (just makes it easier), so that $V$($\phi$) := {$w$ | $M, w$ $\Vdash$ $\phi$} where $\phi$ is some formula (notice that this will reduce to $V$($\phi$) when evaluating the formulae properly)
+\end{itemize}
+
+\subsection{Def 1.21 --- globally or universally true}
+...in a model $M$ if it is satisfied at any $w$ of $M$
+\begin{itemize}
+  \item if it is satisfied in some state, it is satisfiable (there is some state where $\phi$ is true)
+  \item if the negation is satisfiable then the formula is falsifiable
+  \item Note: $\square$ is satisfied at dead ends
+\end{itemize}
+\subsection{Def 1.23 --- modal similarity type}
+$T$ is a modal similarity type. a $T$-frame is a tuple with the following ingredients
+\begin{itemize}
+  \item a non-empty set $W$
+  \item for each $n \geq 0$ and each $n$-ary modal operator $\nabla$ in the similarity type $T$ an $(n+1)$-ary relation $R_\nabla$
+  \item notice that we can then extend our T-frames for an operator $\nabla$, such that $M, w$ $\Vdash$ $\nabla$($\phi_1$, $\phi_2$, $\ldots$) $\iff$ there are some states $v_1$, $v_2$, $\ldots, \in W$ with $R_\nabla w,v_1,v_2,\ldots$ such that for each $i$, $M,v_i$ $\Vdash$ $\phi$i
+  \item similarly for $\square$, we say that $\nabla$($\phi_1$,$\phi_2$,...) is true at $M,w$ $\iff$ for all combinations of states $v_1,v_2,\ldots \in W$ such that $R_\nabla w,v_1,v_2,\ldots$ then for each $i$, $M,v_i$ $\Vdash$ $\phi_i$
+  \item Often we’d like to ignore the effects of valuation and get a grip on the more fundmental level of frames
+\end{itemize}
+\subsection{Def 1.28 --- Validity}
+A formula $\phi$ is valid at a state $w$ in a frame $F$ $F, w$ $\Vdash$ $\phi$) if $\phi$ is true at w in every model (F, V) based on F;
+\begin{itemize}
+  \item $\phi$ is valid in a frame $F$ if it is valid at every state in $F$
+  \item $\phi$ is valid on a class of frames $F$ if it is valid on every frame $F$ in $F$
+  \item $\phi$ is valid if it is valid on all classes of frames
+  \item the set of formulas that are valid in a class of frames $F$ is called the logic of $F$
+  \item this gives rise to specific logics, such as the logic of S5 or KD45 or K
+  \item notice that this essentially means we can assess validity independent of valuation
+  \item We can say that $L_F$ which is the logic of a class of frames $F $is the set of valid formulas that can be made with operators in the modal similarity $T$, such that {$\phi$ in Form($T$, $\phi$) | F $\Vdash$ $\phi$}
+  \item So what’s the problems with what we have right now?
+  \item it’s too concrete when we talk about satisfaction and a little lacking
+  in power (it talks about a single frame only)
+  \item it’s too abstract and therefore a little too strong? when we talk about validity it goes across every valuation
+  \item Let’s have an intermediate level --- a “general frame”, which is a frame $F$ with a restricted but suitably well-behaved collection of admissible valuations, $A$ (which can also stand for a boolean algebra?)
+\end{itemize}
+\subsection{Def 1.30 --- Relation Function}
+\begin{itemize}
+  \item Let $R$ be an $n+1$-ary relation on a set $W$
+  \item We define the following $n$ ary operation $m_R$ on the power set $\mathbb{P}(W)$ of $W$ $m_R(X1,...,Xn)$ = ${w \in W | Rww_1w_2w_3...w_n for some w_1 \in X1, …, w_n \in Xn}$
+  \begin{itemize}
+    \item $m_R(X)$ is the set of states that see a state in $X$, so these are the set of states that can be “seen” from all of X1, X2, ...
+    \item that is, any $w$ is a state that is related by $R$ to a state in $X1$, a state in $X2$, etc.
+    \item so this is the set of all R-related states to $X1$, $X2$, ...?
+  \end{itemize}
+\end{itemize}
+\subsection{Def 1.32 --- General Frames}
+Let $T$ be a modal similarity. A general $T$-frame is a pair $(F, A)$ where $F=(W,R_\nabla)$ is a $T$-Frame and $A$ is a non-empty collection of “admissible” subsets of $W$ closed under the following operations
+\begin{itemize}
+  \item union
+  \item relative complement ($X \in A \implies W \ X \in A)$
+  \item $X1,X2,...,Xn \in A$ $\implies$ $m_{R\nabla(X1,X2,...,Xn)} \in A \forall \nabla \in T$
+  \item A model based on a general frame $(F, A, V)$ has a valuation such that $V(p) \in A$ for all propositions $p$
+  \item Note that all the validities we mentioned in Def 1.28 hold for general frames
+  \item So we’ve talked a lot about logically interesting formulas but we haven't discussed what a logical consequence might be
+  \item indeed, we’ve said nothing about what it means for a set of modal formulas to logically entail another modal formula
+\end{itemize}
+\subsection{Def 1.35 --- Local Semantic Consequence}
+\begin{itemize}
+  \item Let $T$ be a similarity type and let S be a class of structure of type $T$ (a class of models, frames or general frames)
+  \item Let $\sigma$ and $\phi$ be a set of formulas and a single formula from a language of type $T$
+  \item We say that $\phi$ is a local semantic consequence of $\sigma$ over $S$ if for all models $M$ from $S$ and all points $w$ in $M$, if $M,w$ $\Vdash$ $\sigma$ $\implies$ $M, w$ $\Vdash$ $\phi$
+\end{itemize}
+\subsection{Def 1.37 --- Global Semantic Consequence}
+\begin{itemize}
+  \item We say that $\phi$ is a global semantic consequence of $\sigma$ over $S$ $\iff$ for all structures $G$ in $S$, if $G$ $\Vdash$ $\sigma$ then $G$ $\Vdash$ $\phi$
+\end{itemize}
+\subsection{Def 1.39 --- {\bf K}-proof}
+\begin{itemize}
+  \item A {\bf K}-proof is a finite sequence of formulas, each of which is an axiom or
+  follows from one or more earlier items in the sequence by applying a rule of
+  proof
+  \item {\bf K} has the {\bf K} axiom: $\square$(p$\implies$q) $\implies$ ($\square$ p $\implies$ $\square$ q), and dual, that $\square$ p
+  $\implies$ $\neg$ $\lozenge$ $\neg$ p
+  \item {\bf K} has as rules of proof
+  \begin{itemize}
+    \item modus ponens
+    \item uniform subsitution: given $\phi$, prove theta where theta is obtained from $\phi$ by uniformly replacing proposition letters in $\phi$ by arbitrary formulas
+    \item generalisation: given $\phi$, prove $\square$ $\phi$
+  \end{itemize}
+\end{itemize}
+\subsection{ Def 1.42 --- Normal Modal Logic}
+\begin{itemize}
+  \item A normal modal logic is a set of formulas that contains all tautologies,
+  K, and dual and is closed under modus ponens, uniform substitution and
+  generalisation
+\end{itemize}
+
+%-----------------------------------------------------------------------------%
+\end{document}
