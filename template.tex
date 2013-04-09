@@ -1,0 +1,56 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{(arrows,calc,intersections)}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+\newcommand{\aRel}[1] {
+  \sim_{#1} 
+}
+
+\newcommand{\kripkeFrame}[2] {
+  (#1, aRel{#2})
+}
+
+\newcommand{\kripkeModel}[3] {
+  (#1, aRel{#2}, #3)
+}
+
+\newcommand{\frKripModel}[2] {
+  (#1, #2)
+}
+
+\newcommand{\actModel}[3]{
+  (#1, aRel{#2}, #3)
+}
+
+\newcommand}{\frActModel}[2] { % defined via Kripke Frame + Pre
+  (#1, #2)
+}
+
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
+\newcommand{\Universal}{$\mathcal{U}$}
+
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remak}{Remark}
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+\end{document}
