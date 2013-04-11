@@ -12,7 +12,7 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 
-\usetikzlibrary{(arrows,calc,intersections)}
+\usetikzlibrary{(arrows,calc,intersections,shapes)}
 
 %Graphis Extensions
 \DeclareGraphicsExtensions{.png, .jpg}
@@ -53,6 +53,11 @@
 \newtheorem*{remrk}{Remark}
 
 % Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
 
 %-----------------------------------------------------------------------------%
 %Document%
