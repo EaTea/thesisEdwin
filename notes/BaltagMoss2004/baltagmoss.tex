@@ -1,0 +1,96 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{(arrows,calc,intersections,shapes)}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+% Predefined things such as commands, etc.
+
+\newcommand{\aRel}[1] {
+  \sim_{#1} 
+}
+
+\newcommand{\kripkeFrame}[2] {
+  (#1, aRel{#2})
+}
+
+\newcommand{\kripkeModel}[3] {
+  (#1, aRel{#2}, #3)
+}
+
+\newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
+  (#1, #2)
+}
+
+\newcommand{\actModel}[3]{
+  (#1, aRel{#2}, #3)
+}
+
+\newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
+  (#1, #2)
+}
+
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
+\newcommand{\Universal}{$\mathcal{U}$}
+
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remrk}{Remark}
+
+% Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+Baltag and Moss use an example-motivated approach to explore how they can
+capture informative updates in situations regarding knowledge.
+They formulate the following theses, without defense:
+\begin{thm}\label{situationModel}
+For any situation $s$ with deterministic beliefs and knowledge, we can model
+that situation using a corresponding model $S$.
+A statement about $s$ can be formalised to a formal statement about $S$.
+Similarly, a formal statement about $S$ corresponds to a comment we can make
+regarding $s$.
+\end{thm}
+Furthermore, they state that
+\begin{thm}\label{actionModelExists}
+Supposing an action, $\sigma$ operates on $s$ and changes it to a new situation
+of information, $\sigma(s)$.
+Then there exists an $\Sigma$ ``action model" that formally corresponds to
+$\sigma$.
+Statements about $\sigma$ can be formalised as formal statements about $\Sigma$
+and vice versa.
+Furthermore, for a situation $s$ and its corresponding mathematical model $S$ we
+can execute $\Sigma$ on $S$ via operation $\otimes$ to retrieve a new Kripke
+model $S \otimes Sigma$ which is faithful to the update $\sigma(s)$.
+\end{thm}
+\cref{situationModel} isn't very exciting, since it appears to offer the same
+idea about modelling information as other papers.
+It justifies the existence and usage of the Kripke model.
+Conversely, \cref{actionModelExists} is really interesting, because there's now
+a claim that you can construct these formal models for the actions themselves,
+not just the situation.
+This in itself is quite novel since modelling any class of epistemic updates
+doesn't appear to have been done before.\\
+\\
+\end{document}
