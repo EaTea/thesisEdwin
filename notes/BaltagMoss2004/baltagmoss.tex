@@ -105,6 +105,30 @@ logical sentence describing the preconditions for an action to be executed.
 The tuple ${\bf \Sigma} = \actModel{\Sigma}{A}{pre}$ is thus an action model.
 \end{defn}
 \note{Notice that together, $\kripkeFrame{\Sigma}{A}$ is a frame in
-itself and thuus an action model is also a Kripke model, but it's a model of
-an epistemic update.}
+itself and thus an action model is also a multi-agent Kripke model, but it's a
+model of an epistemic update as oppposed to an epistmic situation.}\\
+\\
+Now, the authors introduce the idea of ``distinguished" actions that can
+semantically correspond to the actions that are ``possible resolutions" of a
+complex epistemic update.
+This allows us to specify a program model that corresponds to an epistemic
+update.
+This means that the action model ${\bf \Sigma} = \actModel{\Sigma}{A}{pre}$ can
+attain a higher level of specificty and thus the program model language could be
+more specific?\\
+\\
+Baltag and Moss then define operations to compose and perform the disjoint union
+of two program models (actually scales to multiple).
+Furthermore they also show how to execute a program model on a situation $S$.\\
+\\
+We then have a concept of an ``action signature".
+\begin{defn}
+Let ${\bf \Sigma} = \actModel{\Sigma}{A}$ be a Kripke frame.
+Let ${\bf \Phi} = \{\phi_1, \phi_2, \ldots \}$ where $\phi_i \subseteq \Sigma$.
+We say that ${\bf \Gamma} = \frActModel{ {\bf \Sigma} }{ {\bf \Phi} }$ is an action
+signature, where fixing one $\phi_i$ as the set of actions in ${\bf \Sigma}$ 
+that have non-trivial (true) preconditions yields an action model.
+\end{defn}
+\note{Essentially, an action signauture is for action models what frames are
+for Kripke models.}
 \end{document}
