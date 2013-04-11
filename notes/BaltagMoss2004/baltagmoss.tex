@@ -21,15 +21,15 @@
 % Predefined things such as commands, etc.
 
 \newcommand{\aRel}[1] {
-  \sim_{#1} 
+  \sim_{\mathcal{#1} }
 }
 
 \newcommand{\kripkeFrame}[2] {
-  (#1, aRel{#2})
+  (#1, \aRel{#2})
 }
 
 \newcommand{\kripkeModel}[3] {
-  (#1, aRel{#2}, #3)
+  (#1, \aRel{#2}, #3)
 }
 
 \newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
@@ -37,7 +37,7 @@
 }
 
 \newcommand{\actModel}[3]{
-  (#1, aRel{#2}, #3)
+  (#1, \aRel{#2}, #3)
 }
 
 \newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
@@ -93,4 +93,18 @@ not just the situation.
 This in itself is quite novel since modelling any class of epistemic updates
 doesn't appear to have been done before.\\
 \\
+Baltag and Moss define an Action Model as follows:
+\begin{defn}
+Let $\Sigma$ be a set of actions that are ``simple" in their execution.
+They have a ``uniform" appearance to agents, so that their impact at any current
+state is the same.
+We say that $\aRel{A}$ is a set of relations between sets in $\Sigma$ indexed
+by a set of agents $\mathcal{A}$.
+Let $pre$ be a function mapping an action to a sentence $\alpha$, a valid
+logical sentence describing the preconditions for an action to be executed.
+The tuple ${\bf \Sigma} = \actModel{\Sigma}{A}{pre}$ is thus an action model.
+\end{defn}
+\note{Notice that together, $\kripkeFrame{\Sigma}{A}$ is a frame in
+itself and thuus an action model is also a Kripke model, but it's a model of
+an epistemic update.}
 \end{document}
