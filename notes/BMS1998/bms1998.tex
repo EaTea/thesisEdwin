@@ -1,0 +1,77 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,shapes}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+% Predefined things such as commands, etc.
+
+\newcommand{\aRel}[1] {
+  \sim_{\mathcal{#1} }
+}
+
+\newcommand{\kripkeFrame}[2] {
+  (#1, \aRel{#2})
+}
+
+\newcommand{\kripkeModel}[3] {
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
+  (#1, #2)
+}
+
+\newcommand{\actModel}[3]{
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
+  (#1, #2)
+}
+
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
+\newcommand{\Universal}{$\mathcal{U}$}
+
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remrk}{Remark}
+
+% Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+Citations: 518\\
+\\
+Baltag, Moss and Solecki seem to define an idea similar to their future work in
+Logic for Epistemic Programs.
+In particular, they discuss a similar premise to their 2004 paper.
+Given a state of information with deterministic propositions to decide upon, and
+using a possible worlds model, how should the state of information be updated?\\
+\\
+BMS define a Logic of Epistemic Actions, $\mathcal{L}([\alpha])$.
+In a manner {\em very} similar to their 2004 paper, this logic is a finite
+Kripke frame $K$ with a map of preconditions from $K$ to sentences in
+$\mathcal{L}$.
+\end{document}
