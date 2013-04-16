@@ -1,0 +1,179 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{thmtools}
+\usepackage{tikz}
+\usepackage{comment}
+
+\usetikzlibrary{arrows,shapes}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+% Predefined things such as commands, etc.
+
+\newcommand{\aRel}[1] {
+  \sim_{#1} 
+}
+
+\newcommand{\kripkeFrame}[2] {
+  (#1, \aRel{#2})
+}
+
+\newcommand{\kripkeModel}[3] {
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
+  (#1, #2)
+}
+
+\newcommand{\actModel}[3]{
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
+  (#1, #2)
+}
+
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
+\newcommand{\Universal}{$\mathcal{U}$}
+\newcommand{\modalLog}{$\mathcal{L}$}
+\newcommand{\modLogInf}{$\mathcal{L}_\inf$}
+\newcommand{\epActLog}{\modalLog$([\alpha])$}
+\newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
+
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remrk}{Remark}
+
+% Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+
+\begin{comment}
+The literature review should be about 3000-5000 words long.
+I would probably aim for around 4000.
+You'll need about 5 to 10 papers. Aim for 10?
+\end{comment}
+
+\tableofcontents
+
+\vfill
+\pagebreak
+
+
+\section{Introduction}\label{intro}
+\begin{itemize}
+  \item A motivation for this study; to define a framework for epistemic actions
+  using minimal ``atoms"
+  \item Provide a basis for exploring different updates and dynamic epistemic
+  logic
+  \item Proposed direction would be to model epistemic updates in the context of
+  message passing systems
+  \item Need to provide a clear motivation for study in this area
+  \item Have to show {\em why} we'd want to specify and realise epistemic
+  updates
+\end{itemize}
+
+\section{Epistemic Logic: modelling information}\label{epistemics}
+\begin{itemize}
+\item Give some background into modal logic, epistemic logic and dynamic
+epistemic logic.
+\item Essentially, what is modal logic? What is epistemic logic? What is dynamic
+epistemic logic?
+\item might be a good idea to define some concepts we'd talk about such as box,
+  diamond, kripke frames
+\item Formalisations of concepts in introduction: perhaps not necessary?
+\item Reference DEL, Modal Logic here
+\end{itemize}
+
+\section{Extending PDL}\label{pdlExtend}
+\subsection{Definition of PDL} \label{pdlDefine}
+\begin{itemize}
+  \item Use the first introduction of PDL (old paper from 1979?)
+  \item Motivate why PDL is useful as a specification language
+  \item What does PDL allow us to reason about?
+  \item What does PDL NOT allow us to reason about?
+  \item Why is PDL a good guiding framework?
+\end{itemize}
+\subsection{Message passing with PDL} \label{pdlMessages}
+\begin{itemize}
+\item discuss Bollig et. al's work (Propositional Dynamic Logic for
+    Message-Passing Systems)
+\item what is the significance of the work? essentially given an MSC to specify
+a sequence of messages we can translate this to a formula in PDL
+\item a finite state machine that executes this MSC is of exponential size
+relative to the number of propositions
+\item comment on how this suggests that updates themselves will be expensive
+\end{itemize}
+
+\section{Public Announcements}\label{announcements}
+\begin{itemize}
+\item discuss public announcements as a singular entity
+\item mentioned in Baltag, Moss, Solecki and in DEL
+\item what kind of an update do they entail
+\item what can't we do with them?
+\item what does this afford us as an advantage compared to PDL?
+\item what have we lost in moving to this representation?
+\end{itemize}
+
+\section{Action Models}\label{actModels}
+\begin{itemize}
+  \item reiterate the weaknesses of what we've seen so far and wonder if we can
+  cover them
+  \item introduce the concept of an action model
+\end{itemize}
+\subsection{Action Models Definition}\label{actModelDefn}
+\begin{itemize}
+  \item first covered in BMS1998
+  \item give the definition of a model as a Kripke frame with a valuation
+  \item motivate the model itself, the reasoning you can do with it
+  \item BMS claim you can model message passing with their constructs, but they
+  give no ideas about it
+  \item furthermore it's all about what the omniscient 3rd party sees, not what
+  the agents themselves can see
+\end{itemize}
+\subsection{Extending PDL}\label{actModelExtends}
+\begin{itemize}
+  \item BM2004 suggests an epistemic program, similar to PDL
+  \item gives us a powerful syntax similar to PDL
+  \item what are the consequences?
+  \item what can we express, and what updates can't we express?
+  \item comparison of using PDL for message passing and the consequences of this
+  \item notice that we're not sure what the smallest set of things to generate
+  all action models are
+  \item we don't know how we can realise action models
+  \item if PDL is anything to go by we could be using exponential states to
+  communicate things, is not good
+\end{itemize}
+
+\section{Conclusion}\label{conclusion}
+\begin{itemize}
+  \item Resummarise what this literature review has discussed
+  \item Make any comparisons and comments upon whether we can realise an
+  epistemic update
+  \item remotivate my topic; no-one has yet thought about how the agents can
+  realise a specified update and what the complexity of this is
+\end{itemize}
+
+\end{document}

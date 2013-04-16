@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Epistemic Logic: modelling information}{2}{section.2}
+\contentsline {section}{\numberline {3}Extending PDL}{2}{section.3}
+\contentsline {subsection}{\numberline {3.1}Definition of PDL}{2}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Message passing with PDL}{2}{subsection.3.2}
+\contentsline {section}{\numberline {4}Public Announcements}{2}{section.4}
+\contentsline {section}{\numberline {5}Action Models}{2}{section.5}
+\contentsline {subsection}{\numberline {5.1}Action Models Definition}{3}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Extending PDL}{3}{subsection.5.2}
+\contentsline {section}{\numberline {6}Conclusion}{3}{section.6}
