@@ -8,7 +8,7 @@
 
 % Drawings of frames
 
-\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=30pt,inner sep=0pt]
 \tikzstyle{selected vertex} = [vertex, fill=red!24]
 \tikzstyle{edge} = [draw,thick,->]
 \tikzstyle{weight} = [font=\small]
@@ -41,24 +41,97 @@ mention the “too complicated stuff”!
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{Wanna play a game...?}
+\frametitle{Wanna play a game$\ldots$?}
 \begin{itemize}
   \item Consider two agents, Amy ($A$) and Brian ($B$)
   \item There's a coin in front of them, but they don't know whether the coin is
-    Heads or Tails...
+    Heads ($H$) or Tails ($T$)$\ldots$
   \item We can model this as $\ldots$
 \end{itemize}
 \end{frame}
 
 \begin{frame}
+\frametitle{As a Kripke Structure}
 \begin{figure}
-\begin{tikzpicture}[scale=1.5]
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+      thick]
 
-  \foreach \pos/\name in {{(0,0)/s}, {(3,0)/t}}
-    \node[vertex] (\name) at \pos {$\name$};
-  \foreach \source/\dest/\weight in {s/t/{A,B},t/s/{A,B}}
-    \path[edge] (\source) -- node[weight] {$\weight$} (\dest);
+    \node[vertex] (1) {$H$};
+    \node[vertex] (2) [right of=1] {$T$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2)
+\end{tikzpicture}
+\end{figure}
+\end{frame}
 
+\begin{frame}
+\frametitle{Suspicion!}
+\begin{itemize}
+  \item Amy thinks Brian knows more than he's letting on
+  \item It's possible Brian knows whether the coin is Heads or Tails
+  \item Or maybe he doesn't know any more than Amy knows
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Suspicion: A Kripke Structure}
+\begin{figure}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+
+    \node[vertex] (1) {$H$};
+    \node[vertex] (2) [right of=1] {$T$};
+    \node[vertex] (3) [below of=1] {$H'$};
+    \node[vertex] (4) [below of=2] {$T'$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+              edge node {$A$} (3)
+              edge node {$A$} (4)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2)
+              edge node {$A$} (3)
+              edge node {$A$} (4)
+          (3) edge node {$A$} (4)
+              edge [loop left] node {$B$} (3)
+              edge node {} (1)
+              edge node {} (2)
+          (4) edge node {} (3)
+              edge [loop right] node {$B$} (4)
+              edge node {} (1)
+              edge node {} (2)
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Suspicion: A Kripke Structure}
+\begin{figure}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,thick]
+
+    \node[vertex] (1) {$H$};
+    \node[vertex] (2) [right of=1] {$T$};
+    \node[vertex] (3) [below of=1] {$H'$};
+    \node[vertex] (4) [below of=2] {$T'$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+              edge[red!48] node {$A$} (3)
+              edge[red!48] node {$A$} (4)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2)
+              edge[red!48] node {$A$} (3)
+              edge[red!48] node {$A$} (4)
+          (3) edge[red!48] node {$A$} (4)
+              edge[loop left, red!48] node {$B$} (3)
+              edge[red!48] node {} (1)
+              edge[red!48] node {} (2)
+          (4) edge[red!48] node {} (3)
+              edge[loop right, red!48] node {$B$} (4)
+              edge[red!48] node {} (1)
+              edge[red!48] node {} (2)
 \end{tikzpicture}
 \end{figure}
 \end{frame}
