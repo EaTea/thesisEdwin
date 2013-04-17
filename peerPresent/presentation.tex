@@ -21,6 +21,7 @@
 \begin{document}
 \title{A Logical Framework for realising Action Model Execution}
 \author{Edwin Tay}
+\date{19th April 2013}
 
 \begin{comment}
 My honours presentation.
@@ -73,6 +74,7 @@ mention the “too complicated stuff”!
   \item Amy thinks Brian knows more than he's letting on
   \item It's possible Brian knows whether the coin is Heads or Tails
   \item Or maybe he doesn't know any more than Amy knows
+  \item But Brian hasn't actually cheated
 \end{itemize}
 \end{frame}
 
@@ -118,22 +120,59 @@ mention the “too complicated stuff”!
     \path[edge]
           (1) edge node {$A,B$} (2)
               edge [loop left] node {$A,B$} (1)
-              edge[red!48] node {$A$} (3)
-              edge[red!48] node {$A$} (4)
+              edge[red!88] node {$A$} (3)
+              edge[red!88] node {$A$} (4)
           (2) edge node {} (1)
               edge [loop right] node {$A,B$} (2)
-              edge[red!48] node {$A$} (3)
-              edge[red!48] node {$A$} (4)
-          (3) edge[red!48] node {$A$} (4)
-              edge[loop left, red!48] node {$B$} (3)
-              edge[red!48] node {} (1)
-              edge[red!48] node {} (2)
-          (4) edge[red!48] node {} (3)
-              edge[loop right, red!48] node {$B$} (4)
-              edge[red!48] node {} (1)
-              edge[red!48] node {} (2)
+              edge[red!88] node {$A$} (3)
+              edge[red!88] node {$A$} (4)
+          (3) edge[red!88] node {$A$} (4)
+              edge[loop left, red!88] node {$B$} (3)
+              edge[red!88] node {} (1)
+              edge[red!88] node {} (2)
+          (4) edge[red!88] node {} (3)
+              edge[loop right, red!88] node {$B$} (4)
+              edge[red!88] node {} (1)
+              edge[red!88] node {} (2)
 \end{tikzpicture}
 \end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{The state of information}
+\begin{itemize}
+  \item Describing the state of information is quite doable at any situation
+  \item Problem: how do we move from one situation to another?
+  \item How do we specify an action that changes situation from one to another?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Action Models}
+\begin{itemize}
+  \item Mathematical specification of an action
+  \item Describes how to change the state of information from pre- to post-change
+  \item Essentially a Kripke Model of an action
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problems with Action Models}
+\begin{itemize}
+  \item Action Models describe change in information, but how is that information distributed?
+  \item What can we use to compose or construct action models?
+  \item What are the ``atomics"? Can we generate any action model using some predefined atomic structures?
+  \item Will Action Models actually be useful or practical to execute?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Project Aims}
+\begin{itemize}
+  \item Explore whether a generating set exists for action models/classes of action models
+  \item Explore what operations might be needed to perform this generation
+  \item Use pointed action model execution to specify a per-agent model of an entire action model update
+  \item Measure the complexity of such an execution
+\end{itemize}
 \end{frame}
 
 \end{document}
