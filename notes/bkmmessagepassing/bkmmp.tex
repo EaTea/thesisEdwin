@@ -64,4 +64,31 @@
 %-----------------------------------------------------------------------------%
 %Document%
 \begin{document}
+Number of citations: 15\\
+\\
+The paper is written by Bollig, Kuske and Meinecke (BKM).
+BKM find that if they specify sequences of message passing (MSC) extending LTC
+and TLC.\\
+\\
+I can't find anything on LTL or TLC at the moment?
+Maybe something to ask Tim.\\
+\\
+The major result of this paper is that a formula in PDL can be translated to a
+communicating finite state machine of exponential size (number of states).
+At least this is what's most interesting to me.\\
+\\
+BMS also discuss some interesting things with regards to model checking.
+They show that PDL with intersection can't be effectively modelled by a CFM.
+I think that they had a most interesting result in the first one I mentioend.
+I should re-read this paper for a bit of guidance though.\\
+\\
+Major result is Corollary 3.8.
+I reiterate it here.
+\begin{thm}
+	Let $\phi$ be a global formula of PDL.
+	Then a CFM $\mathcal{A}$ that accepts $M$ iff $M \models \phi$.
+	The numbers of local states and of control messages of $\mathcal{A}$ belong to
+	$2^{O((|\phi|+|\mathcal{P}|)^2)}$.
+\end{thm}
+
 \end{document}

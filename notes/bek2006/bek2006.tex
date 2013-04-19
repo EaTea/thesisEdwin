@@ -1,0 +1,115 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[10pt, a4paper, twoside]{article}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows,shapes}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+% Predefined things such as commands, etc.
+
+\newcommand{\aRel}[1] {
+  \sim_{\mathcal{#1} }
+}
+
+\newcommand{\kripkeFrame}[2] {
+  (#1, \aRel{#2})
+}
+
+\newcommand{\kripkeModel}[3] {
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
+  (#1, #2)
+}
+
+\newcommand{\actModel}[3]{
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
+  (#1, #2)
+}
+
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
+\newcommand{\Universal}{$\mathcal{U}$}
+\newcommand{\modalLog}{$\mathcal{L}$}
+\newcommand{\modLogInf}{$\mathcal{L}_\inf$}
+\newcommand{\epActLog}{\modalLog$([\alpha])$}
+\newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
+
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remrk}{Remark}
+
+% Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+Citations: \\
+\\
+van Benthem, van Eijek and Kooi (BEK).
+They state that they want to deal with common knowledge being an opaque idea for
+multi-agent communication.
+They propose new systems extending the epistemic base language with
+``relativized common knowledge".
+They show that their systems can also deal with factual change and alteration
+rather than just information change.\\
+\\
+Their main technical result is what appears to be PDL interpreted epistemically.
+The claim
+\begin{quote}
+	This is a dynamic epistemic logic $\ldots$ capable of expressing all
+	model-shifting operations with finite action models while providing a
+	compositional analysis for a wide range of informational events.
+\end{quote}
+Their results appear to be mainly stuck in $S5$ and $KD45$.
+So there really isn't much generality to $K$ at the moment.\\
+\\
+Some limitations they mention:
+\begin{itemize}
+	\item an update model with several events as a disjunction of instructions
+	under conditions
+	\item suggests update models are built from simple actions by means of regular
+	operations of choice, sequence and iteration
+	\item perhaps even concurrent composition of events
+	\item See Miller and Moss (23) of this paper!
+	\item atomic form of post conditions for world changing actions
+\end{itemize}
+Relativized Common Knowledge seems suspiciously similar to what BMS1998
+discusses.\\
+\\
+See Section 4.2 for PDL interpreted epistemically.
+See Section 4.3!
+Is this a PDL-like execution of a pointed model?
+This seems exactly like BMS1998 though...?\\
+\\
+Section 5 is like a massive motivational thing.
+It's nice that they have a PDL style framework though...\\
+\\
+Section 6 is interesting.
+In particular BEK ask about Program constructions over update models.
+They obtain a calculus describing effects of more complex events.
+There is a paper that makes PAL undecidable, but partial axiomatizations might
+be possible.
+\end{document}
