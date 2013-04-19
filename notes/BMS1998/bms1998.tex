@@ -47,9 +47,9 @@
 \newcommand{\note}[1]{\textsc{\textbf{#1}}}
 \newcommand{\Universal}{$\mathcal{U}$}
 \newcommand{\modalLog}{$\mathcal{L}$}
-\newcommand{\modLogInf}{$\mathcal{L}_\inf$}
-\newcommand{\epActLog}{\modalLog$([\alpha])$}
-\newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
+\newcommand{\modLogInf}{$\mathcal{L}_{\infty}$}
+\newcommand{\epActLog}{\modalLog $([\alpha])$}
+\newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\Box^{\ast})$}
 
 \newtheorem{defn}{Definition}
 \newtheorem{thm}{Theorem}
@@ -71,10 +71,10 @@ Citations: 518\\
 Baltag, Moss and Solecki seem to define an idea similar to their future work in
 Logic for Epistemic Programs.
 In particular, they discuss a similar premise to their 2004 paper.
-Given a state of information with deterministic propositions to decide upon, and
-using a possible worlds model, how should the state of information be updated?\\
+Given a state of inftyormation with deterministic propositions to decide upon, and
+using a possible worlds model, how should the state of inftyormation be updated?\\
 \\
-BMS define a Logic of Epistemic Actions, \mmodalLog$([\alpha])$.
+BMS define a Logic of Epistemic Actions, \modalLog$([\alpha])$.
 In a manner {\em very} similar to Baltag and Moss, 2004, this logic of epistemic
 actions uses (for its action structure) a Kripke frame $K$ with a map of
 preconditions from $K$ to sentences in \modalLog.\\
@@ -86,7 +86,7 @@ vein similar to PDL, and instead looks at the completeness and expressivity of
 \modalLog$([\alpha])$.\\
 \\
 One really interesting thing is the examples that come out of this paper.
-BMS claim in section 3 that it is possible to represent the information content
+BMS claim in section 3 that it is possible to represent the inftyormation content
 of message passing on faulty or wiretapped channels using their action
 framework.
 This is really cool, but they don't provide specifics; merely that to the
@@ -96,44 +96,66 @@ Why?
 The main problem is that these agents are going to be looking at an entire
 message passing situation as opposed to a pointed model.
 Of note is that BMS define a pointed model execution to give ``current world
-semantics", which might be more useful later on?\\
-\\
+semantics", which might be more useful later on?
 \begin{defn}
-We say a sentence $\phi \in $\modalLog$([a])$ is ia normal form iff it is a
+We say a sentence $\phi \in $\modalLog$([a])$ is a normal form iff it is a
 modal sentence that contains no actions.\\
-A sentence $\phi \in$ \modalLog$([a],\box^{*})$ is a normal form iff it is built
+A sentence $\phi \in$ \modalLog$([a],\Box^{\ast})$ is a normal form iff it is built
 from atomic propositions involving modal logic plus infinitary box, or it is of
-the form $[\alpha]\box^{*}\tau$ where $\alpha$ is an action in normal form and
+the form $[\alpha]\Box^{\ast}\tau$ where $\alpha$ is an action in normal form and
 $\tau$ is in normal form.\\
 An action $\alpha$ is a normal form action if each $PRE(\beta)$ is a normal form
-sentence for all $\beta$ such that $\alpha \implies^{*} \beta$.
+sentence for all $\beta$ such that $\alpha \implies^{\ast} \beta$.
 \end{defn}
 I think that definition is just giving us the ``basic" atomic sentences in
-\modalLog$([\alpha])$ and \modalLog$([\alpha], \box^{*})$.
+\modalLog$([\alpha])$ and \modalLog$([\alpha], \Box^{\ast})$.
 In particular it gives us the idea of a basic action; one whose neighbours all
 have normal form preconditions.
 Note that this makes intuitive sense in S5 or KD45 but it does not generalise
 intuively to K (because now you can have a basic action with non-basic
-preconditions...)\\
-\\
+preconditions...)
 \begin{defn}
 We define \modLogInf to be infinitary modal logic, which are conjunctions (ands
 or intersections) of arbitrary sets of sentences.
 \end{defn}
 \begin{thm}
 Let \modalLog be modal logic, \modalLog$([\alpha])$ be modal logic with action
-execution, \modalLog$([\alpha],\box^{*})$ be \modalLog$([\alpha])$ with common
+execution, \modalLog$([\alpha],\Box^{\ast})$ be \modalLog$([\alpha])$ with common
 knowledge (infinitary box), and let \modLogInf be infinitary modal logic.\\
 Then a (normal?) sentence in \modalLog$([\alpha])$ can be translated to a
 sentence in \modalLog.\\
 Furthermore, the translation used for \modalLog$([\alpha])$ to \modalLog can be
-extended to translate \modalLog$([\alpha],\box^{*})$ to \modLogInf.
+extended to translate \modalLog$([\alpha],\Box^{\ast})$ to \modLogInf.
 This is achieved by making the translated sentence in \modLogInf to be a
 recursive sentence. (of ordinal height $\omega^\omega$?).
 \end{thm}
 BMS also discuss the completeness of \epActLog.
 Indeed they show that \epActLog is strongly complete.
-\begin{defn}
+\begin{thm}
+The logical system \epActLog is strongly complete, that is
+\[
+  \Sigma \vdash \phi \iff \Sigma \models \phi
+\]
+\end{thm}
+They also find a sentence in \epActLogCommonKnowledge that cannot be expressed
+in \modLogInf.
+This shows \epActLogCommonKnowledge is more expressive than \modLogInf.
+They conclude that the validities of \epActLogCommonKnowledge can be axiomatised
+along the lines of PDL.
+As a result we get the finite model property and hence decidability.\\
+\\
+I think I ought to look at the final result and understand/ask Tim about it a
+little more.
+Also the differences in completeness results are worth exploring.
+I think I need to look more into it.\\
+\\
+BMS suggest a number of questions they're interested in:
+\begin{itemize}
+  \item Communications and actions relations haven't been explored
+  \item They publish some new results in BM2004 regarding their new program
+  logic
+  \item Completeness theorems for S4 and S5
+  \item Incorporating ideas from belief revision into our framework
+\end{itemize}
 
-\end{defn}
 \end{document}
