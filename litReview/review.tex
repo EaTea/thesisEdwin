@@ -70,11 +70,11 @@
 %Document%
 \begin{document}
 
-\begin{comment}
-The literature review should be about 3000-5000 words long.
-I would probably aim for around 4000.
-You'll need about 5 to 10 papers. Aim for 10?
-\end{comment}
+%\begin{comment}
+%The literature review should be about 3000-5000 words long.
+%I would probably aim for around 4000.
+%You'll need about 5 to 10 papers. Aim for 10?
+%\end{comment}
 
 \tableofcontents
 
@@ -83,97 +83,220 @@ You'll need about 5 to 10 papers. Aim for 10?
 
 
 \section{Introduction}\label{intro}
-\begin{itemize}
-  \item A motivation for this study; to define a framework for epistemic actions
-  using minimal ``atoms"
-  \item Provide a basis for exploring different updates and dynamic epistemic
-  logic
-  \item Proposed direction would be to model epistemic updates in the context of
-  message passing systems
-  \item Need to provide a clear motivation for study in this area
-  \item Have to show {\em why} we'd want to specify and realise epistemic
-  updates
-\end{itemize}
+\subsection{Describing Information State}\label{intro_infoState}
+The study of information aims to capture what information multiple agents know
+and what they might be uncertain about.
+The logical study of information, known as epistemic logic, produces models
+describing complex knowledge and states of knowledge of multiple agents.
+A related field, the logics of belief --- doxastic logic --- describes the
+beliefs of agents in terms of models.\\
+\\
+Such models are most useful in communications systems and have applications in
+artificial intelligence and game theory.
+They afford a level of rigour and specificity that informal reasoning about
+knowledge cannot provide.\\
+\\
+The change of information state via an update of information is a field that has
+seen much attention recently.
+Theorists have found models that describe updates and changes of information with
+increasing expressivity.
+Executing such a model to update a state of information has been well-defined.
+However, no framework for the execution of these models exists, and the current
+cost of execution is theoretically non-trivial.
+\subsection{Coin-Flipping Game}\label{intro_coinFlipping}
+Consider a game being played between two friends (or agents), Angeline $(A)$
+and Ben $(B)$.
+The game involves flipping a coin, hiding the result from both $A$ and $B$ and
+having both of them guess whether the coin is Heads $(H)$ or the coin is Tails
+$(T)$.
+$A$ or $B$ might be told $H$ or $T$ by their friend Carol $(C)$ or perhaps they
+learn this themselves through sneaking a glance.\\
+\\
+This literature review considers the relevant writings and logics to describe
+this situation.
+We will consider what information we can currently model and how we can model
+updates and actions.
+We will note what has not been explored in the fields and compare frameworks'
+differing approaches and strengths.
+%\begin{itemize}
+%  \item A motivation for this study; to define a framework for epistemic actions
+%  using minimal ``atoms"
+%  \item Provide a basis for exploring different updates and dynamic epistemic
+%  logic
+%  \item Proposed direction would be to model epistemic updates in the context of
+%  message passing systems
+%  \item Need to provide a clear motivation for study in this area
+%  \item Have to show {\em why} we'd want to specify and realise epistemic
+%  updates
+%\end{itemize}
 
-\section{Epistemic Logic: modelling information}\label{epistemics}
+\section{Epistemic Logic}\label{epistemic}
+In the coin-flipping game, we can make the following observations.
 \begin{itemize}
-\item Give some background into modal logic, epistemic logic and dynamic
-epistemic logic.
-\item Essentially, what is modal logic? What is epistemic logic? What is dynamic
-epistemic logic?
-\item might be a good idea to define some concepts we'd talk about such as box,
-  diamond, kripke frames
-\item Formalisations of concepts in introduction: perhaps not necessary?
-\item Reference DEL, Modal Logic here
+	\item $A$ considers both $H$ and $T$ to be possible
+	\item $B$ considers both $H$ and $T$ to be possible
 \end{itemize}
-
-\section{Extending PDL}\label{pdlExtend}
-\subsection{Definition of PDL} \label{pdlDefine}
-\begin{itemize}
-  \item Use the first introduction of PDL (old paper from 1979?)
-  \item Motivate why PDL is useful as a specification language
-  \item What does PDL allow us to reason about?
-  \item What does PDL NOT allow us to reason about?
-  \item Why is PDL a good guiding framework?
-\end{itemize}
-\subsection{Message passing with PDL} \label{pdlMessages}
-\begin{itemize}
-\item discuss Bollig et. al's work (Propositional Dynamic Logic for
-    Message-Passing Systems)
-\item what is the significance of the work? essentially given an MSC to specify
-a sequence of messages we can translate this to a formula in PDL
-\item a finite state machine that executes this MSC is of exponential size
-relative to the number of propositions
-\item comment on how this suggests that updates themselves will be expensive
-\end{itemize}
-
-\section{Public Announcements}\label{announcements}
-\begin{itemize}
-\item discuss public announcements as a singular entity
-\item mentioned in Baltag, Moss, Solecki and in DEL
-\item what kind of an update do they entail
-\item what can't we do with them?
-\item what does this afford us as an advantage compared to PDL?
-\item what have we lost in moving to this representation?
-\end{itemize}
-
-\section{Action Models}\label{actModels}
-\begin{itemize}
-  \item reiterate the weaknesses of what we've seen so far and wonder if we can
-  cover them
-  \item introduce the concept of an action model
-\end{itemize}
-\subsection{Action Models Definition}\label{actModelDefn}
-\begin{itemize}
-  \item first covered in BMS1998
-  \item give the definition of a model as a Kripke frame with a valuation
-  \item motivate the model itself, the reasoning you can do with it
-  \item BMS claim you can model message passing with their constructs, but they
-  give no ideas about it
-  \item furthermore it's all about what the omniscient 3rd party sees, not what
-  the agents themselves can see
-\end{itemize}
-\subsection{Extending PDL}\label{actModelExtends}
-\begin{itemize}
-  \item BM2004 suggests an epistemic program, similar to PDL
-  \item gives us a powerful syntax similar to PDL
-  \item what are the consequences?
-  \item what can we express, and what updates can't we express?
-  \item comparison of using PDL for message passing and the consequences of this
-  \item notice that we're not sure what the smallest set of things to generate
-  all action models are
-  \item we don't know how we can realise action models
-  \item if PDL is anything to go by we could be using exponential states to
-  communicate things, is not good
-\end{itemize}
-
-\section{Conclusion}\label{conclusion}
-\begin{itemize}
-  \item Resummarise what this literature review has discussed
-  \item Make any comparisons and comments upon whether we can realise an
-  epistemic update
-  \item remotivate my topic; no-one has yet thought about how the agents can
-  realise a specified update and what the complexity of this is
-\end{itemize}
+In order to capture and describe this state of knowledge appropriately, we
+first turn to the modal logic.
+\subsection{Modal Logic}\label{epistemic_modal}
+% talk about Kripke's work and Modal logic
+Modal logic presents a formal framework for expressing sentiential notions, or
+modalities in propositions.
+These modalities qualify sentences and statements to express notions of
+necessity, time, belief or knowledge.\\
+\\
+Consider the statement ``It must rain today" and contrast it with ``It
+might rain today".
+The two qualifying statements (``must" and ``might") allow us differing notions
+of necessity.
+Modal logic provides us with a framework to express and describe these
+notions.\\
+\\
+The most notable modal logics are ``propositional modal logics", which are
+propositional logic augmented with modalities.
+These modal logics fulfil a minimal set of axioms, the weakest of these logics
+being $\mathcal{K}$.
+From this minimal set of actions, we can giving our modalities additional
+properties that reflect the kinds of statements we wish to express.\\
+\\
+Modal logic in general is still too weak to describe knowledge or belief.
+We could formalise the statements ``$A$ knows $H$ is true" and ``$A$ knows $H$
+is false" in certain modal logics such as $\mathcal{K}$.
+Problematically, they could be part of a model where these statements would be
+considered consistent in these logics.\\
+\\
+Modal logic is thus too general a framework; we need to establish what axioms we
+will use in our logical relations for epistemic logic.
+We need to correct this weakness in our modal logic by moving to the specific
+modalities for epistemic modal logic.
+\subsection{Epistemic and Doxastic Logic}\label{epistemic_logics}
+In order to reason about our modalities in a sensible fashion, we place
+conditions upon the modalities.
+These conditions correspond to adding in extra axioms into our modal logic
+system.\\
+\\
+In epistemic logic, the modality we are most concerned with is that of knowing.
+We add the following five conditions upon our modality of knowledge
+\begin{enumerate}
+	\item if $A$ knows that the sky is cloudy $(\phi)$ and $A$ knows that if
+	$\phi$ then it will rain $\gamma$, then if $A$ knows $\phi$ then $A$ knows
+	$\gamma$.\\
+	This condition corresponds to the axiom formally labelled {\bf K}.
+	\item for every possibility that is consistent with $A$'s knowledge, if $\phi$
+	is true then $A$ must know $\phi$.\\
+	This is a principle known as {\bf N}.
+	Together with {\bf K} they form the minimum set of conditions for a
+	propositional modal logic.
+	\item if $A$ knows $\phi$ then $\phi$ is true.\\
+	This condition corresponds to the axiom of truth, formally labelled {\bf T}.
+	\item if $A$ knows $\phi$ then $A$ knows that she knows $\phi$.\\
+	This condition corresponds to the ``positive introspection" axiom, labelled 
+	as {\bf 4}.
+	\item if $A$ does not know $\phi$ then $A$ knows that she does not know
+	$\phi$.\\
+	This condition corresponds to the ``negative introspection" axiom, labelled 
+	as {\bf 5}.
+\end{enumerate}
+Together, these axioms form the system {\bf S5}.
+{\bf S5} is the modal logic for dealing with the modality of knowledge and is
+most commonly employed in epistemic logic.\\
+\\
+Replacing axiom {\bf T} (if an agent knows $\phi$ then $\phi$ must be true) with
+the axiom {\bf D} allows us to deal with the modality of belief.
+In the context of belief, {\bf D} states that if $A$ believes that $\phi$ then
+$A$ considers $\phi$ a possibility.
+This modal logic has been labelled {\bf KD45} and is usually used in the context
+of doxastic logic, or the logic of belief.\\
+\\
+We can successfully describe $A$ and $B$'s knowledge in our game of coins using
+the modalities provided in epistemic knowledge.
+{\bf S5} affords us a rigourous formal logic for describing situations regarding
+information.\\
+\\
+But what if their friend, $C$, announced ``The coin is actually Heads" (that is,
+$C$ announces $H$)?
+Both epistemic and doxastic logic cannot describe the change in knowledge that
+$C$'s announcement will entail.
+Furthermore, we have no formal process to say how the situation has changed.
+%\section{Epistemic Logic: modelling information}\label{epistemics}
+%\begin{itemize}
+%\item Give some background into modal logic, epistemic logic and dynamic
+%epistemic logic.
+%\item Essentially, what is modal logic? What is epistemic logic? What is dynamic
+%epistemic logic?
+%\item might be a good idea to define some concepts we'd talk about such as box,
+%  diamond, kripke frames
+%\item Formalisations of concepts in introduction: perhaps not necessary?
+%\item Reference DEL, Modal Logic here
+%\end{itemize}
+%
+%\section{Extending PDL}\label{pdlExtend}
+%\subsection{Definition of PDL} \label{pdlDefine}
+%\begin{itemize}
+%  \item Use the first introduction of PDL (old paper from 1979?)
+%  \item Motivate why PDL is useful as a specification language
+%  \item What does PDL allow us to reason about?
+%  \item What does PDL NOT allow us to reason about?
+%  \item Why is PDL a good guiding framework?
+%\end{itemize}
+%\subsection{Message passing with PDL} \label{pdlMessages}
+%\begin{itemize}
+%\item discuss Bollig et. al's work (Propositional Dynamic Logic for
+%    Message-Passing Systems)
+%\item what is the significance of the work? essentially given an MSC to specify
+%a sequence of messages we can translate this to a formula in PDL
+%\item a finite state machine that executes this MSC is of exponential size
+%relative to the number of propositions
+%\item comment on how this suggests that updates themselves will be expensive
+%\end{itemize}
+%
+%\section{Public Announcements}\label{announcements}
+%\begin{itemize}
+%\item discuss public announcements as a singular entity
+%\item mentioned in Baltag, Moss, Solecki and in DEL
+%\item what kind of an update do they entail
+%\item what can't we do with them?
+%\item what does this afford us as an advantage compared to PDL?
+%\item what have we lost in moving to this representation?
+%\end{itemize}
+%
+%\section{Action Models}\label{actModels}
+%\begin{itemize}
+%  \item reiterate the weaknesses of what we've seen so far and wonder if we can
+%  cover them
+%  \item introduce the concept of an action model
+%\end{itemize}
+%\subsection{Action Models Definition}\label{actModelDefn}
+%\begin{itemize}
+%  \item first covered in BMS1998
+%  \item give the definition of a model as a Kripke frame with a valuation
+%  \item motivate the model itself, the reasoning you can do with it
+%  \item BMS claim you can model message passing with their constructs, but they
+%  give no ideas about it
+%  \item furthermore it's all about what the omniscient 3rd party sees, not what
+%  the agents themselves can see
+%\end{itemize}
+%\subsection{Extending PDL}\label{actModelExtends}
+%\begin{itemize}
+%  \item BM2004 suggests an epistemic program, similar to PDL
+%  \item gives us a powerful syntax similar to PDL
+%  \item what are the consequences?
+%  \item what can we express, and what updates can't we express?
+%  \item comparison of using PDL for message passing and the consequences of this
+%  \item notice that we're not sure what the smallest set of things to generate
+%  all action models are
+%  \item we don't know how we can realise action models
+%  \item if PDL is anything to go by we could be using exponential states to
+%  communicate things, is not good
+%\end{itemize}
+%
+%\section{Conclusion}\label{conclusion}
+%\begin{itemize}
+%  \item Resummarise what this literature review has discussed
+%  \item Make any comparisons and comments upon whether we can realise an
+%  epistemic update
+%  \item remotivate my topic; no-one has yet thought about how the agents can
+%  realise a specified update and what the complexity of this is
+%\end{itemize}
 
 \end{document}
