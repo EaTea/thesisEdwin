@@ -8,7 +8,6 @@
 \usepackage{float}
 \usepackage{verbatim} %for code
 \usepackage[pdftex]{graphics}
-\usepackage{ulem}
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{thmtools}
@@ -130,14 +129,14 @@ differing approaches and strengths.
 %  updates
 %\end{itemize}
 
-\section{Epistemic Logic}\label{epistemic}
+\section{Epistemic Modal Logic}\label{epistemic}
 In the coin-flipping game, we can make the following observations.
 \begin{itemize}
 	\item $A$ considers both $H$ and $T$ to be possible
 	\item $B$ considers both $H$ and $T$ to be possible
 \end{itemize}
-In order to capture and describe this state of knowledge appropriately, we
-first turn to the modal logic.
+In order to capture and describe this state of knowledge in a formal manner, we
+first turn to modal logic.
 \subsection{Modal Logic}\label{epistemic_modal}
 % talk about Kripke's work and Modal logic
 Modal logic presents a formal framework for expressing sentiential notions, or
@@ -150,16 +149,30 @@ might rain today".
 The two qualifying statements (``must" and ``might") allow us differing notions
 of necessity.
 Modal logic provides us with a framework to express and describe these
-notions.\\
+notions, which we refer to as modalities.\\
 \\
-The most notable modal logics are ``propositional modal logics", which are
+The most common modal logics are ``propositional modal logics", which are
 propositional logic augmented with modalities.
 These modal logics fulfil a minimal set of axioms, the weakest of these logics
 being $\mathcal{K}$.
-From this minimal set of actions, we can giving our modalities additional
-properties that reflect the kinds of statements we wish to express.\\
+From this minimal set of axioms, we can give our modalities additional
+properties that reflect the kinds of statements we wish to express.
+\subsubsection{Kripke Semantics}\label{epistemic_kripke}
+These mathematical descriptions and axioms allow us to specify our modalities
+and logics, but interpreting these specifications is difficult.
+Kripke introduces a ``possible worlds" or frame semantics to allow us to better
+model our modalities.\\
 \\
-Modal logic in general is still too weak to describe knowledge or belief.
+We can then model situations of modalities as ``possible worlds" which are
+related to, and can access other possible worlds.
+Our modalities become operators on ``possible worlds" that can then state what
+is true at a specific world.\\
+\\
+Kripke semantics give us a framework to make sense of the models we have
+designed and impose a specific interpretation upon them.
+However, modal logic and Kripke semantics are together still too weak to
+describe and model knowledge or belief.\\
+\\
 We could formalise the statements ``$A$ knows $H$ is true" and ``$A$ knows $H$
 is false" in certain modal logics such as $\mathcal{K}$.
 Problematically, they could be part of a model where these statements would be
@@ -168,7 +181,7 @@ considered consistent in these logics.\\
 Modal logic is thus too general a framework; we need to establish what axioms we
 will use in our logical relations for epistemic logic.
 We need to correct this weakness in our modal logic by moving to the specific
-modalities for epistemic modal logic.
+modalities that reflect knowledge and belief.
 \subsection{Epistemic and Doxastic Logic}\label{epistemic_logics}
 In order to reason about our modalities in a sensible fashion, we place
 conditions upon the modalities.
@@ -208,16 +221,101 @@ $A$ considers $\phi$ a possibility.
 This modal logic has been labelled {\bf KD45} and is usually used in the context
 of doxastic logic, or the logic of belief.\\
 \\
+In the context of knowledge especially, $5$ seems unreasonably strong.
+That an agent knows what they don't know isn't particularly feasible in many
+real world situations.
+However, {\bf S5} most suitably captures information and relates possible
+worlds of information back in the most sensible manner, hence its continued use
+as the set of axioms of choice for epistemic modal logic.\\
+\\
 We can successfully describe $A$ and $B$'s knowledge in our game of coins using
 the modalities provided in epistemic knowledge.
 {\bf S5} affords us a rigourous formal logic for describing situations regarding
 information.\\
 \\
-But what if their friend, $C$, announced ``The coin is actually Heads" (that is,
+But what if their friend, $C$, announces ``The coin is actually Heads" (that is,
 $C$ announces $H$)?
 Both epistemic and doxastic logic cannot describe the change in knowledge that
 $C$'s announcement will entail.
-Furthermore, we have no formal process to say how the situation has changed.
+Furthermore, we have no formal process to say how the situation has changed.\\
+\\
+This deficiency raises the following questions:
+\begin{itemize}
+	\item How do we describe this change in a formal manner?
+	\item What reasonings can we make about the state of information after this
+	change?
+	\item Is there an operation that allows us to change the state of information
+	from the pre-change state to the post-change state?
+\end{itemize}
+
+\section{Public Announcement Logic}\label{pal}
+To model the announcement of facts and information, we turn to the use of public
+announcement logic.
+Public announcements are announcements to multiple agents of facts.
+They are a kind of informative update --- perhaps the most basic kind.\\
+\\
+Public announcement logic was first proposed independently by both Plaza and
+Gerbrandy and Groeneveld.
+They were later augmented by the work of Baltag, Moss and Solecki through the
+addition of common knowledge.
+Public announcements are informational updates of true facts that change the
+knowledge state amongst multiple agents.\\
+\\
+Public announcement of a fact $\phi$ cause all worlds where $\phi$ was
+invalid to ``disappear" from our model.
+In effect, our public announcements are quite easy to model their execution
+since it is simply causing all worlds that are no longer valid to ``disappear"
+from our model of a given situation.\\
+\\
+Public announcements capture changes in information, such as $C$ saying to
+$A$ and $B$ that the coin is $H$.
+Another possible update is $A$ being allowed to see the coin's state, and
+telling $B$ ``I guess you didn't know that the coin is actually heads up".\\
+\\
+These changes can be successful or unsuccessful, depending on whether the fact
+that was announced is true after its announcement.
+For example, if $A$ makes the (truthful) announcement that $H$, then this
+announcement is successful since $H$ will be true after the announcement.\\
+\\
+Conversely, an announcement from $A$ that ``I know that you {\em don't} know $H$
+and the coin is $H$" will be false after the announcement, since $A$'s
+announcement has changed the knowledge state to invalidate her full
+announcement.
+Therefore, the second example is an unsuccessful update.\\
+\\
+By using public announcement logic we can describe these announcements of
+information.
+We have a framework to describe and change the state of information amongst our
+agents before and after announcements of facts.
+Public announcement logic will allow us to model $C$ telling $A$ and $B$ in a
+public fashion that $H$ is true.
+\\
+In terms of dynamic epistemic logic, however, there could be many more kinds of
+updates that we have yet to consider.
+Re-examining our game of heads and tails yields scenarios that we cannot
+describe:
+\begin{itemize}
+	\item What about $A$ cheating?
+	\item What about $B$ suspecting $A$ of cheating, even though she hasn't?
+	\item What if $C$ was to whisper (in front of $B$) whether the coin was $H$
+	or $T$?
+\end{itemize}
+These are things public announcement logic cannot describe, and our inability to
+model them raises more questions:
+\begin{itemize}
+	\item what other kinds of epistemic (or informative) updates exist?
+	\item how can we describe them in a sensible manner?
+	\item we managed to model public announcement execution by specifying that it
+	was simply the announcement of facts about the world, which is a reasonably
+	easy update to the state of agent knowledge. What kind of an execution is
+	required for a more nontrivial update?
+\end{itemize}
+
+\section{Epistemic Actions and Action Models} \label{estAct}
+We can now successfully capture the simple act of announcing a fact; from this,
+aim to generalise the ideas behind public announcements to capture other
+informative updates.
+There are two constrasting approaches to model these epistemic updates.
 %\section{Epistemic Logic: modelling information}\label{epistemics}
 %\begin{itemize}
 %\item Give some background into modal logic, epistemic logic and dynamic
