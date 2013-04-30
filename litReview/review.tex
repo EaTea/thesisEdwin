@@ -279,7 +279,7 @@ announcement is successful since $H$ will be true after the announcement.\\
 \\
 Conversely, an announcement from $A$ that ``I know that you {\em don't} know $H$
 and the coin is $H$" will be false after the announcement, since $A$'s
-announcement has changed the knowledge state to invalidate her full
+announcement has changed the knowledge state to invalidate her
 announcement.
 Therefore, the second example is an unsuccessful update.\\
 \\
@@ -295,7 +295,7 @@ updates that we have yet to consider.
 Re-examining our game of heads and tails yields scenarios that we cannot
 describe:
 \begin{itemize}
-	\item What about $A$ cheating?
+	\item What about $A$ cheating and learning $H$ or $T$ without $B$'s knowledge?
 	\item What about $B$ suspecting $A$ of cheating, even though she hasn't?
 	\item What if $C$ was to whisper (in front of $B$) whether the coin was $H$
 	or $T$?
@@ -304,7 +304,7 @@ These are things public announcement logic cannot describe, and our inability to
 model them raises more questions:
 \begin{itemize}
 	\item what other kinds of epistemic (or informative) updates exist?
-	\item how can we describe them in a sensible manner?
+	\item how can we describe other epistemic updates in a sensible manner?
 	\item we managed to model public announcement execution by specifying that it
 	was simply the announcement of facts about the world, which is a reasonably
 	easy update to the state of agent knowledge. What kind of an execution is
@@ -312,52 +312,90 @@ model them raises more questions:
 \end{itemize}
 
 \section{Epistemic Actions and Action Models} \label{estAct}
-We can now successfully capture the simple act of announcing a fact; from this,
-aim to generalise the ideas behind public announcements to capture other
-informative updates.
-There are two constrasting approaches to model these epistemic updates.
-%\section{Epistemic Logic: modelling information}\label{epistemics}
-%\begin{itemize}
-%\item Give some background into modal logic, epistemic logic and dynamic
-%epistemic logic.
-%\item Essentially, what is modal logic? What is epistemic logic? What is dynamic
-%epistemic logic?
-%\item might be a good idea to define some concepts we'd talk about such as box,
-%  diamond, kripke frames
-%\item Formalisations of concepts in introduction: perhaps not necessary?
-%\item Reference DEL, Modal Logic here
-%\end{itemize}
-%
-%\section{Extending PDL}\label{pdlExtend}
-%\subsection{Definition of PDL} \label{pdlDefine}
-%\begin{itemize}
-%  \item Use the first introduction of PDL (old paper from 1979?)
-%  \item Motivate why PDL is useful as a specification language
-%  \item What does PDL allow us to reason about?
-%  \item What does PDL NOT allow us to reason about?
-%  \item Why is PDL a good guiding framework?
-%\end{itemize}
-%\subsection{Message passing with PDL} \label{pdlMessages}
-%\begin{itemize}
-%\item discuss Bollig et. al's work (Propositional Dynamic Logic for
-%    Message-Passing Systems)
-%\item what is the significance of the work? essentially given an MSC to specify
-%a sequence of messages we can translate this to a formula in PDL
-%\item a finite state machine that executes this MSC is of exponential size
-%relative to the number of propositions
-%\item comment on how this suggests that updates themselves will be expensive
-%\end{itemize}
-%
-%\section{Public Announcements}\label{announcements}
-%\begin{itemize}
-%\item discuss public announcements as a singular entity
-%\item mentioned in Baltag, Moss, Solecki and in DEL
-%\item what kind of an update do they entail
-%\item what can't we do with them?
-%\item what does this afford us as an advantage compared to PDL?
-%\item what have we lost in moving to this representation?
-%\end{itemize}
-%
+We can now successfully capture the simple act of announcing a fact.
+Let us aim to generalise the ideas behind public announcements to capture other
+informative updates.\\
+\\
+Two interesting updates we might want to model are
+\begin{enumerate}
+  \item $A$ learns either of $H$ or $T$ and $B$ watches her learn this but does
+  not know whether $H$ or $T$
+  \item $A$ learns either of $H$ or $T$ but $B$ is unaware that she learnt this
+\end{enumerate}
+We will examine two constrasting approaches to model these epistemic updates.
+First, we examine the approach of van Ditsmarsch in constructing epistemic
+actions.
+\subsection{Epistemic Relational Actions} \label{epi_acts}
+van Ditsmarsch approaches epistemic actions from a syntactical point of view,
+aiming to create a language to specify actions in.
+His work in consutrcting an epistemic action syntax draws from some of the
+syntax of established languages such as propositional dynamic logic.\\
+\\
+We will label his language as $\mathcal{L}_{!}$.
+Within $\mathcal{L}_{!}$ van Ditsmarsch provides operations to make valid
+epistemic statements, and further extends the language with dynamic or
+action-oriented constructs.
+These include the ability to test a proposition, to update a group of agents'
+knowledge and to make a non-deterministic choice between actions.\\
+\\
+$\mathcal{L}_{!}$ presents a way to describe complex actions, and indeed we can
+express and describe all the actions we've discussed in the previous sections.
+We can formally describe actions such as cheating, or a private
+announcement to $B$ that $H$ is true that's seen by $A$.\\
+\\
+However, reasoning about epistemic actions in their current form is difficult.
+Indeed, the interpretations of an epistemic action are non-trivial to
+understand.
+Moreover, van Ditsmarsch, van der Hoek and Kooi present problems with
+representing complex uncertainties with $\mathcal{L}_{!}$ that make it difficult
+to reason about what $A$ and $B$ know after an action takes place.\\
+\\
+As an example, given two actions where a choice between actions $\Omega$ and
+$\Gamma$ occurs, in which $B$ learns that $A$ learns either of $p \land q$ or
+$p \land \neg q$ respectively.
+We can see that $B$ should know that $A$ knows $p$ after either of $\Omega$ or
+$\Gamma$ occurring.
+In order to recognise this, we need a generalisation of our rules on what is
+true after an action is executed.
+Unfortunately, to generalise this principle and allow us to reason this out is
+not provided in $\mathcal{L}_{!}$.\\
+\\
+This motivates our exploration of the work of Baltag and Moss in constructing
+another framework to model epistemic updates.
+\subsection{Epistemic Action Models} \label{act_mods}
+As an alternative to approaching epistemic actions syntactically, Baltag and
+Moss examine epistemic actions from a modelling point of view.
+They aim to construct epistemic action models, which resemble the possible
+worlds models of Kripke semantics.
+This ``possible actions" model addresses the problems that van Ditsmarsch, van
+der Hoek and Kooi highlighted with epistemic actions.\\
+\\
+Baltag and Moss extend the action models they proposed with Solecki into classes
+of action models, which they term action signatures.
+They formalise general descriptions of actions, generating the class of
+public announcements or the class of lying actions.
+They also specify a syntax for discussing actions of a given action signature,
+allowing them to generate the logic of public announcements in its entirety.
+Like epistemic actions, Baltag and Moss' syntax borrows from propositional
+dynamic logic.\\
+\\
+van Benthem, van Eijck and Kooi extended action models for a new language to
+handle communication and change.
+Their main contribution here was to improve the expressivity of their language
+with the addition of common knowledge and novel applications of the Kleene star
+to finite automata.
+This logic of communication and change uses propositional dynamic logic as a basis
+and proceeds to interpret it in an epistemic fashion.\\
+\\
+We have now proposed two frameworks, either of which we can effectively describe
+actions.
+
+% Describe epistemic actions
+% Describe epistemic action models
+% Compare the two --- can one be expressed in the other?
+% What are some of the programs that are coming out of each?
+% Talk about James' work
+
 %\section{Action Models}\label{actModels}
 %\begin{itemize}
 %  \item reiterate the weaknesses of what we've seen so far and wonder if we can
