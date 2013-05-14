@@ -1,10 +1,10 @@
 TARGET = review.pdf
 
-$(TARGET): review.tex
+$(TARGET): review.tex litReview.bib
 	pdflatex review.tex
-# bibtex review.aux
-#	pdflatex review.tex
-#	pdflatex review.tex
+	bibtex review.aux
+	pdflatex review.tex
+	pdflatex review.tex
 
 clean:
 	rm review.pdf review.aux

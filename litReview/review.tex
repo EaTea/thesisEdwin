@@ -13,6 +13,7 @@
 \usepackage{thmtools}
 \usepackage{tikz}
 \usepackage{comment}
+\usepackage[nottoc]{tocbibind}
 \usepackage[square]{natbib}
 
 \usetikzlibrary{arrows,shapes}
@@ -54,10 +55,10 @@
 \newcommand{\epActLog}{\modalLog$([\alpha])$}
 \newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
 
-\newtheorem{defn}{Definition}
-\newtheorem{thm}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem*{remrk}{Remark}
+%\newtheorem{defn}{Definition}
+%\newtheorem{thm}{Theorem}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem*{remrk}{Remark}
 
 % Drawings of frames
 
@@ -81,8 +82,15 @@
 \vfill
 \pagebreak
 
+{\em My comments will be in italic.}
 
 \section{Introduction}\label{intro}
+{\em I've done my best to motivate my topic and give an overview of where I want
+to take us up to.
+I've added in a weird little example in \ref{intro_coinFlipping}.
+What am I missing in motivating the topic well?
+What should I add in and what doesn't work at the moment with motivating?
+Also what should not be here?}
 \subsection{Describing Information State}\label{intro_infoState}
 The study of information aims to capture what information multiple agents know
 and what they might be uncertain about.
@@ -94,15 +102,20 @@ beliefs of agents in terms of models.\\
 Such models are most useful in communications systems and have applications in
 artificial intelligence and game theory.
 They afford a level of rigour and specificity that informal reasoning about
-knowledge cannot provide.\\
+knowledge cannot provide.
+We can make rigourous, formal and verifiable claims about situations by using
+formal models of information and beliefs.\\
 \\
 The change of information state via an update of information is a field that has
 seen much attention recently.
 Theorists have found models that describe updates and changes of information with
 increasing expressivity.
-Executing such a model to update a state of information has been well-defined.
-However, no framework for the execution of these models exists, and the current
+Executing such a model to update a state of information has been well-defined.\\
+\\
+However, no framework for the implementation of an execution of these models exists, and the current
 cost of execution is theoretically non-trivial.
+Being able to take a formally correct and verifiable specification of a
+communication and execute it is a related and unanswered question.
 \subsection{Coin-Flipping Game}\label{intro_coinFlipping}
 Consider a game being played between two friends (or agents), Angeline $(A)$
 and Ben $(B)$.
@@ -118,23 +131,19 @@ We will consider what information we can currently model and how we can model
 updates and actions.
 We will note what has not been explored in the fields and compare frameworks'
 differing approaches and strengths.
-%\begin{itemize}
-%  \item A motivation for this study; to define a framework for epistemic actions
-%  using minimal ``atoms"
-%  \item Provide a basis for exploring different updates and dynamic epistemic
-%  logic
-%  \item Proposed direction would be to model epistemic updates in the context of
-%  message passing systems
-%  \item Need to provide a clear motivation for study in this area
-%  \item Have to show {\em why} we'd want to specify and realise epistemic
-%  updates
-%\end{itemize}
 
 \section{Epistemic Modal Logic}\label{epistemic}
+{\em This section was just supposed to be talking about Modal Logic.
+This is mainly my own ramblings trying to define Modal Logic nicely to the
+reader, without the mathematics or relations.
+How does it sound at the moment?
+Have I made any sweeping misinformations, and if so what are they?
+Is this section even valuable?}\\
+\\
 In the coin-flipping game, we can make the following observations.
 \begin{itemize}
-	\item $A$ considers both $H$ and $T$ to be possible
-	\item $B$ considers both $H$ and $T$ to be possible
+	\item $A$ considers $H$ to be possible, as well as $T$ to be possible
+	\item $B$ also considers $H$ to be possible, and also considers $T$ to be possible
 \end{itemize}
 In order to capture and describe this state of knowledge in a formal manner, we
 first turn to modal logic.
@@ -143,7 +152,7 @@ first turn to modal logic.
 Modal logic presents a formal framework for expressing sentiential notions, or
 modalities in propositions.
 These modalities qualify sentences and statements to express notions of
-necessity, time, belief or knowledge.\\
+necessity, time, belief or knowledge.\citep{blackburn2002modal}\\
 \\
 Consider the statement ``It must rain today" and contrast it with ``It
 might rain today".
@@ -159,10 +168,15 @@ being $\mathcal{K}$.
 From this minimal set of axioms, we can give our modalities additional
 properties that reflect the kinds of statements we wish to express.
 \subsubsection{Kripke Semantics}\label{epistemic_kripke}
+{\em I felt like Kripke Semantics were really important to have.
+What do you think?
+I think their discussion informs the reader about the meaning behind the models
+we work with but perhaps I haven't really gone through it properly.}\\
+\\
 These mathematical descriptions and axioms allow us to specify our modalities
 and logics, but interpreting these specifications is difficult.
 Kripke introduces a ``possible worlds" or frame semantics to allow us to better
-model our modalities.\\
+model our modalities. \citep{blackburn2002modal} \\
 \\
 In the context of logic, it is the semantics that allow us to interpret our
 models and turn them from mathematical descriptions to meaningful models.
@@ -189,10 +203,13 @@ will use in our logical relations for epistemic logic.
 We need to correct this weakness in our modal logic by moving to the specific
 modalities that reflect knowledge and belief.
 \subsection{Epistemic and Doxastic Logic}\label{epistemic_logics}
+{\em I hope the axioms I've stated below make sense and are okay from a
+	semantic or epistemic point of view.}\\
+\\
 In order to reason about our modalities in a sensible fashion, we place
 conditions upon the modalities.
 These conditions correspond to adding in extra axioms into our modal logic
-system.\\
+system. \citep{hoek2008dynamic}\\
 \\
 In epistemic logic, the modality we are most concerned with is that of knowing.
 We add the following five conditions upon our modality of knowledge
@@ -255,15 +272,18 @@ This deficiency raises the following questions:
 \end{itemize}
 
 \section{Public Announcement Logic}\label{pal}
+{\em I like this section, but am I citing the right papers?
+Anything I'm missing?}\\
+\\
 To model the announcement of facts and information, we turn to the use of public
 announcement logic.
 Public announcements are announcements to multiple agents of facts.
 They are a kind of informative update --- perhaps the most basic kind.\\
 \\
 Public announcement logic was first proposed independently by both Plaza and
-Gerbrandy and Groeneveld.
+Gerbrandy and Groeneveld. \citep{plaza2007public,gelbrandy1997reasoning}
 They were later augmented by the work of Baltag, Moss and Solecki through the
-addition of common knowledge.
+addition of common knowledge. \citep{baltag1998lpa}
 Public announcements are informational updates of true facts that change the
 knowledge state amongst multiple agents.\\
 \\
@@ -333,10 +353,16 @@ We will examine two constrasting approaches to model these epistemic updates.
 First, we examine the approach of van Ditsmarsch in constructing epistemic
 actions.
 \subsection{Epistemic Relational Actions} \label{epi_acts}
+{\em According to \citep{hoek2008dynamic} the papers I'm referring toshould be
+	the ones that Hans used to construct relational actions.
+The problems that they pointed out were the things that I noticed whilst reading
+through the book, hence why I've citepd it a few times.}\\
+\\
 van Ditsmarsch approaches epistemic actions from a syntactical point of view,
 aiming to create a language to specify actions in.
 His work in consutrcting an epistemic action syntax draws from some of the
-syntax of established languages such as propositional dynamic logic.\\
+syntax of established languages such as propositional dynamic
+logic.\citep{ditmarsch99knowledge,ditmarsch2002dga}\\
 \\
 We will label his language as $\mathcal{L}_{!}$.
 Within $\mathcal{L}_{!}$ van Ditsmarsch provides operations to make valid
@@ -365,7 +391,7 @@ $\Gamma$ occurring.
 In order to recognise this, we need a generalisation of our rules on what is
 true after an action is executed.
 Unfortunately, to generalise this principle and allow us to reason this out is
-not provided in $\mathcal{L}_{!}$.\\
+not provided in $\mathcal{L}_{!}$.\citep{hoek2008dynamic}\\
 \\
 This motivates our exploration of the work of Baltag and Moss, who construct
 another framework to model epistemic updates.
@@ -373,15 +399,22 @@ van Ditsmarsch, van der Hoek and Kooi note that this framework naturally
 overcomes this problem by having the idea of accessibility between action
 outcomes encoded into the model itself.
 \subsection{Epistemic Action Models} \label{act_mods}
+{\em Am I citing the right things in this section? I feel like these are the
+	right papers and they're being citepd in the right places.}\\
+\\
 As an alternative to approaching epistemic actions syntactically, Baltag, Moss
 and Solecki examine epistemic actions from a modelling point of view.
 They aim to construct epistemic Action Models, which resemble the possible
-worlds models of Kripke semantics.
+worlds models of Kripke semantics. \citep{baltag1998lpa}
+\footnote{Action Models resemble the possible worlds models of Kripke semantics,
+but there were some discrepancies which meant they were not entirely equivalent.
+Aucher resolves this and restores the symmetry between the models, allowing us
+to reason about Actions within Action Models. \citep{aucher09revisited}}
 This ``possible actions" model addresses the problems that van Ditsmarsch, van
 der Hoek and Kooi highlighted with epistemic actions.\\
 \\
 Baltag and Moss extend the Action Models they proposed with Solecki into classes
-of Action Models, which they term action signatures.
+of Action Models, which they term action signatures. \citep{baltag2005programs}
 They formalise general descriptions of actions, generating the class of
 public announcements or the class of lying actions.
 They also specify a syntax for discussing actions of a given action signature,
@@ -399,6 +432,8 @@ This indicates that, given $N$ possible actions, $N^2$ actions must be computed
 in the new state of information before the model can be refined.
 
 \subsubsection{Comparison to Relational Epistemic Actions} \label{epi_compare}
+{\em Do the citations here look legit?}\\
+\\
 Both Relational Epistemic Actions and Action Models describe a larger range of
 epistemic updates for our game of heads and tails.
 The examples we chose earlier, regarding $C$ telling $A$ about the state of the
@@ -410,7 +445,7 @@ van Ditsmarsch, van der Hoek and Kooi, as well as Baltag and Moss independently
 note that the ``possible actions" of Action Models  are actually relational
 epistemic actions.
 In their own review of Action Models, van Ditsmarsch, van der Hoek and Kooi
-motivate this with an example.\\
+motivate this with an example. \citep{hoek2008dynamic,baltag2005programs}\\
 \\
 They consider the non-deterministic choice of 3 possible actions which are
 indistinguishable externally.
@@ -455,6 +490,14 @@ interest compared to Relational Epistemic Actions, as we explore in the next
 section.
 
 \subsection{Extensions of Action Models}
+{\em This section is kinda bad.
+It's the most open-ended, where I've tried to compare, discuss and point out
+	stuff.
+I feel like it might be rambling or have lost a lot of focus.
+I want to refactor it, but are there any particular points that you like?
+I've been trying to communicate the current gaps in Action Models as we know
+them...?}\\
+\\
 Baltag and Moss define a powerful syntax for constructing epistemic programs.
 Their syntax is as powerful as van Ditsmarsch's in Relational Epistemic Actions,
 being able to express sequences of epistemic actions or make a non-deterministic
@@ -463,20 +506,26 @@ The only objection to their syntax, as raised earlier, is the curious use of
 the structures of Kripke semantics within a syntax.
 It is also notable that the operations of composition and non-deterministic
 choice can be as costly as Action Model execution, generating $N \times M$
-possible actions, given two Action Models of size $N$ and $M$ respectively.\\
+possible actions, given two Action Models of size $N$ and $M$
+respectively.\citep{baltag2005programs}\\
 \\
 van Benthem, van Eijck and Kooi extend Action Models for a new language to
 handle communication and change.
 Their main contribution here is to improve Action Model languages with notions
 of group knowledge and iterations of an action model's execution.
 This logic of communication and change uses previous logics of change as a basis
-and proceeds to interpret it in an epistemic fashion.\\
+and proceeds to interpret it in an epistemic fashion.\citep{benthem2006lcc}\\
+\\
+{\em I discuss some stuff from \citep{benthem2006lcc} a few times, but it's
+	interspersed with \citep{bollig07mps}.
+Should I change this around a bit?
+It might be a bit too unstructured to follow properly?}\\
 \\
 Whilst the expressivity and operators in languages involving Action Models are
 improving (as in van Benthem, van Eijck and Kooi's work) Action Models are
 treated as purely descriptive objects.
-They only describe changes, and the execution and expense of such an execution
-is not taken into account.\\
+Thus, Action Models only describe changes, and the execution and expense of
+their execution is not taken into account.\\
 \\
 Perhaps the closest related work regarding the expense of an update might be
 Bollig et. al's findings regarding communications and message passing with
@@ -484,7 +533,7 @@ dynamic logics.
 The logics they utilise in their work are the same as those that van Benthem et.
 al base their own work upon.
 Their findings show that message passing sequences need to be of exponential
-length in order to capture logical statements.
+length in order to capture logical statements. \citep{bollig07mps}
 However, Bollig et. al approach message passing from the perspective of dynamic
 logic, without the Action Models used in van Benthem et. al's work, which might
 offer some semantic exploits that purely dynamic logic might lack.\\
@@ -497,6 +546,7 @@ implemented remains to be seen.\\
 \\
 van Benthem et. al also note that they had not interested themselves with methods of
 generating Action Models from an ``atomic" set of Action Models.
+\citep{benthem2006lcc}
 They laid out their intuitions about how to generate Action Models and the class
 of epistemic updates, but decided not to investigate this avenue of enquiry.
 This presents another unexplored avenue regarding Action Models' generation from
@@ -508,7 +558,7 @@ could be constructed, such that executing $\mathcal{A}$ on $S_1$ produced $S_2$.
 This contribution is especially notable due to it generalising outside of
 epistemic logic, to any modal logic system.
 Thus it is possible to transform any modal logic model into another modal logic
-model using Action Models.\\
+model using Action Models.\citep{hales13synthesis}\\
 \\
 This work highlights the power that Action Models possess as descriptions of
 change in modal logic.
@@ -520,6 +570,13 @@ involves, make implementing the change an Action Model specifies more
 difficult.
 
 \section{Conclusion} \label{conc}
+{\em I've been trying to come to a big overarching wrap up of the review;
+	summarising the major points and missing parts of research.
+What could be improved about this part?
+Does it concisely cover what I've been discussing?
+Is there a good impression that I've gotten to the state of the art, and also
+showed things that people haven't yet investigated?}\\
+\\
 We have arrived at being able to describe the changes and updates in our game of
 heads and tails by employing frameworks of logic.
 We have begun at the beginning of modal logic, motivating the use of epistemic
@@ -541,6 +598,14 @@ to generate any Action Model.
 Finally, Action Models are descriptive in nature, and are only useful for an
 external party.
 The process for an agent involved in the change to utilise an Action Model to
-execute an informative update is also unclear.
+execute an informative update is also unclear.\\
+\\
+In order to move towards realising Action Model execution, the issues
+surrounding the expense of execution should be resolved.
+Generating Action Models from ``atomic" models, and how Action Models can be
+decomposed into these atoms must also be investigated.
+
+\bibliographystyle{plainnat}
+\bibliography{litReview}
 
 \end{document}
