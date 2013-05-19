@@ -1,10 +1,10 @@
 %-----------------------------------------------------------------------------%
 %Packages%
-\documentclass[12pt, a4paper, twoside]{article}
+\documentclass[12pt, a4paper, titlepage]{scrartcl}
 \usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
 \usepackage{mathtools}
 \usepackage[usenames, dvipsnames]{color} %Color naming packages
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=1.5cm]{geometry}
 \usepackage{float}
 \usepackage{verbatim} %for code
 \usepackage[pdftex]{graphics}
@@ -16,6 +16,7 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage[square]{natbib}
 
+\addtokomafont{disposition}{\rmfamily}
 \usetikzlibrary{arrows,shapes}
 
 %Graphis Extensions
@@ -71,11 +72,14 @@
 %Document%
 \begin{document}
 
-%\begin{comment}
-%The literature review should be about 3000-5000 words long.
-%I would probably aim for around 4000.
-%You'll need about 5 to 10 papers. Aim for 10?
-%\end{comment}
+\title{A Survey of Dynamic Epistemic Logic and Action Models}
+\subtitle{UWA Final Engineering Project Literature Review}
+\author{Edwin Tay, 20529864}
+\date{\today}
+
+\maketitle
+
+\pagebreak
 
 \tableofcontents
 
