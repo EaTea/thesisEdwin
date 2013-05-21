@@ -10,11 +10,12 @@
 \usepackage[pdftex]{graphics}
 \usepackage{hyperref}
 \usepackage{cleveref}
-\usepackage{thmtools}
 \usepackage{tikz}
 \usepackage{comment}
 \usepackage[nottoc]{tocbibind}
 \usepackage[square]{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \addtokomafont{disposition}{\rmfamily}
 \usetikzlibrary{arrows,shapes}
@@ -56,16 +57,16 @@
 \newcommand{\epActLog}{\modalLog$([\alpha])$}
 \newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
 
-%\newtheorem{defn}{Definition}
-%\newtheorem{thm}{Theorem}
-%\newtheorem{lemma}{Lemma}
-%\newtheorem*{remrk}{Remark}
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remrk}{Remark}
 
 % Drawings of frames
 
 \tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
 \tikzstyle{selected vertex} = [vertex, fill=red!24]
-\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{edge} = [draw,thick,->]
 \tikzstyle{weight} = [font=\small]
 
 %-----------------------------------------------------------------------------%
@@ -73,7 +74,7 @@
 \begin{document}
 
 \title{A Survey of Dynamic Epistemic Logic and Action Models}
-\subtitle{UWA Final Engineering Project Literature Review}
+\subtitle{UWA Final Year Engineering Project Literature Review}
 \author{Edwin Tay, 20529864}
 \date{\today}
 
@@ -88,28 +89,23 @@
 
 \section{Introduction}\label{intro}
 \subsection{Describing Information State}\label{intro_infoState}
-The study of information aims to capture what information multiple agents know
-and what they might be uncertain about.
-The logical study of information, known as epistemic logic, produces models
-describing complex knowledge and states of knowledge of multiple agents.
-A related field, the logic of belief --- doxastic logic --- describes the
-beliefs of agents in terms of models.\\
+Multi-agent system are found in many fields, including communications systems,
+artificial intelligence and games.
+In part, Multi-agent Dynamic Epistemic Logic is concerned with modelling and reasoning
+about what agents in these systems know.
+This extends to how models are updated and what we can reason about agents'
+perceptions of actions in a multi-agent system.
+Being able to logically reason about what agents know and what actions they perceive
+allows us to construct verifiable and correct specifications and claims about
+models of situations.\\
 \\
-Such models are most useful in communications systems and have applications in
-artificial intelligence and game theory.
-They afford a level of rigour and specificity that informal reasoning about
-knowledge cannot provide.
-We can make rigourous and verifiable claims about situations by using
-formal models of information and beliefs.\\
-\\
-The change of information state via an update of information is a field that has
-seen much attention recently.
-Theorists have constructed models that capture an update and the changes of
-information entails.
-These models have progressively increased in their powers of description and the
-accuracy of the updates they have modelled.
-Executing this description to transform a model of knowledge from one model to
-another has been previously well-defined.\\
+The change of agent knowledge via informative updates is a field that has seen
+much attention recently.
+Theorists have constructed models that capture these informative updates with
+increasing expressiveness.
+We discuss the increasing power and specificity of these models throughout this
+survey, with a particular interest in Public Announcement Logic in Section
+\ref{pal} and Epistemic Actions and Action Models in Section \ref{estAct}. \\
 \\
 In a similar manner to models of knowledge, models of information updates can be
 used to formally reason about updates.
