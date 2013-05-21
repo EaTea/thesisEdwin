@@ -114,154 +114,158 @@ security or verify that it fulfills a specification.
 This formalism to formal, provable methods of software development,
 communication protocol verification as well as economics and game theory.\\
 \\
-However, translating a formal model describing information update into an
+Recent work has focused on the synthesis of informative updates, showing how an
+informative update can be constructed to ensure that, if possible, a multi-agent system
+satisfies a condition after an update. \cite{hales13synthesis}
+However, translating a formal model describing an informative update into an
 implementation of communication between multiple agents is an unexplored
 process.
-It would be desirable to transform a formally correct and verifiable specification of
-communication into an executable protocol within a real world system.
+Transforming a formally correct and verifiable specification of
+communication into an executable protocol within a real world system would have
+wide implications for software engineering, security and safety in
+mission-critical systems with high-correctness requirements.
 \subsection{Coin-Flipping Game}\label{intro_coinFlipping}
 Consider a game being played between two friends (or agents), Angeline $(A)$
 and Ben $(B)$.
 The game involves flipping a coin, hiding the result from both $A$ and $B$ and
 having both of them guess whether the coin is Heads $(H)$ or the coin is Tails
 $(T)$.
-We can describe some possible changes of the information or beliefs that $A$ and
-$B$ hold throughout this game.
-\begin{itemize}
-	\item $A$ might be told $H$ by her friend Carol $(C)$
-	\item $C$ tells $A$ {\em something} in front of $B$ --- $B$ is now unsure
-	whether $A$ has been told $H$, $T$ or something entirely irrelevant 
-	\item $B$ becomes suspicious that $A$ has looked at the coin without his
-	knowledge, but he is not sure
-	\item $B$ goes to the bathroom, and $A$ sneaks a peek without him knowing.
-	When he comes back, he is unaware that $A$ knows whether $H$ or $T$ is true.
-\end{itemize}
+The game is refereed by a mutually trusted (and usually impartial) friend, Carol
+$(C)$ who knows if the coin is $H$ or $T$.\\
+\\
+$A$ and $B$ know that either $H$ is true or $T$ is true.
+They also know that $H$ and $T$ cannot both occur simultaneously together.
+An agent's knowledge (which is inclusive of, but not limited to the previous
+statements) is called the Epistemic State.
+Furthermore, there are two possibilities for the coin's outcome: that it is $H$
+or $T$.
+Neither $A$ or $B$ as they are can distinguish between them; that is, they are
+uncertain which of the outcomes is true.
+Agent uncertainty in this multi-agent system is another aspect we must attempt
+to capture.\\
+\\
+We will concern ourselves specifically with models whose facts cannot change,
+and updates that thus do not contradict previously established facts.
 This literature review considers the relevant writings and logics to describe
-this situation, and the changes in the situation.
-We will consider what information we can currently model and how we can model
-updates and actions.
+the Epistemic State and how we can change and informatively update the Epistemic
+state.
+The following sections will explore how we can model static situations and
+different informative updates.
 We will note what has not been explored in the fields and compare frameworks'
 differing approaches and strengths.
 
-\section{Epistemic Modal Logic}\label{epistemic}
+\section{Epistemic Modal Logic}\label{Epistemic}
 In the coin-flipping game, we can make the following observations.
 \begin{itemize}
 	\item $A$ considers $H$ to be possible, as well as $T$ to be possible
 	\item $B$ also considers $H$ to be possible, and also considers $T$ to be possible
 \end{itemize}
-In order to capture and describe this state of knowledge in a formal manner, we
-first turn to modal logic.
-\subsection{Modal Logic}\label{epistemic_modal}
-% talk about Kripke's work and Modal logic
-Modal logic presents a formal framework for expressing sentential notions, or
-modalities in propositions.
-These modalities qualify sentences and statements to express notions of
-necessity, time, belief or knowledge.\citep{blackburn2002modal}\\
+We claim that there are two possible worlds that differ in one way ---
+in one of these worlds, $H$ is true, and in the other world $T$ is true.
+Furthermore, these worlds are the same from $A$ and $B$'s perspectives.
+$A$ would not be able to distinguish the world where $H$ was true from either of
+the world where $H$ was true or the world where $T$ was true, since she cannot
+see the coin.\\
 \\
-Consider the statement ``It must rain today" and contrast it with ``It
-might rain today".
-The two qualifying statements (``must" and ``might") allow us differing notions
-of the modality of necessity.
-Modal logic provides us with a framework to express and describe these
-notions, which we refer to as modalities.\\
+We can represent this uncertainty between what world is true as relations
+between worlds.
+In this case, let $W = \{ \eta, \tau\}$ be our set of possible worlds, where $H$ is true
+at $\eta$ and $T$ is true at $\tau$.
+Let $R_A = R_B = \{(\tau,\tau), (\tau,\eta), (\eta, \tau), (\eta,\eta)\}$ be
+binary relations on $W$ representing indistinguishability between two possible
+worlds.
+We call these relations ``accessibility relations"; we say if one world is
+indistinguishable from another, then they can access each other.
+Lastly, let $V$ be a valuation function that maps a formula to the set of worlds
+where that formula is true, so $V(H) = \{\eta\}$ and $V(T) = \{\tau\}$.
+\citep{hoek2008dynamic, blackburn2002modal}
+\begin{defn}
+	The tuple
+	\[
+		M = (W, R = R_A \cup R_B, V)
+	\]
+	is an Epistemic model of our game of heads and tails.
+\end{defn}
+
+We can represent this model graphically as shown in Figure \ref{htkripkefigure},
+where our possible worlds $(W)$ are nodes and our binary relations $(R$) are edges in the
+graph.
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\eta$};
+    \node[vertex] (2) [right of=1] {$\tau$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2);
+\end{tikzpicture}
+\caption{A graph representation of our game of heads and tails.}\label{htkripkefigure}
+\end{figure}
+
+The possible worlds models form a semantics allowing us to construct meaningful
+models that reflect an Epistemic State.
+These models allow us to reason about relations between the possible worlds in
+an internal sense, from $A$ and $B$'s perspectives. \citep{blackburn2002modal}
+We can define an operator to formally represent the modality of ``knowing"
+a proposition or formula to be true.
+\begin{defn}
+	The operator $\Box_A H$ stands for ``$A$ knows $H$ is true".
+	$\Box_A \phi$ is true at a possible world $w$ if for all accessibility relations $(w,
+	w')$, $\phi$ is true.
+\end{defn}
+We also define the dual operator of knowing, which is to consider something
+possible.
+\begin{defn}
+	The operator $\diamond_B T$ stands for ``$B$ considers $T$ to be possible".
+	$\diamond_B \phi$ is true at a possible world $w$ if there is one
+	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.\\
+	
+	\begin{note}
+		N.B.: Notice that we can define $\diamond$ in terms of $\Box$, where $\diamond
+		\phi \iff \neg \Box \neg \phi$.
+	\end{note}
+\end{defn}
+We will omit the name of the agent for operators $\Box$ and $\diamond$ when we
+discuss a single-agent case, as follows.
+We now show, without proof, four axioms that must hold for our modality of
+knowledge.
+\begin{thm}
+	The following are true at any world of an Epistemic Model.
+	\begin{enumerate}
+		\item $\Box (\phi \implies \theta) \implies (\Box \phi \implies \Box
+				\theta)$, known as {\bf K}
+		\item $\Box \phi \implies \phi$, known as {\bf T}
+		\item $\Box \phi \implies \Box \Box \phi$, labelled {\bf 4}
+		\item $\neg \Box \phi \implies \Box (\neq \Box \phi))$, known as {\bf 5}
+	\end{enumerate}
+	\citep{hoek2008dynamic}
+\end{thm}
+
+\begin{note}
+In order to satisfy these conditions, binary relations between possible worlds
+in our Epistemic Models become equivalence relations.\\
 \\
-The most common modal logics are ``propositional modal logics", which are
-propositional logic augmented with modalities.
-These modal logics fulfil a minimal set of axioms, the weakest of these logics
-being $\mathcal{K}$.
-These axioms impose properties upon our modalities and thus reflect the kinds of
-statements we wish to express.
-\subsubsection{Kripke Semantics}\label{epistemic_kripke}
-These mathematical descriptions and axioms allow us to specify our modalities
-and logics, but the interpretation and meaning of the formal descriptions is
-unclear.
-Kripke introduces a ``possible worlds" or frame semantics to allow us to better
-model our modalities. \citep{blackburn2002modal} \\
+Also, if we replaced {\bf T} with an axiom {\bf D} which states $\Box \phi
+\implies \diamond \phi$, then we can model Doxastic Models of belief, instead of
+Epistemic Models of knowledge.
+\end{note}
+We can now make formal reasonings, such as deciding that $\Box_A H$ and $\Box_A
+T$ are both false.
+We note that $\Box_B (H \lor T)$ is true and $\Box_A \Box_B (H \lor T)$ is
+true.\\
 \\
-In the context of logic, it is the semantics that allow us to interpret our
-models and turn them from mathematical descriptions to meaningful models.
-Kripke semantics have become the most common semantics for describing and
-interpreting modal systems since they were introduced.\\
-\\
-We can then model situations of modalities as ``possible worlds" which are
-related to, and can access other possible worlds.
-Our modalities become operators on ``possible worlds" that can then state what
-is true at a specific world.\\
-\\
-Kripke semantics give us a framework to make sense of the models we have
-designed and impose a specific interpretation upon them.
-However, modal logic and Kripke semantics are together still too weak to
-describe and model knowledge or belief.\\
-\\
-We could formalise the statements ``$A$ knows $H$ is true" and ``$A$ knows $H$
-is false" in certain modal logics such as $\mathcal{K}$.
-Problematically, they could be part of a model where these statements would be
-considered consistent in these logics.\\
-\\
-Modal logic is thus too general a framework; we need to establish what
-properties knowledge has, and impose them as axioms for our logical relations of
-epistemic logic.
-We need to correct this weakness in our modal logic by formally specifying the
-modalities that reflect knowledge and belief.
-\subsection{Epistemic and Doxastic Logic}\label{epistemic_logics}
-In order to reason about our modalities in a sensible fashion, we place
-conditions upon the modalities.
-These conditions correspond to adding in extra axioms into our modal logic
-system. \citep{hoek2008dynamic}\\
-\\
-In epistemic logic, the modality we are most concerned with is that of knowing.
-We add the following five conditions upon our modality of knowledge
-\begin{enumerate}
-	\item if $A$ knows that the sky is cloudy $(\phi)$ and $A$ knows that if
-	$\phi$ then it will rain $\gamma$, then if $A$ knows $\phi$ then $A$ knows
-	$\gamma$.\\
-	This condition corresponds to the axiom formally labelled {\bf K}.
-	\item for every possibility that is consistent with $A$'s knowledge, if $\phi$
-	is true then $A$ must know $\phi$.\\
-	This is a principle known as {\bf N}.
-	Together with {\bf K} they form the minimum set of conditions for a
-	propositional modal logic.
-	The weakest modal logic, known as $\mathcal{K}$ fulfills just these
-	properties, and no more.
-	\item if $A$ knows $\phi$ then $\phi$ is true.\\
-	This condition corresponds to the axiom of truth, formally labelled {\bf T}.
-	\item if $A$ knows $\phi$ then $A$ knows that she knows $\phi$.\\
-	This condition corresponds to the ``positive introspection" axiom, labelled 
-	as {\bf 4}.
-	\item if $A$ does not know $\phi$ then $A$ knows that she does not know
-	$\phi$.\\
-	This condition corresponds to the ``negative introspection" axiom, labelled 
-	as {\bf 5}.
-\end{enumerate}
-Together, these axioms form the system {\bf S5}.
-{\bf S5} is the modal logic for dealing with the modality of knowledge and is
-most commonly employed in epistemic logic.\\
-\\
-Replacing axiom {\bf T} (if an agent knows $\phi$ then $\phi$ must be true) with
-the axiom {\bf D} allows us to deal with the modality of belief.
-In the context of belief, {\bf D} states that if $A$ believes that $\phi$ then
-$A$ considers $\phi$ a possibility.
-This modal logic has been labelled {\bf KD45} and is usually used in the context
-of doxastic logic, or the logic of belief.\\
-\\
-In the context of knowledge especially, {\bf 5} seems unreasonably strong.
-That an agent knows what they don't know isn't particularly feasible in many
-real world situations involving humans.
-However, many artificial agents are aware of what they do not know, and thus
-{\bf 5} is a reasonable axiom to impose when reasoning about artificial agents
-or programs.
-Thus, {\bf S5} most suitably captures information and relates possible
-worlds of information back in the most sensible manner, hence its continued use
-as the set of axioms of choice for epistemic modal logic. \citep{hoek2008dynamic}\\
-\\
-We can successfully describe $A$ and $B$'s knowledge in our game of coins using
-the modalities provided in epistemic knowledge.
-{\bf S5} affords us a rigourous formal logic for describing situations regarding
-information.\\
+{\bf K}, {\bf T}, {\bf 4} and {\bf 5} allow us to model Epistemic State and
+uncertainty in our game of heads and tails.
+We have defined on our models that allows us to make formal reasonings and
+decide if formulae are true at possible worlds.\\
 \\
 But what if their friend, $C$, announces ``The coin is Heads up" (that is,
 $C$ announces $H$)?
-Both epistemic and doxastic logic cannot describe the {\em change} in knowledge that
+As they are, our models cannot describe the change in knowledge that
 $C$'s announcement will entail.
 Furthermore, we have no formal process to say how the situation has changed.\\
 \\
