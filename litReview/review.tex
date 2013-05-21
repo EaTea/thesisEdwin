@@ -291,11 +291,43 @@ addition of common knowledge. \citep{baltag1998lpa}
 Public announcements are informational updates of true facts that change the
 knowledge state amongst multiple agents.\\
 \\
-Public announcement of a fact $\phi$ cause all worlds where $\phi$ was
-invalid to ``disappear" from our model.
-It is thus quite easy to model the execution of a public announcements.
-The execution simply causes all worlds that are no longer consistent with the
-announcement to ``disappear" from our model of a given situation.\\
+In the context of our card game, let us consider if our external trusted party
+$C$ publicly announces to $A$ and $B$ that $H$ is true.
+We will demonstrate the execution of that update upon our model in Figure
+\ref{pakripkefigure}.
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\eta$};
+    \node[vertex] (2) [right of=1] {$\tau$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2);
+\end{tikzpicture}
+\caption{Our model before $H$ is announced to be true.}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\eta$};
+    \path[edge]
+          (1) edge [loop left] node {$A,B$} (1);
+\end{tikzpicture}
+\caption{Our model after $H$ is announced to be true.}
+\end{subfigure}
+\caption{The differences before and after the public announcements of $H$ to $A$ and
+	$B$.}
+\label{pakripkefigure}
+\end{figure}
 \\
 Public announcements capture changes in information, such as $C$ saying to
 $A$ and $B$ that the coin is $H$.
