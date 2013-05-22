@@ -46,24 +46,44 @@
 %Explain what you expect will be accomplished by undertaking this
 %particular project.  Moreover, is it likely to have any other
 %applications?
-
-Epistemology (the study of knowledge) presents a useful way to specify the possession and transfer of knowledge.
-Its representation has become integral to computational applications such as artificial intelligence.
-Systems involving multiple actors (including economics and games) have been described by epistemic models.
-Share trading and auctions are just some of the areas where these models are being developed and further improved.
-Epistemic models can also describe communications and protocols, namely message passing systems.\\
+Multi-agent systems are found in many different fields, including
+communications, artificial intelligence, game theory and economics.
+Modelling these systems as models of Epistemic Logic, we can make formal and
+verifiable reasonings about what agents in these systems know, are uncertain
+about and are unaware of.
+Share trading and auctions are some of the areas where these models are being
+applied and further improved.\\
 \\
-Action models are one way to specify how a multi-agent system is to be updated.
-They encapsulate the uncertainty and potential outcomes in taking an action.
-When executed on a multi-agent system, an action model updates the system to a new state of knowledge.
-Recent investigations have synthesised an action model to update a pre- to a post-execution state of knowledge.
-However, these executions can involve an extensive number of messages in a practical message passing system.\\
+Actions Models are one way to specify an informative update for a multi-agent
+system.
+They encapsulate the uncertainty between, and potential outcomes of taking an
+action.
+In a similar way to Epistemic Models, we can make formal and verifiable
+reasonings about the updates that agents can employ and what Actions they are
+uncertain about.\\
 \\
-We propose an investigation into a formal language that can specify an informative update for a multi-agent system.
-Our aim is to transform an action model into a series of local informative updates for a single agent of the system.
-These local updates are announcements or messages between actors in our message passing system.
-We want to explore whether the kind of update an action model represents can be taken advantage of to lessen the number of messages needed to update the system.
-%
+When executed on an Epistemic Model of a multi-agent system, an Action Model
+uses the informative update it specifies to change the state of knowledge in the
+multi-agent system model.
+Recent investigations have yielded methods to synthesise Action Models that can
+update an Action Model to ensure that a given condition is true in the updated
+Epistemic Model.\\
+\\
+As a modelling tool for an external user, Action Models are appropriate and
+afford a high level of specificity and precision.
+However, it is unclear how we can translate an Action Model, which is a formally
+specified model applicable to Epistemic Models into a real-world implementation.
+How agents involved in a game might use an Action Model or actually realise it
+has not been explored.
+To come closer to resolving this, we aim to
+\begin{itemize}
+  \item investigate a formal language that can specify informative updates in
+  multi-agent systems
+  \item transform Action Models into a series of local informative updates
+  between individual agents in a multi-agent system
+  \item determining if specific Action Model executions may be made less expensive in
+  terms of number of messages, size of messages and complexity of execution
+\end{itemize}
 %\begin{itemize}
 %  \item Discuss action model updates
 %  \item Discuss taking an action model that updates many local agents
@@ -139,30 +159,36 @@ $\pi$-calculus allows us to discuss how programs pass messages between themselve
 %spend on each task, and draw up a timetable for each
 %sub-task.
 
-To begin with, we propose a review of action models and the informative updates they represent in multi-agent systems.
-This would be similar in content to a review by Baltag and Moss. \cite{logicsForEpistemicPrograms}
-We would like to classify action models in terms of the kind of update they describe.
-From this review of action models, we would aim to achieve
-\begin{itemize}
-	\item a basic classification scheme of informative updates from action models
-	\item examples of how action models update systems of multiple agents
-\end{itemize}
+We decompose our project outcomes into four separate tasks.
+We believe that these separate tasks will together allow us to come closer to
+resolving the differences between executing an Action Model on a model of
+Epistemic Logic, and executing an Action Model as a series of messages in a game
+or message-passing communications system.
 
-Such a classification would aid us in constructing a formal language of agent updates that can build an informative update.
-This would involve the use of a $\pi$-calculus to describe agent updates.
-In undertaking this, we will have a formal language to describe an informative update in terms of local updates to a single agent.
-This allows us to take an action model describing an informative update and use it to theoretically build a series of local updates.\\
-\\
-The formal specification will then be verified.
-We will attempt to prove that both specifications will update the same model to the same final state.
-In doing so, we can also compare both of our update specifications (pure actions models versus formal language) against each other using our initially reviewed models.\\
-\\
-Our final stage will be the implementation and testing of our specification as a message passing system.
-We will attempt to model these updates that we first reviewed and test how useful our system is to specify complex updates.
-This allows us to answer the question of whether we can use less messages to execute an action model in a message passing context.
-It also allows us to discuss what action models this is possible for, 
-We can also discuss how expensive it is to implement an action model execution.
-In particular, we can explore what benefits our formal language as as a series of informative updates to specify a single, multi-agent informative update.
+%To begin with, we propose a review of action models and the informative updates they represent in multi-agent systems.
+%This would be similar in content to a review by Baltag and Moss. \cite{logicsForEpistemicPrograms}
+%We would like to classify action models in terms of the kind of update they describe.
+%From this review of action models, we would aim to achieve
+%\begin{itemize}
+%	\item a basic classification scheme of informative updates from action models
+%	\item examples of how action models update systems of multiple agents
+%\end{itemize}
+%
+%Such a classification would aid us in constructing a formal language of agent updates that can build an informative update.
+%This would involve the use of a $\pi$-calculus to describe agent updates.
+%In undertaking this, we will have a formal language to describe an informative update in terms of local updates to a single agent.
+%This allows us to take an action model describing an informative update and use it to theoretically build a series of local updates.\\
+%\\
+%The formal specification will then be verified.
+%We will attempt to prove that both specifications will update the same model to the same final state.
+%In doing so, we can also compare both of our update specifications (pure actions models versus formal language) against each other using our initially reviewed models.\\
+%\\
+%Our final stage will be the implementation and testing of our specification as a message passing system.
+%We will attempt to model these updates that we first reviewed and test how useful our system is to specify complex updates.
+%This allows us to answer the question of whether we can use less messages to execute an action model in a message passing context.
+%It also allows us to discuss what action models this is possible for, 
+%We can also discuss how expensive it is to implement an action model execution.
+%In particular, we can explore what benefits our formal language as as a series of informative updates to specify a single, multi-agent informative update.
 
 %\begin{enumerate}
 %  \item list out different action models, exploring how they update
