@@ -1,0 +1,144 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[12pt, a4paper, titlepage]{scrartcl}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usepackage{comment}
+\usepackage[nottoc]{tocbibind}
+%\usepackage[square]{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\addtokomafont{disposition}{\rmfamily}
+\usetikzlibrary{arrows,shapes}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+% Predefined things such as commands, etc.
+
+\newcommand{\aRel}[1] {
+  \sim_{#1} 
+}
+
+\newcommand{\kripkeFrame}[2] {
+  (#1, \aRel{#2})
+}
+
+\newcommand{\kripkeModel}[3] {
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
+  (#1, #2)
+}
+
+\newcommand{\actModel}[3]{
+  (#1, \aRel{#2}, #3)
+}
+
+\newcommand{\actModelStates}[4] {
+	(#1, \aRel{#2}, #3, #4)
+}
+
+\newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
+  (#1, #2)
+}
+
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
+\newcommand{\Universal}{$\mathcal{U}$}
+\newcommand{\modalLog}{$\mathcal{L}$}
+\newcommand{\modLogInf}{$\mathcal{L}_\inf$}
+\newcommand{\epActLog}{\modalLog$([\alpha])$}
+\newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
+
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{remrk}{Remark}
+
+% Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,->]
+\tikzstyle{weight} = [font=\small]
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+
+\section{Definitions}
+
+\begin{defn} \label{frame}
+	Let $\Sigma$ be a set and $\aRel{A}$ a set indexed by $A$, a set of agents.
+	Then the tuple $\kripkeFrame{\Sigma}{A}$ is a frame.
+\end{defn}
+
+A frame represents a mathematical structure, but holds no meaningful information.
+In order to give meaning and be able to draw conclusions from the frame, we can
+construct a valuation function that transforms the frame into a model detailing
+information.
+\begin{defn} \label{model}
+	Let $F = \kripkeFrame{\Sigma}{A}$ be a frame, and $A$ a set of agents.
+	Let $V: \mathbb{P} \to \mathcal{P}(\Sigma)$ be a function mapping any
+	well-formed	sentence in $\mathbb{P}$ to a subset of $\Sigma$.
+	We say $V$ is a valuation function on $F$.\\
+	\\
+	Then $M = \frKripModel{F}{V} = \kripkeModel{\Sigma}{A}{V}$ is a Kripke
+	model.
+\end{defn}
+
+Our models are now informative models that we can reason with.
+In an epistemic logic context, we say that each $s \in \Sigma$ is a possible
+world.
+Each relation in $\aRel{A}$ is an accessibility relation, such that $s_1 \sim_a
+s_2$ signifies an agent $a \in A$ considering that, if $s_1$ was the ``current"
+world $a$ would believe $s_2$ was possible.\\
+\\
+We define an event model as a frame with a precondition function, and extend it
+to take a set of 
+{\em More stuff follows: some things about event models, etc.}\\
+\\
+Let us consider the following operation
+
+\begin{defn} \label{gen_union_1}
+	Let $M_1 = \actModelStates{\Sigma_1}{A}{pre_1}{\Gamma_1}$ and $M_2 =
+	\actModelStates{\Sigma_2}{A}{pre_2}{\Gamma_2}$ be two event models with
+	designated states.\\
+	\\
+	Let $M_1 \sqcup_B M_2 = \actModelStates{\Sigma}{A}{pre}{\Gamma}$ be the disjoint
+	union of $M_1$ and $M_2$ for some group	of agents $B \subseteq A$, such that
+	\begin{itemize}
+		\item $\Sigma = \Sigma_1 \sqcup \Sigma_2$
+		\item $\aRel{A} = {\aRel{A}}_1 \sqcup {\aRel{A}}_2 \sqcup \{w \sim_b w' | b \in
+		B \land (w \in \Gamma_1 \land w' \in \Gamma_2 \lor w \in \Gamma_2 \land w' \in \Gamma_1)\}$
+		\item $pre(w) = pre_1(w)$ if $w \in \Sigma_1$ and $pre(w) = pre_2(w)$ if $w
+		\in \Sigma_2$
+		\item $\Gamma = \Gamma_1 \sqcup \Gamma_2$
+	\end{itemize}
+\end{defn}
+
+\begin{lemma}
+	The algebra (?)
+	\[
+		\phi = \phi ; \theta | \phi ^{\ast} | \phi \sqcup \theta | \text{announce} |
+		\text{skip} | \text{crash}
+	\]
+	generates all event models in {\bf K45}.
+\end{lemma}
+
+\begin{note}
+	Actually this isn't true.
+	As an example, you can generate a model outside of {\bf K45} and into ???.
+\end{note}
+\end{document}
