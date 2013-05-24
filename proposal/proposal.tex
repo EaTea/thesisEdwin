@@ -1,19 +1,18 @@
 \documentclass[12pt, a4paper]{article}
 \usepackage {amsfonts}
-\usepackage[round,authoryear]{natbib}
 \setlength{\oddsidemargin}{0.5cm}
 \setlength{\evensidemargin}{0.5cm}
-\setlength{\topmargin}{-1.6cm}
+\setlength{\topmargin}{-1.3cm}
 \setlength{\leftmargin}{0.5cm}
 \setlength{\rightmargin}{0.5cm}
-\setlength{\textheight}{24.00cm} 
-\setlength{\textwidth}{15.00cm}
+\setlength{\textheight}{25.00cm} 
+\setlength{\textwidth}{15.50cm}
 \parindent 0pt
 \parskip 5pt
 \pagestyle{plain}
 
 \title{Research Proposal --- Bachelor of Software Engineering}
-\date{14th March 2013}
+\date{\today}
 
 \newcommand{\namelistlabel}[1]{\mbox{#1}\hfil}
 \newenvironment{namelist}[1]{%1
@@ -31,7 +30,7 @@
 
 \begin{namelist}{}
 \item[{\bf Title:}]
-  Executing updates in Epistemic Systems
+  Executing informative updates in multi-agent systems
   \item[{\bf Author:}]
 	Edwin Tay, 20529864
 \item[{\bf Supervisor:}]
@@ -134,7 +133,8 @@ Action models resemble Kripke models in their structure, and consist of a tuple 
   \item $\bar{pre}$ is a function that maps a state $s \in \bar{S}$ to a propositional formula that represents the preconditions for that action state to be fulfilled
 \end{itemize}
 The execution of an action model $A$ to update a Kripke model $M$ to produce $M'$ is a well-understood process.
-An update involves taking the Cartesian Product $\bar{S} \times S$ to form the states of $M'$. \cite{van2008dynamic}
+An update involves taking the Cartesian Product $\bar{S} \times S$ to form the
+states of $M'$. \cite{logicsForEpistemicPrograms,baltag1998lpa}
 The number of states then dramatically decreases by reduction of the valid states.
 This presents a problem in utilising action models to represent an informative update in a computer, due to the expensive nature of an operation like the Cartesian product.\\
 \\
@@ -163,33 +163,43 @@ We decompose our project outcomes into four separate tasks.
 We believe that these separate tasks will together allow us to come closer to
 resolving the differences between executing an Action Model on a model of
 Epistemic Logic, and executing an Action Model as a series of messages in a game
-or message-passing communications system.
+or message-passing communications system.\\
+\\
+Firstly, we would like to determine if a generating set exists for action
+models, and if not whether there are specific action classes of action models
+that we can generate.
+Questions that might be resolved include
+\begin{itemize}
+	\item can we generate all action models?
+	\item what is the generating set and what operations would we need to generate
+	all action models?
+	\item if we cannot generate all action models, what can we not construct and
+	would we want to construct it?
+\end{itemize}
 
-%To begin with, we propose a review of action models and the informative updates they represent in multi-agent systems.
-%This would be similar in content to a review by Baltag and Moss. \cite{logicsForEpistemicPrograms}
-%We would like to classify action models in terms of the kind of update they describe.
-%From this review of action models, we would aim to achieve
-%\begin{itemize}
-%	\item a basic classification scheme of informative updates from action models
-%	\item examples of how action models update systems of multiple agents
-%\end{itemize}
-%
-%Such a classification would aid us in constructing a formal language of agent updates that can build an informative update.
-%This would involve the use of a $\pi$-calculus to describe agent updates.
-%In undertaking this, we will have a formal language to describe an informative update in terms of local updates to a single agent.
-%This allows us to take an action model describing an informative update and use it to theoretically build a series of local updates.\\
-%\\
-%The formal specification will then be verified.
-%We will attempt to prove that both specifications will update the same model to the same final state.
-%In doing so, we can also compare both of our update specifications (pure actions models versus formal language) against each other using our initially reviewed models.\\
-%\\
-%Our final stage will be the implementation and testing of our specification as a message passing system.
-%We will attempt to model these updates that we first reviewed and test how useful our system is to specify complex updates.
-%This allows us to answer the question of whether we can use less messages to execute an action model in a message passing context.
-%It also allows us to discuss what action models this is possible for, 
-%We can also discuss how expensive it is to implement an action model execution.
-%In particular, we can explore what benefits our formal language as as a series of informative updates to specify a single, multi-agent informative update.
-
+Secondly, we will investigate how to specify a recursive execution of an action
+model.
+We will explore how an action model can be realised in a multi-agent system by
+first specifying a theoretical way based on pointed action models.
+We will attempt to use notions acquired during investigating the generation of
+action models to exploit in this recursive execution.
+If such a framework cannot be constructed, we will look at what we can execute,
+why we cannot execute certain models and decide whether these are updates we
+would want to execute.\\
+\\
+Thirdly, we will implement our recursive framework of action model execution.
+This will allow us to perform experimentation and look into the cost of our
+action model execution framework.
+It would also be desirable to construct our action model generation framework
+for experimentation purposes.\\
+\\
+Finally, using our framework, we will experimentally model how costly our
+updates are.
+We would like to measure this in terms of time complexity, the time cost to an agent to update
+their agent state and the size of the communications made to an agent.
+It would be desirable to use these implementation results to reflect theoretical
+results about cost of action model execution, and thus allow us to provide some
+basis for whether an action model can be executed in a real-world system.
 %\begin{enumerate}
 %  \item list out different action models, exploring how they update
 %    different agents (see Baltag and Moss for a similar exercise)
@@ -223,21 +233,30 @@ At this time, my project does not appear to require any special software or hard
 		\hline
 		23 May 2013 & Resubmit literature review \\
 		\hline
-		June 2013 & Construct a specification for informative updates \\
+		7 June 2013 & Draft current ideas about generating sets and operations into
+		written work\\
 		\hline
-		July 2013 & Write about the specification for informative updates \\
+		21 June 2013 & Find a generating set and operations for action models \\
 		\hline
-		July 2013 & Prove the specification for informative updates \\
+		28 June 2013 & Re-formalise generation ideas about action models\\
 		\hline
-		Early August 2013 & Design and implement message passing informative update \\
+		15 July 2013 & Specify a recursive method for executing epistemic updates\\
 		\hline
-		Early August 2013 & Discuss about message passing and its implementation/design details \\
+		3 August 2013 & Implement the informative update framework and a framework
+		for generating action models\\
 		\hline
-		Late August 2013 & Evaluate the implementation and whether goal of making informative updates from action models cheaper in a message passing system has been achieved\\
+		10 August 2013 & Draft details about implementation and action model
+		execution into written work\\
 		\hline
-		Early September 2013 & Begin writing about specification and the results we have achieved \\
+		17 August 2013 & Experiment upon informative updates to measure their cost
+		and complexity \\
 		\hline
-		19 September 2013 & Draft thesis due \\
+		30 August 2013 & Employ previous experimental results to make claims about
+		cost of update execution and formalise them \\
+		\hline
+		31 August 2013 & Begin writing about specification and the results we have achieved \\
+		\hline
+		20 September 2013 & Draft thesis due \\
 		\hline
 	\end{tabular}
 \end{center}
@@ -257,7 +276,7 @@ At this time, my project does not appear to require any special software or hard
 %(and certainly no more than four pages)
 %outlining your plan for the year.
 
-\bibliographystyle{plainnat}
+\bibliographystyle{ieeetr}
 \bibliography{proposal}
 
 \end{document}
