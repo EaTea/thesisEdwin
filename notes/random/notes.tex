@@ -64,6 +64,7 @@
 \newtheorem{defn}{Definition}
 \newtheorem{thm}{Theorem}
 \newtheorem{lemma}{Lemma}
+\newtheorem{corr}{Corrollary}
 \newtheorem*{remrk}{Remark}
 
 % Drawings of frames
@@ -139,6 +140,88 @@ Let us consider the following operation
 
 \begin{note}
 	Actually this isn't true.
-	As an example, you can generate a model outside of {\bf K45} and into ???.
+	As an example, you can generate a model outside of {\bf K45} and into ???.\\
 \end{note}
+\\
+Let $L$ be the language of {\bf K45}.
+We say $\mathcal{AM}$ is the class of all action models over $L$.
+Then we say $\mathcal{AM}_{PA}$ is the class of all action models that
+are public announcements of a sentence in $L$.\\
+\\
+Let us define the following action models
+\begin{defn} \label{insanity}
+Let $M = \actModel{\{\sigma\}}{\varnothing}{{\sigma, \phi}}$ be an action model
+where $\phi \in L$.
+Then $\mathcal{AM}_{IN} = \{M | \phi \in L\}$ is the class of all action models
+that represent the onset of insanity.
+\end{defn}
+
+We define an operation
+\begin{defn} \label{believe}
+Let $M_1, M_2 \in \mathcal{AM}$ and without loss of generality let $M_1$, $M_2$
+be disjoint.
+Let $A$ be the agents for an action model $M_1$ and $M_2$.
+Let $B \subseteq A$.
+Then $M_1 \rightarrow_B M_2 = \actModel{\Sigma}{}{pre}$ where
+\begin{itemize}
+  \item $\Sigma = \Sigma_1 \cup \Sigma_2$
+  \item $\sim = \sim_1 \cup \sim_2 \cup \{(a, b) | a \in \Sigma_1 \land b \in
+  \Sigma_2 \}$
+  \item $pre = pre_1 \cup pre_2$
+\end{itemize}
+\end{defn}
+$M = M_1 \rightarrow_B M_2$ is the operation such that after $M$'s execution, $B$ will
+believe $M_2$ is executed if any action in $M_1$ is executed.\\
+\\
+\begin{lemma} \label{gen_trees}
+Suppose $\phi$ is a formula and from $L_{\otimes \forall} \exists_B \phi$.
+Then $M \in \mathcal{AM}$ and after $M$'s execution $\models \phi$, the language
+\[
+  \phi = \phi ; \theta | \phi ^ {\ast} | \phi \rightarrow_b \theta | skip |
+  crash | announce | insanity
+\]
+will generate a model $M'$ that is bisimilar to $M$.
+\end{lemma}
+
+We adopt the convention for pointed event models that $M_1 = \{\Sigma^1, \sim^1,
+pre^1, T^1\}$ and $M_\alpha = \{\Sigma^\alpha,\sim^\alpha,pre^\alpha,T^\alpha\}$.
+
+Let us redefine our operations in terms of pointed models:
+\begin{defn} \label{possOne}
+Let $M_1$ and $M_2$ be multi-pointed event models, and without loss of
+generality let $M_1$ and $M_2$ be disjoint. (?)
+Let $B$ be a subset of agents participant in $M_1$ or $M_2$.
+We define $M = M_1 \to_B M_2$ as 
+\begin{itemize}
+  \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  \item $\forall k \in A \sim_k = \sim^1_k \cup \sim^2_k \cup \{(a, b) | a \in \Sigma^1 \land b \in
+  \Sigma^2 \land a \in T^1 \land b \in T^2 \land k \in B\}$
+  \item $pre = pre^1 \cup pre^2$
+\end{itemize}
+\end{defn}
+
+This indicates that from $M_1$, an agent in $B$ considers $M_2$ a possible
+update.
+An oddity is that $M$ is not a multi-pointed event model.
+
+Another operation:
+\begin{defn} \label{possTwo}
+Let $M_1$ and $M_2$ be multi-pointed event models, and without loss of
+generality let $M_1$ and $M_2$ be disjoint. (?)
+Let $B$ be a subset of agents participant in $M_1$ or $M_2$.
+We define $M = M_1 \mapsto_B M_2$ as 
+\begin{itemize}
+  \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  \item $\forall k \in B \implies \sim_k = \sim^1_k \setminus \{ (a,b) \} \cup \sim^2_k \cup \{(a, b) | a \in \Sigma^1 \land b \in
+  \Sigma^2 \land a \in T^1 \land b \in T^2 \land k \in B \}$
+  \item $pre = pre^1 \cup pre^2$
+\end{itemize}
+\end{defn}
+
+The ``meaning" of $M_1 \mapsto_B M_2$ would be that given a set of actions in
+$M_1$ the agents in $B$ believe that one of a set of actions in $M_2$ was
+executed instead.
+$M$ is an oddity in that it is not multi-pointed.
+Also note that either of $\to_\varnothing$ or $\mapsto_\varnothing$ is
+sufficient to replicate the disjoint union operation of Baltag and Moss.
 \end{document}
