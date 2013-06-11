@@ -183,8 +183,8 @@ Then $M \in \mathcal{AM}$ and after $M$'s execution $\models \phi$, the language
 will generate a model $M'$ that is bisimilar to $M$.
 \end{lemma}
 
-We adopt the convention for pointed event models that $M_1 = \{\Sigma^1, \sim^1,
-pre^1, T^1\}$ and $M_\alpha = \{\Sigma^\alpha,\sim^\alpha,pre^\alpha,T^\alpha\}$.
+We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, \sim^1,
+pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,\sim^\alpha,pre^\alpha,T^\alpha\}$.
 
 Let us redefine our operations in terms of pointed models:
 \begin{defn} \label{possOne}
@@ -194,15 +194,17 @@ Let $B$ be a subset of agents participant in $M_1$ or $M_2$.
 We define $M = M_1 \to_B M_2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  % TODO: change this to a matrix union environment
   \item $\forall k \in A \sim_k = \sim^1_k \cup \sim^2_k \cup \{(a, b) | a \in \Sigma^1 \land b \in
   \Sigma^2 \land a \in T^1 \land b \in T^2 \land k \in B\}$
   \item $pre = pre^1 \cup pre^2$
+  \item $T = T^1$
 \end{itemize}
 \end{defn}
 
 This indicates that from $M_1$, an agent in $B$ considers $M_2$ a possible
-update.
-An oddity is that $M$ is not a multi-pointed event model.
+update.\\
+\\
 
 Another operation:
 \begin{defn} \label{possTwo}
@@ -212,22 +214,49 @@ Let $B$ be a subset of agents participant in $M_1$ or $M_2$.
 We define $M = M_1 \mapsto_B M_2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  % TODO: change this to a matrix union environment
   \item $\forall k \in B \implies \sim_k = \sim^1_k \setminus \{ (a,b) \} \cup \sim^2_k \cup \{(a, b) | a \in \Sigma^1 \land b \in
   \Sigma^2 \land a \in T^1 \land b \in T^2 \land k \in B \}$
   \item $pre = pre^1 \cup pre^2$
+  \item $T = T^1$
 \end{itemize}
 \end{defn}
 
 The ``meaning" of $M_1 \mapsto_B M_2$ would be that given a set of actions in
 $M_1$ the agents in $B$ believe that one of a set of actions in $M_2$ was
-executed instead.
-$M$ is an oddity in that it is not multi-pointed.
-Also note that either of $\to_\varnothing$ or $\mapsto_\varnothing$ is
-sufficient to replicate the disjoint union operation of Baltag and Moss.\\
+executed instead.\\
 \\
 It would be desirable to see whether the class of public announcements, with
 $\to$ and $\mapsto$ would be sufficient to construct all tree-like action
 models.
 Conversely, using insanity and public announcement event models with $\to$ should be sufficient to construct
 all tree-like action models.
+
+\begin{thm}
+Let $M$ be a tree-like event model.
+$M$ can be constructed by public announcements, $\to$ and $\mapsto$.
+\end{thm}
+To prove this we shall show that any pointed subtree of $M$, $M'$ can be
+constructed by public announcements, $\to$ and $\mapsto$.
+We will induct on the subtrees of $M$.\\
+\\
+Consider $M'$, a subtree of $M$.
+Suppose $M'$ is a leaf node, and thus it must be a public announcement, with ints
+single point.
+Then our induction hypothesis holds for leaf nodes of $M$.\\
+\\
+Suppose $M'$ is an arbitrary subtree of $M$.
+Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M$ whose parent node is
+the root node of $M'$.
+Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
+induction hypothesis.
+Consider the public announcement $P = \{\Sigma,\sim,pre,T\}$, such that
+\begin{itemize}
+  \item $\Sigma = \{ \sigma \}$
+  \item $\forall a \in A \implies \sim_a = \{ (\sigma,\sigma) \}$
+  \item $pre = \{ \(\sigma, \phi\}$
+  \item $T = \{\sigma\}$
+\end{itemize}
+where $\phi$ is the precondition of the root node of $M'$.
+Then $M = (((P \mapsto K^1) \to K^2) \to \ldots \to K^n$.
 \end{document}
