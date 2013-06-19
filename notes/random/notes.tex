@@ -113,12 +113,12 @@ to take a set of
 Let us consider the following operation
 
 \begin{defn} \label{gen_union_1}
-	Let $M_1 = \actModelStates{\Sigma_1}{A}{pre_1}{\Gamma_1}$ and $M_2 =
+	Let $M^1 = \actModelStates{\Sigma_1}{A}{pre_1}{\Gamma_1}$ and $M^2 =
 	\actModelStates{\Sigma_2}{A}{pre_2}{\Gamma_2}$ be two event models with
 	designated states.\\
 	\\
-	Let $M_1 \sqcup_B M_2 = \actModelStates{\Sigma}{A}{pre}{\Gamma}$ be the disjoint
-	union of $M_1$ and $M_2$ for some group	of agents $B \subseteq A$, such that
+	Let $M^1 \sqcup_B M^2 = \actModelStates{\Sigma}{A}{pre}{\Gamma}$ be the disjoint
+	union of $M^1$ and $M^2$ for some group	of agents $B \subseteq A$, such that
 	\begin{itemize}
 		\item $\Sigma = \Sigma_1 \sqcup \Sigma_2$
 		\item $\aRel{A} = {\aRel{A}}_1 \sqcup {\aRel{A}}_2 \sqcup \{w \sim_b w' | b \in
@@ -158,11 +158,11 @@ that represent the onset of insanity.
 
 We define an operation
 \begin{defn} \label{believe}
-Let $M_1, M_2 \in \mathcal{AM}$ and without loss of generality let $M_1$, $M_2$
+Let $M^1, M^2 \in \mathcal{AM}$ and without loss of generality let $M^1$, $M^2$
 be disjoint.
-Let $A$ be the agents for an action model $M_1$ and $M_2$.
+Let $A$ be the agents for an action model $M^1$ and $M^2$.
 Let $B \subseteq A$.
-Then $M_1 \rightarrow_B M_2 = \actModel{\Sigma}{}{pre}$ where
+Then $M^1 \rightarrow_B M^2 = \actModel{\Sigma}{}{pre}$ where
 \begin{itemize}
   \item $\Sigma = \Sigma_1 \cup \Sigma_2$
   \item $\sim = \sim_1 \cup \sim_2 \cup \{(a, b) | a \in \Sigma_1 \land b \in
@@ -170,8 +170,8 @@ Then $M_1 \rightarrow_B M_2 = \actModel{\Sigma}{}{pre}$ where
   \item $pre = pre_1 \cup pre_2$
 \end{itemize}
 \end{defn}
-$M = M_1 \rightarrow_B M_2$ is the operation such that after $M$'s execution, $B$ will
-believe $M_2$ is executed if any action in $M_1$ is executed.\\
+$M = M^1 \rightarrow_B M^2$ is the operation such that after $M$'s execution, $B$ will
+believe $M^2$ is executed if any action in $M^1$ is executed.\\
 \\
 \begin{lemma} \label{gen_trees}
 Suppose $\phi$ is a formula and from $L_{\otimes \forall} \exists_B \phi$.
@@ -188,42 +188,55 @@ pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,\sim^\alpha,pre^\alpha,T^\alpha\}$
 
 Let us redefine our operations in terms of pointed models:
 \begin{defn} \label{possOne}
-Let $M_1$ and $M_2$ be multi-pointed event models, and without loss of
-generality let $M_1$ and $M_2$ be disjoint. (?)
-Let $B$ be a subset of agents participant in $M_1$ or $M_2$.
-We define $M = M_1 \to_B M_2$ as 
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
+generality let $M^1$ and $M^2$ be disjoint.
+Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
+We define $M = M^1 \to_B M^2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
-  % TODO: change this to a matrix union environment
-  \item $\forall k \in A \sim_k = \sim^1_k \cup \sim^2_k \cup \{(a, b) | a \in \Sigma^1 \land b \in
-  \Sigma^2 \land a \in T^1 \land b \in T^2 \land k \in B\}$
+  \item $\sim_a =
+  \begin{cases}
+    \sim^1_a \cup \sim^2_a & \text{if } a \notin C \\
+    \displaystyle\bigcup \begin{array}{c}
+      \sim^1_a \\
+      \sim^2_a \\
+      \{(s,t) | s \in T^1 \land t \in T^2 \}
+    \end{array} & \text{if } a \in C 
+  \end{cases}$
   \item $pre = pre^1 \cup pre^2$
   \item $T = T^1$
 \end{itemize}
 \end{defn}
 
-This indicates that from $M_1$, an agent in $B$ considers $M_2$ a possible
+This indicates that from $M^1$, an agent in $B$ considers $M^2$ a possible
 update.\\
 \\
-
+%TODO: Add in the story/motivation --- why is this useful
 Another operation:
 \begin{defn} \label{possTwo}
-Let $M_1$ and $M_2$ be multi-pointed event models, and without loss of
-generality let $M_1$ and $M_2$ be disjoint. (?)
-Let $B$ be a subset of agents participant in $M_1$ or $M_2$.
-We define $M = M_1 \mapsto_B M_2$ as 
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
+generality let $M^1$ and $M^2$ be disjoint.
+Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
+We define $M = M^1 \mapsto_B M^2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
-  % TODO: change this to a matrix union environment
-  \item $\forall k \in B \implies \sim_k = \sim^1_k \setminus \{ (a,b) \} \cup \sim^2_k \cup \{(a, b) | a \in \Sigma^1 \land b \in
-  \Sigma^2 \land a \in T^1 \land b \in T^2 \land k \in B \}$
+  \item $\sim_a =
+  \begin{cases}
+    \sim^1_a \cup \sim^2_a & \text{if } a \notin B \\
+    %FIXME: Make this neater
+    \bigcup \begin{array}{c}
+      \sim^1_a \setminus \{(s,t) | s \in T^1 \} \\
+      \sim^2_a \\
+      \{(s,t) | s \in T^1 \land t \in T^2 \}
+    \end{array} & \text{if } a \in B 
+  \end{cases}$
   \item $pre = pre^1 \cup pre^2$
   \item $T = T^1$
 \end{itemize}
 \end{defn}
 
-The ``meaning" of $M_1 \mapsto_B M_2$ would be that given a set of actions in
-$M_1$ the agents in $B$ believe that one of a set of actions in $M_2$ was
+The ``meaning" of $M^1 \mapsto_B M^2$ would be that given a set of actions in
+$M^1$ the agents in $B$ believe that one of a set of actions in $M^2$ was
 executed instead.\\
 \\
 It would be desirable to see whether the class of public announcements, with
@@ -231,32 +244,87 @@ $\to$ and $\mapsto$ would be sufficient to construct all tree-like action
 models.
 Conversely, using insanity and public announcement event models with $\to$ should be sufficient to construct
 all tree-like action models.
-
+%TODO: Add in the definition of a finite tree-like event model.
 \begin{thm}
-Let $M$ be a tree-like event model.
+Let $M$ be a finite tree-like event model.
 $M$ can be constructed by public announcements, $\to$ and $\mapsto$.
 \end{thm}
-To prove this we shall show that any pointed subtree of $M$, $M'$ can be
-constructed by public announcements, $\to$ and $\mapsto$.
+To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
+is at its root can be constructed by public announcements, $\to$ and $\mapsto$.
 We will induct on the subtrees of $M$.\\
 \\
-Consider $M'$, a subtree of $M$.
-Suppose $M'$ is a leaf node, and thus it must be a public announcement, with ints
-single point.
-Then our induction hypothesis holds for leaf nodes of $M$.\\
+Suppose $M'$ is a leaf node of $M$, $m$.
+The leaf nodes of a tree-like event model resemble are public announcements.
+Let $M'$ be a pointed public announcement event model with its precondition the
+same as $m$.
+Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
 \\
-Suppose $M'$ is an arbitrary subtree of $M$.
-Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M$ whose parent node is
+Now, suppose $M'$ is an arbitrary subtree of $M$.
+Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
 the root node of $M'$.
+%TODO: tidy up the agent relations...?
+Let the group of agents $A^i$ have relations from the root node of $M'$ to a
+subtree $K^i$.
 Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
 induction hypothesis.
-Consider the public announcement $P = \{\Sigma,\sim,pre,T\}$, such that
+Consider the public announcement $P = \{\Sigma,\sim_{A^1},pre,T\}$, such that
 \begin{itemize}
   \item $\Sigma = \{ \sigma \}$
-  \item $\forall a \in A \implies \sim_a = \{ (\sigma,\sigma) \}$
-  \item $pre = \{ \(\sigma, \phi\}$
+  \item $\forall a \in A^1 \implies \sim_a = \{ (\sigma,\sigma) \}$
+  \item $pre = \{ (\sigma, \phi)\}$
+  \item $T = \{\sigma\}$
+\end{itemize}
+%TODO: what is \sigma ???
+where $\phi$ is the precondition of the root node of $M'$.
+Then $M' = ((\ldots((P \mapsto_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
+%TODO: break things up more
+
+\begin{thm}
+Let $M$ be a finite tree-like event model.
+$M$ can be constructed by public announcements, insanity event models and $\to$.
+\end{thm}
+To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
+is at its root can be constructed by public announcements, insanity event models
+and $\to$.
+We will induct on the subtrees of $M$.\\
+\\
+Suppose $M'$ is a leaf node of $M$, $m$.
+The leaf nodes of a tree-like event model resemble are public announcements.
+Let $M'$ be a pointed public announcement event model with its precondition the
+same as $m$.
+Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
+\\
+Now, suppose $M'$ is an arbitrary subtree of $M$.
+Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
+the root node of $M'$.
+Let the group of agents $A^i$ have relations from the root node of $M'$ to a
+subtree $K^i$.
+Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
+induction hypothesis.
+Consider the insanity model $P = (\Sigma,\varnothing,pre,T)$, such that
+\begin{itemize}
+  \item $\Sigma = \{ \sigma \}$
+  \item $pre = \{ (\sigma, \phi)\}$
   \item $T = \{\sigma\}$
 \end{itemize}
 where $\phi$ is the precondition of the root node of $M'$.
-Then $M = (((P \mapsto K^1) \to K^2) \to \ldots \to K^n$.
+Then $M' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
+Thus the induction hypothesis holds for $M'$.\\
+\\
+It is clear that adding disjoint union to either of these sets of operators
+allows us to form all forests of tree-like event models.
+It also provides us with an alternate way to form tree-like event models.\\
+\\
+  %TODO: need tree like event model definition to establish claim
+However, we cannot form tree-like event models with just $\mapsto$, or even
+$\mapsto$ and disjoint union.
+Consider $M = ( \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}, \{\sim_a =
+\{(\sigma_1,\sigma_2),(\sigma_1,\sigma_3),(\sigma_2,\sigma_2),(\sigma_3,\sigma_3)\},
+\sim_b =
+\{(\sigma_1,\sigma_3),(\sigma_1,\sigma_4),(\sigma_3,\sigma_3),(\sigma_4,\sigma_4)\}\},
+pre)$.
+We cannot form this model using $ \mapsto $, due to $\sim_a \cap \sim_b \neq
+\varnothing$.\\
+\\
+We can form other interesting models besides trees using these operators.
 \end{document}
