@@ -186,7 +186,22 @@ will generate a model $M'$ that is bisimilar to $M$.
 We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, \sim^1,
 pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,\sim^\alpha,pre^\alpha,T^\alpha\}$.
 
-Let us redefine our operations in terms of pointed models:
+%TODO: Add in citations
+In FIXME, Hales demonstrates that it is possible to determine whether an
+finite epistemic goal can be achieved.
+Furthermore, if it is achievable Hales constructs event models that will realise
+that goal.
+We will focus on defining a framework that constructs these event models in a
+recursive manner.
+This facilitates an automated method for updating knowledge models to reflect a
+knowledge state.\\
+\\
+The event models that Hales employs resemble finite trees.
+We give a rigourous definition for them as follows
+\begin{defn} \label{finTree}
+%TODO: Add in the definition of a finite tree-like event model.
+\end{defn}
+
 \begin{defn} \label{possOne}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
 generality let $M^1$ and $M^2$ be disjoint.
@@ -208,11 +223,57 @@ We define $M = M^1 \to_B M^2$ as
 \end{itemize}
 \end{defn}
 
-This indicates that from $M^1$, an agent in $B$ considers $M^2$ a possible
-update.\\
+$M^1 \to_B M^2$ indicates that from $M^1$, an agent in $B$ considers $M^2$ a possible
+update.
+
+%TODO: Wait what is a group announcement? Isn't the null-group the equivalent of
+%an insanity model?
+
+\begin{thm}
+Let $M$ be a finite tree-like event model.
+$M$ can be constructed by public announcements, insanity event models and $\to$.
+\end{thm}
+To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
+is at its root can be constructed by group announcements, insanity event models
+and $\to$.
+We will induct on the subtrees of $M$.\\
 \\
+Suppose $M'$ is a leaf node of $M$, $m$.
+The leaf nodes of a tree-like event model resemble are public announcements.
+Let $M'$ be a pointed public announcement event model with its precondition the
+same as $m$.
+Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
+\\
+Now, suppose $M'$ is an arbitrary subtree of $M$.
+Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
+the root node of $M'$.
+Let the group of agents $A^i$ have relations from the root node of $M'$ to a
+subtree $K^i$.
+Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
+induction hypothesis.
+Consider the insanity model $P = (\Sigma,\varnothing,pre,T)$, such that
+\begin{itemize}
+  \item $\Sigma = \{ \sigma \}$
+  \item $pre = \{ (\sigma, \phi)\}$
+  \item $T = \{\sigma\}$
+\end{itemize}
+where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
+$\phi$ is the precondition of the root node of $M'$.
+Then $M' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
+Thus the induction hypothesis holds for $M'$.\\
+\\
+``Insanity models" are a somewhat cumbersome construct, since their only purpose
+is to serve as intermediate nodes in the tree.
+They have no meaning outside of a tree-like structure and their semantics are
+unintuitive within the context of knowledge or belief.
+It would thus be desirable to reduce our atomic models to only group
+announcements, since group announcements have more meaning within the context of
+knowledge.\\
+\\
+In order to do so, we must define an operation that ensures that if $M^1$ was to
+be executed, a group of agents in $B$ would believe $M^2$ would be executed
+instead.
 %TODO: Add in the story/motivation --- why is this useful
-Another operation:
 \begin{defn} \label{possTwo}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
 generality let $M^1$ and $M^2$ be disjoint.
@@ -244,7 +305,6 @@ $\to$ and $\mapsto$ would be sufficient to construct all tree-like action
 models.
 Conversely, using insanity and public announcement event models with $\to$ should be sufficient to construct
 all tree-like action models.
-%TODO: Add in the definition of a finite tree-like event model.
 \begin{thm}
 Let $M$ be a finite tree-like event model.
 $M$ can be constructed by public announcements, $\to$ and $\mapsto$.
@@ -274,48 +334,17 @@ Consider the public announcement $P = \{\Sigma,\sim_{A^1},pre,T\}$, such that
   \item $pre = \{ (\sigma, \phi)\}$
   \item $T = \{\sigma\}$
 \end{itemize}
-%TODO: what is \sigma ???
-where $\phi$ is the precondition of the root node of $M'$.
-Then $M' = ((\ldots((P \mapsto_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
+where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
+$\phi$ is the precondition of the root node of $M'$.
+Then $M' = ((\ldots((P \mapsto_{A^1} K^1) \to_{A^2} K^2) \to_{A^3}
+      \ldots)\to_{A^n} K^n)$.\\
+\\
 %TODO: break things up more
-
-\begin{thm}
-Let $M$ be a finite tree-like event model.
-$M$ can be constructed by public announcements, insanity event models and $\to$.
-\end{thm}
-To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
-is at its root can be constructed by public announcements, insanity event models
-and $\to$.
-We will induct on the subtrees of $M$.\\
-\\
-Suppose $M'$ is a leaf node of $M$, $m$.
-The leaf nodes of a tree-like event model resemble are public announcements.
-Let $M'$ be a pointed public announcement event model with its precondition the
-same as $m$.
-Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
-\\
-Now, suppose $M'$ is an arbitrary subtree of $M$.
-Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
-the root node of $M'$.
-Let the group of agents $A^i$ have relations from the root node of $M'$ to a
-subtree $K^i$.
-Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
-induction hypothesis.
-Consider the insanity model $P = (\Sigma,\varnothing,pre,T)$, such that
-\begin{itemize}
-  \item $\Sigma = \{ \sigma \}$
-  \item $pre = \{ (\sigma, \phi)\}$
-  \item $T = \{\sigma\}$
-\end{itemize}
-where $\phi$ is the precondition of the root node of $M'$.
-Then $M' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
-Thus the induction hypothesis holds for $M'$.\\
-\\
 It is clear that adding disjoint union to either of these sets of operators
 allows us to form all forests of tree-like event models.
 It also provides us with an alternate way to form tree-like event models.\\
 \\
-  %TODO: need tree like event model definition to establish claim
+%TODO: 
 However, we cannot form tree-like event models with just $\mapsto$, or even
 $\mapsto$ and disjoint union.
 Consider $M = ( \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}, \{\sim_a =
