@@ -200,6 +200,21 @@ The event models that Hales employs resemble finite trees.
 We give a rigourous definition for them as follows
 \begin{defn} \label{finTree}
 %TODO: Add in the definition of a finite tree-like event model.
+Let $M = \{\Sigma, \sim, pre, T \}$ be a pointed event model.
+$M$ is a finite tree-like event model if
+\begin{itemize}
+	\item $T$ is a singleton set, $\{ r \}$ where $r \in \Sigma$ is the root of the tree
+	\item each action $s$ in $\Sigma \setminus \{ t \}$, for each agent $a \in A$ has only at most 
+	one action $p \in \Sigma$ such that $p \sim_a s$
+	\item each action $s$ in $\Sigma$ fulfills either of
+	\begin{itemize}
+		\item each accessibility relation from $s$ is of the form $s \sim t$ where $t \neq s$
+		\item each accessibility relation from $s$ is of the form $s \sim s$
+	\end{itemize}
+	\item let $s$ be an action in $\Sigma$; then there exists some sequence of actions $a_1, a_2,
+	\ldots, a_k \in \Sigma$ such that $a_1 = r$, $a_k = s$ and $a_1 \sim a_2$, $a_2 \sim a_3$,
+	$\ldots$, $a_{k-1} \sim a_k$
+\end{itemize}
 \end{defn}
 
 \begin{defn} \label{possOne}
@@ -262,6 +277,7 @@ $\phi$ is the precondition of the root node of $M'$.
 Then $M' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
 Thus the induction hypothesis holds for $M'$.\\
 \\
+%TODO: Fix this.
 ``Insanity models" are a somewhat cumbersome construct, since their only purpose
 is to serve as intermediate nodes in the tree.
 They have no meaning outside of a tree-like structure and their semantics are
