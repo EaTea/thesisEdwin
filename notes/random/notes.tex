@@ -370,7 +370,7 @@ It is clear that adding disjoint union to either of these sets of operators
 allows us to form all forests of tree-like event models.
 It also provides us with an alternate way to form tree-like event models.\\
 \\
-%TODO: 
+%TODO: this isn't true; how to resolve this properly? definition is not sound at the moment
 However, we cannot form tree-like event models with just $\mapsto$, or even
 $\mapsto$ and disjoint union.
 Consider $M = ( \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}, \{\sim_a =
@@ -382,4 +382,11 @@ We cannot form this model using $ \mapsto $, due to $\sim_a \cap \sim_b \neq
 \varnothing$.\\
 \\
 We can form other interesting models besides trees using these operators.
+Let $B$, $C \subseteq A$, the set of all agents.
+Suppose $ann(\phi)_B$ is the event model of the group announcement of $\phi$.
+We define $skip$ as the public announcement of $\top$ to all agents.
+Then $ann(\phi)_B \to_C skip$ models all agents in $B$ learning $\phi$ whilst all agents in $C$
+believe that nothing has changed.
+Similarly, $skip \mapsto_C ann(\phi)_A$ models the announcement of $\phi$ by an external agent that
+the agents in $C$ trust, but the agents in $B$ do not.
 \end{document}
