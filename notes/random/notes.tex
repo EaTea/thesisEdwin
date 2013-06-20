@@ -203,6 +203,7 @@ We give a rigourous definition for them as follows
 Let $M = \{\Sigma, \sim, pre, T \}$ be a pointed event model.
 $M$ is a finite tree-like event model if
 \begin{itemize}
+	\item $\Sigma$ is a finite set
 	\item $T$ is a singleton set, $\{ r \}$ where $r \in \Sigma$ is the root of the tree
 	\item each action $s$ in $\Sigma \setminus \{ t \}$, for each agent $a \in A$ has only at most 
 	one action $p \in \Sigma$ such that $p \sim_a s$
@@ -216,6 +217,11 @@ $M$ is a finite tree-like event model if
 	$\ldots$, $a_{k-1} \sim a_k$
 \end{itemize}
 \end{defn}
+
+In order to generate these models, we must construct an algebra that can construct event models.
+However, we are unaware of any operations that are appropriate for building tree-likemodels.
+We define an operation to describe a group of agents' belief with regards to the possible execution
+of one event model instead another.
 
 \begin{defn} \label{possOne}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
@@ -238,16 +244,18 @@ We define $M = M^1 \to_B M^2$ as
 \end{itemize}
 \end{defn}
 
-$M^1 \to_B M^2$ indicates that from $M^1$, an agent in $B$ considers $M^2$ a possible
-update.
+$M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers $M^2$ as another
+possible update.
+We can now use our new operation to construct finite tree-like event models.
 
 %TODO: Wait what is a group announcement? Isn't the null-group the equivalent of
 %an insanity model?
 
 \begin{thm}
 Let $M$ be a finite tree-like event model.
-$M$ can be constructed by public announcements, insanity event models and $\to$.
+$M$ can be constructed by group announcements, insanity event models and $\to$.
 \end{thm}
+\begin{proof}
 To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
 is at its root can be constructed by group announcements, insanity event models
 and $\to$.
@@ -259,7 +267,7 @@ Let $M'$ be a pointed public announcement event model with its precondition the
 same as $m$.
 Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
 \\
-Now, suppose $M'$ is an arbitrary subtree of $M$.
+Suppose $M'$ is an arbitrary subtree of $M$.
 Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
 the root node of $M'$.
 Let the group of agents $A^i$ have relations from the root node of $M'$ to a
@@ -274,9 +282,10 @@ Consider the insanity model $P = (\Sigma,\varnothing,pre,T)$, such that
 \end{itemize}
 where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
 $\phi$ is the precondition of the root node of $M'$.
-Then $M' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
-Thus the induction hypothesis holds for $M'$.\\
-\\
+Then consider $M'' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
+Thus the induction hypothesis holds for $M'$.
+\end{proof}
+
 %TODO: Fix this.
 ``Insanity models" are a somewhat cumbersome construct, since their only purpose
 is to serve as intermediate nodes in the tree.
@@ -325,6 +334,7 @@ all tree-like action models.
 Let $M$ be a finite tree-like event model.
 $M$ can be constructed by public announcements, $\to$ and $\mapsto$.
 \end{thm}
+\begin{proof}
 To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
 is at its root can be constructed by public announcements, $\to$ and $\mapsto$.
 We will induct on the subtrees of $M$.\\
@@ -353,9 +363,9 @@ Consider the public announcement $P = \{\Sigma,\sim_{A^1},pre,T\}$, such that
 where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
 $\phi$ is the precondition of the root node of $M'$.
 Then $M' = ((\ldots((P \mapsto_{A^1} K^1) \to_{A^2} K^2) \to_{A^3}
-      \ldots)\to_{A^n} K^n)$.\\
-\\
+      \ldots)\to_{A^n} K^n)$.
 %TODO: break things up more
+\end{proof}
 It is clear that adding disjoint union to either of these sets of operators
 allows us to form all forests of tree-like event models.
 It also provides us with an alternate way to form tree-like event models.\\
