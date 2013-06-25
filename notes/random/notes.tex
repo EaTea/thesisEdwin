@@ -114,6 +114,9 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 	\end{itemize}
 \end{defn}
 
+Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
+models.
+
 %Our models are now informative models that we can reason with.
 %In an epistemic logic context, we say that each $s \in \Sigma$ is a possible
 %world.
@@ -235,14 +238,14 @@ We give a rigourous definition for them as follows
 %\end{defn}
 
 \begin{defn} \label{finTree}
-Let $M = (\Sigma, R, pre, t)$ be a pointed event model.
+Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
 $M$ is a finite tree-like event model if
 \begin{itemize}
 	\item $\Sigma$, the set of possible actions is finite
-	\item $t$ is the root of the tree and is not accessible from any other action
-	\item for each $s \in \Sigma \setminus \{ t \}$ there is a unique agent $a \in A$ and a unique
+	\item $r$ is the root of the tree and is not accessible from any other action
+	\item for each $s \in \Sigma \setminus \{ r \}$ there is a unique agent $a \in A$ and a unique
 	action $p \in \Sigma$ such that $(p,s) \in R(a)$
-	\item for each $s \in \Sigma$ there exists a unique sequence of actions in $\Sigma$, $t = s_0,
+	\item for each $s \in \Sigma$ there exists a unique sequence of actions in $\Sigma$, $r = s_0,
 	s_1, \ldots, s_n = s$ and a sequence of agents $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1}
 	s_1$, $s_1 R_{a_2} s_2$, $\ldots, s_{n-1} R_{a_n} s_n$
 \end{itemize}
@@ -282,40 +285,49 @@ We can now use our new operation to construct finite tree-like event models.
 %an insanity model?
 
 \begin{thm}
-Suppose $M$ is a pointed event model
+Let $\phi$ be a well-formed sentence.
+Suppose an event model $M$ exists such that $\phi$ is true after its execution.
+There is a finite tree-like event model $T$ such that after $T$'s execution $\phi$ is true.
 \end{thm}
-\begin{proof}
-To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
-is at its root can be constructed by group announcements, insanity event models
-and $\to$.
-We will induct on the subtrees of $M$.\\
-\\
-Suppose $M'$ is a leaf node of $M$, $m$.
-The leaf nodes of a tree-like event model resemble are public announcements.
-Let $M'$ be a pointed public announcement event model with its precondition the
-same as $m$.
-Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
-\\
-Suppose $M'$ is an arbitrary subtree of $M$.
-Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
-the root node of $M'$.
-Let the group of agents $A^i$ have relations from the root node of $M'$ to a
-subtree $K^i$.
-Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
-induction hypothesis.
-Consider the insanity model $P = (\Sigma,\varnothing,pre,T)$, such that
-\begin{itemize}
-  \item $\Sigma = \{ \sigma \}$
-  \item $pre = \{ (\sigma, \phi)\}$
-  \item $T = \{\sigma\}$
-\end{itemize}
-where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
-$\phi$ is the precondition of the root node of $M'$.
-Then consider $M'' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
-Thus the induction hypothesis holds for $M'$.
-\end{proof}
 
-%TODO: Fix this.
+\begin{thm}
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
+$M$ can be constructed using insanity event models and $\to$.
+\end{thm}
+Let $M' = (\Sigma', R', pre', r')$ be a finite tree-like event model that is a submodel of $M$.
+That is there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ 
+%\begin{proof}
+%To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
+%is at its root can be constructed by group announcements, insanity event models
+%and $\to$.
+%We will induct on the subtrees of $M$.\\
+%\\
+%Suppose $M'$ is a leaf node of $M$, $m$.
+%The leaf nodes of a tree-like event model resemble are public announcements.
+%Let $M'$ be a pointed public announcement event model with its precondition the
+%same as $m$.
+%Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
+%\\
+%Suppose $M'$ is an arbitrary subtree of $M$.
+%Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
+%the root node of $M'$.
+%Let the group of agents $A^i$ have relations from the root node of $M'$ to a
+%subtree $K^i$.
+%Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
+%induction hypothesis.
+%Consider the insanity model $P = (\Sigma,\varnothing,pre,T)$, such that
+%\begin{itemize}
+%  \item $\Sigma = \{ \sigma \}$
+%  \item $pre = \{ (\sigma, \phi)\}$
+%  \item $T = \{\sigma\}$
+%\end{itemize}
+%where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
+%$\phi$ is the precondition of the root node of $M'$.
+%Then consider $M'' = ((\ldots((P \to_{A^1} K^1) \to_{A^2} K^2) \to_{A^3} \ldots)\to_{A^n} K^n)$.
+%Thus the induction hypothesis holds for $M'$.
+%\end{proof}
+%
+%%TODO: Fix this.
 ``Insanity models" are a somewhat cumbersome construct, since their only purpose
 is to serve as intermediate nodes in the tree.
 They have no meaning outside of a tree-like structure and their semantics are
