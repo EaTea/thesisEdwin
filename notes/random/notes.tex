@@ -108,7 +108,11 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 	\begin{itemize}
 		\item a domain $\Sigma$ of possible atomic action points
 		\item an accessibility function, $R: A \to \mathcal{P}(S \times S)$, a function from agents to
-		accessibility relations on $\Sigma$
+		accessibility relations on $\Sigma$.\\
+		We refer to $R(a)$ as $R_a$.
+		We will refer to all accessible action points from $s$ as $s R_a$, and all action points that
+		can access $t$ as $R_a t$.
+		Furthermore, we say $s R_a t$ means $t$ is $a$-accessible from $s$.
 		\item a precondiion function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
 		sentence in $\mathcal{L}S$
 	\end{itemize}
@@ -116,6 +120,10 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 
 Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
 models.
+We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
+pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.\\
+\\
+
 
 %Our models are now informative models that we can reason with.
 %In an epistemic logic context, we say that each $s \in \Sigma$ is a possible
@@ -200,11 +208,6 @@ that represent the onset of insanity.
 %\]
 %will generate a model $M'$ that is bisimilar to $M$.
 %\end{lemma}
-
-We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
-pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.\\
-\\
-
 %TODO: Add in citations
 In FIXME, Hales demonstrates that it is possible to determine whether an
 finite epistemic goal can be achieved.
@@ -251,8 +254,25 @@ $M$ is a finite tree-like event model if
 \end{itemize}
 \end{defn}
 
+\begin{defn} \label{subtree}
+Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
+We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
+\begin{itemize}
+	\item $M'$ is a finite tree-like event model
+	\item there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ and a
+	sequence of agents in $A$, $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1} s_1, s_1 R_{a_2} s_2,
+	\ldots s_{n-1} R_{a_n} s_n$
+\end{itemize}
+\end{defn}
+
+\begin{defn} \label{leaf}
+Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
+Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+$M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and $\Sigma' = \{ r'\}$.
+\end{defn}
+
 In order to generate these models, we must construct an algebra that can construct event models.
-However, we are unaware of any operations that are appropriate for building tree-likemodels.
+However, we are unaware of any operations that are appropriate for building tree-like models.
 We define an operation to describe a group of agents' belief with regards to the possible execution
 of one event model instead another.
 
@@ -263,15 +283,12 @@ Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
 We define $M = M^1 \to_B M^2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
-  \item $\sim_a =
-  \begin{cases}
-    \sim^1_a \cup \sim^2_a & \text{if } a \notin C \\
-    \displaystyle\bigcup \begin{array}{c}
-      \sim^1_a \\
-      \sim^2_a \\
+  \item $R_a = R^1_a \cup R^2_a \text{if } a \notin C$
+	\item $R_a =
+      R^1_a \cup
+      R^2_a \cup
       \{(s,t) | s \in T^1 \land t \in T^2 \}
-    \end{array} & \text{if } a \in C 
-  \end{cases}$
+    \text{if } a \in C $
   \item $pre = pre^1 \cup pre^2$
   \item $T = T^1$
 \end{itemize}
@@ -294,8 +311,44 @@ There is a finite tree-like event model $T$ such that after $T$'s execution $\ph
 Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
 $M$ can be constructed using insanity event models and $\to$.
 \end{thm}
-Let $M' = (\Sigma', R', pre', r')$ be a finite tree-like event model that is a submodel of $M$.
-That is there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ 
+\begin{proof}
+Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+We will show by induction that for any $M'$ we can use insanity event models and $\to$ to
+construct $M'$.\\
+\\
+Suppose that $M' = (\Sigma', R', pre', r')$ is a leaf node.
+Let $pre'(r') = \phi$, a formula in our logical language.
+$M'$ is an insanity event model by definition.
+Thus, we can construct $M'$ using insanity event models when $M'$ is a leaf node of $M$.\\
+\\
+Let $M' = (\Sigma', R', pre', r')$ be an arbitrary subtree of $M$.
+Suppose $pre'(r') = \phi$, where $\phi$ is a formula in our logical language.
+Let $M^1, M^2, \ldots, M^n$ be all the disjoint subtrees of $M'$.
+Suppose that each of $M^1, M^2, \ldots, M^n$ fulfill the induction hypothesis.
+Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $r' R_{a_1} r^1$, $r' R_{a_2} r^2,
+	\ldots, r' R_{a_n} r^n$.\\
+\\
+Consider the insanity pointed-event model $M^t = (\{ t \}, R^t, pre^t, t)$.
+Let $pre^t(t) = \phi$.
+Consider the event model $M^K = $
+\[
+(\ldots((M^t \to_{\{a_1\}} M ^ 1) \to_{\{a_2\}} M_2) \to_{\{a_3\}} \ldots
+\to_{\{a_{n-1}\}} M^{n-1} ) \to_{\{a_n\}} M ^ n
+\]
+We will show that $M^K$ and $M'$ are equivalent event models.\\
+\\
+Each of $M^1, M^2, \ldots, M^n$ are subtrees of $M'$.
+The action points, accessibilities and preconditions in each of $M^1, M^2, \ldots, M^n$ are
+equivalent to the action points and the accessibilities and preconditions of those points in $M'$.
+We can see that by its definition the ``root" of $M^K$, $t$ has the same precondition as $r'$.
+Furthermore, both $r'$ and $t$ can access each of $M^1, M^2, \ldots M^n$ by an $a_1, a_2, \ldots, a_n$ edge
+respectively.\\
+\\
+Thus $M'$ and $M^K$ are equivalent.
+We can form $M'$ using insanity event models and $\to$, and thus any arbitrary subtree of $M'$
+fulfills the induction hypothesis.
+\end{proof}
+
 %\begin{proof}
 %To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
 %is at its root can be constructed by group announcements, insanity event models
@@ -329,11 +382,11 @@ That is there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots,
 %
 %%TODO: Fix this.
 ``Insanity models" are a somewhat cumbersome construct, since their only purpose
-is to serve as intermediate nodes in the tree.
+is to serve as nodes in the tree.
 They have no meaning outside of a tree-like structure and their semantics are
 unintuitive within the context of knowledge or belief.
 It would thus be desirable to reduce our atomic models to only group
-announcements, since group announcements have more meaning within the context of
+announcements, since public announcements have more meaning within the context of
 knowledge.\\
 \\
 In order to do so, we must define an operation that ensures that if $M^1$ was to
@@ -347,16 +400,13 @@ Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
 We define $M = M^1 \mapsto_B M^2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
-  \item $\sim_a =
-  \begin{cases}
-    \sim^1_a \cup \sim^2_a & \text{if } a \notin B \\
-    %FIXME: Make this neater
-    \bigcup \begin{array}{c}
-      \sim^1_a \setminus \{(s,t) | s \in T^1 \} \\
-      \sim^2_a \\
+  \item $R_a =
+    R^1_a \cup R^2_a \text{if } a \notin B$
+	\item $\sim_a =
+      R^1_a \setminus \{(s,t) | s \in T^1 \} \cup
+      R^2_a \cup
       \{(s,t) | s \in T^1 \land t \in T^2 \}
-    \end{array} & \text{if } a \in B 
-  \end{cases}$
+    \text{if } a \in B$
   \item $pre = pre^1 \cup pre^2$
   \item $T = T^1$
 \end{itemize}
@@ -372,40 +422,10 @@ models.
 Conversely, using insanity and public announcement event models with $\to$ should be sufficient to construct
 all tree-like action models.
 \begin{thm}
-Let $M$ be a finite tree-like event model.
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
 $M$ can be constructed by public announcements, $\to$ and $\mapsto$.
 \end{thm}
 \begin{proof}
-To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
-is at its root can be constructed by public announcements, $\to$ and $\mapsto$.
-We will induct on the subtrees of $M$.\\
-\\
-Suppose $M'$ is a leaf node of $M$, $m$.
-The leaf nodes of a tree-like event model resemble are public announcements.
-Let $M'$ be a pointed public announcement event model with its precondition the
-same as $m$.
-Then our induction hypothesis holds for $M'$ being a leaf node of $M$.\\
-\\
-Now, suppose $M'$ is an arbitrary subtree of $M$.
-Let $K^1$, $K^2$, $\ldots$, $K^n$ be the subtrees of $M'$ whose parent node is
-the root node of $M'$.
-%TODO: tidy up the agent relations...?
-Let the group of agents $A^i$ have relations from the root node of $M'$ to a
-subtree $K^i$.
-Furthermore, let us say that each of $K^1, K^2, \ldots, K^n$ fulfills the
-induction hypothesis.
-Consider the public announcement $P = \{\Sigma,\sim_{A^1},pre,T\}$, such that
-\begin{itemize}
-  \item $\Sigma = \{ \sigma \}$
-  \item $\forall a \in A^1 \implies \sim_a = \{ (\sigma,\sigma) \}$
-  \item $pre = \{ (\sigma, \phi)\}$
-  \item $T = \{\sigma\}$
-\end{itemize}
-where $\Sigma$, the set of states of $P$ is the singleton set $\sigma$ and 
-$\phi$ is the precondition of the root node of $M'$.
-Then $M' = ((\ldots((P \mapsto_{A^1} K^1) \to_{A^2} K^2) \to_{A^3}
-      \ldots)\to_{A^n} K^n)$.
-%TODO: break things up more
 \end{proof}
 It is clear that adding disjoint union to either of these sets of operators
 allows us to form all forests of tree-like event models.
