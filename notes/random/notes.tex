@@ -121,9 +121,22 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
 models.
 We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
-pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.\\
-\\
+pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
 
+\begin{defn} \label{bisim}
+	Let $M$, $M'$ be event models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
+	relation.
+	$\sim$ is a bisimulation between $M$ and $M'$ if and only if
+	\begin{itemize}
+		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $pre(s)
+		\iff pre('s)$
+		\item {\bf front}: for each $s \in \Sigma$ such that $s \sim s'$, for each $t$ such that for an
+		$a \in A$, $s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \sim t'$
+		\item {\bf back}: for each $s' \in \Sigma'$ such that $s \sim s'$, for each $t$ such that for an
+		$a \in A$, $s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \sim t'$
+	\end{itemize}
+	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
+\end{defn}
 
 %Our models are now informative models that we can reason with.
 %In an epistemic logic context, we say that each $s \in \Sigma$ is a possible
@@ -169,10 +182,11 @@ pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.\\
 %	As an example, you can generate a model outside of {\bf K45} and into ???.\\
 %\end{note}
 %\\
-Let $L$ be the language of {\bf K45}.
+Let $L$ be the modal logic language of $\mathcal{K}$.
 We say $\mathcal{AM}$ is the class of all action models over $L$.
 Then we say $\mathcal{AM}_{PA}$ is the class of all action models that
-are public announcements of a sentence in $L$.\\
+are public announcements of a sentence in $L$.
+We adopt the convention that $pub(\phi)$ is the event model representing the public announcement of $\phi$.\\
 \\
 Let us define the following action models
 \begin{defn} \label{insanity}
@@ -423,17 +437,24 @@ Conversely, using insanity and public announcement event models with $\to$ shoul
 all tree-like action models.
 \begin{thm}
 Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
-$M$ can be constructed by public announcements, $\to$ and $\mapsto$.
+An event model $M^T \sim M$ can be constructed by public announcements, $\to$ and
+$\mapsto$.
 \end{thm}
 \begin{proof}
+We will show by induction that for any subtree of $M$,$M'$, we can construct a pointed event model
+$M^s \sim M'$ by public announcements, $\to$ and $\mapsto$.\\
+\\
+Suppose $M'$ is a leaf node of $M$.
+Then $M'$ is composed of a single action point $\sigma$.
+Let $pre(\sigma) = \phi$.
+Let $M^s$ be of the form $pub(\phi) \mapsto_A pub(\bot)$.
 \end{proof}
 It is clear that adding disjoint union to either of these sets of operators
 allows us to form all forests of tree-like event models.
 It also provides us with an alternate way to form tree-like event models.\\
 \\
 %TODO: this isn't true; how to resolve this properly? definition is not sound at the moment
-However, we cannot form tree-like event models with just $\mapsto$, or even
-$\mapsto$ and disjoint union.
+However, we cannot form tree-like event models with just $\mapsto$.
 Consider $M = ( \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}, \{\sim_a =
 \{(\sigma_1,\sigma_2),(\sigma_1,\sigma_3),(\sigma_2,\sigma_2),(\sigma_3,\sigma_3)\},
 \sim_b =
@@ -449,5 +470,6 @@ We define $skip$ as the public announcement of $\top$ to all agents.
 Then $ann(\phi)_B \to_C skip$ models all agents in $B$ learning $\phi$ whilst all agents in $C$
 believe that nothing has changed.
 Similarly, $skip \mapsto_C ann(\phi)_A$ models the announcement of $\phi$ by an external agent that
-the agents in $C$ trust, but the agents in $B$ do not.
+the agents in $C$ trust, but the agents in $B$ do not.\\
+\\
 \end{document}
