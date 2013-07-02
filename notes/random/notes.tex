@@ -26,41 +26,6 @@
 
 % Predefined things such as commands, etc.
 
-\newcommand{\aRel}[1] {
-  \sim_{#1} 
-}
-
-\newcommand{\kripkeFrame}[2] {
-  (#1, \aRel{#2})
-}
-
-\newcommand{\kripkeModel}[3] {
-  (#1, \aRel{#2}, #3)
-}
-
-\newcommand{\frKripModel}[2] { % defined via Kripke Frame + valuation
-  (#1, #2)
-}
-
-\newcommand{\actModel}[3]{
-  (#1, \aRel{#2}, #3)
-}
-
-\newcommand{\actModelStates}[4] {
-	(#1, \aRel{#2}, #3, #4)
-}
-
-\newcommand{\frActModel}[2] { % defined via Kripke Frame + Pre
-  (#1, #2)
-}
-
-\newcommand{\note}[1]{\textsc{\textbf{#1}}}
-\newcommand{\Universal}{$\mathcal{U}$}
-\newcommand{\modalLog}{$\mathcal{L}$}
-\newcommand{\modLogInf}{$\mathcal{L}_\inf$}
-\newcommand{\epActLog}{\modalLog$([\alpha])$}
-\newcommand{\epActLogCommonKnowledge}{\modalLog$([\alpha],\box^{*})$}
-
 \newtheorem{defn}{Definition}
 \newtheorem{thm}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -79,9 +44,9 @@
 \begin{document}
 
 \section{Definitions}
-
+Let $L$ be the modal logic language of $\mathcal{K}$.
 \begin{defn} \label{frame}
-	Let $\Sigma$ be a set and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
+	Let $\Sigma$ be a set of atoms and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
 	accessibility relations.
 	Then the tuple $(\Sigma, R)$ is a frame.
 \end{defn}
@@ -92,11 +57,12 @@ construct a valuation function that transforms the frame into a model detailing
 information.
 \begin{defn} \label{model}
 	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
-	Let $V: \mathbb{P} \to \mathcal{P}(\Sigma)$ be a function mapping any
-	well-formed	sentence in $\mathbb{P}$ to a subset of $\Sigma$.
+	In the context of epistemic modal logic, $\Sigma$ is a set of atomic knowledge points.
+	Let $V: \mathcal{L} \to \mathcal{P}(\Sigma)$ be a function mapping any
+	well-formed	sentence in $\mathcal{L}$ to a subset of $\Sigma$.
 	We say $V$ is a valuation function on $F$.\\
 	\\
-	Then $M = \frKripModel{F}{V} = (\Sigma, R, V)$ is a Kripke
+	Then $M = (F, V) = (\Sigma, R, V)$ is a Kripke
 	model.
 \end{defn}
 A pointed model $M_s$ is a model $M = (\Sigma, R, V)$ along with a designated state $s \in S$.
@@ -104,6 +70,7 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 
 \begin{defn} \label{evModel}
 	Let $\mathcal{L}$ be a logical language.
+	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
 	An event model $M = (\Sigma, R, pre)$ with preconditions defined on $\mathcal{L}$ consists of
 	\begin{itemize}
 		\item a domain $\Sigma$ of possible atomic action points
@@ -114,7 +81,7 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 		can access $t$ as $R_a t$.
 		Furthermore, we say $s R_a t$ means $t$ is $a$-accessible from $s$.
 		\item a precondiion function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
-		sentence in $\mathcal{L}S$
+		sentence in $\mathcal{L}$
 	\end{itemize}
 \end{defn}
 
@@ -182,18 +149,24 @@ pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
 %	As an example, you can generate a model outside of {\bf K45} and into ???.\\
 %\end{note}
 %\\
-Let $L$ be the modal logic language of $\mathcal{K}$.
-We say $\mathcal{AM}$ is the class of all action models over $L$.
-Then we say $\mathcal{AM}_{PA}$ is the class of all action models that
+We say $\mathcal{AM}$ is the class of all event models over $L$.
+\begin{defn} \label{pub}
+Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
+Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)$ for each $a \in A$ and $\phi
+\in \mathcal{L}$.
+Then $M$ is a public announcement of $\phi$.
+We will use $pub(\phi)$ to denote the pointed event model $(M, \sigma)$.
+We say $\mathcal{AM}_{PA}$ is the class of all action models that
 are public announcements of a sentence in $L$.
-We adopt the convention that $pub(\phi)$ is the event model representing the public announcement of $\phi$.\\
-\\
+\end{defn}
+
 Let us define the following action models
 \begin{defn} \label{insanity}
-Let $M = (\{ \sigma \}, R, \{(\sigma, \phi)\}) $ be an action model
+Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
 where $\phi \in L$ and $\sigma$ is an action point.
-Then $\mathcal{AM}_{IN} = \{M | \phi \in L\}$ is the class of all action models
-that represent the onset of insanity.
+$M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
+$\mathcal{AM}_{IN} = \{M | \phi \in L\}$ is the class of all such action models,
+which we will term ``insanity models".
 \end{defn}
 
 %We define an operation
@@ -258,8 +231,8 @@ We give a rigourous definition for them as follows
 Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
 $M$ is a finite tree-like event model if
 \begin{itemize}
-	\item $\Sigma$, the set of possible actions is finite
-	\item $r$ is the root of the tree and is not accessible from any other action
+	\item $\Sigma$, the set of action points is finite
+	\item $r$ is the root of the tree and is not accessible from any other action point
 	\item for each $s \in \Sigma \setminus \{ r \}$ there is a unique agent $a \in A$ and a unique
 	action $p \in \Sigma$ such that $(p,s) \in R(a)$
 	\item for each $s \in \Sigma$ there exists a unique sequence of actions in $\Sigma$, $r = s_0,
@@ -272,7 +245,10 @@ $M$ is a finite tree-like event model if
 Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
 We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
 \begin{itemize}
-	\item $M'$ is a finite tree-like event model
+	\item $\Sigma' \subseteq \Sigma$
+	\item $\forall a \in A \implies R_a' \subseteq R_a$
+	\item $\forall \sigma \in \Sigma' \implies pre(\sigma) = pre'(\sigma) $
+	\item $M$ is $R$-generable
 	\item there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ and a
 	sequence of agents in $A$, $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1} s_1, s_1 R_{a_2} s_2,
 	\ldots s_{n-1} R_{a_n} s_n$
@@ -288,24 +264,25 @@ $M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and 
 In order to generate these models, we must construct an algebra that can construct event models.
 However, we are unaware of any operations that are appropriate for building tree-like models.
 We define an operation to describe a group of agents' belief with regards to the possible execution
-of one event model instead another.
+of one event model instead of another.
 
 \begin{defn} \label{possOne}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
 generality let $M^1$ and $M^2$ be disjoint.
-Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
+Let $B$ be a subset of agents participating in $M^1$ or $M^2$.
 We define $M = M^1 \to_B M^2$ as 
 \begin{itemize}
   \item $\Sigma = \Sigma^1 \cup \Sigma^2$
-  \item $R_a = R^1_a \cup R^2_a \text{if } a \notin C$
+  \item $R_a = R^1_a \cup R^2_a \text{if } a \notin B$
 	\item $R_a =
       R^1_a \cup
       R^2_a \cup
       \{(s,t) | s \in T^1 \land t \in T^2 \}
-    \text{if } a \in C $
+    \text{if } a \in B $
   \item $pre = pre^1 \cup pre^2$
   \item $T = T^1$
 \end{itemize}
+The $\to$ operator will be referred to as ``considers".
 \end{defn}
 
 $M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers $M^2$ as another
@@ -317,7 +294,8 @@ We can now use our new operation to construct finite tree-like event models.
 
 \begin{thm}
 Let $\phi$ be a well-formed sentence.
-Suppose an event model $M$ exists such that $\phi$ is true after its execution.
+Suppose an event model $M$ exists such that after $M$'s execution on a epistemic model $K$ $\phi$ is
+always true or $K$ is the empty model.
 There is a finite tree-like event model $T$ such that after $T$'s execution $\phi$ is true.
 \end{thm}
 
@@ -455,11 +433,15 @@ It also provides us with an alternate way to form tree-like event models.\\
 \\
 %TODO: this isn't true; how to resolve this properly? definition is not sound at the moment
 However, we cannot form tree-like event models with just $\mapsto$.
-Consider $M = ( \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}, \{\sim_a =
-\{(\sigma_1,\sigma_2),(\sigma_1,\sigma_3),(\sigma_2,\sigma_2),(\sigma_3,\sigma_3)\},
-\sim_b =
-\{(\sigma_1,\sigma_3),(\sigma_1,\sigma_4),(\sigma_3,\sigma_3),(\sigma_4,\sigma_4)\}\},
-pre)$.
+Consider $M = (\Sigma, R, pre, T)$ such that
+\begin{itemize}
+	\item $\Sigma = \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}$
+	\item $R_a =
+\{(\sigma_1,\sigma_2),(\sigma_1,\sigma_3),(\sigma_2,\sigma_2),(\sigma_3,\sigma_3)\}$
+	\item $R_b = \{(\sigma_1,\sigma_3),(\sigma_1,\sigma_4),(\sigma_3,\sigma_3),(\sigma_4,\sigma_4)\}$
+	\item $T = \{ \sigma_1 \}$
+pre).
+\end{itemize}
 We cannot form this model using $ \mapsto $, due to $\sim_a \cap \sim_b \neq
 \varnothing$.\\
 \\
