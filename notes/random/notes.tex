@@ -91,19 +91,30 @@ We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
 pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
 
 \begin{defn} \label{bisim}
-	Let $M$, $M'$ be event models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
+	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
 	relation.
-	$\sim$ is a bisimulation between $M$ and $M'$ if and only if
 	\begin{itemize}
 		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $pre(s)
 		\iff pre('s)$
-		\item {\bf front}: for each $s \in \Sigma$ such that $s \sim s'$, for each $t$ such that for an
-		$a \in A$, $s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \sim t'$
-		\item {\bf back}: for each $s' \in \Sigma'$ such that $s \sim s'$, for each $t$ such that for an
-		$a \in A$, $s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \sim t'$
+		\item {\bf front-$a$}: for each $s \in \Sigma$ such that $s \sim s'$, for each $t$ such that
+		$s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \sim t'$
+		\item {\bf back-$a$}: for each $s' \in \Sigma'$ such that $s \sim s'$, for each $t$ such that
+		$s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \sim t'$
 	\end{itemize}
+	$\sim$ is a bisimulation between $M$ and $M'$ if and only if {\bf atoms} holds and {\bf front-$a$}
+	and {\bf back-$a$} hold for each $a \in A$.
 	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
 \end{defn}
+
+\begin{defn} \label{refinement}
+Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
+\times \Sigma'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
+every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
+\end{defn}
+If $(\sigma, \sigma') \in \lesssim$ then we say $M_{\sigma'}$ is a $B$-simulation of $M_\sigma$ and
+$M_\sigma$ a $B$-refinement of $M_{\sigma'}$.
+We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsim M_{\sigma}$.\\
+\\
 
 %Our models are now informative models that we can reason with.
 %In an epistemic logic context, we say that each $s \in \Sigma$ is a possible
@@ -167,6 +178,13 @@ where $\phi \in L$ and $\sigma$ is an action point.
 $M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
 $\mathcal{AM}_{IN} = \{M | \phi \in L\}$ is the class of all such action models,
 which we will term ``insanity models".
+\end{defn}
+
+\begin{defn} \label{brestrict}
+Let $B \subseteq A$ and let $N \in \mathcal{AM}$. Then $N$ is a $B$-restricted event model if and
+only if for every $u \in \Sigma$ and every $M_s \in \mathcal{L}$ such that $M_s \models pre(u)$ we
+have $M_s \otimes N_u \gtrsim_B M_s$.
+We call the class of $B$-restricted action models $\mathcal{AM}_B$.
 \end{defn}
 
 %We define an operation
@@ -266,7 +284,7 @@ However, we are unaware of any operations that are appropriate for building tree
 We define an operation to describe a group of agents' belief with regards to the possible execution
 of one event model instead of another.
 
-\begin{defn} \label{possOne}
+\begin{defn} \label{considers}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
 generality let $M^1$ and $M^2$ be disjoint.
 Let $B$ be a subset of agents participating in $M^1$ or $M^2$.
@@ -294,9 +312,15 @@ We can now use our new operation to construct finite tree-like event models.
 
 \begin{thm}
 Let $B \subseteq A$, let $\phi \in \mathcal{L}$.
-Then there exists a finite tree-like event model $M \in \mathcal{AM_B}$ such that
+Then there exists a finite tree-like event model $M \in \mathcal{AM}_B$ such that
 $[M]\phi$ and $\langle M \rangle \phi \iff \exists_B \phi$.
 \end{thm}
+
+\begin{lemma}
+Let $B \subseteq A$ and let $\phi = \alpha \lor \beta \in mathcal{L}$.
+Then there exists a finite tree-like event model $M \in \mathcal{AM}_B$ such that $[M]\phi$ and
+$\langle M \rangle \phi \iff \exists_B \phi$.
+\end{lemma}
 
 \begin{thm}
 Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
