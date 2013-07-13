@@ -32,6 +32,8 @@
 \newtheorem{corr}{Corrollary}
 \newtheorem*{remrk}{Remark}
 
+\newcommand{\cover}{\bigtriangledown}
+
 % Drawings of frames
 
 \tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
@@ -43,8 +45,13 @@
 %Document%
 \begin{document}
 
-\section{Definitions}
+\tableofcontents
+
+\pagebreak
+
+\section{Technical preliminaries}
 Let $L$ be the modal logic language of $\mathcal{K}$.
+
 \begin{defn} \label{frame}
 	Let $\Sigma$ be a set of atoms and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
 	accessibility relations.
@@ -89,6 +96,17 @@ Pointed and multi-pointed event models are similarly defined to pointed and mult
 models.
 We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
 pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
+
+\begin{defn} \label{evModelEx}
+%FIXME: WTF HAPPENED HERE
+Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
+		R^N, pre^N) \in
+\mathcal{AM}$ as follows.
+The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
+\begin{itemize}
+	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N$
+\end{itemize}
+\end{defn}
 
 \begin{defn} \label{bisim}
 	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
@@ -214,6 +232,9 @@ We call the class of $B$-restricted action models $\mathcal{AM}_B$.
 %will generate a model $M'$ that is bisimilar to $M$.
 %\end{lemma}
 %TODO: Add in citations
+
+\section{Single-agent epistemic goal achievement in $\mathcal{K}$}
+
 In FIXME, Hales demonstrates that it is possible to determine whether an
 finite epistemic goal can be achieved.
 Furthermore, if it is achievable Hales constructs event models that will realise
@@ -221,8 +242,29 @@ that goal.
 We will focus on defining a framework that constructs these event models in a
 recursive manner.
 This facilitates an automated method for updating knowledge models to reflect a
-knowledge state.\\
-\\
+knowledge state.
+
+\subsection{Technical preliminaries}
+
+We will discuss the single-agent arbitrary action model logic.
+Thus $A$ contains a single agent $a$ and our modal operators will only involve that agent for this
+chapter.
+
+\begin{defn} \label{arbitraryeventmodellogic}
+$L_{\otimes\forall}$ is the language of arbitrary action model logic, inductively defined as
+\[
+	\phi :== p | \not \phi | (\phi \land \phi) | \box \phi | [ M ] \phi | \forall \phi
+\]
+where $p$ is an atomic statement and $M \in \mathcal{AM}$ is a multi-pointed event model with
+preconditions defined on $L_{\otimes\forall}$.
+\end{defn}
+We use the following standard abbreviations in addition to those in propostional logic
+\begin{itemize}
+	\item $\diamond \phi :== \not \box \not \phi$
+	\item $\exists \phi :== \not \forall \not \phi$
+\end{itemize}
+%TODO: FIXME: PLEASE REFERENCE JAMES HERE
+
 The event models that Hales employs resemble finite trees.
 We give a rigourous definition for them as follows
 %\begin{defn} \label{finTree}
@@ -310,22 +352,12 @@ We can now use our new operation to construct finite tree-like event models.
 %TODO: Wait what is a group announcement? Isn't the null-group the equivalent of
 %an insanity model?
 
-\begin{thm}
-Let $B \subseteq A$, let $\phi \in \mathcal{L}$.
-Then there exists a finite tree-like event model $M \in \mathcal{AM}_B$ such that
-$[M]\phi$ and $\langle M \rangle \phi \iff \exists_B \phi$.
-\end{thm}
+\subsection{Completeness}
 
 \begin{lemma}
-Let $B \subseteq A$ and let $\phi = \alpha \lor \beta \in mathcal{L}$.
-Then there exists a finite tree-like event model $M \in \mathcal{AM}_B$ such that $[M]\phi$ and
-$\langle M \rangle \phi \iff \exists_B \phi$.
-\end{lemma}
-
-\begin{thm}
 Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
 $M$ can be constructed using insanity event models and $\to$.
-\end{thm}
+\end{lemma}
 \begin{proof}
 Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
 We will show by induction that for any $M'$ we can use insanity event models and $\to$ to
@@ -364,6 +396,31 @@ We can form $M'$ using insanity event models and $\to$, and thus any arbitrary s
 fulfills the induction hypothesis.
 \end{proof}
 
+\subsection{Expressivity}
+
+\begin{lemma}
+Let $\phi = \alpha \lor \beta \in \mathcal{L}_{\otimes\forall}$.
+Suppose that for $\gamma \in \{\alpha, \beta\}$ there is an event model $M_\gamma \in \mathcal{AM}$ such that
+$\vdash [M_\gamma] \gamma$
+and $\vdash \langle M_\gamma \rangle \gamma \iff \exists \gamma$.
+Then there exists a finite tree-like event model $M \in \mathcal{AM}$ such that $\vdash [M]\phi$ and
+$\vdash \langle M \rangle \phi \iff \exists \phi$.
+\end{lemma}
+
+\begin{lemma}
+Let $\phi = \phi \land \cover \Gamma \in \mathcal{L}_{\otimes\forall}$.
+Suppose that for $\gamma \in \Gamma$ there is an event model $M_\gamma \in \mathcal{AM}$ such that
+$\vdash [M_\gamma] \gamma$ and $\vdash \langle M_\gamma \rangle \gamma \iff \exists \gamma$.
+Then there exists a finite tree-like event model $M \in \mathcal{AM}$ such that $\vdash [M]\phi$ and
+$\vdash \langle M \rangle \phi \iff \exists \phi$.
+\end{lemma}
+
+\begin{thm}
+Let $B \subseteq A$, let $\phi \in \mathcal{L}_{\otimes\forall}$.
+Then there exists a finite tree-like event model $M \in \mathcal{AM}$ such that
+$\vdash [M]\phi$ and $\vdash \langle M \rangle \phi \iff \exists \phi$.
+\end{thm}
+
 %\begin{proof}
 %To prove this we shall show that any pointed subtree of $M$, $M'$, whose point
 %is at its root can be constructed by group announcements, insanity event models
@@ -396,6 +453,9 @@ fulfills the induction hypothesis.
 %\end{proof}
 %
 %%TODO: Fix this.
+
+\section{Multi-agent goal achievement in $\mathcal{K}$}
+
 ``Insanity models" are a somewhat cumbersome construct, since their only purpose
 is to serve as nodes in the tree.
 They have no meaning outside of a tree-like structure and their semantics are
