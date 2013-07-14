@@ -26,10 +26,10 @@
 
 % Predefined things such as commands, etc.
 
-\newtheorem{defn}{Definition}
-\newtheorem{thm}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{corr}{Corrollary}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corr}{Corrollary}[section]
 \newtheorem*{remrk}{Remark}
 
 \newcommand{\cover}{\bigtriangledown}
@@ -73,7 +73,7 @@ information.
 	model.
 \end{defn}
 A pointed model $M_s$ is a model $M = (\Sigma, R, V)$ along with a designated state $s \in S$.
-A multi-pointed model is a model $M$ with a set of designated states, $T$.
+A multi-pointed model is a model $M_T$ with a set of designated states, $T$.
 
 \begin{defn} \label{evModel}
 	Let $\mathcal{L}$ be a logical language.
@@ -87,7 +87,7 @@ A multi-pointed model is a model $M$ with a set of designated states, $T$.
 		We will refer to all accessible action points from $s$ as $s R_a$, and all action points that
 		can access $t$ as $R_a t$.
 		Furthermore, we say $s R_a t$ means $t$ is $a$-accessible from $s$.
-		\item a precondiion function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
+		\item a precondition function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
 		sentence in $\mathcal{L}$
 	\end{itemize}
 \end{defn}
@@ -98,14 +98,18 @@ We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
 pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
 
 \begin{defn} \label{evModelEx}
-%FIXME: WTF HAPPENED HERE
 Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
 		R^N, pre^N) \in
 \mathcal{AM}$ as follows.
 The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
 \begin{itemize}
-	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N$
+	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \vdash pre^N(u)\}$
+	\item $(s, u) R_a' (t, v) \iff s R_a t \land u R_a^N v$
+	\item $V'((s,u)) = V(s)$
 \end{itemize}
+We define pointed event model execution as $M_s \otimes N_u = (M \otimes N)_{(s, u)}$.
+This pointed model execution is only sensible if and only if $M_s \models pre^N(u)$ and thus $(s,u)
+	\in \Sigma'$.
 \end{defn}
 
 \begin{defn} \label{bisim}
@@ -246,16 +250,16 @@ knowledge state.
 
 \subsection{Technical preliminaries}
 
-We will discuss the single-agent arbitrary action model logic.
-Thus $A$ contains a single agent $a$ and our modal operators will only involve that agent for this
+In this chapter we will only discuss single-agent scenarios and modelling.
+Thus $A$ is the singleton $\{a\}$ and our modal operators will only involve the single agent for this
 chapter.
 
 \begin{defn} \label{arbitraryeventmodellogic}
 $L_{\otimes\forall}$ is the language of arbitrary action model logic, inductively defined as
 \[
-	\phi :== p | \not \phi | (\phi \land \phi) | \box \phi | [ M ] \phi | \forall \phi
+	\phi :== p | \not \phi | (\phi \land \phi) | \box \phi | [ M_T ] \phi | \forall \phi
 \]
-where $p$ is an atomic statement and $M \in \mathcal{AM}$ is a multi-pointed event model with
+where $p$ is an atomic statement and $M_T \in \mathcal{AM}$ is a multi-pointed event model with
 preconditions defined on $L_{\otimes\forall}$.
 \end{defn}
 We use the following standard abbreviations in addition to those in propostional logic
@@ -301,6 +305,19 @@ $M$ is a finite tree-like event model if
 \end{itemize}
 \end{defn}
 
+\begin{defn} \label{forest}
+Let $M_T = (\Sigma, R, pre, T)$ be a multi-pointed event model.
+$M_T$ is a finite forest event model if
+\begin{itemize}
+	\item each point $t$ in $T$ is the root of finite tree-like event model $M^t = (\Sigma^t, R^t,
+	pre^t, t)$
+	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$
+	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
+	\item for each $\sigma \in \Sigma^t$, $pre(\sigma) = pre^t(\sigma)$
+	\item if $s, t \in T$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+\end{itemize}
+\end{defn}
+
 \begin{defn} \label{subtree}
 Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
 We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
@@ -308,7 +325,7 @@ We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
 	\item $\Sigma' \subseteq \Sigma$
 	\item $\forall a \in A \implies R_a' \subseteq R_a$
 	\item $\forall \sigma \in \Sigma' \implies pre(\sigma) = pre'(\sigma) $
-	\item $M$ is $R$-generable
+	\item $M'$ is $R$-generable
 	\item there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ and a
 	sequence of agents in $A$, $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1} s_1, s_1 R_{a_2} s_2,
 	\ldots s_{n-1} R_{a_n} s_n$
@@ -400,24 +417,24 @@ fulfills the induction hypothesis.
 
 \begin{lemma}
 Let $\phi = \alpha \lor \beta \in \mathcal{L}_{\otimes\forall}$.
-Suppose that for $\gamma \in \{\alpha, \beta\}$ there is an event model $M_\gamma \in \mathcal{AM}$ such that
-$\vdash [M_\gamma] \gamma$
-and $\vdash \langle M_\gamma \rangle \gamma \iff \exists \gamma$.
-Then there exists a finite tree-like event model $M \in \mathcal{AM}$ such that $\vdash [M]\phi$ and
+Suppose that for $\gamma \in \{\alpha, \beta\}$ there is an event model $M^\gamma \in \mathcal{AM}$ such that
+$\vdash [M^\gamma] \gamma$
+and $\vdash \langle M^\gamma \rangle \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M \in \mathcal{AM}$ such that $\vdash [M]\phi$ and
 $\vdash \langle M \rangle \phi \iff \exists \phi$.
 \end{lemma}
 
 \begin{lemma}
 Let $\phi = \phi \land \cover \Gamma \in \mathcal{L}_{\otimes\forall}$.
-Suppose that for $\gamma \in \Gamma$ there is an event model $M_\gamma \in \mathcal{AM}$ such that
-$\vdash [M_\gamma] \gamma$ and $\vdash \langle M_\gamma \rangle \gamma \iff \exists \gamma$.
-Then there exists a finite tree-like event model $M \in \mathcal{AM}$ such that $\vdash [M]\phi$ and
+Suppose that for $\gamma \in \Gamma$ there is an event model $M^\gamma \in \mathcal{AM}$ such that
+$\vdash [M^\gamma] \gamma$ and $\vdash \langle M^\gamma \rangle \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M \in \mathcal{AM}$ such that $\vdash [M]\phi$ and
 $\vdash \langle M \rangle \phi \iff \exists \phi$.
 \end{lemma}
 
 \begin{thm}
 Let $B \subseteq A$, let $\phi \in \mathcal{L}_{\otimes\forall}$.
-Then there exists a finite tree-like event model $M \in \mathcal{AM}$ such that
+Then there exists a finite forest event model $M \in \mathcal{AM}$ such that
 $\vdash [M]\phi$ and $\vdash \langle M \rangle \phi \iff \exists \phi$.
 \end{thm}
 
