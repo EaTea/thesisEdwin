@@ -1,0 +1,567 @@
+%-----------------------------------------------------------------------------%
+%Packages%
+\documentclass[12pt, a4paper, titlepage]{scrartcl}
+\usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
+\usepackage{mathtools}
+\usepackage[usenames, dvipsnames]{color} %Color naming packages
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{float}
+\usepackage{verbatim} %for code
+\usepackage[pdftex]{graphics}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{tikz}
+\usepackage{comment}
+\usepackage[nottoc]{tocbibind}
+%\usepackage[square]{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\addtokomafont{disposition}{\rmfamily}
+\usetikzlibrary{arrows,shapes}
+
+%Graphis Extensions
+\DeclareGraphicsExtensions{.png, .jpg}
+\parindent 0pt
+
+% Predefined things such as commands, etc.
+
+\newtheorem{defn}{Definition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corr}{Corrollary}[section]
+\newtheorem*{remrk}{Remark}
+
+\newcommand{\cover}{\bigtriangledown}
+\newcommand{\lang}{\mathcal{L}}
+\newcommand{\langRefine}{\lang_{\forall}}
+\newcommand{\langActEx}{\lang_{\otimes}}
+\newcommand{\langArbAct}{\lang_{\otimes\forall}}
+
+\newcommand{\kripkeClass}{\mathcal{K}}
+\newcommand{\eventClass}{\mathcal{AM}}
+% Drawings of frames
+
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,->]
+\tikzstyle{weight} = [font=\small]
+
+%-----------------------------------------------------------------------------%
+%Document%
+\begin{document}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Technical preliminaries}
+In order to discuss event model synthesis, we first define essential concepts regarding event
+models and the semantics of the logics we are working within.
+
+\subsection{Models}
+
+\begin{defn} \label{frame}
+	Let $\Sigma$ be a set of atoms and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
+	accessibility relations.
+	Then the tuple $(\Sigma, R)$ is a frame.
+\end{defn}
+
+A frame represents a mathematical structure, but holds no meaningful information.
+In order to give meaning and be able to draw conclusions from the frame, we can
+construct a valuation function that transforms the frame into a model detailing
+information.
+\begin{defn} \label{model}
+	Let $L$ be a logical language.
+	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
+	In the context of epistemic modal logic, $\Sigma$ is a set of atomic knowledge points.
+	Let $V: L \to \mathcal{P}(\Sigma)$ be a function mapping any
+	well-formed	sentence in $L$ to a subset of $\Sigma$.
+	We say $V$ is a valuation function on $F$.\\
+	\\
+	Then $M = (F, V) = (\Sigma, R, V)$ is a Kripke
+	model.
+\end{defn}
+A pointed model $M_s$ is a model $M = (\Sigma, R, V)$ along with a designated state $s \in S$.
+A multi-pointed model is a model $M_T$ with a set of designated states, $T$.
+We say $\kripkeClass$ is the class of all Kripke models.
+
+\begin{defn} \label{evModel}
+	Let $L$ be a logical language.
+	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
+	An event model $M = (\Sigma, R, pre)$ with preconditions defined on $\mathcal{L}$ consists of
+	\begin{itemize}
+		\item a domain $\Sigma$ of possible atomic action points
+		\item an accessibility function, $R: A \to \mathcal{P}(S \times S)$, a function from agents to
+		accessibility relations on $\Sigma$.\\
+		We refer to $R(a)$ as $R_a$.
+		We will refer to all accessible action points from $s$ as $s R_a$, and all action points that
+		can access $t$ as $R_a t$.
+		Furthermore, we say $s R_a t$ means $t$ is $a$-accessible from $s$.
+		\item a precondition function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
+		sentence in $\mathcal{L}$
+	\end{itemize}
+\end{defn}
+
+Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
+models.
+We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
+pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
+
+\begin{defn} \label{evModelEx}
+Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
+		R^N, pre^N) \in
+\mathcal{AM}$ as follows.
+The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
+\begin{itemize}
+	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \vdash pre^N(u)\}$
+	\item $(s, u) R_a' (t, v) \iff s R_a t \land u R_a^N v$
+	\item $V'((s,u)) = V(s)$
+\end{itemize}
+We define pointed event model execution as $M_s \otimes N_u = (M \otimes N)_{(s, u)}$.
+This pointed model execution is only sensible if and only if $M_s \models pre^N(u)$ and thus $(s,u)
+	\in \Sigma'$.
+\end{defn}
+
+We say $\eventClass$ is the class of all event models.
+
+\begin{defn} \label{pub}
+Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
+Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)$ for each $a \in A$ and $\phi
+\in \mathcal{L}$.
+Then $M$ is a public announcement of $\phi$.
+We say $\mathcal{AM}_{PA}$ is the class of all action models that
+are public announcements of a sentence in $L$.
+\end{defn}
+
+\begin{defn} \label{insanity}
+Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
+where $\phi \in L$ and $\sigma$ is an action point.
+$M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
+$\mathcal{AM}_{IN} = \{M | \phi \in L\}$ is the class of all such action models,
+which we will term ``insanity models".
+\end{defn}
+
+\begin{defn} \label{brestrict}
+Let $B \subseteq A$ and let $N \in \mathcal{AM}$. Then $N$ is a $B$-restricted event model if and
+only if for every $u \in \Sigma$ and every $M_s \in \mathcal{L}$ such that $M_s \models pre(u)$ we
+have $M_s \otimes N_u \gtrsim_B M_s$.
+We call the class of $B$-restricted action models $\mathcal{AM}_B$.
+\end{defn}
+
+\subsection{Bisimilarity, simulation and refinement}
+
+\begin{defn} \label{bisim}
+	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
+	relation.
+	\begin{itemize}
+		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $pre(s)
+		\iff pre('s)$
+		\item {\bf front-$a$}: for each $s \in \Sigma$ such that $s \sim s'$, for each $t$ such that
+		$s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \sim t'$
+		\item {\bf back-$a$}: for each $s' \in \Sigma'$ such that $s \sim s'$, for each $t$ such that
+		$s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \sim t'$
+	\end{itemize}
+	$\sim$ is a bisimulation between $M$ and $M'$ if and only if {\bf atoms} holds and {\bf front-$a$}
+	and {\bf back-$a$} hold for each $a \in A$.
+	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
+\end{defn}
+% FIXME: add in citations
+
+\begin{lemma}
+	The relation $\sim$ is an equivalence relation.
+\end{lemma}
+
+\begin{defn} \label{refinement}
+Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
+\times \Sigma'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
+every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
+\end{defn}
+If $(\sigma, \sigma') \in \lesssim$ then we say $M'_{\sigma'}$ is a $B$-simulation of $M_\sigma$ and
+$M_\sigma$ a $B$-refinement of $M'_{\sigma'}$.
+We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsim M_{\sigma}$.
+
+\subsection{Language semantics}
+We now discuss the semantics and syntax of several different languages, culminating with language of
+arbitrary action model logic which will rely upon each of the languages we discuss.
+
+\begin{defn} \label{modalLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$.
+The language $\lang$ is inductively defined by
+\[
+	\phi ::== p | \neg \phi | (\phi \land \phi)
+\]
+The interpretation of $\phi \in \lang$ in the logic $K$ is defined inductively as
+\begin{itemize}
+	\item $M_s \models p$ iff $p \in V(s)$
+	\item $M_s \models \neg \phi$ iff $M_s \not \models \phi$
+	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
+	\item $M_s \models \Box_a \phi$ iff for every $t \in s R_a: M_t \models \phi$
+\end{itemize}
+\end{defn}
+The Kripke semantics for modal logic are well-known.
+We will adopt the standard abbreviations for Kripke semantics --- see FIXME.
+%FIXME: Add in citations and stuff
+In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
+its dual, $\diamond_a \phi$ means ``$a$ considers $\phi$ possible".\\
+\\
+We say that a formula $\phi$ is satisfied by a pointed model Kripke model $M_s \in \kripkeClass$ iff
+$M_s \models \phi$.
+We say that $\phi$ is satisfied by a model $M = (\Sigma, R, V)$ (denoted by $M \models \phi$) iff
+for all $\sigma \in \Sigma$, $M_\sigma \models \phi$.
+Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for every model $M \in
+\kripkeClass$, $M \models \phi$.\\
+\\
+%FIXME: Add citation
+In addition to $Box_a$ we introduce the cover operator, as first defined in FIXME.
+{\bf TODO: Add in citation to link to cover transformations. }
+
+\begin{defn} \label{actModelLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $N = (\Sigma^N, R^N, pre^N) \in
+\eventClass$ a multi-pointed event model.
+The interpretation of $\phi \in \langActEx$ is the same as its interpretation in $\lang$
+(\ref{modalLogic}), but with the additional
+inductive cases
+\begin{itemize}
+	\item $M_s \models [ N_\sigma ] \phi$ iff $M_s \models \phi \implies M_s \otimes N_\sigma \models
+	\phi$
+	\item $M_s \models [ N_T ] \phi$ iff for every $\sigma \in T$, $M_s \models [ N_\sigma ] \phi$ 
+\end{itemize}
+\end{defn}
+$[ N_\sigma ] \phi$ can be read as ``the successful execution of the informative update modelled by
+$N_\sigma$ will result in $\phi$ being true".
+Similarly, $[ N_T ] \phi$ can be read as ``the successful execution of the informative update
+modelled by $N_T$ will result in $\phi$ being true".\\
+\\
+We adopt the standard convention for the dual operators, with $\langle N_\sigma \rangle \phi$ being
+read as ``the successful execution of the informative update modelled by $N_\sigma$ may result in
+$\phi$ being true".
+Again, $\langle N_T \rangle \phi$ can be read as ``the successful execution of the informative
+update modelled by $N_T$ may result in $\phi$ being true".
+
+%FIXME: Add in citations to Baltag, Moss and Solecki
+
+\begin{defn} \label{refineLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model.
+The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the same as $\lang$
+(\ref{modalLogic}), but with the additional inductive case
+\[
+	M_s \models \forall_B \phi \text{ iff } \forall M'_{s'} \in \eventClass \text{ such that } M'_{s'}
+	\lesssim_B M_s : M'_{s'} \models \phi
+\]
+\end{defn}
+We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold".
+Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that $\phi$ will hold".
+
+%FIXME: Add in citations to Tim, Rowan, James
+
+\begin{defn} \label{arbActLogic}
+The language of arbitrary action model logic, $\langArbAct$ is first defined in FIXME.
+We inductively define $\langArbAct$ by
+\[
+	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | [ N_T ] \phi | \forall_B \phi
+\]
+for $N_T \in \eventClass$ and $B \subseteq A$.
+\end{defn}
+$\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $[ N_T ]$.
+
+%FIXME: Add in the citations of James
+
+\section{Single-agent epistemic goal achievement in $\langArbAct$}
+
+%FIXME: citations here
+In FIXME, Hales demonstrates that it is possible to determine whether an
+finite epistemic goal can be achieved.
+Furthermore, if it is achievable Hales constructs event models that will realise
+that goal.
+We will focus on defining a framework that constructs these event models in a
+recursive manner.
+This facilitates an automated method for updating knowledge models to reflect a
+knowledge state.
+
+\subsection{Technical preliminaries}
+
+The event models that Hales employs resemble finite trees.
+We give a rigourous definition for them as follows
+%\begin{defn} \label{finTree}
+%%TODO: Add in the definition of a finite tree-like event model.
+%Let $M = \{\Sigma, \sim, pre, T \}$ be a pointed event model.
+%$M$ is a finite tree-like event model if
+%\begin{itemize}
+%	\item $\Sigma$ is a finite set
+%	\item $T$ is a singleton set, $\{ r \}$ where $r \in \Sigma$ is the root of the tree
+%	\item each action $s$ in $\Sigma \setminus \{ t \}$, for each agent $a \in A$ has only at most 
+%	one action $p \in \Sigma$ such that $p \sim_a s$
+%	\item each action $s$ in $\Sigma$ fulfills either of
+%	\begin{itemize}
+%		\item each accessibility relation from $s$ is of the form $s \sim t$ where $t \neq s$
+%		\item each accessibility relation from $s$ is of the form $s \sim s$
+%	\end{itemize}
+%	\item let $s$ be an action in $\Sigma$; then there exists some sequence of actions $a_1, a_2,
+%	\ldots, a_k \in \Sigma$ such that $a_1 = r$, $a_k = s$ and $a_1 \sim a_2$, $a_2 \sim a_3$,
+%	$\ldots$, $a_{k-1} \sim a_k$
+%\end{itemize}
+%\end{defn}
+
+\begin{defn} \label{finTree}
+Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
+$M$ is a finite tree-like event model if
+\begin{itemize}
+	\item $\Sigma$, the set of action points is finite
+	\item $r$ is the root of the tree and is not accessible from any other action point
+	\item for each $s \in \Sigma \setminus \{ r \}$ there is a unique agent $a \in A$ and a unique
+	action $p \in \Sigma$ such that $(p,s) \in R(a)$
+	\item for each $s \in \Sigma$ there exists a unique sequence of actions in $\Sigma$, $r = s_0,
+	s_1, \ldots, s_n = s$ and a sequence of agents $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1}
+	s_1$, $s_1 R_{a_2} s_2$, $\ldots, s_{n-1} R_{a_n} s_n$
+\end{itemize}
+\end{defn}
+
+\begin{defn} \label{forest}
+Let $M_T = (\Sigma, R, pre, T)$ be a multi-pointed event model.
+$M_T$ is a finite forest event model if
+\begin{itemize}
+	\item each point $t$ in $T$ is the root of finite tree-like event model $M^t = (\Sigma^t, R^t,
+	pre^t, t)$
+	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$
+	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
+	\item for each $\sigma \in \Sigma^t$, $pre(\sigma) = pre^t(\sigma)$
+	\item if $s, t \in T$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+\end{itemize}
+\end{defn}
+
+\begin{defn} \label{subtree}
+Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
+We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
+\begin{itemize}
+	\item $\Sigma' \subseteq \Sigma$
+	\item $\forall a \in A \implies R_a' \subseteq R_a$
+	\item $\forall \sigma \in \Sigma' \implies pre(\sigma) = pre'(\sigma) $
+	\item $M'$ is $R$-generable
+	\item there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ and a
+	sequence of agents in $A$, $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1} s_1, s_1 R_{a_2} s_2,
+	\ldots s_{n-1} R_{a_n} s_n$
+\end{itemize}
+\end{defn}
+
+\begin{defn} \label{leaf}
+Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
+Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+$M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and $\Sigma' = \{ r'\}$.
+\end{defn}
+
+In order to generate these models, we must construct an algebra that can construct event models.
+However, we are unaware of any operations that are appropriate for building tree-like models.
+We define an operation to describe a group of agents' belief with regards to the possible execution
+of one event model instead of another.
+
+\begin{defn} \label{considers}
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
+generality let $M^1$ and $M^2$ be disjoint.
+Let $B$ be a subset of agents participating in $M^1$ or $M^2$.
+We define $M = M^1 \to_B M^2$ as 
+\begin{itemize}
+  \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  \item $R_a = R^1_a \cup R^2_a \text{if } a \notin B$
+	\item $R_a =
+      R^1_a \cup
+      R^2_a \cup
+      \{(s,t) | s \in T^1 \land t \in T^2 \}
+    \text{if } a \in B $
+  \item $pre = pre^1 \cup pre^2$
+  \item $T = T^1$
+\end{itemize}
+The $\to$ operator will be referred to as ``considers".
+\end{defn}
+
+$M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers $M^2$ as another
+possible update.
+We also present the disjoint union operator defined by FIXME.
+
+%FIXME: who introduced this? (Baltag and Moss)
+
+\begin{defn} \label{disjoint}
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of generality let $M^1$ and
+$M^2$ be disjoint.
+We define $M = M^1 \sqcup M^2$ as
+\begin{itemize}
+	\item $\Sigma = \Sigma^1 \cup \Sigma^2$
+	\item $R_a = R^1_a \cup R^2_a$
+	\item $pre = pre^1 \cup pre^2$
+	\item $T = T^1 \cup T^2$
+\end{itemize}
+\end{defn}
+This is the disjoint union of the two event models, which we can refer to as the agents in $A$
+knowing that one of the two models has occurred.
+Baltag and Moss call this a non-deterministic choice.
+%FIXME: cite
+
+We can use these operations to construct finite tree-like and forest event models, as we show
+in the next section.
+
+\subsection{Completeness}
+
+\begin{lemma}
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
+$M$ can be constructed using insanity event models and $\to$.
+\end{lemma}
+\begin{proof}
+Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+We will show by induction that for any $M'$ we can use insanity event models and $\to$ to
+construct $M'$.\\
+\\
+Suppose that $M' = (\Sigma', R', pre', r')$ is a leaf node.
+Let $pre'(r') = \phi$, a formula in our logical language.
+$M'$ is an insanity event model by definition.
+Thus, we can construct $M'$ using insanity event models when $M'$ is a leaf node of $M$.\\
+\\
+Let $M' = (\Sigma', R', pre', r')$ be an arbitrary subtree of $M$.
+Suppose $pre'(r') = \phi$, where $\phi$ is a formula in our logical language.
+Let $M^1, M^2, \ldots, M^n$ be all the disjoint subtrees of $M'$.
+Suppose that each of $M^1, M^2, \ldots, M^n$ fulfill the induction hypothesis.
+Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $r' R_{a_1} r^1$, $r' R_{a_2} r^2,
+	\ldots, r' R_{a_n} r^n$.\\
+\\
+Consider the insanity pointed-event model $M^t = (\{ t \}, R^t, pre^t, t)$.
+Let $pre^t(t) = \phi$.
+Consider the event model $M^K = $
+\[
+(\ldots((M^t \to_{\{a_1\}} M ^ 1) \to_{\{a_2\}} M_2) \to_{\{a_3\}} \ldots
+\to_{\{a_{n-1}\}} M^{n-1} ) \to_{\{a_n\}} M ^ n
+\]
+We will show that $M^K$ and $M'$ are equivalent event models.\\
+\\
+Each of $M^1, M^2, \ldots, M^n$ are subtrees of $M'$.
+The action points, accessibilities and preconditions in each of $M^1, M^2, \ldots, M^n$ are
+equivalent to the action points and the accessibilities and preconditions of those points in $M'$.
+We can see that by its definition the ``root" of $M^K$, $t$ has the same precondition as $r'$.
+Furthermore, both $r'$ and $t$ can access each of $M^1, M^2, \ldots M^n$ by an $a_1, a_2, \ldots, a_n$ edge
+respectively.\\
+\\
+Thus $M'$ and $M^K$ are equivalent.
+We can form $M'$ using insanity event models and $\to$, and thus any arbitrary subtree of $M'$
+fulfills the induction hypothesis.
+\end{proof}
+
+\subsection{Achieving information goals}
+
+\begin{lemma}
+Let $\phi = \pi \land \cover \Gamma \in \langArbAct$.
+Suppose that for $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
+$\vdash [M^\gamma_{T^gamma}] \gamma$ and $\vdash \langle M^\gamma_{T^\gamma} \rangle \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash [M_T]\phi$ and
+$\vdash \langle M_T \rangle \phi \iff \exists \phi$.
+\end{lemma}
+
+\begin{proof}
+Suppose $\Gamma = \varnothing$ and $\phi = \pi$.
+Hales shows in FIXME that an insanity model $M'_\sigma \in \eventClass_{IN}$ such that $pre(\sigma) =
+\exists \pi$ will result in $[M'_\sigma] \pi \iff [M'_\sigma] \phi$.
+By definition, $M'_\sigma$ is a finite tree-like event model and thus it is a finite forest event
+model.\\
+\\
+Now suppose $\Gamma = \{ \gamma_1, \gamma_2, \ldots \}$.
+Let $M''_{T''} = (\ldots((M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to
+			M^{\gamma_2}_{T^{\gamma_2}}) \to \ldots)$.
+\end{proof}
+
+
+\begin{lemma}
+Let $\phi = \alpha \lor \beta \in \langArbAct$.
+Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
+$\vdash [M^\gamma_T] \gamma$
+and $\vdash \langle M^\gamma \rangle \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash [M_T]\phi$ and
+$\vdash \langle M_T \rangle \phi \iff \exists \phi$.
+\end{lemma}
+
+\begin{thm}
+Let $B \subseteq A$, let $\phi \in \langArbAct$.
+Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that
+$\vdash [M_T]\phi$ and $\vdash \langle M_T \rangle \phi \iff \exists \phi$.
+\end{thm}
+
+\section{Multi-agent goal achievement in $\langArbAct$}
+
+``Insanity models" are a somewhat cumbersome construct, since their only purpose
+is to serve as nodes in the tree.
+They have no meaning outside of a tree-like structure and their semantics are
+unintuitive within the context of knowledge or belief.
+It would thus be desirable to reduce our atomic models to only group
+announcements, since public announcements have more meaning within the context of
+knowledge.\\
+\\
+In order to do so, we must define an operation that ensures that if $M^1$ was to
+be executed, a group of agents in $B$ would believe $M^2$ would be executed
+instead.
+%TODO: Add in the story/motivation --- why is this useful
+\begin{defn} \label{possTwo}
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
+generality let $M^1$ and $M^2$ be disjoint.
+Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
+We define $M = M^1 \mapsto_B M^2$ as 
+\begin{itemize}
+  \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  \item $R_a =
+    R^1_a \cup R^2_a \text{if } a \notin B$
+	\item $\sim_a =
+      R^1_a \setminus \{(s,t) | s \in T^1 \} \cup
+      R^2_a \cup
+      \{(s,t) | s \in T^1 \land t \in T^2 \}
+    \text{if } a \in B$
+  \item $pre = pre^1 \cup pre^2$
+  \item $T = T^1$
+\end{itemize}
+\end{defn}
+
+The ``meaning" of $M^1 \mapsto_B M^2$ would be that given a set of actions in
+$M^1$ the agents in $B$ believe that one of a set of actions in $M^2$ was
+executed instead.\\
+\\
+It would be desirable to see whether the class of public announcements, with
+$\to$ and $\mapsto$ would be sufficient to construct all tree-like action
+models.
+Conversely, using insanity and public announcement event models with $\to$ should be sufficient to construct
+all tree-like action models.
+\begin{thm}
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
+An event model $M^T \sim M$ can be constructed by public announcements, $\to$ and
+$\mapsto$.
+\end{thm}
+\begin{proof}
+We will show by induction that for any subtree of $M$,$M'$, we can construct a pointed event model
+$M^s \sim M'$ by public announcements, $\to$ and $\mapsto$.\\
+\\
+Suppose $M'$ is a leaf node of $M$.
+Then $M'$ is composed of a single action point $\sigma$.
+Let $pre(\sigma) = \phi$.
+Let $M^s$ be of the form $pub(\phi) \mapsto_A pub(\bot)$.
+\end{proof}
+It is clear that adding disjoint union to either of these sets of operators
+allows us to form all forests of tree-like event models.
+It also provides us with an alternate way to form tree-like event models.\\
+\\
+%TODO: this isn't true; how to resolve this properly? definition is not sound at the moment
+However, we cannot form tree-like event models with just $\mapsto$.
+Consider $M = (\Sigma, R, pre, T)$ such that
+\begin{itemize}
+	\item $\Sigma = \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}$
+	\item $R_a =
+\{(\sigma_1,\sigma_2),(\sigma_1,\sigma_3),(\sigma_2,\sigma_2),(\sigma_3,\sigma_3)\}$
+	\item $R_b = \{(\sigma_1,\sigma_3),(\sigma_1,\sigma_4),(\sigma_3,\sigma_3),(\sigma_4,\sigma_4)\}$
+	\item $T = \{ \sigma_1 \}$
+pre).
+\end{itemize}
+We cannot form this model using $ \mapsto $, due to $\sim_a \cap \sim_b \neq
+\varnothing$.\\
+\\
+We can form other interesting models besides trees using these operators.
+Let $B$, $C \subseteq A$, the set of all agents.
+Suppose $ann(\phi)_B$ is the event model of the group announcement of $\phi$.
+We define $skip$ as the public announcement of $\top$ to all agents.
+Then $ann(\phi)_B \to_C skip$ models all agents in $B$ learning $\phi$ whilst all agents in $C$
+believe that nothing has changed.
+Similarly, $skip \mapsto_C ann(\phi)_A$ models the announcement of $\phi$ by an external agent that
+the agents in $C$ trust, but the agents in $B$ do not.\\
+\\
+\end{document}
