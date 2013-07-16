@@ -130,7 +130,7 @@ Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
 Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)$ for each $a \in A$ and $\phi
 \in \mathcal{L}$.
 Then $M$ is a public announcement of $\phi$.
-We say $\mathcal{AM}_{PA}$ is the class of all action models that
+We say $\eventClass_{PA}$ is the class of all action models that
 are public announcements of a sentence in $L$.
 \end{defn}
 
@@ -138,15 +138,8 @@ are public announcements of a sentence in $L$.
 Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
 where $\phi \in L$ and $\sigma$ is an action point.
 $M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
-$\mathcal{AM}_{IN} = \{M | \phi \in L\}$ is the class of all such action models,
+$\eventClass_{IN} = \{M | \phi \in L\}$ is the class of all such action models,
 which we will term ``insanity models".
-\end{defn}
-
-\begin{defn} \label{brestrict}
-Let $B \subseteq A$ and let $N \in \mathcal{AM}$. Then $N$ is a $B$-restricted event model if and
-only if for every $u \in \Sigma$ and every $M_s \in \mathcal{L}$ such that $M_s \models pre(u)$ we
-have $M_s \otimes N_u \gtrsim_B M_s$.
-We call the class of $B$-restricted action models $\mathcal{AM}_B$.
 \end{defn}
 
 \subsection{Bisimilarity, simulation and refinement}
@@ -181,6 +174,13 @@ If $(\sigma, \sigma') \in \lesssim$ then we say $M'_{\sigma'}$ is a $B$-simulati
 $M_\sigma$ a $B$-refinement of $M'_{\sigma'}$.
 We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsim M_{\sigma}$.
 
+\begin{defn} \label{brestrict}
+Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
+only if for every $u \in \Sigma$ and every $M_s \in \kripkeClass$ such that $M_s \models pre(u)$ we
+have $M_s \otimes N_u \gtrsim_B M_s$.
+We call the class of $B$-restricted action models $\mathcal{AM}_B$.
+\end{defn}
+
 \subsection{Language semantics}
 We now discuss the semantics and syntax of several different languages, culminating with language of
 arbitrary action model logic which will rely upon each of the languages we discuss.
@@ -197,13 +197,16 @@ The interpretation of $\phi \in \lang$ in the logic $K$ is defined inductively a
 	\item $M_s \models \neg \phi$ iff $M_s \not \models \phi$
 	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
 	\item $M_s \models \Box_a \phi$ iff for every $t \in s R_a: M_t \models \phi$
+	\item $M_s \models \Box_B \phi$ iff for every $b \in B : M_s \models \Box_b \phi$
 \end{itemize}
+for $a \in A$, $B \subseteq A$, $s \in \Sigma$.
 \end{defn}
 The Kripke semantics for modal logic are well-known.
 We will adopt the standard abbreviations for Kripke semantics --- see FIXME.
 %FIXME: Add in citations and stuff
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
-its dual, $\diamond_a \phi$ means ``$a$ considers $\phi$ possible".\\
+its dual, $\diamond_a \phi$ means ``$a$ considers $\phi$ possible".
+In the case where $B = A$ we write $M_s \models \Box \phi$.\\
 \\
 We say that a formula $\phi$ is satisfied by a pointed model Kripke model $M_s \in \kripkeClass$ iff
 $M_s \models \phi$.
@@ -231,7 +234,8 @@ inductive cases
 $[ N_\sigma ] \phi$ can be read as ``the successful execution of the informative update modelled by
 $N_\sigma$ will result in $\phi$ being true".
 Similarly, $[ N_T ] \phi$ can be read as ``the successful execution of the informative update
-modelled by $N_T$ will result in $\phi$ being true".\\
+modelled by $N_T$ will result in $\phi$ being true".
+If $T = \Sigma^N$ then we write $M_s \models [ N ] \phi$.\\
 \\
 We adopt the standard convention for the dual operators, with $\langle N_\sigma \rangle \phi$ being
 read as ``the successful execution of the informative update modelled by $N_\sigma$ may result in
@@ -252,6 +256,8 @@ The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the sam
 \end{defn}
 We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold".
 Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that $\phi$ will hold".
+As in the previous operations, when $B = A$ we will write $\forall \phi$.
+In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
 
 %FIXME: Add in citations to Tim, Rowan, James
 
@@ -269,6 +275,10 @@ $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $[
 
 \section{Single-agent epistemic goal achievement in $\langArbAct$}
 
+In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
+epistemic goals or cause a model to crash in the process.
+Thus during our single agent treatment, we will say that $A = \{a\}$.\\
+\\
 %FIXME: citations here
 In FIXME, Hales demonstrates that it is possible to determine whether an
 finite epistemic goal can be achieved.
@@ -283,25 +293,6 @@ knowledge state.
 
 The event models that Hales employs resemble finite trees.
 We give a rigourous definition for them as follows
-%\begin{defn} \label{finTree}
-%%TODO: Add in the definition of a finite tree-like event model.
-%Let $M = \{\Sigma, \sim, pre, T \}$ be a pointed event model.
-%$M$ is a finite tree-like event model if
-%\begin{itemize}
-%	\item $\Sigma$ is a finite set
-%	\item $T$ is a singleton set, $\{ r \}$ where $r \in \Sigma$ is the root of the tree
-%	\item each action $s$ in $\Sigma \setminus \{ t \}$, for each agent $a \in A$ has only at most 
-%	one action $p \in \Sigma$ such that $p \sim_a s$
-%	\item each action $s$ in $\Sigma$ fulfills either of
-%	\begin{itemize}
-%		\item each accessibility relation from $s$ is of the form $s \sim t$ where $t \neq s$
-%		\item each accessibility relation from $s$ is of the form $s \sim s$
-%	\end{itemize}
-%	\item let $s$ be an action in $\Sigma$; then there exists some sequence of actions $a_1, a_2,
-%	\ldots, a_k \in \Sigma$ such that $a_1 = r$, $a_k = s$ and $a_1 \sim a_2$, $a_2 \sim a_3$,
-%	$\ldots$, $a_{k-1} \sim a_k$
-%\end{itemize}
-%\end{defn}
 
 \begin{defn} \label{finTree}
 Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
@@ -441,6 +432,19 @@ respectively.\\
 Thus $M'$ and $M^K$ are equivalent.
 We can form $M'$ using insanity event models and $\to$, and thus any arbitrary subtree of $M'$
 fulfills the induction hypothesis.
+\end{proof}
+
+\begin{lemma}
+Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
+Then $M$ can be constructed using $\to$, $\sqcup$ and insanity event models.
+\end{lemma}
+
+\begin{proof}
+We know that for each $t \in T$ there is a finite tree event model $M^t = (\Sigma^t, R^t, pre^t, t)$
+that we can construct using $\to$ and insanity event models.\\
+\\
+We thus consider the model $M' = \bigsqcup_{t \in T} M^t = (\Sigma', R', pre', T')$.
+Since $\Sigma' = \bigsqcup_{t \in T} \Sigma^t$
 \end{proof}
 
 \subsection{Achieving information goals}
