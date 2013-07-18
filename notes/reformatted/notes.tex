@@ -40,6 +40,8 @@
 
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
+\newcommand{\insaneClass}{\eventClass_{IN}}
+\newcommand{\publicAnnClass}{\eventClass_{PA}}
 % Drawings of frames
 
 \tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
@@ -130,7 +132,7 @@ Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
 Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)$ for each $a \in A$ and $\phi
 \in \mathcal{L}$.
 Then $M$ is a public announcement of $\phi$.
-We say $\eventClass_{PA}$ is the class of all action models that
+We say $\publicAnnClass$ is the class of all action models that
 are public announcements of a sentence in $L$.
 \end{defn}
 
@@ -138,7 +140,7 @@ are public announcements of a sentence in $L$.
 Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
 where $\phi \in L$ and $\sigma$ is an action point.
 $M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
-$\eventClass_{IN} = \{M | \phi \in L\}$ is the class of all such action models,
+$\insaneClass = \{M | \phi \in L\}$ is the class of all such action models,
 which we will term ``insanity models".
 \end{defn}
 
@@ -205,7 +207,7 @@ The Kripke semantics for modal logic are well-known.
 We will adopt the standard abbreviations for Kripke semantics --- see FIXME.
 %FIXME: Add in citations and stuff
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
-its dual, $\diamond_a \phi$ means ``$a$ considers $\phi$ possible".
+its dual, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
 In the case where $B = A$ we write $M_s \models \Box \phi$.\\
 \\
 We say that a formula $\phi$ is satisfied by a pointed model Kripke model $M_s \in \kripkeClass$ iff
@@ -273,6 +275,10 @@ $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $[
 
 %FIXME: Add in the citations of James
 
+\subsection{Axiomatisations}
+
+TODO: Add in later, too lazy right now.
+
 \section{Single-agent epistemic goal achievement in $\langArbAct$}
 
 In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
@@ -296,7 +302,7 @@ We give a rigourous definition for them as follows
 
 \begin{defn} \label{finTree}
 Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
-$M$ is a finite tree-like event model if
+$M$ is a finite tree event model if
 \begin{itemize}
 	\item $\Sigma$, the set of action points is finite
 	\item $r$ is the root of the tree and is not accessible from any other action point
@@ -312,7 +318,7 @@ $M$ is a finite tree-like event model if
 Let $M_T = (\Sigma, R, pre, T)$ be a multi-pointed event model.
 $M_T$ is a finite forest event model if
 \begin{itemize}
-	\item each point $t$ in $T$ is the root of finite tree-like event model $M^t = (\Sigma^t, R^t,
+	\item each point $t$ in $T$ is the root of finite tree event model $M^t = (\Sigma^t, R^t,
 	pre^t, t)$
 	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$
 	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
@@ -321,8 +327,10 @@ $M_T$ is a finite forest event model if
 \end{itemize}
 \end{defn}
 
+TODO: make sure definition of forest and finTree allow for forest to trivially be a finTree
+
 \begin{defn} \label{subtree}
-Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
+Let $M = (\Sigma, R, pre, r)$ be a finite tree event model.
 We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
 \begin{itemize}
 	\item $\Sigma' \subseteq \Sigma$
@@ -336,13 +344,13 @@ We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
 \end{defn}
 
 \begin{defn} \label{leaf}
-Let $M = (\Sigma, R, pre, r)$ be a finite tree-like event model.
+Let $M = (\Sigma, R, pre, r)$ be a finite tree event model.
 Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
 $M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and $\Sigma' = \{ r'\}$.
 \end{defn}
 
 In order to generate these models, we must construct an algebra that can construct event models.
-However, we are unaware of any operations that are appropriate for building tree-like models.
+However, we are unaware of any operations that are appropriate for building tree models.
 We define an operation to describe a group of agents' belief with regards to the possible execution
 of one event model instead of another.
 
@@ -387,13 +395,13 @@ knowing that one of the two models has occurred.
 Baltag and Moss call this a non-deterministic choice.
 %FIXME: cite
 
-We can use these operations to construct finite tree-like and forest event models, as we show
+We can use these operations to construct finite tree and forest event models, as we show
 in the next section.
 
 \subsection{Completeness}
 
 \begin{lemma}
-Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree event model.
 $M$ can be constructed using insanity event models and $\to$.
 \end{lemma}
 \begin{proof}
@@ -450,25 +458,102 @@ Since $\Sigma' = \bigsqcup_{t \in T} \Sigma^t$
 \subsection{Achieving information goals}
 
 \begin{lemma}
-Let $\phi = \pi \land \cover \Gamma \in \langArbAct$, where $\Gamma$ is a finite set.
+Let $\phi = \pi \land \cover \Gamma \in \langArbAct$, where $\Gamma = \{\gamma_1, \gamma_2, \ldots,
+		\gamma_n\}$ is a finite set.
 Suppose that for $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
-$\vdash [M^\gamma_{T^gamma}] \gamma$ and $\vdash \langle M^\gamma_{T^\gamma} \rangle \gamma \iff \exists \gamma$.
+$\vdash [M^\gamma_{T^\gamma}] \gamma$ and $\vdash \langle M^\gamma_{T^\gamma} \rangle \gamma \iff \exists \gamma$.
 Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash [M_T]\phi$ and
 $\vdash \langle M_T \rangle \phi \iff \exists \phi$.
 \end{lemma}
 
 \begin{proof}
-Suppose $\Gamma = \varnothing$ and $\phi = \pi$.
-Hales shows in FIXME that an insanity model $M'_\sigma \in \eventClass_{IN}$ such that $pre(\sigma) =
+Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
 \exists \pi$ will result in $[M'_\sigma] \pi \iff [M'_\sigma] \phi$.
-By definition, $M'_\sigma$ is a finite tree-like event model and thus it is a finite forest event
-model.\\
+Now suppose $\Gamma = \{ \gamma_1, \gamma_2, \ldots, \gamma_n \}$.
+Let $M_T = ((\ldots((M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to
+			M^{\gamma_2}_{T^{\gamma_2}}) \to \ldots ) \to M^{\gamma_n}_{T^{\gamma_n}} )$.\\
 \\
-Now suppose $\Gamma = \{ \gamma_1, \gamma_2, \ldots \}$.
-Let $M''_{T''} = (\ldots((M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to
-			M^{\gamma_2}_{T^{\gamma_2}}) \to \ldots)$.
-\end{proof}
+Our proof is decomposed into three parts.
+Firstly, we show that $M_T$ is a finite tree event model and by extension a finite forest event
+model.
+Secondly, we show that $\vdash [M_T] \phi$.
+Lastly, we show $\vdash \langle M_T \rangle \phi \iff \exists \phi$.\\
+\\
+To show that $M_T$ is a finite tree event model, we observe the following.
+Firstly, $M_T$ is a pointed event model, with its point at $\sigma$.
+$\Sigma$ is a finite set and the point $\sigma$ is inaccessible from any other point in $\Sigma$.\\
+\\
+Furthermore, let $\sigma_k$ be some point in $\Sigma \setminus \{ \sigma \}$.
+Then $\sigma_k \in M^{\gamma_k}_{t^{\gamma_k}}$ where $M^{\gamma_k}_{t^{\gamma_k}}$ is the finite
+tree event model corresponding to $\gamma_k \in \Gamma$ and $t^{\gamma_k} \in T^{\gamma_k}$.
+We observe that by the definition of finite tree event models there exists a unique sequence
+$\sigma^{1}_{k}, \sigma^2_{k}, \ldots, \sigma^d_k \in \Sigma^{\gamma_k}_{t^{\gamma_k}}$ such that
+$t^{\gamma_k} R \sigma^1_k$, $\sigma^1_k R \sigma^2_k$, $\ldots$, $\sigma^{d-1}_k R \sigma^d_k$,
+$\sigma^d_k R \sigma_k$.
+Thus $M^{\gamma_k}_{t^{\gamma_k}}$ is a finite tree event model with its point $t^{\gamma_k} \in
+T^{\gamma_k}$.
+By the definition ot $\to$, $(\ldots (M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to \ldots ) \to
+M^{\gamma_k}_{T^{\gamma_k}} \implies \sigma R t^{\gamma_k}$.
+Then there is a unique path from $\sigma$ to $\sigma_k$.
+Thus $M_T$ is a finite tree event model and is also a finite forest event model.\\
+\\
+Next, we shall show that $\vdash [M_T] \phi$.
+We will show that each of the following holds
+\begin{enumerate}
+	\item $\vdash [ M_T ] \pi$
+	\item $\vdash [ M_T ] \Box \bigwedge_{\gamma \in \Gamma} \gamma$
+	\item $\vdash [ M_T ] \bigvee_{\gamma \in \Gamma} \Diamond \gamma$
+\end{enumerate}
 
+Firstly we show $\vdash [M_T] \pi$.
+\begin{eqnarray}
+	& \vdash & \phi \implies \pi \\
+	& \vdash & \neg \pi \implies \neg \phi \\
+	& \vdash & \forall (\neg \pi \implies \neg \phi) \\
+	& \vdash & \forall \neg \pi \implies \forall \neg \phi \\
+	& \vdash & \neg \forall \neg \phi \implies \neg \forall \neg \pi \\
+	& \vdash & \exists \phi \implies \exists \pi \\
+	& \vdash & pre(\sigma) \implies \exists \pi \\
+	& \vdash & pre(\sigma) \implies \pi \\
+	& \vdash & [M_\sigma] \pi
+\end{eqnarray}
+
+Next, we show $\vdash [M_T] \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
+
+\begin{eqnarray}
+	& \vdash & [ M^{\gamma}_{T^{\gamma}} ] \gamma \text{ for every }\gamma \in \Gamma\\
+	& \vdash & \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every }\gamma \in \Gamma\\
+	& \vdash & \Box \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
+	& \vdash & \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
+	& \vdash & \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma\\
+	& \vdash & \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v]
+	\bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash & \bigwedge_{v \in \sigma R} \Box [M^\gamma_v]\bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash & pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box [M_v] \bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash & [M_\sigma] \Box \bigvee_{\gamma' \in \Gamma} \gamma'
+\end{eqnarray}
+
+Finally, we show $\vdash [M_\sigma]\bigwedge_{\gamma \in \Gamma} \Diamond \gamma$.
+
+\begin{eqnarray}
+	& \vdash & \exists \phi \implies \exists \cover \Gamma\\
+	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists \gamma\\
+	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
+	M^\gamma_{T^{\gamma}} \rangle \gamma\\
+	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
+	\bigvee_{v \in T^\gamma} M^\gamma_{v} \rangle \gamma\\
+	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
+	\bigvee_{v \in \sigma R} M^\gamma_{v} \rangle \gamma\\
+	& \vdash & \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \bigvee_{v \in \sigma R}
+	\Diamond \langle M^\gamma_{v} \rangle \gamma)\\
+	& \vdash & \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \langle M^\gamma_{\sigma}
+	\rangle \Diamond \gamma)\\
+	& \vdash & \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)
+\end{eqnarray}
+
+Together, we combine our result to show
+
+\end{proof}
 
 \begin{lemma}
 Let $\phi = \alpha \lor \beta \in \langArbAct$.
@@ -489,7 +574,7 @@ $\vdash [M_T]\phi$ and $\vdash \langle M_T \rangle \phi \iff \exists \phi$.
 
 ``Insanity models" are a somewhat cumbersome construct, since their only purpose
 is to serve as nodes in the tree.
-They have no meaning outside of a tree-like structure and their semantics are
+They have no meaning outside of a tree structure and their semantics are
 unintuitive within the context of knowledge or belief.
 It would thus be desirable to reduce our atomic models to only group
 announcements, since public announcements have more meaning within the context of
@@ -523,12 +608,12 @@ $M^1$ the agents in $B$ believe that one of a set of actions in $M^2$ was
 executed instead.\\
 \\
 It would be desirable to see whether the class of public announcements, with
-$\to$ and $\mapsto$ would be sufficient to construct all tree-like action
+$\to$ and $\mapsto$ would be sufficient to construct all tree action
 models.
 Conversely, using insanity and public announcement event models with $\to$ should be sufficient to construct
-all tree-like action models.
+all tree action models.
 \begin{thm}
-Suppose $M = (\Sigma, R, pre, r)$ is a finite tree-like event model.
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree event model.
 An event model $M^T \sim M$ can be constructed by public announcements, $\to$ and
 $\mapsto$.
 \end{thm}
@@ -542,11 +627,11 @@ Let $pre(\sigma) = \phi$.
 Let $M^s$ be of the form $pub(\phi) \mapsto_A pub(\bot)$.
 \end{proof}
 It is clear that adding disjoint union to either of these sets of operators
-allows us to form all forests of tree-like event models.
-It also provides us with an alternate way to form tree-like event models.\\
+allows us to form all forests of tree event models.
+It also provides us with an alternate way to form tree event models.\\
 \\
 %TODO: this isn't true; how to resolve this properly? definition is not sound at the moment
-However, we cannot form tree-like event models with just $\mapsto$.
+However, we cannot form tree event models with just $\mapsto$.
 Consider $M = (\Sigma, R, pre, T)$ such that
 \begin{itemize}
 	\item $\Sigma = \{\sigma_1, \sigma_2, \sigma_3, \sigma_4\}$
