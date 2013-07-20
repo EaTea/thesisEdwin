@@ -35,6 +35,8 @@
 \numberwithin{equation}{section}
 
 \newcommand{\cover}{\bigtriangledown}
+\newcommand{\sqex}[1]{[{#1}]}
+\newcommand{\anex}[1]{\langle {#1} \rangle}
 \newcommand{\lang}{\mathcal{L}}
 \newcommand{\langRefine}{\lang_{\forall}}
 \newcommand{\langActEx}{\lang_{\otimes}}
@@ -230,21 +232,21 @@ The interpretation of $\phi \in \langActEx$ is the same as its interpretation in
 (\ref{modalLogic}), but with the additional
 inductive cases
 \begin{itemize}
-	\item $M_s \models [ N_\sigma ] \phi$ iff $M_s \models \phi \implies M_s \otimes N_\sigma \models
+	\item $M_s \models \sqex{N_\sigma} \phi$ iff $M_s \models \phi \implies M_s \otimes N_\sigma \models
 	\phi$
-	\item $M_s \models [ N_T ] \phi$ iff for every $\sigma \in T$, $M_s \models [ N_\sigma ] \phi$ 
+	\item $M_s \models \sqex{N_T} \phi$ iff for every $\sigma \in T$, $M_s \models \sqex{N_\sigma} \phi$ 
 \end{itemize}
 \end{defn}
-$[ N_\sigma ] \phi$ can be read as ``the successful execution of the informative update modelled by
+$\sqex{N_\sigma} \phi$ can be read as ``the successful execution of the informative update modelled by
 $N_\sigma$ will result in $\phi$ being true".
-Similarly, $[ N_T ] \phi$ can be read as ``the successful execution of the informative update
+Similarly, $\sqex{N_T} \phi$ can be read as ``the successful execution of the informative update
 modelled by $N_T$ will result in $\phi$ being true".
-If $T = \Sigma^N$ then we write $M_s \models [ N ] \phi$.\\
+If $T = \Sigma^N$ then we write $M_s \models \sqex{N} \phi$.\\
 \\
-We adopt the standard convention for the dual operators, with $\langle N_\sigma \rangle \phi$ being
+We adopt the standard convention for the dual operators, with $\anex{ N_\sigma } \phi$ being
 read as ``the successful execution of the informative update modelled by $N_\sigma$ may result in
 $\phi$ being true".
-Again, $\langle N_T \rangle \phi$ can be read as ``the successful execution of the informative
+Again, $\anex{ N_T } \phi$ can be read as ``the successful execution of the informative
 update modelled by $N_T$ may result in $\phi$ being true".
 
 %FIXME: Add in citations to Baltag, Moss and Solecki
@@ -269,11 +271,11 @@ In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
 The language of arbitrary action model logic, $\langArbAct$ is first defined in FIXME.
 We inductively define $\langArbAct$ by
 \[
-	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | [ N_T ] \phi | \forall_B \phi
+	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | \sqex{N_T} \phi | \forall_B \phi
 \]
 for $N_T \in \eventClass$ and $B \subseteq A$.
 \end{defn}
-$\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $[ N_T ]$.
+$\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{N_T}$.
 
 %FIXME: Add in the citations of James
 
@@ -463,14 +465,14 @@ Since $\Sigma' = \bigsqcup_{t \in T} \Sigma^t$
 Let $\phi = \pi \land \cover \Gamma \in \langArbAct$, where $\Gamma = \{\gamma_1, \gamma_2, \ldots,
 		\gamma_n\}$ is a finite set.
 Suppose that for $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
-$\vdash [M^\gamma_{T^\gamma}] \gamma$ and $\vdash \langle M^\gamma_{T^\gamma} \rangle \gamma \iff \exists \gamma$.
-Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash [M_T]\phi$ and
-$\vdash \langle M_T \rangle \phi \iff \exists \phi$.
+$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash \sqex{M_T}\phi$ and
+$\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \end{lemma}
 
 \begin{proof}
 Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
-\exists \pi$ will result in $[M'_\sigma] \pi \iff [M'_\sigma] \phi$.
+\exists \pi$ will result in $\sqex{M'_\sigma} \pi \iff \sqex{M'_\sigma} \phi$.
 Now suppose $\Gamma = \{ \gamma_1, \gamma_2, \ldots, \gamma_n \}$.
 Let $M_T = ((\ldots((M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to
 			M^{\gamma_2}_{T^{\gamma_2}}) \to \ldots ) \to M^{\gamma_n}_{T^{\gamma_n}} )$.\\
@@ -478,8 +480,8 @@ Let $M_T = ((\ldots((M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to
 Our proof is decomposed into three parts.
 Firstly, we show that $M_T$ is a finite tree event model and by extension a finite forest event
 model.
-Secondly, we show that $\vdash [M_T] \phi$.
-Lastly, we show $\vdash \langle M_T \rangle \phi \iff \exists \phi$.\\
+Secondly, we show that $\vdash \sqex{M_T} \phi$.
+Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.\\
 \\
 According to Definition \ref{finTree} $M_T = (\Sigma, R, pre, T)$ is a finite tree event model, the following four conditions must hold:
 \begin{enumerate}
@@ -518,15 +520,15 @@ Then $s \in \Sigma^\gamma$ for some $\gamma \in \Gamma$.
 Then there is a unique path from $s' \in T^\gamma$ to $s$.
 Furthermore, $\sigma R s'$, and so there is a unique path from $\sigma$ to $s$.\\
 \\
-Next, we shall show that $\vdash [M_T] \phi$.
+Next, we shall show that $\vdash \sqex{M_T} \phi$.
 We will show that each of the following holds
 \begin{enumerate}
-	\item $\vdash [ M_T ] \pi$
-	\item $\vdash [ M_T ] \Box \bigwedge_{\gamma \in \Gamma} \gamma$
-	\item $\vdash [ M_T ] \bigvee_{\gamma \in \Gamma} \Diamond \gamma$
+	\item $\vdash \sqex{M_T} \pi$
+	\item $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$
+	\item $\vdash \sqex{M_T} \bigvee_{\gamma \in \Gamma} \Diamond \gamma$
 \end{enumerate}
 
-Firstly we show $\vdash [M_T] \pi$.
+Firstly we show $\vdash \sqex{M_T} \pi$.
 \begin{align}
 	& \vdash \phi \implies \pi \\
 	& \vdash \neg \pi \implies \neg \phi \\
@@ -536,65 +538,108 @@ Firstly we show $\vdash [M_T] \pi$.
 	& \vdash \exists \phi \implies \exists \pi \\
 	& \vdash pre(\sigma) \implies \exists \pi \\
 	& \vdash pre(\sigma) \implies \pi \\
-	& \vdash [M_\sigma] \pi
+	& \vdash \sqex{M_\sigma} \pi
 \end{align}
 
-Next, we show $\vdash [M_T] \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
+Next, we show $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
 
 \begin{align}
-	& \vdash [ M^{\gamma}_{T^{\gamma}} ] \gamma \text{ for every }\gamma \in \Gamma\\
-	& \vdash \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every }\gamma \in \Gamma\\
-	& \vdash \Box \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
-	& \vdash \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
-	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma\\
-	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v]
+	& \vdash \sqex{M^{\gamma}_{T^{\gamma}}} \gamma \text{ for every }\gamma \in \Gamma\\
+	& \vdash \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every }\gamma \in \Gamma\\
+	& \vdash \Box \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in \Gamma\\
+	& \vdash \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in \Gamma\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v} \gamma\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v}
 	\bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash \bigwedge_{v \in \sigma R} \Box [M^\gamma_v]\bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box [M_v] \bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash [M_\sigma] \Box \bigvee_{\gamma' \in \Gamma} \gamma'
+	& \vdash \bigwedge_{v \in \sigma R} \Box \sqex{M^\gamma_v}\bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash \sqex{M_\sigma} \Box \bigvee_{\gamma' \in \Gamma} \gamma'
 \end{align}
 
-Finally, we show $\vdash [M_\sigma]\bigwedge_{\gamma \in \Gamma} \Diamond \gamma$.
+Finally, we show $\vdash \sqex{M_\sigma}\bigwedge_{\gamma \in \Gamma} \Diamond \gamma$.
 
 \begin{align}
 	& \vdash \exists \phi \implies \exists \cover \Gamma\\
 	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists \gamma\\
-	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
-	M^\gamma_{T^{\gamma}} \rangle \gamma\\
-	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
-	\bigvee_{v \in T^\gamma} M^\gamma_{v} \rangle \gamma\\
-	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
-	\bigvee_{v \in \sigma R} M^\gamma_{v} \rangle \gamma\\
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \anex{
+	M^\gamma_{T^{\gamma}} } \gamma\\
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \anex{
+	\bigvee_{v \in T^\gamma} M^\gamma_{v} } \gamma\\
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \anex{
+	\bigvee_{v \in \sigma R} M^\gamma_{v} } \gamma\\
 	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \bigvee_{v \in \sigma R}
-	\Diamond \langle M^\gamma_{v} \rangle \gamma)\\
-	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \langle M^\gamma_{\sigma}
-	\rangle \Diamond \gamma)\\
+	\Diamond \anex{ M^\gamma_{v} } \gamma)\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \anex{ M^\gamma_{\sigma}
+	} \Diamond \gamma)\\
 	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)
 \end{align}
 
 Together, we combine our result to show
 
 \begin{align}
-	& \vdash [M_\sigma] \pi \land [M_\sigma] \Box \bigvee_{\gamma \in \Gamma} \gamma \land
-	\bigwedge_{\gamma \in \Gamma} [M_\sigma] \Diamond \gamma \\
-	& \vdash [M_\sigma](\pi \land \cover \Gamma)
+	& \vdash \sqex{M_\sigma} \pi \land \sqex{M_\sigma} \Box \bigvee_{\gamma \in \Gamma} \gamma \land
+	\bigwedge_{\gamma \in \Gamma} \sqex{M_\sigma} \Diamond \gamma \\
+	& \vdash \sqex{M_\sigma}(\pi \land \cover \Gamma)
+\end{align}
+
+Lastly, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
+
+\begin{align}
+	& \vdash \anex{ M_\sigma } \phi \iff (pre(\sigma) \land [ M_\sigma ] \phi\\
+	& \vdash \anex{ M_\sigma } \phi \iff pre(\sigma)\\
+	& \vdash \anex{ M_\sigma } \phi \iff \exists \phi
 \end{align}
 
 \end{proof}
 
 \begin{lemma}
 Let $\phi = \alpha \lor \beta \in \langArbAct$.
-Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
-$\vdash [M^\gamma_T] \gamma$
-and $\vdash \langle M^\gamma \rangle \gamma \iff \exists \gamma$.
-Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash [M_T]\phi$ and
-$\vdash \langle M_T \rangle \phi \iff \exists \phi$.
+Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
+$M^\gamma_{T^\gamma} \in \mathcal{AM}$ such that
+$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$
+and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash \sqex{M_T}\phi$ and
+$\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \end{lemma}
+
+\begin{proof}
+Let $M_T = M^\alpha_{T^\alpha} \sqcup M^\beta_{T\beta}$.
+We will show three things.
+Firstly, that $M_T$ is a finite forest event model.
+Secondly, that $\vdash \sqex{M_T}\phi$.
+Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.\\
+\\
+To show that $M_T$ is a finite forest event model, we observe that $M_T$ is a disjoint union of two
+finite forest event models.
+Thus each action point in $M_T$ is bisimilar to a corresponding point in $M^\alpha_{T^\alpha}$ or
+$M^\beta_{T^\beta}$.
+Since each of $M^\alpha_{T^\alpha}$ and $M^\beta_{T^\beta}$ are finite forest event models and no
+new accessibilities are added to $R$.
+Thus $M_T$ is a finite forest event model.\\
+\\
+Next, we show that $\vdash \sqex{M_T}\phi$.
+\begin{align}
+	&\vdash \sqex{M^\alpha_{T^\alpha}}\alpha \land \sqex{M^\beta_{T^\beta}}\beta\\
+	&\vdash \sqex{M_{T^\alpha}}\alpha \land \sqex{M_{T^\beta}}\beta\\
+	&\vdash \sqex{M_{T^\alpha}}(\alpha \lor \beta) \land \sqex{M_{T^\beta}}(\alpha \lor \beta)\\
+\end{align}
+
+\begin{align}
+	&\vdash \exists (\alpha \lor \beta) \implies (\exists \alpha \lor \exists \beta) \\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{ M^\alpha_{T^\alpha} } \alpha \lor
+			\anex{ M^\beta_{T^\beta} }\beta) \\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} \alpha \lor \anex{M_{T^\beta}}
+			\beta)\\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} (\alpha \lor \beta) \lor \anex{M_{T^\beta}}
+			(\alpha \lor \beta))\\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_T} (\alpha \lor \beta))
+\end{align}
+\end{proof}
 
 \begin{thm}
 Let $B \subseteq A$, let $\phi \in \langArbAct$ be a finite formula.
 Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that
-$\vdash [M_T]\phi$ and $\vdash \langle M_T \rangle \phi \iff \exists \phi$.
+$\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \end{thm}
 
 \section{Multi-agent goal achievement in $\langArbAct$}
