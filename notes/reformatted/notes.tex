@@ -32,6 +32,8 @@
 \newtheorem{corr}{Corrollary}[section]
 \newtheorem*{remrk}{Remark}
 
+\numberwithin{equation}{section}
+
 \newcommand{\cover}{\bigtriangledown}
 \newcommand{\lang}{\mathcal{L}}
 \newcommand{\langRefine}{\lang_{\forall}}
@@ -479,23 +481,42 @@ model.
 Secondly, we show that $\vdash [M_T] \phi$.
 Lastly, we show $\vdash \langle M_T \rangle \phi \iff \exists \phi$.\\
 \\
-To show that $M_T$ is a finite tree event model, we observe the following.
-Firstly, $M_T$ is a pointed event model, with its point at $\sigma$.
-$\Sigma$ is a finite set and the point $\sigma$ is inaccessible from any other point in $\Sigma$.\\
+According to Definition \ref{finTree} $M_T = (\Sigma, R, pre, T)$ is a finite tree event model, the following four conditions must hold:
+\begin{enumerate}
+	\item $\Sigma$ is finite \label{treeConFinite}
+	\item $T = \{\sigma\}$, where $R \sigma = \varnothing$ \label{treeConRoot}
+	\item for each $s \in \Sigma \setminus T$ there is only one $a \in A$ and only one $p \in \Sigma$
+	such that $p R_a s$ \label{treeConOneAgent}
+	\item for each $s \in \Sigma$ there is a unique finite sequence of points in $\Sigma$, $\sigma =
+	s_0, s_1, s_2, \ldots, s_k = s$ and a sequence of agents $a_1, a_2, \ldots, a_k$ such that $s_0
+	R_{a_1} s_1, s_1 R_{a_2} s_2, \ldots, a_{k-1} R_k
+	a_k$ \label{treeConUniquePath}
+\end{enumerate}
+
+We note that condition \ref{treeConFinite} is satisfied by the definition of $M_T$ as
+\[\Sigma = \{\sigma\} \bigcup_{\gamma \in \Gamma} \Sigma^{\gamma}\]
+where $\gamma$ is a finite set and each $\Sigma^\gamma$ is finite.
+Therefore, $\Sigma$ itself must also be finite.\\
 \\
-Furthermore, let $\sigma_k$ be some point in $\Sigma \setminus \{ \sigma \}$.
-Then $\sigma_k \in M^{\gamma_k}_{t^{\gamma_k}}$ where $M^{\gamma_k}_{t^{\gamma_k}}$ is the finite
-tree event model corresponding to $\gamma_k \in \Gamma$ and $t^{\gamma_k} \in T^{\gamma_k}$.
-We observe that by the definition of finite tree event models there exists a unique sequence
-$\sigma^{1}_{k}, \sigma^2_{k}, \ldots, \sigma^d_k \in \Sigma^{\gamma_k}_{t^{\gamma_k}}$ such that
-$t^{\gamma_k} R \sigma^1_k$, $\sigma^1_k R \sigma^2_k$, $\ldots$, $\sigma^{d-1}_k R \sigma^d_k$,
-$\sigma^d_k R \sigma_k$.
-Thus $M^{\gamma_k}_{t^{\gamma_k}}$ is a finite tree event model with its point $t^{\gamma_k} \in
-T^{\gamma_k}$.
-By the definition ot $\to$, $(\ldots (M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to \ldots ) \to
-M^{\gamma_k}_{T^{\gamma_k}} \implies \sigma R t^{\gamma_k}$.
-Then there is a unique path from $\sigma$ to $\sigma_k$.
-Thus $M_T$ is a finite tree event model and is also a finite forest event model.\\
+Condition \ref{treeConRoot} is satisfied by the definition of $M_T$ and the definition of $\to$
+(Definition \ref{considers}).
+$\to$ only adds relations to $\sigma R$, and $R \sigma$ begins as $\varnothing$.
+Thus $\sigma$ is not accessible from any other points.\\
+\\
+We next show \ref{treeConOneAgent} is satisfied.
+Since $A = \{a\}$, all that remains to be shown is that for each $s$ in $\Sigma \setminus T$, there is a unique
+$p \in \Sigma$ such that $p R s$.
+Let us suppose $s \in \Sigma^\gamma$, for some $\gamma \in \Gamma$.
+If $s \in T^\gamma$, then $R s = \{ \sigma \}$ by the definition of $M_T$.
+Otherwise, by the definition of $M^\gamma_{T^\gamma}$, any $s \notin T^\gamma$ is in some finite
+forest event model and there is some $p \in \Sigma^\gamma$ such that $p R s$.\\
+\\
+Lastly, we satisfy \ref{treeConUniquePath} with a similar argument to the previous argument.
+Suppose $s = \sigma$; the path is trivial.
+Now, suppose $s \in \Sigma \setminus \{ \sigma \}$.
+Then $s \in \Sigma^\gamma$ for some $\gamma \in \Gamma$.
+Then there is a unique path from $s' \in T^\gamma$ to $s$.
+Furthermore, $\sigma R s'$, and so there is a unique path from $\sigma$ to $s$.\\
 \\
 Next, we shall show that $\vdash [M_T] \phi$.
 We will show that each of the following holds
@@ -506,52 +527,58 @@ We will show that each of the following holds
 \end{enumerate}
 
 Firstly we show $\vdash [M_T] \pi$.
-\begin{eqnarray}
-	& \vdash & \phi \implies \pi \\
-	& \vdash & \neg \pi \implies \neg \phi \\
-	& \vdash & \forall (\neg \pi \implies \neg \phi) \\
-	& \vdash & \forall \neg \pi \implies \forall \neg \phi \\
-	& \vdash & \neg \forall \neg \phi \implies \neg \forall \neg \pi \\
-	& \vdash & \exists \phi \implies \exists \pi \\
-	& \vdash & pre(\sigma) \implies \exists \pi \\
-	& \vdash & pre(\sigma) \implies \pi \\
-	& \vdash & [M_\sigma] \pi
-\end{eqnarray}
+\begin{align}
+	& \vdash \phi \implies \pi \\
+	& \vdash \neg \pi \implies \neg \phi \\
+	& \vdash \forall (\neg \pi \implies \neg \phi) \\
+	& \vdash \forall \neg \pi \implies \forall \neg \phi \\
+	& \vdash \neg \forall \neg \phi \implies \neg \forall \neg \pi \\
+	& \vdash \exists \phi \implies \exists \pi \\
+	& \vdash pre(\sigma) \implies \exists \pi \\
+	& \vdash pre(\sigma) \implies \pi \\
+	& \vdash [M_\sigma] \pi
+\end{align}
 
 Next, we show $\vdash [M_T] \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
 
-\begin{eqnarray}
-	& \vdash & [ M^{\gamma}_{T^{\gamma}} ] \gamma \text{ for every }\gamma \in \Gamma\\
-	& \vdash & \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every }\gamma \in \Gamma\\
-	& \vdash & \Box \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
-	& \vdash & \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
-	& \vdash & \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma\\
-	& \vdash & \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v]
+\begin{align}
+	& \vdash [ M^{\gamma}_{T^{\gamma}} ] \gamma \text{ for every }\gamma \in \Gamma\\
+	& \vdash \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every }\gamma \in \Gamma\\
+	& \vdash \Box \bigwedge_{v \in T^\gamma} [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
+	& \vdash \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma \text{ for every } \gamma \in \Gamma\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v] \gamma\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box [M^\gamma_v]
 	\bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash & \bigwedge_{v \in \sigma R} \Box [M^\gamma_v]\bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash & pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box [M_v] \bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash & [M_\sigma] \Box \bigvee_{\gamma' \in \Gamma} \gamma'
-\end{eqnarray}
+	& \vdash \bigwedge_{v \in \sigma R} \Box [M^\gamma_v]\bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box [M_v] \bigvee_{\gamma' \in \Gamma} \gamma'\\
+	& \vdash [M_\sigma] \Box \bigvee_{\gamma' \in \Gamma} \gamma'
+\end{align}
 
 Finally, we show $\vdash [M_\sigma]\bigwedge_{\gamma \in \Gamma} \Diamond \gamma$.
 
-\begin{eqnarray}
-	& \vdash & \exists \phi \implies \exists \cover \Gamma\\
-	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists \gamma\\
-	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
+\begin{align}
+	& \vdash \exists \phi \implies \exists \cover \Gamma\\
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists \gamma\\
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
 	M^\gamma_{T^{\gamma}} \rangle \gamma\\
-	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
 	\bigvee_{v \in T^\gamma} M^\gamma_{v} \rangle \gamma\\
-	& \vdash & \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \langle
 	\bigvee_{v \in \sigma R} M^\gamma_{v} \rangle \gamma\\
-	& \vdash & \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \bigvee_{v \in \sigma R}
+	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \bigvee_{v \in \sigma R}
 	\Diamond \langle M^\gamma_{v} \rangle \gamma)\\
-	& \vdash & \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \langle M^\gamma_{\sigma}
+	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \langle M^\gamma_{\sigma}
 	\rangle \Diamond \gamma)\\
-	& \vdash & \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)
-\end{eqnarray}
+	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)
+\end{align}
 
 Together, we combine our result to show
+
+\begin{align}
+	& \vdash [M_\sigma] \pi \land [M_\sigma] \Box \bigvee_{\gamma \in \Gamma} \gamma \land
+	\bigwedge_{\gamma \in \Gamma} [M_\sigma] \Diamond \gamma \\
+	& \vdash [M_\sigma](\pi \land \cover \Gamma)
+\end{align}
 
 \end{proof}
 
