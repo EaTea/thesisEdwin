@@ -41,11 +41,14 @@
 \newcommand{\langRefine}{\lang_{\forall}}
 \newcommand{\langActEx}{\lang_{\otimes}}
 \newcommand{\langArbAct}{\lang_{\otimes\forall}}
+\newcommand{\langProp}{\lang_0}
 
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
 \newcommand{\insaneClass}{\eventClass_{IN}}
 \newcommand{\publicAnnClass}{\eventClass_{PA}}
+\newcommand{\treeClass}{\eventClass_{TR}}
+\newcommand{\forestClass}{\eventClass_{FOR}}
 % Drawings of frames
 
 \tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
@@ -88,8 +91,8 @@ information.
 	Then $M = (F, V) = (\Sigma, R, V)$ is a Kripke
 	model.
 \end{defn}
-A pointed model $M_s$ is a model $M = (\Sigma, R, V)$ along with a designated state $s \in S$.
-A multi-pointed model is a model $M_T$ with a set of designated states, $T$.
+A multi-pointed model is a model $M = (\Sigma, R, V)$ with a set of designated states, $T$.
+When $T = \{s\}$ is a single state, we say that the model is a pointed model and write $M_s$.
 We say $\kripkeClass$ is the class of all Kripke models.
 
 \begin{defn} \label{evModel}
@@ -167,7 +170,7 @@ which we will term ``insanity models".
 \end{defn}
 % FIXME: add in citations
 
-\begin{lemma}
+\begin{lemma} \label{bisimEquivalence}
 	The relation $\sim$ is an equivalence relation.
 \end{lemma}
 
@@ -207,6 +210,8 @@ The interpretation of $\phi \in \lang$ in the logic $K$ is defined inductively a
 \end{itemize}
 for $a \in A$, $B \subseteq A$, $s \in \Sigma$.
 \end{defn}
+The language $\lang$ is $\langProp$ (propositional logic), with the additional inductive case for
+$\Box_b \phi$.
 The Kripke semantics for modal logic are well-known.
 We will adopt the standard abbreviations for Kripke semantics --- see FIXME.
 %FIXME: Add in citations and stuff
@@ -318,11 +323,13 @@ $M$ is a finite tree event model if
 \end{itemize}
 \end{defn}
 
+We say that the class of finite tree event models is $\treeClass$.
+
 \begin{defn} \label{forest}
 Let $M_T = (\Sigma, R, pre, T)$ be a multi-pointed event model.
 $M_T$ is a finite forest event model if
 \begin{itemize}
-	\item each point $t$ in $T$ is the root of finite tree event model $M^t = (\Sigma^t, R^t,
+	\item each point $t$ in $T$ is the root of a finite tree event model $M^t = (\Sigma^t, R^t,
 	pre^t, t)$
 	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$
 	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
@@ -330,6 +337,10 @@ $M_T$ is a finite forest event model if
 	\item if $s, t \in T$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
 \end{itemize}
 \end{defn}
+
+We say that the class of finite forest event models is $\forestClass$.
+It is clear that by our earlier definitions, a finite tree event model is also a finite forest event
+model.
 
 TODO: make sure definition of forest and finTree allow for forest to trivially be a finTree
 
@@ -399,12 +410,45 @@ knowing that one of the two models has occurred.
 Baltag and Moss call this a non-deterministic choice.
 %FIXME: cite
 
+\begin{lemma} \label{disjForestIsForest}
+Let $M^1_{T^1}, M^2_{T^2} \in \forestClass$ be two disjoint forest event models.
+Then $M_T = M^1_{T^1} \sqcup M^2_{T^2} \in \forestClass$.
+\end{lemma}
+
+\begin{proof}
+We must show each of the following
+\begin{enumerate}
+	\item each $t \in T$ corresponds to a finite tree event model $M^t \in \treeClass$ \label{treeCorrespondence}
+	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$ \label{forestStateSubsets}
+	\item for each $M^t$, $R^t \subseteq R$ \label{forestEdgeSubsets}
+	\item for each $M^t$, for each $s \in \Sigma^t$, $pre^t(s) = pre(s)$ \label{preconMatch}
+	\item for each $s, t \in T$, $\Sigma^s$ and $\Sigma^t$ are disjoint \label{subtreeStatesDisjoint}
+\end{enumerate}
+
+We note that $T = T^1 \sqcup T^2$.
+Thus $t \in T \implies (t \in T^1 \lor t \in T^2)$.
+Since $M^1_{T^1}$ and $M^2_{T^2}$ are both finite forest event models then there must be some finite
+tree event model $M^t \in \treeClass$ that corresponds to $t$.
+Without loss of generality, let $t \in T^1$.\\
+\\
+Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $M^t$, $\Sigma^t \subseteq \Sigma^1 \subseteq \Sigma$.
+Also, $R^t \subseteq R^1 \subseteq R$ and for all $s \in \Sigma^1 \implies pre^t(s) = pre^1(s) =
+pre(s)$.
+Finally, if $t, t' \in T$, each $M^t$ is disjoint from any other $M^{t'}$ since
+\begin{itemize}
+	\item $t' \in T^1 \implies$ that condition \ref{subtreeStatesDisjoint} previously held for
+	$M^1_{T^1} \in \forestClass$ and thus $\Sigma^{t'}$ is disjoint $\Sigma^t$
+	\item $t' \in T^2$ will ensure that $\Sigma^{t'}$ and $\Sigma^t$ are disjoint by the premise of
+	the lemma
+\end{itemize}
+\end{proof}
+
 We can use these operations to construct finite tree and forest event models, as we show
 in the next section.
 
 \subsection{Completeness}
 
-\begin{lemma}
+\begin{lemma} \label{finTreeConstruct}
 Suppose $M = (\Sigma, R, pre, r)$ is a finite tree event model.
 $M$ can be constructed using insanity event models and $\to$.
 \end{lemma}
@@ -446,7 +490,7 @@ We can form $M'$ using insanity event models and $\to$, and thus any arbitrary s
 fulfills the induction hypothesis.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma} \label{forestCon}
 Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
 Then $M$ can be constructed using $\to$, $\sqcup$ and insanity event models.
 \end{lemma}
@@ -461,7 +505,7 @@ Since $\Sigma' = \bigsqcup_{t \in T} \Sigma^t$
 
 \subsection{Achieving information goals}
 
-\begin{lemma}
+\begin{lemma} \label{coverFormulaAchievementK}
 Let $\phi = \pi \land \cover \Gamma \in \langArbAct$, where $\Gamma = \{\gamma_1, \gamma_2, \ldots,
 		\gamma_n\}$ is a finite set.
 Suppose that for $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
@@ -514,11 +558,11 @@ Otherwise, by the definition of $M^\gamma_{T^\gamma}$, any $s \notin T^\gamma$ i
 forest event model and there is some $p \in \Sigma^\gamma$ such that $p R s$.\\
 \\
 Lastly, we satisfy \ref{treeConUniquePath} with a similar argument to the previous argument.
-Suppose $s = \sigma$; the path is trivial.
+Suppose $s = \sigma$; the sequence of action points is trivial.
 Now, suppose $s \in \Sigma \setminus \{ \sigma \}$.
 Then $s \in \Sigma^\gamma$ for some $\gamma \in \Gamma$.
 Then there is a unique path from $s' \in T^\gamma$ to $s$.
-Furthermore, $\sigma R s'$, and so there is a unique path from $\sigma$ to $s$.\\
+Furthermore, $\sigma R s'$, and so there is a unique sequence of action points from $\sigma$ to $s$.\\
 \\
 Next, we shall show that $\vdash \sqex{M_T} \phi$.
 We will show that each of the following holds
@@ -530,69 +574,77 @@ We will show that each of the following holds
 
 Firstly we show $\vdash \sqex{M_T} \pi$.
 \begin{align}
-	& \vdash \phi \implies \pi \\
-	& \vdash \neg \pi \implies \neg \phi \\
-	& \vdash \forall (\neg \pi \implies \neg \phi) \\
-	& \vdash \forall \neg \pi \implies \forall \neg \phi \\
-	& \vdash \neg \forall \neg \phi \implies \neg \forall \neg \pi \\
-	& \vdash \exists \phi \implies \exists \pi \\
-	& \vdash pre(\sigma) \implies \exists \pi \\
-	& \vdash pre(\sigma) \implies \pi \\
-	& \vdash \sqex{M_\sigma} \pi
+	& \vdash \phi \implies \pi \label{cfa_c1_1} \\
+	& \vdash \neg \pi \implies \neg \phi \label{cfa_c1_2}\\
+	& \vdash \forall (\neg \pi \implies \neg \phi) \label{cfa_c1_3}\\
+	& \vdash \forall \neg \pi \implies \forall \neg \phi \label{cfa_c1_4}\\
+	& \vdash \neg \forall \neg \phi \implies \neg \forall \neg \pi \label{cfa_c1_5}\\
+	& \vdash \exists \phi \implies \exists \pi \label{cfa_c1_6}\\
+	& \vdash pre(\sigma) \implies \pi \label{cfa_c1_7}\\
+	& \vdash \sqex{M_\sigma} \pi \label{cfa_c1_8}
 \end{align}
-
+(\ref{cfa_c1_3}) follows from FIXME, (\ref{cfa_c1_4}) follows from FIXME, (\ref{cfa_c1_6}) follows from
+$\exists$, (\ref{cfa_c1_7}) follows from the definition of $M$ (as $pre(\sigma) = \exists \phi$) and
+(\ref{cfa_c1_8}) follows from FIXME.\\
+\\
 Next, we show $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
-
 \begin{align}
-	& \vdash \sqex{M^{\gamma}_{T^{\gamma}}} \gamma \text{ for every }\gamma \in \Gamma\\
-	& \vdash \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every }\gamma \in \Gamma\\
-	& \vdash \Box \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in \Gamma\\
-	& \vdash \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in \Gamma\\
-	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v} \gamma\\
+	& \vdash \sqex{M^{\gamma}_{T^{\gamma}}} \gamma \text{ for every }\gamma \in \Gamma
+	\label{cfa_c2_1} \\
+	& \vdash \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every }\gamma \in \Gamma\label{cfa_c2_1} \\
+	& \vdash \Box \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in \Gamma\label{cfa_c2_2} \\
+	& \vdash \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in \Gamma\label{cfa_c2_3} \\
+	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v} \gamma\label{cfa_c2_4} \\
 	& \vdash \bigwedge_{\gamma \in \Gamma} \bigwedge_{v \in T^\gamma} \Box \sqex{M^\gamma_v}
-	\bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash \bigwedge_{v \in \sigma R} \Box \sqex{M^\gamma_v}\bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in \Gamma} \gamma'\\
-	& \vdash \sqex{M_\sigma} \Box \bigvee_{\gamma' \in \Gamma} \gamma'
+	\bigvee_{\gamma' \in \Gamma} \gamma'\label{cfa_c2_5} \\
+	& \vdash \bigwedge_{v \in \sigma R} \Box \sqex{M^\gamma_v}\bigvee_{\gamma' \in \Gamma} \gamma'\label{cfa_c2_6} \\
+	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in \Gamma} \gamma'\label{cfa_c2_7} \\
+	& \vdash \sqex{M_\sigma} \Box \bigvee_{\gamma' \in \Gamma} \gamma'\label{cfa_c2_8} 
 \end{align}
-
+(\ref{cfa_c2_1}) follows from our hypothesis, (\ref{cfa_c2_2}) follows from FIXME, (\ref{cfa_c2_8})
+	follows from FIXME.\\
+\\
 Finally, we show $\vdash \sqex{M_\sigma}\bigwedge_{\gamma \in \Gamma} \Diamond \gamma$.
-
 \begin{align}
-	& \vdash \exists \phi \implies \exists \cover \Gamma\\
-	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists \gamma\\
+	& \vdash \exists \phi \implies \exists \cover \Gamma \label{cfa_c3_1}\\
+	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists \gamma\label{cfa_c3_2}\\
 	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \anex{
-	M^\gamma_{T^{\gamma}} } \gamma\\
+	M^\gamma_{T^{\gamma}} } \gamma\label{cfa_c3_3}\\
 	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \anex{
-	\bigvee_{v \in T^\gamma} M^\gamma_{v} } \gamma\\
+	\bigvee_{v \in T^\gamma} M^\gamma_{v} } \gamma\label{cfa_c3_4}\\
 	& \vdash \exists \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \anex{
-	\bigvee_{v \in \sigma R} M^\gamma_{v} } \gamma\\
+	\bigvee_{v \in \sigma R} M^\gamma_{v} } \gamma\label{cfa_c3_5}\\
 	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \bigvee_{v \in \sigma R}
-	\Diamond \anex{ M^\gamma_{v} } \gamma)\\
+	\Diamond \anex{ M^\gamma_{v} } \gamma)\label{cfa_c3_6}\\
 	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists \phi \implies \anex{ M^\gamma_{\sigma}
-	} \Diamond \gamma)\\
-	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)
+	} \Diamond \gamma)\label{cfa_c3_7}\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)\label{cfa_c3_8}
 \end{align}
-
+(\ref{cfa_c3_1}) follows from similiar reasoning for (\ref{cfa_c1_1} - \ref{cfa_c1_6}) and
+(\ref{cfa_c3_2}) follows from FIXME.
+Then (\ref{cfa_c3_4}) follows from hypothesis, (\ref{cfa_c3_5}) from FIXME, (\ref{cfa_c3_6}) and
+(\ref{cfa_c3_7}) from the definition of $M$ and (\ref{cfa_c3_8}) from FIXME.\\
+\\
 Together, we combine our result to show
-
 \begin{align}
 	& \vdash \sqex{M_\sigma} \pi \land \sqex{M_\sigma} \Box \bigvee_{\gamma \in \Gamma} \gamma \land
-	\bigwedge_{\gamma \in \Gamma} \sqex{M_\sigma} \Diamond \gamma \\
-	& \vdash \sqex{M_\sigma}(\pi \land \cover \Gamma)
+	\bigwedge_{\gamma \in \Gamma} \sqex{M_\sigma} \Diamond \gamma \label{cfa_cc_1} \\
+	& \vdash \sqex{M_\sigma}(\pi \land \cover \Gamma) \label{cfa_cc_2}
 \end{align}
-
+(\ref{cfa_cc_1}) follows from (\ref{cfa_c1_8}), (\ref{cfa_c2_7}) and (\ref{cfa_c3_8}) and
+(\ref{cfa_cc_2}) follows from FIXME.\\
+\\
 Lastly, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
-
 \begin{align}
-	& \vdash \anex{ M_\sigma } \phi \iff (pre(\sigma) \land [ M_\sigma ] \phi\\
-	& \vdash \anex{ M_\sigma } \phi \iff pre(\sigma)\\
-	& \vdash \anex{ M_\sigma } \phi \iff \exists \phi
+	& \vdash \anex{ M_\sigma } \phi \iff (pre(\sigma) \land [ M_\sigma ] \phi \label{cfa_cc1_1}\\
+	& \vdash \anex{ M_\sigma } \phi \iff pre(\sigma) \label{cfa_cc1_2}\\
+	& \vdash \anex{ M_\sigma } \phi \iff \exists \phi\label{cfa_cc1_3}
 \end{align}
-
+(\ref{cfa_cc1_1}) follows from a simple semantic argument, (\ref{cfa_cc1_2}) follows from
+(\ref{cfa_cc_2}) and (\ref{cfa_cc1_3}) follows from the definition of $M$.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma} \label{disjunctionFormulaAchievementK}
 Let $\phi = \alpha \lor \beta \in \langArbAct$.
 Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
 $M^\gamma_{T^\gamma} \in \mathcal{AM}$ such that
@@ -607,40 +659,76 @@ Let $M_T = M^\alpha_{T^\alpha} \sqcup M^\beta_{T\beta}$.
 We will show three things.
 Firstly, that $M_T$ is a finite forest event model.
 Secondly, that $\vdash \sqex{M_T}\phi$.
-Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.\\
+Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.
+We assume, without loss of generality, that $\Sigma^\alpha$ and $\Sigma^\beta$ are disjoint.\\
 \\
 To show that $M_T$ is a finite forest event model, we observe that $M_T$ is a disjoint union of two
-finite forest event models.
-Thus each action point in $M_T$ is bisimilar to a corresponding point in $M^\alpha_{T^\alpha}$ or
-$M^\beta_{T^\beta}$.
-Since each of $M^\alpha_{T^\alpha}$ and $M^\beta_{T^\beta}$ are finite forest event models and no
-new accessibilities are added to $R$.
-Thus $M_T$ is a finite forest event model.\\
+finite forest event models who are both disjoint.
+Then by Lemma \ref{disjForestIsFirest} $M_T$ is a finite forest event model.
+Note that each action point in $M_T$ is bisimilar to a corresponding point in $M^\alpha_{T^\alpha}$ or
+$M^\beta_{T^\beta}$.\\
 \\
 Next, we show that $\vdash \sqex{M_T}\phi$.
 \begin{align}
-	&\vdash \sqex{M^\alpha_{T^\alpha}}\alpha \land \sqex{M^\beta_{T^\beta}}\beta\\
-	&\vdash \sqex{M_{T^\alpha}}\alpha \land \sqex{M_{T^\beta}}\beta\\
-	&\vdash \sqex{M_{T^\alpha}}(\alpha \lor \beta) \land \sqex{M_{T^\beta}}(\alpha \lor \beta)\\
+	&\vdash \sqex{M^\alpha_{T^\alpha}}\alpha \land \sqex{M^\beta_{T^\beta}}\beta \label{djfa_c1_1}\\
+	&\vdash \sqex{M_{T^\alpha}}\alpha \land \sqex{M_{T^\beta}}\beta \label{djfa_c1_2}\\
+	&\vdash \sqex{M_{T^\alpha}}(\alpha \lor \beta) \land \sqex{M_{T^\beta}}(\alpha \lor \beta) \label{djfa_c1_3} \\
+	&\vdash \sqex{M_T}(\alpha \lor \beta) \label{djfa_c1_4}
 \end{align}
-
+(\ref{djfa_c1_1}) follows from our hypothesis, (\ref{djfa_c1_2}) follows from FIXME and the fact that
+$M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta} \sim M^\beta{T^\beta}$.
+(\ref{djfa_c1_3}) is a simple introduction of disjunctions and (\ref{djfa_c1_4}) follows from FIXME, as
+$T = T^\alpha \cup T^\beta$.\\
+\\
+Finally, we show that $\anex{M_T} \iff \exists \phi$.
 \begin{align}
-	&\vdash \exists (\alpha \lor \beta) \implies (\exists \alpha \lor \exists \beta) \\
+	&\vdash \exists (\alpha \lor \beta) \implies (\exists \alpha \lor \exists \beta) \label{djfa_c2_1} \\
 	&\vdash \exists (\alpha \lor \beta) \implies (\anex{ M^\alpha_{T^\alpha} } \alpha \lor
-			\anex{ M^\beta_{T^\beta} }\beta) \\
+			\anex{ M^\beta_{T^\beta} }\beta) \label{djfa_c2_2}\\
 	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} \alpha \lor \anex{M_{T^\beta}}
-			\beta)\\
+			\beta)\label{djfa_c2_3}\\
 	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} (\alpha \lor \beta) \lor \anex{M_{T^\beta}}
-			(\alpha \lor \beta))\\
-	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_T} (\alpha \lor \beta))
+			(\alpha \lor \beta))\label{djfa_c2_4}\\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_T} (\alpha \lor \beta))\label{djfa_c2_5}
 \end{align}
+(\ref{djfa_c2_1}) follows from FIXME, (\ref{djfa_c2_2}) follows from hypothesis and
+(\ref{djfa_c2_3}) follows from FIXME and $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta}
+\sim M^\beta_{T^\beta}$.
+(\ref{djfa_c2_4}) is a simple disjunction introduction, and (\ref{djfa_c2_5}) follows from FIXME.\\
+\\
+The converse, $\vdash \anex{M_T} \phi \implies \exists \phi$ follows from a simple semantic
+argument and from FIXME.
 \end{proof}
 
-\begin{thm}
-Let $B \subseteq A$, let $\phi \in \langArbAct$ be a finite formula.
-Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that
+\begin{thm} \label{goalAchievementK}
+Let $\phi \in \langArbAct$ be a finite formula.
+Then there exists a finite forest event model $M_T \in \eventClass$ such that
 $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \end{thm}
+
+\begin{proof}
+Without loss of generality from Lemma {FIXME} we may assume that $\phi \in \lang$, and from Lemma
+{FIXME} we may further assume that $\phi$ is in cover disjunctive normal form.
+We proceed with an inductive case on the structure of $\phi$.\\
+\\
+Suppose that $\phi = \pi \land \cover \Gamma$ where $\pi \in \langProp$ and $\Gamma \subseteq \lang$
+is a finite set of formulae.
+From the induction hypothesis, for every $\gamma \in \Gamma$ there exists a finite forest event
+model $N^\gamma_{T^\gamma} \in \eventClass$ such that $\vdash \sqex{N^\gamma_{T^\gamma}} \gamma$ and
+$\vdash \anex{N^\gamma_{T^\gamma}} \gamma \iff \exists \gamma$.
+Then from Lemma \ref{coverFormulaAchievementK} there exists a finite forest event model $M_T$ such
+that $\vdash \sqex{M_T} \phi$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
+We note that the base case for the induction occurs when $\Gamma = \varnothing$ and thus $\phi =
+\pi$.\\
+\\
+Suppose that $\phi = \alpha \lor \beta$.
+Then from the induction hypothesis there exists finite forest event models $N^\alpha_{T^\alpha}$ and
+$N^\beta_{T^\beta} \in \eventClass$ such that for $\gamma \in \{\alpha, \beta\}:
+\vdash \sqex{N^\gamma_{T^\gamma}} \gamma \land \vdash \anex{N^\gamma_{T^\gamma}} \iff \exists
+\gamma$.
+Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite forest event model $M_T$ such
+that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
+\end{proof}
 
 \section{Multi-agent goal achievement in $\langArbAct$}
 
