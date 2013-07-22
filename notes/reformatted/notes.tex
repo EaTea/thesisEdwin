@@ -26,10 +26,10 @@
 
 % Predefined things such as commands, etc.
 
-\newtheorem{defn}{Definition}[section]
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{corr}{Corrollary}[section]
+\newtheorem{defn}{Definition}[subsection]
+\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\newtheorem{corr}{Corrollary}[subsection]
 \newtheorem*{remrk}{Remark}
 
 \numberwithin{equation}{section}
@@ -42,6 +42,28 @@
 \newcommand{\langActEx}{\lang_{\otimes}}
 \newcommand{\langArbAct}{\lang_{\otimes\forall}}
 \newcommand{\langProp}{\lang_0}
+
+\newcommand{\AXK}{{\bf K}}
+\newcommand{\AXAML}{${\bf AML_{\AXK}}$}
+\newcommand{\AXRML}{${\bf RML_{\AXK}}$}
+\newcommand{\AXAAML}{${\bf AAML_{\AXK}}$}
+
+\newcommand{\axP}{{\bf P}}
+\newcommand{\axK}{{\bf K}}
+\newcommand{\axMP}{{\bf MP}}
+\newcommand{\axNecK}{{\bf NecK}}
+\newcommand{\axAN}{{\bf AN}}
+\newcommand{\axAP}{{\bf AP}}
+\newcommand{\axAC}{{\bf AC}}
+\newcommand{\axAK}{{\bf AK}}
+\newcommand{\axAU}{{\bf AU}}
+\newcommand{\axNecA}{{\bf NecA}}
+\newcommand{\axR}{{\bf R}}
+\newcommand{\axRP}{{\bf RP}}
+\newcommand{\axRK}{{\bf RK}}
+\newcommand{\axRComm}{{\bf RComm}}
+\newcommand{\axRDist}{{\bf RDist}}
+\newcommand{\axNecR}{{\bf NecR}}
 
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
@@ -153,7 +175,7 @@ which we will term ``insanity models".
 
 \subsection{Bisimilarity, simulation and refinement}
 
-\begin{defn} \label{bisim}
+\begin{defn} \label{bisimKripke}
 	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
 	relation.
 	\begin{itemize}
@@ -189,6 +211,7 @@ only if for every $u \in \Sigma$ and every $M_s \in \kripkeClass$ such that $M_s
 have $M_s \otimes N_u \gtrsim_B M_s$.
 We call the class of $B$-restricted action models $\mathcal{AM}_B$.
 \end{defn}
+%FIXME: citation here
 
 \subsection{Language semantics}
 We now discuss the semantics and syntax of several different languages, culminating with language of
@@ -227,7 +250,7 @@ Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for 
 \kripkeClass$, $M \models \phi$.\\
 \\
 %FIXME: Add citation
-In addition to $Box_a$ we introduce the cover operator, as first defined in FIXME.
+In addition to $\Box_a$ we introduce the cover operator $\cover_a$, as first defined in FIXME.
 {\bf TODO: Add in citation to link to cover transformations. }
 
 \begin{defn} \label{actModelLogic}
@@ -282,11 +305,131 @@ for $N_T \in \eventClass$ and $B \subseteq A$.
 \end{defn}
 $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{N_T}$.
 
+%FIXME: Add in James' alternate definition for \forall
+
 %FIXME: Add in the citations of James
 
-\subsection{Axiomatisations}
+\subsubsection{Miscellaneous Semantic Results}
+We provide other results that we will use in the main technical findings of this paper.
 
-TODO: Add in later, too lazy right now.
+\begin{defn} \label{bisimEvent}
+	Let $M, M' \in \eventClass$ with preconditions defined on $\langArbAct$.
+	A non-empty relation $\sim$ on $M \times M'$ is a bisimulation if and only if for every $a \in A$
+	and $(s, s') \in \sim$, the following three conditions hold:
+	\begin{itemize}
+		\item {\bf pre}: $pre(s) \iff pre'(s')$
+		\item {\bf forth-$a$}: for every $v \in s R_a$ there is a $v' \in s' R'_a$ such that $(v,v') \in
+		\sim$
+		\item {\bf back-$a$}: for every $v' \in s' R'_a$ there is a $v \in s R_a$ such that $(v,v') \in
+		\sim$
+	\end{itemize}
+	If $(s, s') \in \sim$ we write $M_s \sim M'_{s'}$ to denote that $M_s$ and $M'_{s'}$ are bisimilar and
+	that there is a bisimulation between $M_s$ and $M'_{s'}$.
+\end{defn}
+
+\begin{lemma} \label{eventModelsRefine}
+Let $M_\sigma \in \eventClass$ be an event model and let $N_s \in \kripkeClass$ be a Kripke
+model such that $N_s \models pre(\sigma)$.
+Then $N_s \otimes M_\sigma \lesssim N_s$.
+\end{lemma}
+
+\begin{lemma} \label{eventModelEquivalent}
+Let $M_\sigma$, $M'_{\sigma'} \in \eventClass$ be event models such that $M_\sigma \sim M'_{\sigma'}$
+and let $N_s \in \kripkeClass$ such that $N_s \models pre(\sigma)$.
+Then $N_s \otimes M_\sigma \sim N_s \otimes M'_{\sigma'}$.
+\end{lemma}
+
+%FIXME: WHO?! Please cite.
+
+\begin{defn} \label{coverNormal}
+A formula in cover disjunctive normal form is defined inductively as
+\[
+	\alpha ::== \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b | \alpha \lor \alpha
+\]
+where $\pi \in \langProp$, $B \subseteq A$ and for every $b \in B$, $\Gamma_b$ is a finite set of
+formulae in cover disjunctive normal form.
+\end{defn}
+
+\begin{lemma} \label{allInCoverNormal}
+Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal form.
+\end{lemma}
+
+\subsection{Axiomatisations}
+We will present axiomatisations derived by Hales for $\langArbAct$.
+To construct this axiomatisation, we first begin by presenting an axiomatisation for $\lang$, an
+axiomatisation for $\langActEx$ and an axiomatisation for $\langRefine$.\\
+\\
+We say that a formula $\phi$ is provable under an axiomatisation if and only if it can be derived by
+some finite sequence of axioms and rules within that axiomatisation.
+We denote that $\phi$ is provable by $\vdash \phi$.
+When discussing provability, it should be contextually clear which axiomatisation we are using.
+
+\begin{defn} \label{axiomK}
+The axiomatisation \AXK consists of the following axioms
+\begin{alignat*}{2}
+	& \axP && \quad \text{All propositional tautologies} \\
+	& \axK && \quad \Box_a(\phi \implies \psi) \implies (\Box_a \phi \implies \Box_a \psi)
+\end{alignat*}
+and the following rules
+\begin{alignat*}{2}
+	& \axMP && \quad \text{From $\vdash \phi \implies \psi$ and $\vdash \phi$, infer $\vdash \psi$} \\
+	& \axNecK && \quad \text{From $\vdash \phi$, infer $\vdash \Box_a \phi$}
+\end{alignat*}
+\end{defn}
+
+\begin{lemma} \label{axiomKSoundComplete}
+The axiomatisation \AXK is sound and complete with respect to the logic $\lang$.
+\end{lemma}
+
+\begin{defn} \label{axiomAML}
+The axiomatisation \AXAML contains the axioms and rules from \AXK, as well as the following axioms
+\begin{alignat*}{2}
+	& \axAP && \quad \sqex{M_\sigma}\pi \iff (pre(\sigma) \implies \pi) \text{ for $\pi \in \langProp$}\\
+	& \axAN && \quad \sqex{M_\sigma} \neg \phi \iff (pre(\sigma) \implies \neg \sqex{M_\sigma} \phi)\\
+	& \axAC && \quad \sqex{M_\sigma}(\phi \land \psi) \iff (\sqex{M_\sigma}\phi \land \sqex{M_\sigma}\psi\\
+	& \axAK && \quad \sqex{M_\sigma}\Box_a\phi \iff (pre(\sigma) \implies \bigwedge_{v \in \sigma R_a}
+		\Box_a \sqex{M_v} \phi) \\
+	& \axAU && \quad \sqex{M_T} \phi \iff \bigwedge_{u \in T} \sqex{M_u} \phi
+\end{alignat*}
+and the rule
+\[
+	\axNecA \quad \text{From $\vdash \phi$ infer $\vdash \sqex{M_\sigma} \phi$}
+\]
+\end{defn}
+
+\begin{lemma} \label{axiomAMLSoundComplete}
+The axiomatisation \AXAML is sound and complete with respect to the logic $\langActEx$.
+\end{lemma}
+
+\begin{defn} \label{axiomRML}
+The axiomatisation \AXRML contains the axioms and rules from \AXK, as well as the following axioms
+\begin{alignat*}{2}
+	& \axR && \quad \forall_B (\phi \implies \psi) \implies (\forall_B \phi \implies \forall_B \psi) \\
+	& \axRP && \quad \forall_B \pi \iff \pi \text{ where } \pi \in \langProp \\
+	& \axRK && \quad\exists_B \cover_a \Gamma_a \iff \bigwedge_{\gamma \in \Gamma} \Diamond_a \exists_B
+	\gamma \text{ where } a \in B \\
+	& \axRComm && \quad \exists_B \cover_a \Gamma_a \iff \cover_a \{ \exists_B \gamma | \gamma \in
+	\Gamma_a\} \text{ where } a \notin B\\
+	& \axRDist && \quad \exists_B \bigwedge_{c \in C} \cover_c \Gamma_c \iff \bigwedge_{c \in C}
+	\exists_B \cover_c \Gamma_c \text{ where } C \subseteq A
+\end{alignat*}
+and the rule
+\[
+	\axNecR \quad \text{From $\vdash \phi$, infer $\vdash \forall_B \phi$}
+\]
+\end{defn}
+
+\begin{lemma} \label{axiomRMLSoundComplete}
+The axiomatisation \AXRML is sound and complete with respect to the logic $\langRefine$.
+\end{lemma}
+
+\begin{defn} \label{axiomAAML}
+The axiomatisation \AXAAML contains the axioms and rules from \AXRML and \AXAML.
+\end{defn}
+
+\begin{thm} \label{axiomAAMLSoundComplete}
+The axiomatisation \AXAAML is sound and complete with respect to the logic $\langArbAct$.
+\end{thm}
 
 \section{Single-agent epistemic goal achievement in $\langArbAct$}
 
@@ -334,7 +477,7 @@ $M_T$ is a finite forest event model if
 	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$
 	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
 	\item for each $\sigma \in \Sigma^t$, $pre(\sigma) = pre^t(\sigma)$
-	\item if $s, t \in T$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+	\item if $s, t \in T$ such that $s \neq t$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
 \end{itemize}
 \end{defn}
 
@@ -342,19 +485,15 @@ We say that the class of finite forest event models is $\forestClass$.
 It is clear that by our earlier definitions, a finite tree event model is also a finite forest event
 model.
 
-TODO: make sure definition of forest and finTree allow for forest to trivially be a finTree
-
 \begin{defn} \label{subtree}
-Let $M = (\Sigma, R, pre, r)$ be a finite tree event model.
-We say $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
+Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
+We say the pointed event model $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
 \begin{itemize}
 	\item $\Sigma' \subseteq \Sigma$
 	\item $\forall a \in A \implies R_a' \subseteq R_a$
 	\item $\forall \sigma \in \Sigma' \implies pre(\sigma) = pre'(\sigma) $
 	\item $M'$ is $R$-generable
-	\item there is a sequence of action points in $\Sigma$, $r = s_0, s_1, \ldots, s_n = r'$ and a
-	sequence of agents in $A$, $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1} s_1, s_1 R_{a_2} s_2,
-	\ldots s_{n-1} R_{a_n} s_n$
+	\item $M'$ is a finite tree event model
 \end{itemize}
 \end{defn}
 
@@ -427,8 +566,8 @@ We must show each of the following
 
 We note that $T = T^1 \sqcup T^2$.
 Thus $t \in T \implies (t \in T^1 \lor t \in T^2)$.
-Since $M^1_{T^1}$ and $M^2_{T^2}$ are both finite forest event models then there must be some finite
-tree event model $M^t \in \treeClass$ that corresponds to $t$.
+Since $M^1_{T^1}$ and $M^2_{T^2}$ are both finite forest event models then there must be some
+subtree event model $M^t \in \treeClass$ that corresponds to $t$.
 Without loss of generality, let $t \in T^1$.\\
 \\
 Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $M^t$, $\Sigma^t \subseteq \Sigma^1 \subseteq \Sigma$.
@@ -496,19 +635,18 @@ Then $M$ can be constructed using $\to$, $\sqcup$ and insanity event models.
 \end{lemma}
 
 \begin{proof}
-We know that for each $t \in T$ there is a finite tree event model $M^t = (\Sigma^t, R^t, pre^t, t)$
-that we can construct using $\to$ and insanity event models.\\
-\\
-We thus consider the model $M' = \bigsqcup_{t \in T} M^t = (\Sigma', R', pre', T')$.
-Since $\Sigma' = \bigsqcup_{t \in T} \Sigma^t$
+This result follows trivially from the definition of a finite forest event model and a finite tree
+event model, the fact that a finite tree event model is also a finite forest event model and Lemma \ref{disjForestIsForest}.
 \end{proof}
 
 \subsection{Achieving information goals}
 
+%FIXME: Needs to cite James
+
 \begin{lemma} \label{coverFormulaAchievementK}
 Let $\phi = \pi \land \cover \Gamma \in \langArbAct$, where $\Gamma = \{\gamma_1, \gamma_2, \ldots,
 		\gamma_n\}$ is a finite set.
-Suppose that for $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
+Suppose that for each $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
 $\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
 Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash \sqex{M_T}\phi$ and
 $\vdash \anex{ M_T } \phi \iff \exists \phi$.
@@ -583,9 +721,9 @@ Firstly we show $\vdash \sqex{M_T} \pi$.
 	& \vdash pre(\sigma) \implies \pi \label{cfa_c1_7}\\
 	& \vdash \sqex{M_\sigma} \pi \label{cfa_c1_8}
 \end{align}
-(\ref{cfa_c1_3}) follows from FIXME, (\ref{cfa_c1_4}) follows from FIXME, (\ref{cfa_c1_6}) follows from
+(\ref{cfa_c1_3}) follows from \axNecR, (\ref{cfa_c1_4}) follows from \axR, (\ref{cfa_c1_6}) follows from
 $\exists$, (\ref{cfa_c1_7}) follows from the definition of $M$ (as $pre(\sigma) = \exists \phi$) and
-(\ref{cfa_c1_8}) follows from FIXME.\\
+(\ref{cfa_c1_8}) follows from \axAP.\\
 \\
 Next, we show $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
 \begin{align}
@@ -601,8 +739,8 @@ Next, we show $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
 	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in \Gamma} \gamma'\label{cfa_c2_7} \\
 	& \vdash \sqex{M_\sigma} \Box \bigvee_{\gamma' \in \Gamma} \gamma'\label{cfa_c2_8} 
 \end{align}
-(\ref{cfa_c2_1}) follows from our hypothesis, (\ref{cfa_c2_2}) follows from FIXME, (\ref{cfa_c2_8})
-	follows from FIXME.\\
+(\ref{cfa_c2_1}) follows from our hypothesis, (\ref{cfa_c2_2}) follows from \axAU, and (\ref{cfa_c2_8})
+	follows from \axAK.\\
 \\
 Finally, we show $\vdash \sqex{M_\sigma}\bigwedge_{\gamma \in \Gamma} \Diamond \gamma$.
 \begin{align}
@@ -621,9 +759,9 @@ Finally, we show $\vdash \sqex{M_\sigma}\bigwedge_{\gamma \in \Gamma} \Diamond \
 	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond \gamma)\label{cfa_c3_8}
 \end{align}
 (\ref{cfa_c3_1}) follows from similiar reasoning for (\ref{cfa_c1_1} - \ref{cfa_c1_6}) and
-(\ref{cfa_c3_2}) follows from FIXME.
-Then (\ref{cfa_c3_4}) follows from hypothesis, (\ref{cfa_c3_5}) from FIXME, (\ref{cfa_c3_6}) and
-(\ref{cfa_c3_7}) from the definition of $M$ and (\ref{cfa_c3_8}) from FIXME.\\
+(\ref{cfa_c3_2}) follows from \axRK.
+Then (\ref{cfa_c3_4}) follows from hypothesis, (\ref{cfa_c3_5}) from \axAU, (\ref{cfa_c3_6}) and
+(\ref{cfa_c3_7}) from the definition of $M$ and (\ref{cfa_c3_8}) from \axAK.\\
 \\
 Together, we combine our result to show
 \begin{align}
@@ -632,7 +770,7 @@ Together, we combine our result to show
 	& \vdash \sqex{M_\sigma}(\pi \land \cover \Gamma) \label{cfa_cc_2}
 \end{align}
 (\ref{cfa_cc_1}) follows from (\ref{cfa_c1_8}), (\ref{cfa_c2_7}) and (\ref{cfa_c3_8}) and
-(\ref{cfa_cc_2}) follows from FIXME.\\
+(\ref{cfa_cc_2}) follows from \axAC.\\
 \\
 Lastly, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \begin{align}
@@ -664,7 +802,7 @@ We assume, without loss of generality, that $\Sigma^\alpha$ and $\Sigma^\beta$ a
 \\
 To show that $M_T$ is a finite forest event model, we observe that $M_T$ is a disjoint union of two
 finite forest event models who are both disjoint.
-Then by Lemma \ref{disjForestIsFirest} $M_T$ is a finite forest event model.
+Then by Lemma \ref{disjForestIsForest} $M_T$ is a finite forest event model.
 Note that each action point in $M_T$ is bisimilar to a corresponding point in $M^\alpha_{T^\alpha}$ or
 $M^\beta_{T^\beta}$.\\
 \\
@@ -675,9 +813,9 @@ Next, we show that $\vdash \sqex{M_T}\phi$.
 	&\vdash \sqex{M_{T^\alpha}}(\alpha \lor \beta) \land \sqex{M_{T^\beta}}(\alpha \lor \beta) \label{djfa_c1_3} \\
 	&\vdash \sqex{M_T}(\alpha \lor \beta) \label{djfa_c1_4}
 \end{align}
-(\ref{djfa_c1_1}) follows from our hypothesis, (\ref{djfa_c1_2}) follows from FIXME and the fact that
+(\ref{djfa_c1_1}) follows from our hypothesis, (\ref{djfa_c1_2}) follows from Lemma \ref{eventModelEquivalent} and the fact that
 $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta} \sim M^\beta{T^\beta}$.
-(\ref{djfa_c1_3}) is a simple introduction of disjunctions and (\ref{djfa_c1_4}) follows from FIXME, as
+(\ref{djfa_c1_3}) is a simple introduction of disjunctions and (\ref{djfa_c1_4}) follows from \axAU, as
 $T = T^\alpha \cup T^\beta$.\\
 \\
 Finally, we show that $\anex{M_T} \iff \exists \phi$.
@@ -691,13 +829,14 @@ Finally, we show that $\anex{M_T} \iff \exists \phi$.
 			(\alpha \lor \beta))\label{djfa_c2_4}\\
 	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_T} (\alpha \lor \beta))\label{djfa_c2_5}
 \end{align}
-(\ref{djfa_c2_1}) follows from FIXME, (\ref{djfa_c2_2}) follows from hypothesis and
-(\ref{djfa_c2_3}) follows from FIXME and $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta}
+(\ref{djfa_c2_1}) follows from \axR, (\ref{djfa_c2_2}) follows from hypothesis and
+(\ref{djfa_c2_3}) follows from Lemma \ref{eventModelEquivalent} and $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta}
 \sim M^\beta_{T^\beta}$.
-(\ref{djfa_c2_4}) is a simple disjunction introduction, and (\ref{djfa_c2_5}) follows from FIXME.\\
+(\ref{djfa_c2_4}) is a simple disjunction introduction, and (\ref{djfa_c2_5}) follows from \axAU.\\
 \\
 The converse, $\vdash \anex{M_T} \phi \implies \exists \phi$ follows from a simple semantic
-argument and from FIXME.
+argument, from any single-agent event model involving agent $a$ trivially being an $a$-restricted
+event model, from Lemma \ref{eventModelsRefine} and the completeness of \AXAAML.
 \end{proof}
 
 \begin{thm} \label{goalAchievementK}
@@ -708,7 +847,7 @@ $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 
 \begin{proof}
 Without loss of generality from Lemma {FIXME} we may assume that $\phi \in \lang$, and from Lemma
-{FIXME} we may further assume that $\phi$ is in cover disjunctive normal form.
+\ref{allInCoverNormal} we may further assume that $\phi$ is in cover disjunctive normal form.
 We proceed with an inductive case on the structure of $\phi$.\\
 \\
 Suppose that $\phi = \pi \land \cover \Gamma$ where $\pi \in \langProp$ and $\Gamma \subseteq \lang$
