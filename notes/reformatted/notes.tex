@@ -251,7 +251,21 @@ Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for 
 \\
 %FIXME: Add citation
 In addition to $\Box_a$ we introduce the cover operator $\cover_a$, as first defined in FIXME.
-{\bf TODO: Add in citation to link to cover transformations. }
+\begin{defn} \label{coverDef}
+Let $\Gamma \subseteq \lang$ be a finite set of formulae.
+Then
+\[
+  \cover_a \Gamma ::== \Box_a \bigvee_{\gamma \in \Gamma} \gamma \land
+  \bigwedge_{\gamma \in \Gamma} \Diamond_a \gamma
+\]
+Similarly, if $B \subseteq A$, then $\cover_B \Gamma ::== \bigwedge_{b \in B}
+\cover_b \Gamma$.
+\end{defn}
+We note that this is a simple abbreviation, and we can define $\Box_a$ and
+$\Diamond_a$ in terms of it.
+$\Box_a \phi \iff \cover_a \phi \lor \cover_a \varnothing$, while $\Diamond_a
+\phi \iff \cover_a \{\phi, \top\}$.
+$\cover$ is the basis for the axiomatisation of refinement modal logic.
 
 \begin{defn} \label{actModelLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $N = (\Sigma^N, R^N, pre^N) \in
@@ -478,10 +492,18 @@ $M_T$ is a finite forest event model if
 	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
 	\item for each $\sigma \in \Sigma^t$, $pre(\sigma) = pre^t(\sigma)$
 	\item if $s, t \in T$ such that $s \neq t$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+  \item $\Sigma = \bigcup_{t \in T} \Sigma^t$
+  \item for each $a \in A \implies R_a = \bigcup_{t \in T} R_a^t$
 \end{itemize}
 \end{defn}
 
 We say that the class of finite forest event models is $\forestClass$.
+
+\begin{lemma} \label{treeIsForest}
+The event model class $\treeClass$ is contained within the event model class
+$\forestClass$, that is $\treeClass \subseteq \forestClass$.
+\end{lemma}
+
 It is clear that by our earlier definitions, a finite tree event model is also a finite forest event
 model.
 
@@ -635,8 +657,13 @@ Then $M$ can be constructed using $\to$, $\sqcup$ and insanity event models.
 \end{lemma}
 
 \begin{proof}
-This result follows trivially from the definition of a finite forest event model and a finite tree
-event model, the fact that a finite tree event model is also a finite forest event model and Lemma \ref{disjForestIsForest}.
+Let $M^t = (\Sigma^t, R^t, pre^t, t) \in \treeClass$ be the
+subtree of $M$ that corresponds to point $t \in T$ (Definition \ref{forest}).
+By Lemma \ref{finTreeConstruct} we can generate from $\insaneClass$ and $\to$.
+By Lemma \ref{treeIsForest} $M^t \in \forestClass$.
+Then by a recursive and finite number of applications of Lemma
+\ref{disjForestIsForest} we have that $\bigsqcup_{t \in T} M^t$ is a finite
+forest event model.
 \end{proof}
 
 \subsection{Achieving information goals}
