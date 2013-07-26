@@ -810,13 +810,14 @@ Lastly, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \end{proof}
 
 \begin{lemma} \label{disjunctionFormulaAchievementK}
-Let $\phi = \alpha \lor \beta \in \langArbAct$.
+Let $\phi = \alpha \lor \beta \in \langArbAct$ and $B \subseteq A$.
 Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
 $M^\gamma_{T^\gamma} \in \mathcal{AM}$ such that
 $\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$
 and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
-Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash \sqex{M_T}\phi$ and
-$\vdash \anex{ M_T } \phi \iff \exists \phi$.
+Furthermore, let each subforest of $M^\gamma_{T^\gamma}$ be constructed as in Lemma \ref{coverFormulaAchievementK}.
+Then there exists a finite forest event model $M_T \in \mathcal{AM}_B$ such that $\vdash \sqex{M_T}\phi$ and
+$\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 \end{lemma}
 
 \begin{proof}
@@ -845,6 +846,19 @@ $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta} \sim M^\beta{T^\beta}$.
 (\ref{djfa_c1_3}) is a simple introduction of disjunctions and (\ref{djfa_c1_4}) follows from \axAU, as
 $T = T^\alpha \cup T^\beta$.\\
 \\
+Now we show that $M_T$ is a $B$-restricted event model.
+Let $\gamma \in \{\alpha, \beta\}$ and let $N_s \in \kripkeClass$.
+Let $M^\gamma_t$ be a subtree of $M^\gamma$, where $t \in T^\gamma$, and by hypothesis, $M^\gamma_t \in \eventClass_B$.
+Suppose $\sigma \in \Sigma^\gamma_t$, the event points in the subtree $M^\gamma_t$.
+As $M^\gamma_\sigma \in \eventClass_B$ then $N_s \otimes M^\gamma_\sigma \lesssim_B N_s$.
+As $M$ is formed from the disjoint union of $M^\alpha$ and $M^\beta$ (which by Lemma FIXME are
+disjoint unions of each of the finite subtrees $M^\gamma_t$), it is a simple matter to show that $M_\sigma \sim M^\gamma_\sigma$.
+From Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M_t \sim N_s \otimes
+M^\gamma_\sigma$, which indictates that $N_s \otimes M_\sigma \lesssim_B N_s \otimes
+M^\gamma_\sigma$ (by Lemma FIXME).
+From Lemma FIXME, the relation $\lesssim_B$ is transitive, and thus $N_s \otimes M_\sigma \lesssim_B
+N_s$, and so $M \in \eventClass_B$.\\
+\\
 Finally, we show that $\anex{M_T} \iff \exists \phi$.
 \begin{align}
 	&\vdash \exists (\alpha \lor \beta) \implies (\exists \alpha \lor \exists \beta) \label{djfa_c2_1} \\
@@ -861,9 +875,8 @@ Finally, we show that $\anex{M_T} \iff \exists \phi$.
 \sim M^\beta_{T^\beta}$.
 (\ref{djfa_c2_4}) is a simple disjunction introduction, and (\ref{djfa_c2_5}) follows from \axAU.\\
 \\
-The converse, $\vdash \anex{M_T} \phi \implies \exists \phi$ follows from a simple semantic
-argument, from any single-agent event model involving agent $a$ trivially being an $a$-restricted
-event model, from Lemma \ref{eventModelsRefine} and the completeness of \AXAAML.
+The converse, $\vdash \anex{M_T} \phi \implies \exists \phi$ follows from a semantic
+argument, from $M_T \in \eventClass_B$, from Lemma \ref{eventModelsRefine} and the completeness of \AXAAML.\\
 \end{proof}
 
 \begin{thm} \label{goalAchievementK}
