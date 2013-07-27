@@ -71,6 +71,8 @@
 \newcommand{\publicAnnClass}{\eventClass_{PA}}
 \newcommand{\treeClass}{\eventClass_{TR}}
 \newcommand{\forestClass}{\eventClass_{FOR}}
+
+\newcommand{\FIXME}{{\bf FIXME}}
 % Drawings of frames
 
 \tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
@@ -138,6 +140,8 @@ Pointed and multi-pointed event models are similarly defined to pointed and mult
 models.
 We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
 pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
+Furthermore, in literature both of the terms event models and action models are used to describe
+the same concept, and we use them interchangeably throughout this paper to refer to event models.
 
 \begin{defn} \label{evModelEx}
 Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
@@ -190,7 +194,7 @@ which we will term ``insanity models".
 	and {\bf back-$a$} hold for each $a \in A$.
 	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
 \end{defn}
-% FIXME: add in citations
+% \FIXME: add in citations
 
 \begin{lemma} \label{bisimEquivalence}
 	The relation $\sim$ is an equivalence relation.
@@ -209,9 +213,11 @@ We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsi
 Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
 only if for every $u \in \Sigma$ and every $M_s \in \kripkeClass$ such that $M_s \models pre(u)$ we
 have $M_s \otimes N_u \gtrsim_B M_s$.
-We call the class of $B$-restricted action models $\mathcal{AM}_B$.
 \end{defn}
-%FIXME: citation here
+We say the class of $B$-restricted action models is $\eventClass_B$.
+Furthermore, if $E$ is a class of action models, then $E_B$ is the class of $B$-restricted event
+models in $E$.
+%\FIXME: citation here
 
 \subsection{Language semantics}
 We now discuss the semantics and syntax of several different languages, culminating with language of
@@ -236,8 +242,8 @@ for $a \in A$, $B \subseteq A$, $s \in \Sigma$.
 The language $\lang$ is $\langProp$ (propositional logic), with the additional inductive case for
 $\Box_b \phi$.
 The Kripke semantics for modal logic are well-known.
-We will adopt the standard abbreviations for Kripke semantics --- see FIXME.
-%FIXME: Add in citations and stuff
+We will adopt the standard abbreviations for Kripke semantics --- see \\FIXME.
+%\FIXME: Add in citations and stuff
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
 its dual, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
 In the case where $B = A$ we write $M_s \models \Box \phi$.\\
@@ -249,8 +255,8 @@ for all $\sigma \in \Sigma$, $M_\sigma \models \phi$.
 Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for every model $M \in
 \kripkeClass$, $M \models \phi$.\\
 \\
-%FIXME: Add citation
-In addition to $\Box_a$ we introduce the cover operator $\cover_a$, as first defined in FIXME.
+%\FIXME: Add citation
+In addition to $\Box_a$ we introduce the cover operator $\cover_a$, as first defined in \\FIXME.
 \begin{defn} \label{coverDef}
 Let $\Gamma \subseteq \lang$ be a finite set of formulae.
 Then
@@ -291,7 +297,7 @@ $\phi$ being true".
 Again, $\anex{ N_T } \phi$ can be read as ``the successful execution of the informative
 update modelled by $N_T$ may result in $\phi$ being true".
 
-%FIXME: Add in citations to Baltag, Moss and Solecki
+%\FIXME: Add in citations to Baltag, Moss and Solecki
 
 \begin{defn} \label{refineLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model.
@@ -307,10 +313,10 @@ Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that 
 As in the previous operations, when $B = A$ we will write $\forall \phi$.
 In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
 
-%FIXME: Add in citations to Tim, Rowan, James
+%\FIXME: Add in citations to Tim, Rowan, James
 
 \begin{defn} \label{arbActLogic}
-The language of arbitrary action model logic, $\langArbAct$ is first defined in FIXME.
+The language of arbitrary action model logic, $\langArbAct$ is first defined in \\FIXME.
 We inductively define $\langArbAct$ by
 \[
 	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | \sqex{N_T} \phi | \forall_B \phi
@@ -319,9 +325,9 @@ for $N_T \in \eventClass$ and $B \subseteq A$.
 \end{defn}
 $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{N_T}$.
 
-%FIXME: Add in James' alternate definition for \forall
+%\FIXME: Add in James' alternate definition for \forall
 
-%FIXME: Add in the citations of James
+%\FIXME: Add in the citations of James
 
 \subsubsection{Miscellaneous Semantic Results}
 We provide other results that we will use in the main technical findings of this paper.
@@ -353,7 +359,7 @@ and let $N_s \in \kripkeClass$ such that $N_s \models pre(\sigma)$.
 Then $N_s \otimes M_\sigma \sim N_s \otimes M'_{\sigma'}$.
 \end{lemma}
 
-%FIXME: WHO?! Please cite.
+%\FIXME: WHO?! Please cite.
 
 \begin{defn} \label{coverNormal}
 A formula in cover disjunctive normal form is defined inductively as
@@ -451,8 +457,8 @@ In this chapter, we examine an algebra for constructing event models that will, 
 epistemic goals or cause a model to crash in the process.
 Thus during our single agent treatment, we will say that $A = \{a\}$.\\
 \\
-%FIXME: citations here
-In FIXME, Hales demonstrates that it is possible to determine whether an
+%\FIXME: citations here
+In \FIXME, Hales demonstrates that it is possible to determine whether an
 finite epistemic goal can be achieved.
 Furthermore, if it is achievable Hales constructs event models that will realise
 that goal.
@@ -551,9 +557,9 @@ The $\to$ operator will be referred to as ``considers".
 
 $M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers $M^2$ as another
 possible update.
-We also present the disjoint union operator defined by FIXME.
+We also present the disjoint union operator defined by \FIXME.
 
-%FIXME: who introduced this? (Baltag and Moss)
+%\FIXME: who introduced this? (Baltag and Moss)
 
 \begin{defn} \label{disjoint}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of generality let $M^1$ and
@@ -569,7 +575,7 @@ We define $M = M^1 \sqcup M^2$ as
 This is the disjoint union of the two event models, which we can refer to as the agents in $A$
 knowing that one of the two models has occurred.
 Baltag and Moss call this a non-deterministic choice.
-%FIXME: cite
+%\FIXME: cite
 
 \begin{lemma} \label{disjForestIsForest}
 Let $M^1_{T^1}, M^2_{T^2} \in \forestClass$ be two disjoint forest event models.
@@ -602,6 +608,55 @@ Finally, if $t, t' \in T$, each $M^t$ is disjoint from any other $M^{t'}$ since
 	\item $t' \in T^2$ will ensure that $\Sigma^{t'}$ and $\Sigma^t$ are disjoint by the premise of
 	the lemma
 \end{itemize}
+\end{proof}
+
+A final miscellaneous result shown by Hales in \FIXME, which we employ later, is reproduced here.
+
+\begin{lemma} \label{brestrictDisjoint}
+Suppose $\{ M^i_{T^i} = (\Sigma^i, R^i, pre^i, T^i) | i \in [1, n] \}$ is a finite set of $n$ event
+models.
+Furthermore, let each $M^i_{T^i} \in \eventClass_B$.
+Then
+\[
+	M_T = \bigsqcup_{i = 1}^{n} M^i_{T^i} \in \eventClass_B
+\]
+\end{lemma}
+
+\begin{proof}
+We will inductively show that for $k$ event models
+\[
+	\bigsqcup_{i = 1}^k M^i_{T^i} \in \eventClass_B
+\]
+We begin with our base case, where $k = 1$.
+This is trivially so by the definition of $M^1_{T^1}$.
+\[
+	\bigsqcup_{i = 1}^1 M^i_{T^i} = M^1_{T^1} \in \eventClass_B
+\]
+Now, suppose that our induction hypothesis holds for $k$ event models.
+Let the disjoint union of the first $k$ event models be $M^K_{T^K}$.
+Then for $k+1$ event models, let
+\begin{align*}
+	M'_{T'} = & \bigsqcup_{i = 1}^{k+1} M^i_{T^i} \\
+	= & \bigsqcup_{i = 1}^k M^i_{T^i} \sqcup M^{k+1}_{T^{k+1}} \\
+	= & M^K_{T^K} \sqcup M^{k+1}_{T^{k+1}}
+\end{align*}
+We note that since $M'_{T'}$ is a disjoint union of event models, $M'_{T^i} \sim M^i_{T^i}$ is a
+trivial bisimilarity.
+Similarly, $M'_{T^K} \sim M^K_{T^K}$ is a trivial bisimilarity.\\
+\\
+Let $\gamma$ be either of $K$ or $k+1$, and suppose $\sigma \in \Sigma^\gamma$.
+Let $N_s \in \kripkeClass$.
+As $M^\gamma \in \eventClass_B$, then $N_s \otimes M^\gamma_\sigma \lesssim_B N_s$.
+We note that due to $M'$ being a disjoint union of event models, $M'_\sigma \sim M^\gamma_\sigma$.
+Then from Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M^\gamma_\sigma \sim N_s
+\otimes M'_\sigma$.
+From Lemma \FIXME, we have $N_s \otimes M'_\sigma \lesssim_B N_s \otimes M^\gamma_\sigma$.
+From Lemma \FIXME, $\lesssim_B$ is a transitive relation.
+Then $N_s \otimes M'_\sigma \lesssim_B N_s$.
+Thus
+\[
+M'_{T'} = \bigsqcup_{i = 1}^{k+1} M^i_{T^i} \in \eventClass_B.
+\]
 \end{proof}
 
 We can use these operations to construct finite tree and forest event models, as we show
@@ -666,26 +721,52 @@ Then by a recursive and finite number of applications of Lemma
 forest event model.
 \end{proof}
 
+\begin{corr} \label{forestConCorr}
+Let $M = (\Sigma, R, pre, T)$ be a finite forest event model, and for each $t \in T$ let $M^t \in
+\treeClass$ be the subtree of $M$ corresponding to $t$.
+Then $M = \bigsqcup_{t \in T} M^t$.
+\end{corr}
+
 \subsection{Achieving information goals}
 
-%FIXME: Needs to cite James
+%\FIXME: Needs to cite James
 
 \begin{lemma} \label{coverFormulaAchievementK}
-Let $\phi = \pi \land \cover \Gamma \in \langArbAct$, where $\Gamma = \{\gamma_1, \gamma_2, \ldots,
-		\gamma_n\}$ is a finite set.
-Suppose that for each $\gamma \in \Gamma$ there is a finite forest event model $M^\gamma_T \in \mathcal{AM}$ such that
-$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
-Then there exists a finite forest event model $M_T \in \mathcal{AM}$ such that $\vdash \sqex{M_T}\phi$ and
-$\vdash \anex{ M_T } \phi \iff \exists \phi$.
+Let $B, C \subseteq A$ and
+\[
+\phi = \pi \land \bigwedge_{c \in C} \cover_c \Gamma_c \in \langArbAct
+\]
+where $\Gamma$ is a finite set.
+Suppose that for each $c \in C$, and for each $\gamma \in \Gamma_c$ there is a finite forest event
+model $M^\gamma_T \in \forestClass_B$ such that
+$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff
+\exists_B \gamma$.
+Then there exists a finite forest event model $M_T \in \forestClass_B$ such that $\vdash \sqex{M_T}\phi$ and
+$\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 \end{lemma}
 
 \begin{proof}
-Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
-\exists \pi$ will result in $\sqex{M'_\sigma} \pi \iff \sqex{M'_\sigma} \phi$.
-Now suppose $\Gamma = \{ \gamma_1, \gamma_2, \ldots, \gamma_n \}$.
-Let $M_T = ((\ldots((M'_\sigma \to M^{\gamma_1}_{T^{\gamma_1}}) \to
-			M^{\gamma_2}_{T^{\gamma_2}}) \to \ldots ) \to M^{\gamma_n}_{T^{\gamma_n}} )$.\\
+Let us say that $A$, a finite set of agents can be enumerated as $A = \{ a_1, a_2, \ldots, a_n\}$
+and that the set $A \setminus C = \{d_1, d_2, \ldots, d_k\}$.
+For each $a \in A$, if $a \in C$,
+\[
+	M^a_{T^a} = \bigsqcup_{\gamma \in \Gamma_a} M^\gamma_{T^\gamma}
+\]
+By Lemma \ref{disjForestIsForest} $M_c \in \forestClass$.
+Furthermore, by Lemma \ref{brestrictDisjoint}, $M_c \in \eventClass_B$.\\
 \\
+If $a \notin C$ then let
+\[
+	M^a_{T^a} = (\{\sigma\}, \varnothing, \{(\sigma, \top)\}, \{\sigma\}) \in \insaneClass.
+\]
+\\
+Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
+\exists \pi$.
+Let
+\[
+M_T = ((\ldots((M'_\sigma \to_{a_1} M^{a_1}_{T^{a_1}}) \to_{a_2} M^{c_2}_{T^{a_2}}) \to_{a_3} \ldots )
+		\to_{a_n} M^{a_n}_{T^{a_n}}).
+\]
 Our proof is decomposed into three parts.
 Firstly, we show that $M_T$ is a finite tree event model and by extension a finite forest event
 model.
@@ -715,11 +796,11 @@ $\to$ only adds relations to $\sigma R$, and $R \sigma$ begins as $\varnothing$.
 Thus $\sigma$ is not accessible from any other points.\\
 \\
 We next show \ref{treeConOneAgent} is satisfied.
-Since $A = \{a\}$, all that remains to be shown is that for each $s$ in $\Sigma \setminus T$, there is a unique
-$p \in \Sigma$ such that $p R s$.
-Let us suppose $s \in \Sigma^\gamma$, for some $\gamma \in \Gamma$.
-If $s \in T^\gamma$, then $R s = \{ \sigma \}$ by the definition of $M_T$.
-Otherwise, by the definition of $M^\gamma_{T^\gamma}$, any $s \notin T^\gamma$ is in some finite
+To do so we much show that for each $s$ in $\Sigma \setminus T$, there is a unique
+$p \in \Sigma$ and $a \in A$ such that $p R_a s$.
+Suppose that there is some $c \in C$ such that $s \in \Sigma^c$.
+If $s \in T^c$, then $R_c s = \{ \sigma \}$ by the definition of $M_T$.
+Otherwise, by the definition of $M^c$, any $s \notin T^\gamma$ is in some finite
 forest event model and there is some $p \in \Sigma^\gamma$ such that $p R s$.\\
 \\
 Lastly, we satisfy \ref{treeConUniquePath} with a similar argument to the previous argument.
@@ -812,11 +893,11 @@ Lastly, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \begin{lemma} \label{disjunctionFormulaAchievementK}
 Let $\phi = \alpha \lor \beta \in \langArbAct$ and $B \subseteq A$.
 Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
-$M^\gamma_{T^\gamma} \in \mathcal{AM}$ such that
+$M^\gamma_{T^\gamma} \in \forestClass_B$ such that
 $\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$
 and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
 Furthermore, let each subforest of $M^\gamma_{T^\gamma}$ be constructed as in Lemma \ref{coverFormulaAchievementK}.
-Then there exists a finite forest event model $M_T \in \mathcal{AM}_B$ such that $\vdash \sqex{M_T}\phi$ and
+Then there exists a finite forest event model $M_T \in \forestClass_B$ such that $\vdash \sqex{M_T}\phi$ and
 $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 \end{lemma}
 
@@ -847,17 +928,8 @@ $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta} \sim M^\beta{T^\beta}$.
 $T = T^\alpha \cup T^\beta$.\\
 \\
 Now we show that $M_T$ is a $B$-restricted event model.
-Let $\gamma \in \{\alpha, \beta\}$ and let $N_s \in \kripkeClass$.
-Let $M^\gamma_t$ be a subtree of $M^\gamma$, where $t \in T^\gamma$, and by hypothesis, $M^\gamma_t \in \eventClass_B$.
-Suppose $\sigma \in \Sigma^\gamma_t$, the event points in the subtree $M^\gamma_t$.
-As $M^\gamma_\sigma \in \eventClass_B$ then $N_s \otimes M^\gamma_\sigma \lesssim_B N_s$.
-As $M$ is formed from the disjoint union of $M^\alpha$ and $M^\beta$ (which by Lemma FIXME are
-disjoint unions of each of the finite subtrees $M^\gamma_t$), it is a simple matter to show that $M_\sigma \sim M^\gamma_\sigma$.
-From Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M_t \sim N_s \otimes
-M^\gamma_\sigma$, which indictates that $N_s \otimes M_\sigma \lesssim_B N_s \otimes
-M^\gamma_\sigma$ (by Lemma FIXME).
-From Lemma FIXME, the relation $\lesssim_B$ is transitive, and thus $N_s \otimes M_\sigma \lesssim_B
-N_s$, and so $M \in \eventClass_B$.\\
+Since $M^\alpha, M^\beta \in \eventClass_B$, by Lemma \ref{brestrictDisjoint} $M_T \in
+\eventClass_B$.\\
 \\
 Finally, we show that $\anex{M_T} \iff \exists \phi$.
 \begin{align}
@@ -886,7 +958,7 @@ $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \end{thm}
 
 \begin{proof}
-Without loss of generality from Lemma {FIXME} we may assume that $\phi \in \lang$, and from Lemma
+Without loss of generality from Lemma {\FIXME} we may assume that $\phi \in \lang$, and from Lemma
 \ref{allInCoverNormal} we may further assume that $\phi$ is in cover disjunctive normal form.
 We proceed with an inductive case on the structure of $\phi$.\\
 \\
