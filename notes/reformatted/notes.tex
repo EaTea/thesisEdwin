@@ -213,10 +213,8 @@ We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsi
 Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
 only if for every $u \in \Sigma$ and every $M_s \in \kripkeClass$ such that $M_s \models pre(u)$ we
 have $M_s \otimes N_u \gtrsim_B M_s$.
-\end{defn}
 We say the class of $B$-restricted action models is $\eventClass_B$.
-Furthermore, if $E$ is a class of action models, then $E_B$ is the class of $B$-restricted event
-models in $E$.
+\end{defn}
 %\FIXME: citation here
 
 \subsection{Language semantics}
@@ -737,12 +735,12 @@ Let $B, C \subseteq A$ and
 \phi = \pi \land \bigwedge_{c \in C} \cover_c \Gamma_c \in \langArbAct
 \]
 where $\Gamma$ is a finite set.
-Suppose that for each $c \in C$, and for each $\gamma \in \Gamma_c$ there is a finite forest event
-model $M^\gamma_T \in \forestClass_B$ such that
+Suppose that for each $c \in C$, and for each $\gamma \in \Gamma_c$ there is an event model
+$M^\gamma_T \in \forestClass$ and $M^\gamma_T \in \eventClass_B$  such that
 $\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff
 \exists_B \gamma$.
-Then there exists a finite forest event model $M_T \in \forestClass_B$ such that $\vdash \sqex{M_T}\phi$ and
-$\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
+Then there exists a finite forest event model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
+such that $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 \end{lemma}
 
 \begin{proof}
@@ -796,26 +794,32 @@ $\to$ only adds relations to $\sigma R$, and $R \sigma$ begins as $\varnothing$.
 Thus $\sigma$ is not accessible from any other points.\\
 \\
 We next show \ref{treeConOneAgent} is satisfied.
-To do so we much show that for each $s$ in $\Sigma \setminus T$, there is a unique
-$p \in \Sigma$ and $a \in A$ such that $p R_a s$.
-Suppose that there is some $c \in C$ such that $s \in \Sigma^c$.
-If $s \in T^c$, then $R_c s = \{ \sigma \}$ by the definition of $M_T$.
-Otherwise, by the definition of $M^c$, any $s \notin T^\gamma$ is in some finite
-forest event model and there is some $p \in \Sigma^\gamma$ such that $p R s$.\\
+To do so we much show that for each $s$ in $\Sigma \setminus T = \Sigma \setminus \{ \sigma \}$, there
+is a unique $p \in \Sigma$ and $a \in A$ such that $p R_a s$.
+Suppose that there is some $a \in A$ such that $s \in \Sigma^a$.
+If $s \in T^a$, then $R_a s = \{ \sigma \}$ by the definition of $M_T$.
+Otherwise, by the definition of $M^a$, any $s \notin T^a$ is in some subforest of $M^a$
+and therefore there is a unique $p \in \Sigma^a$ and a unique agent $a' \in A$ such that $p R_{a'}
+s$.\\
 \\
-Lastly, we satisfy \ref{treeConUniquePath} with a similar argument to the previous argument.
-Suppose $s = \sigma$; the sequence of action points is trivial.
+Lastly, we show that \ref{treeConUniquePath} holds.
+Suppose $s = \sigma$; the sequence of action points is of length 0 and thus no agents are involved.
 Now, suppose $s \in \Sigma \setminus \{ \sigma \}$.
-Then $s \in \Sigma^\gamma$ for some $\gamma \in \Gamma$.
-Then there is a unique path from $s' \in T^\gamma$ to $s$.
-Furthermore, $\sigma R s'$, and so there is a unique sequence of action points from $\sigma$ to $s$.\\
+Then for some $a \in A$ we have $s \in \Sigma^a$.
+Then for some $s' \in T^a$ there is a unique sequence of agents $a_1, a_2, \ldots, a_n$ and action
+points $s' = s_0, s_1, s_2, \ldots, s_n = s$ such that $s_i R_{a_{i+1}} s_{i+1}$ for any $0 \leq i
+\leq n-1$.
+Furthermore, $\sigma R_a s'$ by the definition of $M_T$, so we can combine the previous statement
+with $\sigma R_a s'$ to say that there is a unique sequence of agents and points from $\sigma$ to
+$s$.
+Thus, $M_T \in \treeClass \implies M_T \in \forestClass$ by Lemma \ref{treeIsForest}.\\
 \\
 Next, we shall show that $\vdash \sqex{M_T} \phi$.
 We will show that each of the following holds
 \begin{enumerate}
 	\item $\vdash \sqex{M_T} \pi$
-	\item $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$
-	\item $\vdash \sqex{M_T} \bigvee_{\gamma \in \Gamma} \Diamond \gamma$
+	\item $\vdash \sqex{M_T} \Box_c \bigwedge_{\gamma \in \Gamma_c} \gamma$ for every $c \in C$
+	\item $\vdash \sqex{M_T} \bigvee_{\gamma \in \Gamma_c} \Diamond_c \gamma$ for every $c \in C$
 \end{enumerate}
 
 Firstly we show $\vdash \sqex{M_T} \pi$.
@@ -833,7 +837,7 @@ Firstly we show $\vdash \sqex{M_T} \pi$.
 $\exists$, (\ref{cfa_c1_7}) follows from the definition of $M$ (as $pre(\sigma) = \exists \phi$) and
 (\ref{cfa_c1_8}) follows from \axAP.\\
 \\
-Next, we show $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
+Now we suppose $c \in C$ and show $\vdash \sqex{M_T} \Box \bigwedge_{\gamma \in \Gamma} \gamma$.
 \begin{align}
 	& \vdash \sqex{M^{\gamma}_{T^{\gamma}}} \gamma \text{ for every }\gamma \in \Gamma
 	\label{cfa_c2_1} \\
@@ -893,12 +897,11 @@ Lastly, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 \begin{lemma} \label{disjunctionFormulaAchievementK}
 Let $\phi = \alpha \lor \beta \in \langArbAct$ and $B \subseteq A$.
 Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
-$M^\gamma_{T^\gamma} \in \forestClass_B$ such that
+$M^\gamma_{T^\gamma} \in \forestClass$ and $M^\gamma_{T^\gamma} \in \eventClass_B$ such that
 $\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$
 and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
-Furthermore, let each subforest of $M^\gamma_{T^\gamma}$ be constructed as in Lemma \ref{coverFormulaAchievementK}.
-Then there exists a finite forest event model $M_T \in \forestClass_B$ such that $\vdash \sqex{M_T}\phi$ and
-$\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
+Then there exists a finite forest event model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
+such that $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 \end{lemma}
 
 \begin{proof}
