@@ -555,6 +555,8 @@ The $\to$ operator will be referred to as ``considers".
 
 $M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers $M^2$ as another
 possible update.
+In the case that $B = A$, we will denote this by $\to$, and if $B = \{a\}$, then
+we will write $\to_a$.
 We also present the disjoint union operator defined by \FIXME.
 
 %\FIXME: who introduced this? (Baltag and Moss)
@@ -687,8 +689,8 @@ Consider the $M^t = (\{ t \}, R^t, pre^t, t) \in \insaneClass$.
 Let $pre^t(t) = \phi$.
 Consider the event model 
 \[
-M^K = (\ldots((M^t \to_{\{a_1\}} M ^ 1) \to_{\{a_2\}} M_2) \to_{\{a_3\}} \ldots
-\to_{\{a_{n-1}\}} M^{n-1} ) \to_{\{a_n\}} M ^ n
+M^K = (\ldots((M^t \to_{a_1} M ^ 1) \to_{a_2} M_2) \to_{a_3} \ldots
+\to_{a_{n-1}} M^{n-1} ) \to_{a_n} M ^ n
 \]
 We will show that $M^K$ and $M'$ are equivalent event models.\\
 \\
@@ -1030,7 +1032,7 @@ In order to do so, we must define an operation that ensures that if $M^1$ was to
 be executed, a group of agents in $B$ would believe $M^2$ would be executed
 instead.
 %TODO: Add in the story/motivation --- why is this useful
-\begin{defn} \label{possTwo}
+\begin{defn} \label{believes}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
 generality let $M^1$ and $M^2$ be disjoint.
 Let $B$ be a subset of agents participant in $M^1$ or $M^2$.
@@ -1047,8 +1049,11 @@ We define $M = M^1 \mapsto_B M^2$ as
   \item $pre = pre^1 \cup pre^2$
   \item $T = T^1$
 \end{itemize}
+We name this operation ``believes".
 \end{defn}
 
+Similarly to $\to$, in the case that $B = A$, we will denote this by $\mapsto$, and if $B = \{a\}$, then
+we will write $\mapsto_a$.
 The ``meaning" of $M^1 \mapsto_B M^2$ would be that given a set of actions in
 $M^1$ the agents in $B$ believe that one of a set of actions in $M^2$ was
 executed instead.\\
