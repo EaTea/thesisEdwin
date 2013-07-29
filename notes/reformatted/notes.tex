@@ -449,11 +449,11 @@ The axiomatisation \AXAAML contains the axioms and rules from \AXRML and \AXAML.
 The axiomatisation \AXAAML is sound and complete with respect to the logic $\langArbAct$.
 \end{thm}
 
-\section{Single-agent epistemic goal achievement in $\langArbAct$}
+\section{Multi-agent epistemic goal achievement in $\langArbAct$}
 
 In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
-Thus during our single agent treatment, we will say that $A = \{a\}$.\\
+We examine this goal achievement for a subset of agents $B \subseteq A$.\\
 \\
 %\FIXME: citations here
 In \FIXME, Hales demonstrates that it is possible to determine whether an
@@ -683,11 +683,11 @@ Suppose that each of $M^1, M^2, \ldots, M^n$ fulfill the induction hypothesis.
 Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $r' R_{a_1} r^1$, $r' R_{a_2} r^2,
 	\ldots, r' R_{a_n} r^n$.\\
 \\
-Consider the insanity pointed-event model $M^t = (\{ t \}, R^t, pre^t, t)$.
+Consider the $M^t = (\{ t \}, R^t, pre^t, t) \in \insaneClass$.
 Let $pre^t(t) = \phi$.
-Consider the event model $M^K = $
+Consider the event model 
 \[
-(\ldots((M^t \to_{\{a_1\}} M ^ 1) \to_{\{a_2\}} M_2) \to_{\{a_3\}} \ldots
+M^K = (\ldots((M^t \to_{\{a_1\}} M ^ 1) \to_{\{a_2\}} M_2) \to_{\{a_3\}} \ldots
 \to_{\{a_{n-1}\}} M^{n-1} ) \to_{\{a_n\}} M ^ n
 \]
 We will show that $M^K$ and $M'$ are equivalent event models.\\
@@ -753,11 +753,10 @@ For each $a \in A$, if $a \in C$,
 By Lemma \ref{disjForestIsForest} $M_c \in \forestClass$.
 Furthermore, by Lemma \ref{brestrictDisjoint}, $M_c \in \eventClass_B$.\\
 \\
-If $a \notin C$ then let
+If $a \notin C$ then let (\FIXME plz)
 \[
 	M^a_{T^a} = (\{\sigma\}, \varnothing, \{(\sigma, \top)\}, \{\sigma\}) \in \insaneClass.
 \]
-\\
 Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
 \exists_B \phi$.
 Let
@@ -765,13 +764,15 @@ Let
 M_T = ((\ldots((M'_\sigma \to_{a_1} M^{a_1}_{T^{a_1}}) \to_{a_2} M^{c_2}_{T^{a_2}}) \to_{a_3} \ldots )
 		\to_{a_n} M^{a_n}_{T^{a_n}}).
 \]
-Our proof is decomposed into three parts.
-Firstly, we show that $M_T$ is a finite tree event model and by extension a finite forest event
+Our proof is decomposed into four parts.
+Firstly, we show that $M_T \in \treeClass$ and therefore implicitly $M_T \in \forestClass$.
 model.
 Secondly, we show that $\vdash \sqex{M_T} \phi$.
-Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.\\
+Thirdly, we show $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
+Lastly, we show that $M_T \in \eventClass_B$.\\
 \\
-According to Definition \ref{finTree} $M_T = (\Sigma, R, pre, T)$ is a finite tree event model, the following four conditions must hold:
+According to Definition \ref{finTree} $M_T = (\Sigma, R, pre, T)$ is a finite tree event model if
+and only if the following four conditions must hold:
 \begin{enumerate}
 	\item $\Sigma$ is finite \label{treeConFinite}
 	\item $T = \{\sigma\}$, where $R \sigma = \varnothing$ \label{treeConRoot}
