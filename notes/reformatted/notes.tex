@@ -264,7 +264,7 @@ The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductive
 	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
 \end{itemize}
 for $s \in \Sigma$.
-\end{logic}
+\end{defn}
 We will adopt the standard abbreviations for propositional logic, such as $\phi \lor \phi =
 \neg(\neg \phi \land \neg \phi)$.
 These are defined in \FIXME.
@@ -278,15 +278,16 @@ The language of modal logic $\lang$ is $\langProp$ with the additional inductive
 The interpretation of $\phi \in \lang$ in the logic $K$ is the same as $\langProp$, with the
 additional inductive case
 \[
-	M_s \models \Box_a \phi$ iff for every $t \in s R_a: M_t \models \phi
+	M_s \models \Box_a \phi \text{ iff for every }t \in s R_a: M_t \models \phi
 \]
 for $a \in A$ and $s \in \Sigma$.
 \end{defn}
 The Kripke semantics for modal logic are well-known.
-We will adopt the standard abbreviations for Kripke semantics --- see \FIXME.
+We will adopt the standard abbreviations for Kripke semantics --- see \FIXME.\\
+\\
 %\FIXME: Add in citations and stuff
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
-its dual, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
+its dual operator, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
 We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigwedge_{b \in B}
 \Box_b \phi$.
 In the case where $B = A$ we write $M_s \models \Box \phi$.\\
@@ -731,8 +732,8 @@ M'_{T'} = \bigsqcup_{i = 1}^{k+1} M^i_{T^i} \in \eventClass_B.
 \]
 \end{proof}
 
-We can use these operations to construct finite tree and forest event models, as we show
-in the next section.
+We can use the operations $\to$ (considers) and $\sqcup$ (choice) to construct finite tree and
+forest event models, as we show in the next section.
 
 \subsection{Completeness}
 
@@ -859,7 +860,10 @@ and only if the following four conditions must hold:
 \end{enumerate}
 
 We note that condition \ref{treeConFinite} is satisfied by the definition of $M_T$ as
-\[\Sigma = \{\sigma\} \bigcup_{\gamma \in \Gamma} \Sigma^{\gamma}\]
+\[
+  \Sigma = \{\sigma\} \bigcup_{a \in A} (\bigcup_{\gamma \in \Gamma}
+      \Sigma^{\gamma})
+\]
 where $\Gamma$ is a finite set and each $\Sigma^\gamma$ is finite.
 Therefore, $\Sigma$ itself must also be finite.\\
 \\
@@ -916,18 +920,18 @@ Now we suppose $c \in C$ and show $\vdash \sqex{M_T} \Box_c \bigwedge_{\gamma \i
 \begin{align}
 	& \vdash \sqex{M^{\gamma}_{T^{\gamma}}} \gamma \text{ for every }\gamma \in \Gamma^c
 	\label{cfa_c2_1} \\
-	& \vdash \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every }\gamma \in \Gamma^c \label{cfa_c2_1} \\
+	& \vdash \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every }\gamma \in \Gamma^c \label{cfa_c2_2} \\
 	& \vdash \Box \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in
-	\Gamma^c\label{cfa_c2_2} \\
-	& \vdash \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in
 	\Gamma^c\label{cfa_c2_3} \\
-	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma\label{cfa_c2_4} \\
+	& \vdash \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in
+	\Gamma^c\label{cfa_c2_4} \\
+	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma\label{cfa_c2_5} \\
 	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v}
-	\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_5} \\
-	& \vdash \bigwedge_{v \in \sigma R} \Box_c \sqex{M^\gamma_v}\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_6} \\
+	\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_6} \\
+	& \vdash \bigwedge_{v \in \sigma R} \Box_c \sqex{M_v}\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_7} \\
 	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in
-		\Gamma^c} \gamma'\label{cfa_c2_7} \\
-	& \vdash \sqex{M_\sigma} \Box_c \bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_8} 
+		\Gamma^c} \gamma'\label{cfa_c2_8} \\
+	& \vdash \sqex{M_\sigma} \Box_c \bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_9} 
 \end{align}
 (\ref{cfa_c2_1}) follows from our hypothesis, (\ref{cfa_c2_2}) follows from \axAU, and (\ref{cfa_c2_8})
 	follows from \axAK.\\
