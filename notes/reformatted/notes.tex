@@ -162,7 +162,7 @@ We say $\eventClass$ is the class of all event models.
 
 \begin{defn} \label{pub}
 Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
-Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)$ for each $a \in A$ and $\phi
+Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)\}$ for each $a \in A$ and $\phi
 \in \mathcal{L}$.
 Then $M$ is a public announcement of $\phi$.
 We say $\publicAnnClass$ is the class of all action models that
@@ -173,18 +173,21 @@ are public announcements of a sentence in $L$.
 Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
 where $\phi \in L$ and $\sigma$ is an action point.
 $M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
-$\insaneClass = \{M | \phi \in L\}$ is the class of all such action models,
-which we will term ``insanity models".
+$\insaneClass = \{M | \phi \in L\}$ is the class of all such action models.
 \end{defn}
+We call this class of models ``insanity models".
+This is because after the execution of an insanity model, all agents have renounced every belief
+they hold.
+They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
+Allowing them to believe such contradictions means that they are effectively insane.
 
 \subsection{Bisimilarity, simulation and refinement}
 
 \begin{defn} \label{bisimKripke}
 	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
-	relation.
+	relation such that
 	\begin{itemize}
-		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $pre(s)
-		\iff pre('s)$
+		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $V(s) = V'(s')$
 		\item {\bf front-$a$}: for each $s \in \Sigma$ such that $s \sim s'$, for each $t$ such that
 		$s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \sim t'$
 		\item {\bf back-$a$}: for each $s' \in \Sigma'$ such that $s \sim s'$, for each $t$ such that
@@ -199,6 +202,8 @@ which we will term ``insanity models".
 \begin{lemma} \label{bisimEquivalence}
 	The relation $\sim$ is an equivalence relation.
 \end{lemma}
+
+This is a well-known result shown by de Rijke, Venema and Blackburn in \FIXME.
 
 \begin{defn} \label{nBisimKripke}
 Let $M_s, M'_{s'} \in \kripkeClass$.
@@ -246,29 +251,44 @@ We say the class of $B$-restricted action models is $\eventClass_B$.
 We now discuss the semantics and syntax of several different languages, culminating with language of
 arbitrary action model logic which will rely upon each of the languages we discuss.
 
-\begin{defn} \label{modalLogic}
+\begin{defn} \label{propLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$.
-The language $\lang$ is inductively defined by
+The language of propositional logic $\langProp$ is inductively defined by
 \[
 	\phi ::== p | \neg \phi | (\phi \land \phi)
 \]
-The interpretation of $\phi \in \lang$ in the logic $K$ is defined inductively as
+The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
 \begin{itemize}
 	\item $M_s \models p$ iff $p \in V(s)$
 	\item $M_s \models \neg \phi$ iff $M_s \not \models \phi$
 	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
-	\item $M_s \models \Box_a \phi$ iff for every $t \in s R_a: M_t \models \phi$
-	\item $M_s \models \Box_B \phi$ iff for every $b \in B : M_s \models \Box_b \phi$
 \end{itemize}
-for $a \in A$, $B \subseteq A$, $s \in \Sigma$.
+for $s \in \Sigma$.
+\end{logic}
+We will adopt the standard abbreviations for propositional logic, such as $\phi \lor \phi =
+\neg(\neg \phi \land \neg \phi)$.
+These are defined in \FIXME.
+
+\begin{defn} \label{modalLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$.
+The language of modal logic $\lang$ is $\langProp$ with the additional inductive case
+\[
+	 \Box_a \phi
+\]
+The interpretation of $\phi \in \lang$ in the logic $K$ is the same as $\langProp$, with the
+additional inductive case
+\[
+	M_s \models \Box_a \phi$ iff for every $t \in s R_a: M_t \models \phi
+\]
+for $a \in A$ and $s \in \Sigma$.
 \end{defn}
-The language $\lang$ is $\langProp$ (propositional logic), with the additional inductive case for
-$\Box_b \phi$.
 The Kripke semantics for modal logic are well-known.
 We will adopt the standard abbreviations for Kripke semantics --- see \FIXME.
 %\FIXME: Add in citations and stuff
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
 its dual, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
+We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigwedge_{b \in B}
+\Box_b \phi$.
 In the case where $B = A$ we write $M_s \models \Box \phi$.\\
 \\
 We say that a formula $\phi$ is satisfied by a pointed model Kripke model $M_s \in \kripkeClass$ iff
@@ -304,7 +324,7 @@ The interpretation of $\phi \in \langActEx$ is the same as its interpretation in
 inductive cases
 \begin{itemize}
 	\item $M_s \models \sqex{N_\sigma} \phi$ iff $M_s \models \phi \implies M_s \otimes N_\sigma \models
-	\phi$
+	\phi$ (see Definition \ref{evModelEx})
 	\item $M_s \models \sqex{N_T} \phi$ iff for every $\sigma \in T$, $M_s \models \sqex{N_\sigma} \phi$ 
 \end{itemize}
 \end{defn}
