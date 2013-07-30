@@ -1,6 +1,6 @@
 %-----------------------------------------------------------------------------%
 %Packages%
-\documentclass[12pt, a4paper, titlepage]{scrartcl}
+\documentclass[12pt, a4paper, titlepage]{article}
 \usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
 \usepackage{mathtools}
 \usepackage[usenames, dvipsnames]{color} %Color naming packages
@@ -17,7 +17,6 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
-\addtokomafont{disposition}{\rmfamily}
 \usetikzlibrary{arrows,shapes}
 
 %Graphis Extensions
@@ -1093,6 +1092,11 @@ $N^\beta_{T^\beta} \in \eventClass$ such that for $\gamma \in \{\alpha, \beta\}:
 Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite forest event model $M_T$ such
 that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
 \end{proof}
+
+\begin{thm} \label{everyBRestrictedEventModel}
+Let $M_T \in \eventClass_B$.
+Then there is some $M'_{T'} \in \forestClass$ such that $M_T \sim_n M'_{T'}$.
+\end{thm}
 
 \section{Multi-agent goal achievement in $\langArbAct$}
 
