@@ -1,7 +1,434 @@
-\section{Technical preliminaries --- fixed by 4 August 2013}
+\section{Technical preliminaries}
+In order to discuss event model synthesis, we first define essential concepts regarding event
+models and the semantics of the logics we are working within.
 
-\subsection{Modal, doxastic and epistemic logics}
+\subsection{Models}
 
-\subsection{Bisimulation, simulation and refinements}
+\begin{defn} \label{frame}
+	Let $\Sigma$ be a set of atoms and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
+	accessibility relations.
+	Then the tuple $(\Sigma, R)$ is a frame.
+\end{defn}
 
-\subsection{Refinement quantified event models}
+A frame represents a mathematical structure, but holds no meaningful information.
+In order to give meaning and be able to draw conclusions from the frame, we can
+construct a valuation function that transforms the frame into a model detailing
+information.
+\begin{defn} \label{model}
+	Let $L$ be a logical language.
+	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
+	In the context of epistemic modal logic, $\Sigma$ is a set of atomic knowledge points.
+	Let $V: L \to \mathcal{P}(\Sigma)$ be a function mapping any
+	well-formed	sentence in $L$ to a subset of $\Sigma$.
+	We say $V$ is a valuation function on $F$.\\
+	\\
+	Then $M = (F, V) = (\Sigma, R, V)$ is a Kripke
+	model.
+\end{defn}
+A multi-pointed model is a model $M = (\Sigma, R, V)$ with a set of designated states, $T$.
+When $T = \{s\}$ is a single state, we say that the model is a pointed model and write $M_s$.
+We say $\kripkeClass$ is the class of all Kripke models.
+
+\begin{defn} \label{evModel}
+	Let $L$ be a logical language.
+	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
+	An event model $M = (\Sigma, R, pre)$ with preconditions defined on $\mathcal{L}$ consists of
+	\begin{itemize}
+		\item a domain $\Sigma$ of possible atomic action points
+		\item an accessibility function, $R: A \to \mathcal{P}(S \times S)$, a function from agents to
+		accessibility relations on $\Sigma$.\\
+		We refer to $R(a)$ as $R_a$.
+		We will refer to all accessible action points from $s$ as $s R_a$, and all action points that
+		can access $t$ as $R_a t$.
+		Furthermore, we say $s R_a t$ means $t$ is $a$-accessible from $s$.
+		\item a precondition function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
+		sentence in $\mathcal{L}$
+	\end{itemize}
+\end{defn}
+
+Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
+models.
+We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
+pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
+Furthermore, in literature both of the terms event models and action models are used to describe
+the same concept, and we use them interchangeably throughout this paper to refer to event models.
+
+\begin{defn} \label{evModelEx}
+Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
+		R^N, pre^N) \in
+\mathcal{AM}$ as follows.
+The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
+\begin{itemize}
+	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \vdash pre^N(u)\}$
+	\item $(s, u) R_a' (t, v) \iff s R_a t \land u R_a^N v$
+	\item $V'((s,u)) = V(s)$
+\end{itemize}
+We define pointed event model execution as $M_s \otimes N_u = (M \otimes N)_{(s, u)}$.
+This pointed model execution is only sensible if and only if $M_s \models pre^N(u)$ and thus $(s,u)
+	\in \Sigma'$.
+\end{defn}
+
+We say $\eventClass$ is the class of all event models.
+
+\begin{defn} \label{pub}
+Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
+Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)\}$ for each $a \in A$ and $\phi
+\in \mathcal{L}$.
+Then $M$ is a public announcement of $\phi$.
+We say $\publicAnnClass$ is the class of all action models that
+are public announcements of a sentence in $L$.
+\end{defn}
+
+\begin{defn} \label{insanity}
+Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
+where $\phi \in L$ and $\sigma$ is an action point.
+$M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
+$\insaneClass = \{M | \phi \in L\}$ is the class of all such action models.
+\end{defn}
+We call this class of models ``insanity models".
+This is because after the execution of an insanity model, all agents have renounced every belief
+they hold.
+They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
+Allowing them to believe such contradictions means that they are effectively insane.
+
+\subsection{Bisimilarity, simulation and refinement}
+
+\begin{defn} \label{bisimKripke}
+	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
+	relation such that
+	\begin{itemize}
+		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $V(s) = V'(s')$
+		\item {\bf front-$a$}: for each $s \in \Sigma$ such that $s \sim s'$, for each $t$ such that
+		$s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \sim t'$
+		\item {\bf back-$a$}: for each $s' \in \Sigma'$ such that $s \sim s'$, for each $t$ such that
+		$s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \sim t'$
+	\end{itemize}
+	$\sim$ is a bisimulation between $M$ and $M'$ if and only if {\bf atoms} holds and {\bf front-$a$}
+	and {\bf back-$a$} hold for each $a \in A$.
+	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
+\end{defn}
+% \FIXME: add in citations
+
+\begin{lemma} \label{bisimEquivalence}
+	The relation $\sim$ is an equivalence relation.
+\end{lemma}
+
+This is a well-known result shown by de Rijke, Venema and Blackburn in \FIXME.
+
+\begin{defn} \label{nBisimKripke}
+Let $M_s, M'_{s'} \in \kripkeClass$.
+We define $n$-bisimilarity inductively as follows.
+We say that $M_s$ is $0$-bisimilar to $M'_{s'}$ if and only if $V(s) = V'(s)$.
+Then for $n > 0$ we say that $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if for every $a \in A$
+\begin{itemize}
+	\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
+	\item {\bf $n$-front-$a$}: for each $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
+	$n-1$-bisimilar to $M'_{t'}$
+	\item {\bf $n$-back-$a$}: for each $t' \in s' R'_a$ there is a $t \in s R_a$ such that $M_t$ is
+	$n-1$-bisimilar to $M'_{t'}$
+\end{itemize}
+We denote $M_s$ and $M'_{s'}$ being $n$-bisimilar by $M_s \sim_n M'_{s'}$.
+\end{defn}
+
+\begin{defn} \label{refinement}
+Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
+\times \Sigma'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
+every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
+\end{defn}
+If $(\sigma, \sigma') \in \lesssim$ then we say $M'_{\sigma'}$ is a $B$-simulation of $M_\sigma$ and
+$M_\sigma$ a $B$-refinement of $M'_{\sigma'}$.
+We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsim M_{\sigma}$.
+
+\begin{lemma} \label{refinementPreorder}
+The relation $\lesssim_B$ is a preorder.
+\end{lemma}
+This is shown by van Ditsmarch and French in \FIXME.
+
+\begin{lemma} \label{bisimilarIsRefinement}
+Let $M_\sigma, M'_{\sigma'} \in \kripkeClass$ and $B \subseteq A$.
+Then $M_\sigma \sim M'_{\sigma'} \implies M_\sigma \lesssim_B M'_{\sigma'}$.
+\end{lemma}
+
+\begin{defn} \label{brestrict}
+Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
+only if for every $u \in \Sigma$ and every $M_s \in \kripkeClass$ such that $M_s \models pre(u)$ we
+have $M_s \otimes N_u \gtrsim_B M_s$.
+We say the class of $B$-restricted action models is $\eventClass_B$.
+\end{defn}
+%\FIXME: citation here
+
+\subsection{Language semantics}
+We now discuss the semantics and syntax of several different languages, culminating with language of
+arbitrary action model logic which will rely upon each of the languages we discuss.
+
+\begin{defn} \label{propLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$.
+The language of propositional logic $\langProp$ is inductively defined by
+\[
+	\phi ::== p | \neg \phi | (\phi \land \phi)
+\]
+The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
+\begin{itemize}
+	\item $M_s \models p$ iff $p \in V(s)$
+	\item $M_s \models \neg \phi$ iff $M_s \not \models \phi$
+	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
+\end{itemize}
+for $s \in \Sigma$.
+\end{defn}
+We will adopt the standard abbreviations for propositional logic, such as $\phi \lor \phi =
+\neg(\neg \phi \land \neg \phi)$.
+These are defined in \FIXME.
+
+\begin{defn} \label{modalLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$.
+The language of modal logic $\lang$ is $\langProp$ with the additional inductive case
+\[
+	 \Box_a \phi
+\]
+The interpretation of $\phi \in \lang$ in the logic $K$ is the same as $\langProp$, with the
+additional inductive case
+\[
+	M_s \models \Box_a \phi \text{ iff for every }t \in s R_a: M_t \models \phi
+\]
+for $a \in A$ and $s \in \Sigma$.
+\end{defn}
+The Kripke semantics for modal logic are well-known.
+We will adopt the standard abbreviations for Kripke semantics --- see \FIXME.\\
+\\
+%\FIXME: Add in citations and stuff
+In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
+its dual operator, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
+We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigwedge_{b \in B}
+\Box_b \phi$.
+In the case where $B = A$ we write $M_s \models \Box \phi$.\\
+\\
+We say that a formula $\phi$ is satisfied by a pointed model Kripke model $M_s \in \kripkeClass$ iff
+$M_s \models \phi$.
+We say that $\phi$ is satisfied by a model $M = (\Sigma, R, V)$ (denoted by $M \models \phi$) iff
+for all $\sigma \in \Sigma$, $M_\sigma \models \phi$.
+Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for every model $M \in
+\kripkeClass$, $M \models \phi$.\\
+\\
+%\FIXME: Add citation
+In addition to $\Box_a$ we introduce the cover operator $\cover_a$, as first defined in \FIXME.
+\begin{defn} \label{coverDef}
+Let $\Gamma \subseteq \lang$ be a finite set of formulae.
+Then
+\[
+  \cover_a \Gamma ::== \Box_a \bigvee_{\gamma \in \Gamma} \gamma \land
+  \bigwedge_{\gamma \in \Gamma} \Diamond_a \gamma
+\]
+Similarly, if $B \subseteq A$, then $\cover_B \Gamma ::== \bigwedge_{b \in B}
+\cover_b \Gamma$.
+\end{defn}
+We note that this is a simple abbreviation, and we can define $\Box_a$ and
+$\Diamond_a$ in terms of it.
+$\Box_a \phi \iff \cover_a \phi \lor \cover_a \varnothing$, while $\Diamond_a
+\phi \iff \cover_a \{\phi, \top\}$.
+$\cover$ is the basis for the axiomatisation of refinement modal logic.
+
+\begin{defn} \label{actModelLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $N = (\Sigma^N, R^N, pre^N) \in
+\eventClass$ a multi-pointed event model.
+The interpretation of $\phi \in \langActEx$ is the same as its interpretation in $\lang$
+(\ref{modalLogic}), but with the additional
+inductive cases
+\begin{itemize}
+	\item $M_s \models \sqex{N_\sigma} \phi$ iff $M_s \models \phi \implies M_s \otimes N_\sigma \models
+	\phi$ (see Definition \ref{evModelEx})
+	\item $M_s \models \sqex{N_T} \phi$ iff for every $\sigma \in T$, $M_s \models \sqex{N_\sigma} \phi$ 
+\end{itemize}
+\end{defn}
+$\sqex{N_\sigma} \phi$ can be read as ``the successful execution of the informative update modelled by
+$N_\sigma$ will result in $\phi$ being true".
+Similarly, $\sqex{N_T} \phi$ can be read as ``the successful execution of the informative update
+modelled by $N_T$ will result in $\phi$ being true".
+If $T = \Sigma^N$ then we write $M_s \models \sqex{N} \phi$.\\
+\\
+We adopt the standard convention for the dual operators, with $\anex{ N_\sigma } \phi$ being
+read as ``the successful execution of the informative update modelled by $N_\sigma$ may result in
+$\phi$ being true".
+Again, $\anex{ N_T } \phi$ can be read as ``the successful execution of the informative
+update modelled by $N_T$ may result in $\phi$ being true".
+
+%\FIXME: Add in citations to Baltag, Moss and Solecki
+
+\begin{defn} \label{refineLogic}
+Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model.
+The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the same as $\lang$
+(\ref{modalLogic}), but with the additional inductive case
+\[
+	M_s \models \forall_B \phi \text{ iff } \forall M'_{s'} \in \eventClass \text{ such that } M'_{s'}
+	\lesssim_B M_s : M'_{s'} \models \phi
+\]
+\end{defn}
+We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold".
+Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that $\phi$ will hold".
+As in the previous operations, when $B = A$ we will write $\forall \phi$.
+In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
+
+%\FIXME: Add in citations to Tim, Rowan, James
+
+\begin{defn} \label{arbActLogic}
+The language of arbitrary action model logic, $\langArbAct$ is first defined in \FIXME.
+We inductively define $\langArbAct$ by
+\[
+	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | \sqex{N_T} \phi | \forall_B \phi
+\]
+for $N_T \in \eventClass$ and $B \subseteq A$.
+\end{defn}
+$\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{N_T}$.
+
+%\FIXME: Add in James' alternate definition for \forall
+
+%\FIXME: Add in the citations of James
+
+\subsubsection{Miscellaneous Semantic Results}
+We provide other results that we will use in the main technical findings of this paper.
+
+\begin{defn} \label{bisimEvent}
+	Let $M, M' \in \eventClass$ with preconditions defined on $\langArbAct$.
+	A non-empty relation $\sim$ on $M \times M'$ is a bisimulation if and only if for every $a \in A$
+	and $(s, s') \in \sim$, the following three conditions hold:
+	\begin{itemize}
+		\item {\bf pre}: $pre(s) \iff pre'(s')$
+		\item {\bf forth-$a$}: for every $v \in s R_a$ there is a $v' \in s' R'_a$ such that $(v,v') \in
+		\sim$
+		\item {\bf back-$a$}: for every $v' \in s' R'_a$ there is a $v \in s R_a$ such that $(v,v') \in
+		\sim$
+	\end{itemize}
+	If $(s, s') \in \sim$ we write $M_s \sim M'_{s'}$ to denote that $M_s$ and $M'_{s'}$ are bisimilar and
+	that there is a bisimulation between $M_s$ and $M'_{s'}$.
+\end{defn}
+
+\begin{lemma} \label{eventModelsRefine}
+Let $M_\sigma \in \eventClass$ be an event model and let $N_s \in \kripkeClass$ be a Kripke
+model such that $N_s \models pre(\sigma)$.
+Then $N_s \otimes M_\sigma \lesssim N_s$.
+\end{lemma}
+
+\begin{lemma} \label{eventModelEquivalent}
+Let $M_\sigma$, $M'_{\sigma'} \in \eventClass$ be event models such that $M_\sigma \sim M'_{\sigma'}$
+and let $N_s \in \kripkeClass$ such that $N_s \models pre(\sigma)$.
+Then $N_s \otimes M_\sigma \sim N_s \otimes M'_{\sigma'}$.
+\end{lemma}
+
+\begin{lemma} \label{nBisimilarKripkeExec}
+Let $M_s$, $M'_{s'} \in \kripkeClass$ such that $M_s \sim_n M'_{s'}$ and let $N_t \in \eventClass$.
+For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N_t \models \phi
+\iff M'_{s'} \otimes N_t \models \phi.$
+\end{lemma}
+
+\begin{defn} \label{nBisimEvent}
+	Let $M_s, M'_{s'} \in \eventClass$ with preconditions defined on $\langArbAct$.
+	We inductively define $n$-bisimilarity for event models.
+	We say $M_s$ is $0$-bisimilar to $M'_{s'}$ if and only if $pre(s) \iff pre'(s')$.
+	Then for $n>0$ $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if each of the following hold
+	\begin{itemize}
+		\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
+		\item {\bf $n$-forth-$a$} for every $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
+		$n-1$-bisimilar to $M'_{t'}$
+		\item {\bf $n$-back-$a$} for every $t' \in s' R'_a$, there is a $t \in s R_a$ such that $M_t$ is
+		$n-1$-bisimilar to $M'_{t'}$
+	\end{itemize}
+	We write $M_s \sim_n M'_{s'}$ to denote that $M_s$ is $n$-bisimilar to $M'_{s'}$.
+\end{defn}
+
+\begin{lemma} \label{nBisimilarEventExec}
+	Let $M_s, M'_{s'} \in \eventClass$ such that $M_s \sim_n M'_{s'}$ and $N_t \in \kripkeClass$.
+	For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $N_t \otimes M_s \models \phi
+	\iff N_t \otimes M'_{s'} \models \phi$.
+\end{lemma}
+
+%\FIXME: WHO?! Please cite.
+
+\begin{defn} \label{coverNormal}
+A formula in cover disjunctive normal form is defined inductively as
+\[
+	\alpha ::== \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b | \alpha \lor \alpha
+\]
+where $\pi \in \langProp$, $B \subseteq A$ and for every $b \in B$, $\Gamma_b$ is a finite set of
+formulae in cover disjunctive normal form.
+\end{defn}
+
+\begin{lemma} \label{allInCoverNormal}
+Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal form.
+\end{lemma}
+
+\subsection{Axiomatisations}
+We will present axiomatisations derived by Hales for $\langArbAct$.
+To construct this axiomatisation, we first begin by presenting an axiomatisation for $\lang$, an
+axiomatisation for $\langActEx$ and an axiomatisation for $\langRefine$.\\
+\\
+We say that a formula $\phi$ is provable under an axiomatisation if and only if it can be derived by
+some finite sequence of axioms and rules within that axiomatisation.
+We denote that $\phi$ is provable by $\vdash \phi$.
+When discussing provability, it should be contextually clear which axiomatisation we are using.
+
+\begin{defn} \label{axiomK}
+The axiomatisation \AXK consists of the following axioms
+\begin{alignat*}{2}
+	& \axP && \quad \text{All propositional tautologies} \\
+	& \axK && \quad \Box_a(\phi \implies \psi) \implies (\Box_a \phi \implies \Box_a \psi)
+\end{alignat*}
+and the following rules
+\begin{alignat*}{2}
+	& \axMP && \quad \text{From $\vdash \phi \implies \psi$ and $\vdash \phi$, infer $\vdash \psi$} \\
+	& \axNecK && \quad \text{From $\vdash \phi$, infer $\vdash \Box_a \phi$}
+\end{alignat*}
+\end{defn}
+
+\begin{lemma} \label{axiomKSoundComplete}
+The axiomatisation \AXK is sound and complete with respect to the logic $\lang$.
+\end{lemma}
+
+\begin{defn} \label{axiomAML}
+The axiomatisation \AXAML contains the axioms and rules from \AXK, as well as the following axioms
+\begin{alignat*}{2}
+	& \axAP && \quad \sqex{M_\sigma}\pi \iff (pre(\sigma) \implies \pi) \text{ for $\pi \in \langProp$}\\
+	& \axAN && \quad \sqex{M_\sigma} \neg \phi \iff (pre(\sigma) \implies \neg \sqex{M_\sigma} \phi)\\
+	& \axAC && \quad \sqex{M_\sigma}(\phi \land \psi) \iff (\sqex{M_\sigma}\phi \land \sqex{M_\sigma}\psi\\
+	& \axAK && \quad \sqex{M_\sigma}\Box_a\phi \iff (pre(\sigma) \implies \bigwedge_{v \in \sigma R_a}
+		\Box_a \sqex{M_v} \phi) \\
+	& \axAU && \quad \sqex{M_T} \phi \iff \bigwedge_{u \in T} \sqex{M_u} \phi
+\end{alignat*}
+and the rule
+\[
+	\axNecA \quad \text{From $\vdash \phi$ infer $\vdash \sqex{M_\sigma} \phi$}
+\]
+\end{defn}
+
+\begin{lemma} \label{axiomAMLSoundComplete}
+The axiomatisation \AXAML is sound and complete with respect to the logic $\langActEx$.
+\end{lemma}
+
+\begin{defn} \label{axiomRML}
+The axiomatisation \AXRML contains the axioms and rules from \AXK, as well as the following axioms
+\begin{alignat*}{2}
+	& \axR && \quad \forall_B (\phi \implies \psi) \implies (\forall_B \phi \implies \forall_B \psi) \\
+	& \axRP && \quad \forall_B \pi \iff \pi \text{ where } \pi \in \langProp \\
+	& \axRK && \quad\exists_B \cover_a \Gamma_a \iff \bigwedge_{\gamma \in \Gamma} \Diamond_a \exists_B
+	\gamma \text{ where } a \in B \\
+	& \axRComm && \quad \exists_B \cover_a \Gamma_a \iff \cover_a \{ \exists_B \gamma | \gamma \in
+	\Gamma_a\} \text{ where } a \notin B\\
+	& \axRDist && \quad \exists_B \bigwedge_{c \in C} \cover_c \Gamma_c \iff \bigwedge_{c \in C}
+	\exists_B \cover_c \Gamma_c \text{ where } C \subseteq A
+\end{alignat*}
+and the rule
+\[
+	\axNecR \quad \text{From $\vdash \phi$, infer $\vdash \forall_B \phi$}
+\]
+\end{defn}
+
+\begin{lemma} \label{axiomRMLSoundComplete}
+The axiomatisation \AXRML is sound and complete with respect to the logic $\langRefine$.
+\end{lemma}
+
+\begin{defn} \label{axiomAAML}
+The axiomatisation \AXAAML contains the axioms and rules from \AXRML and \AXAML.
+\end{defn}
+
+\begin{thm} \label{axiomAAMLSoundComplete}
+The axiomatisation \AXAAML is sound and complete with respect to the logic $\langArbAct$.
+\end{thm}
+

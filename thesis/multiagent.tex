@@ -1,3 +1,572 @@
-\section{Multi-agent goal achievement in $\mathcal{K}$}
+\section{Multi-agent epistemic goal achievement in $\langArbAct$}
+
+In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
+epistemic goals or cause a model to crash in the process.
+We examine this goal achievement for a subset of agents $B \subseteq A$.\\
+\\
+%\FIXME: citations here
+In \FIXME, Hales demonstrates that it is possible to determine whether an
+finite epistemic goal can be achieved.
+Furthermore, if it is achievable Hales constructs event models that will realise
+that goal.
+We will focus on defining a framework that constructs these event models in a
+recursive manner.
+This facilitates an automated method for updating knowledge models to reflect a
+knowledge state.
 
 \subsection{Technical preliminaries}
+
+The event models that Hales employs resemble finite trees.
+We give a rigourous definition for them as follows
+
+\begin{defn} \label{finTree}
+Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
+$M$ is a finite tree event model if
+\begin{itemize}
+	\item $\Sigma$, the set of action points is finite
+	\item $r$ is the root of the tree and is not accessible from any other action point
+	\item for each $s \in \Sigma \setminus \{ r \}$ there is a unique agent $a \in A$ and a unique
+	action $p \in \Sigma$ such that $(p,s) \in R(a)$
+	\item for each $s \in \Sigma$ there exists a unique sequence of actions in $\Sigma$, $r = s_0,
+	s_1, \ldots, s_n = s$ and a sequence of agents $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1}
+	s_1$, $s_1 R_{a_2} s_2$, $\ldots, s_{n-1} R_{a_n} s_n$
+\end{itemize}
+\end{defn}
+
+We say that the class of finite tree event models is $\treeClass$.
+
+\begin{defn} \label{forest}
+Let $M_T = (\Sigma, R, pre, T)$ be a multi-pointed event model.
+$M_T$ is a finite forest event model if
+\begin{itemize}
+	\item each point $t$ in $T$ is the root of a finite tree event model $M^t = (\Sigma^t, R^t,
+	pre^t, t)$
+	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$
+	\item for each $M^t$ and for each $a \in A$, $R^t \subseteq R$
+	\item for each $\sigma \in \Sigma^t$, $pre(\sigma) = pre^t(\sigma)$
+	\item if $s, t \in T$ such that $s \neq t$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+  \item $\Sigma = \bigcup_{t \in T} \Sigma^t$
+  \item for each $a \in A \implies R_a = \bigcup_{t \in T} R_a^t$
+\end{itemize}
+\end{defn}
+
+We say that the class of finite forest event models is $\forestClass$.
+
+\begin{lemma} \label{treeIsForest}
+The event model class $\treeClass$ is contained within the event model class
+$\forestClass$, that is $\treeClass \subseteq \forestClass$.
+\end{lemma}
+
+It is clear that by our earlier definitions, a finite tree event model is also a finite forest event
+model.
+
+\begin{defn} \label{subtree}
+Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
+We say the pointed event model $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
+\begin{itemize}
+	\item $\Sigma' \subseteq \Sigma$
+	\item $\forall a \in A \implies R_a' \subseteq R_a$
+	\item $\forall \sigma \in \Sigma' \implies pre(\sigma) = pre'(\sigma) $
+	\item $M'$ is $R$-generable
+	\item $M'$ is a finite tree event model
+\end{itemize}
+\end{defn}
+
+\begin{defn} \label{leaf}
+Let $M = (\Sigma, R, pre, r)$ be a finite tree event model.
+Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+$M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and $\Sigma' = \{ r'\}$.
+\end{defn}
+
+In order to generate these models, we must construct an algebra that can construct event models.
+However, we are unaware of any operations that are appropriate for building tree models.
+We define an operation to describe a group of agents' belief with regards to the possible execution
+of one event model instead of another.
+
+\begin{defn} \label{considers}
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
+generality let $M^1$ and $M^2$ be disjoint.
+Let $B$ be a subset of agents participating in $M^1$ or $M^2$.
+We define $M = M^1 \to_B M^2$ as 
+\begin{itemize}
+  \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  \item $R_a = R^1_a \cup R^2_a \text{if } a \notin B$
+	\item $R_a =
+      R^1_a \cup
+      R^2_a \cup
+      \{(s,t) | s \in T^1 \land t \in T^2 \}
+    \text{if } a \in B $
+  \item $pre = pre^1 \cup pre^2$
+  \item $T = T^1$
+\end{itemize}
+The $\to$ operator will be referred to as ``considers".
+\end{defn}
+
+$M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers $M^2$ as another
+possible update.
+In the case that $B = A$, we will denote this by $\to$, and if $B = \{a\}$, then
+we will write $\to_a$.
+We also present the disjoint union operator defined by \FIXME.
+
+%\FIXME: who introduced this? (Baltag and Moss)
+
+\begin{defn} \label{disjoint}
+Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of generality let $M^1$ and
+$M^2$ be disjoint.
+We define $M = M^1 \sqcup M^2$ as
+\begin{itemize}
+	\item $\Sigma = \Sigma^1 \cup \Sigma^2$
+	\item $R_a = R^1_a \cup R^2_a$
+	\item $pre = pre^1 \cup pre^2$
+	\item $T = T^1 \cup T^2$
+\end{itemize}
+\end{defn}
+This is the disjoint union of the two event models, which we can refer to as the agents in $A$
+knowing that one of the two models has occurred.
+Baltag and Moss call this a non-deterministic choice.
+%\FIXME: cite
+
+\begin{lemma} \label{disjForestIsForest}
+Let $M^1_{T^1}, M^2_{T^2} \in \forestClass$ be two disjoint forest event models.
+Then $M_T = M^1_{T^1} \sqcup M^2_{T^2} \in \forestClass$.
+\end{lemma}
+
+\begin{proof}
+We must show each of the following
+\begin{enumerate}
+	\item each $t \in T$ corresponds to a finite tree event model $M^t \in \treeClass$ \label{treeCorrespondence}
+	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$ \label{forestStateSubsets}
+	\item for each $M^t$, $R^t \subseteq R$ \label{forestEdgeSubsets}
+	\item for each $M^t$, for each $s \in \Sigma^t$, $pre^t(s) = pre(s)$ \label{preconMatch}
+	\item for each $s, t \in T$, $\Sigma^s$ and $\Sigma^t$ are disjoint \label{subtreeStatesDisjoint}
+\end{enumerate}
+
+We note that $T = T^1 \sqcup T^2$.
+Thus $t \in T \implies (t \in T^1 \lor t \in T^2)$.
+Since $M^1_{T^1}$ and $M^2_{T^2}$ are both finite forest event models then there must be some
+subtree event model $M^t \in \treeClass$ that corresponds to $t$.
+Without loss of generality, let $t \in T^1$.\\
+\\
+Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $M^t$, $\Sigma^t \subseteq \Sigma^1 \subseteq \Sigma$.
+Also, $R^t \subseteq R^1 \subseteq R$ and for all $s \in \Sigma^1 \implies pre^t(s) = pre^1(s) =
+pre(s)$.
+Finally, if $t, t' \in T$, each $M^t$ is disjoint from any other $M^{t'}$ since
+\begin{itemize}
+	\item $t' \in T^1 \implies$ that condition \ref{subtreeStatesDisjoint} previously held for
+	$M^1_{T^1} \in \forestClass$ and thus $\Sigma^{t'}$ is disjoint $\Sigma^t$
+	\item $t' \in T^2$ will ensure that $\Sigma^{t'}$ and $\Sigma^t$ are disjoint by the premise of
+	the lemma
+\end{itemize}
+\end{proof}
+
+A final miscellaneous result shown by Hales in \FIXME, which we employ later, is reproduced here.
+
+\begin{lemma} \label{brestrictDisjoint}
+Suppose $\{ M^i_{T^i} = (\Sigma^i, R^i, pre^i, T^i) | i \in [1, n] \}$ is a finite set of $n$ event
+models.
+Furthermore, let each $M^i_{T^i} \in \eventClass_B$.
+Then
+\[
+	M_T = \bigsqcup_{i = 1}^{n} M^i_{T^i} \in \eventClass_B
+\]
+\end{lemma}
+
+\begin{proof}
+We will inductively show that for $k$ event models
+\[
+	\bigsqcup_{i = 1}^k M^i_{T^i} \in \eventClass_B
+\]
+We begin with our base case, where $k = 1$.
+This is trivially so by the definition of $M^1_{T^1}$.
+\[
+	\bigsqcup_{i = 1}^1 M^i_{T^i} = M^1_{T^1} \in \eventClass_B
+\]
+Now, suppose that our induction hypothesis holds for $k$ event models.
+Let $M^K_{T^K} = \bigsqcup_{i = 1}^k M^i_{T^i} \in \eventClass_B$.
+Then for $k+1$ event models, let
+\begin{align*}
+	M'_{T'} = & \bigsqcup_{i = 1}^{k+1} M^i_{T^i} \\
+	= & \bigsqcup_{i = 1}^k M^i_{T^i} \sqcup M^{k+1}_{T^{k+1}} \\
+	= & M^K_{T^K} \sqcup M^{k+1}_{T^{k+1}}
+\end{align*}
+We note that since $M'_{T'}$ is a disjoint union of event models, $M'_{T^i} \sim M^i_{T^i}$ is a
+trivial bisimilarity.
+Similarly, $M'_{T^K} \sim M^K_{T^K}$ is a trivial bisimilarity.\\
+\\
+Let $\gamma$ be either of $K$ or $k+1$, and suppose $\sigma \in \Sigma^\gamma$.
+Let $N_s \in \kripkeClass$.
+As $M^\gamma \in \eventClass_B$, then $N_s \otimes M^\gamma_\sigma \lesssim_B N_s$.
+We note that due to $M'$ being a disjoint union of event models, $M'_\sigma \sim M^\gamma_\sigma$.
+Then from Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M^\gamma_\sigma \sim N_s
+\otimes M'_\sigma$.
+From Lemma \ref{bisimilarIsRefinement}, we have $N_s \otimes M'_\sigma \lesssim_B N_s \otimes M^\gamma_\sigma$.
+From Lemma \ref{refinementPreorder}, $\lesssim_B$ is a transitive relation.
+Then $N_s \otimes M'_\sigma \lesssim_B N_s$.
+Thus
+\[
+M'_{T'} = \bigsqcup_{i = 1}^{k+1} M^i_{T^i} \in \eventClass_B.
+\]
+\end{proof}
+
+We can use the operations $\to$ (considers) and $\sqcup$ (choice) to construct finite tree and
+forest event models, as we show in the next section.
+
+\subsection{Completeness}
+
+\begin{lemma} \label{finTreeConstruct}
+Suppose $M = (\Sigma, R, pre, r)$ is a finite tree event model.
+$M$ can be constructed using insanity event models and $\to$.
+\end{lemma}
+\begin{proof}
+Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+We will show by induction that for any $M'$ we can use insanity event models and $\to$ to
+construct $M'$.\\
+\\
+Suppose that $M' = (\Sigma', R', pre', r')$ is a leaf node.
+Let $pre'(r') = \phi$, a formula in our logical language.
+$M'$ is an insanity event model by definition.
+Thus, we can construct $M'$ using insanity event models when $M'$ is a leaf node of $M$.\\
+\\
+Let $M' = (\Sigma', R', pre', r')$ be an arbitrary subtree of $M$.
+Suppose $pre'(r') = \phi$, where $\phi$ is a formula in our logical language.
+Let $M^1, M^2, \ldots, M^n$ be all the disjoint subtrees of $M'$.
+Suppose that each of $M^1, M^2, \ldots, M^n$ fulfill the induction hypothesis.
+Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $r' R_{a_1} r^1$, $r' R_{a_2} r^2,
+	\ldots, r' R_{a_n} r^n$.\\
+\\
+Consider the $M^t = (\{ t \}, R^t, pre^t, t) \in \insaneClass$.
+Let $pre^t(t) = \phi$.
+Consider the event model 
+\[
+M^K = (\ldots((M^t \to_{a_1} M ^ 1) \to_{a_2} M_2) \to_{a_3} \ldots
+\to_{a_{n-1}} M^{n-1} ) \to_{a_n} M ^ n
+\]
+We will show that $M^K$ and $M'$ are equivalent event models.\\
+\\
+Each of $M^1, M^2, \ldots, M^n$ are subtrees of $M'$.
+The action points, accessibilities and preconditions in each of $M^1, M^2, \ldots, M^n$ are
+equivalent to the action points and the accessibilities and preconditions of those points in $M'$.
+We can see that by its definition the ``root" of $M^K$, $t$ has the same precondition as $r'$.
+Furthermore, both $r'$ and $t$ can access each of $M^1, M^2, \ldots M^n$ by an $a_1, a_2, \ldots, a_n$ edge
+respectively.\\
+\\
+Thus $M'$ and $M^K$ are equivalent.
+We can form $M'$ using insanity event models and $\to$, and thus any arbitrary subtree of $M'$
+fulfills the induction hypothesis.
+\end{proof}
+
+\begin{lemma} \label{forestCon}
+Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
+Then $M$ can be constructed using $\to$, $\sqcup$ and insanity event models.
+\end{lemma}
+
+\begin{proof}
+Let $M^t = (\Sigma^t, R^t, pre^t, t) \in \treeClass$ be the
+subtree of $M$ that corresponds to point $t \in T$ (Definition \ref{forest}).
+By Lemma \ref{finTreeConstruct} we can generate from $\insaneClass$ and $\to$.
+By Lemma \ref{treeIsForest} $M^t \in \forestClass$.
+Then by a recursive and finite number of applications of Lemma
+\ref{disjForestIsForest} we have that $\bigsqcup_{t \in T} M^t$ is a finite
+forest event model.
+\end{proof}
+
+\begin{corr} \label{forestConCorr}
+Let $M = (\Sigma, R, pre, T)$ be a finite forest event model, and for each $t \in T$ let $M^t \in
+\treeClass$ be the subtree of $M$ corresponding to $t$.
+Then $M = \bigsqcup_{t \in T} M^t$.
+\end{corr}
+
+\subsection{Achieving information goals}
+
+%\FIXME: Needs to cite James
+
+\begin{lemma} \label{coverFormulaAchievementK}
+Let $B, C \subseteq A$ and
+\[
+\phi = \pi \land \bigwedge_{c \in C} \cover_c \Gamma_c \in \langArbAct
+\]
+where $\Gamma$ is a finite set.
+Suppose that for each $c \in C$, and for each $\gamma \in \Gamma_c$ there is an event model
+$M^\gamma_T \in \forestClass$ and $M^\gamma_T \in \eventClass_B$  such that
+$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff
+\exists_B \gamma$.
+Then there exists a finite forest event model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
+such that $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
+\end{lemma}
+
+\begin{proof}
+Let us say that $A$, a finite set of agents can be enumerated as $A = \{ a_1, a_2, \ldots, a_n\}$
+and that the set $A \setminus C = \{d_1, d_2, \ldots, d_k\}$.
+For each $a \in A$, if $a \in C$,
+\[
+	M^a_{T^a} = \bigsqcup_{\gamma \in \Gamma_a} M^\gamma_{T^\gamma}
+\]
+By Lemma \ref{disjForestIsForest} $M_c \in \forestClass$.
+Furthermore, by Lemma \ref{brestrictDisjoint}, $M_c \in \eventClass_B$.\\
+\\
+If $a \notin C$ then let (\FIXME plz)
+\[
+	M^a_{T^a} = (\{\sigma\}, \varnothing, \{(\sigma, \top)\}, \{\sigma\}) \in \insaneClass.
+\]
+Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
+\exists_B \phi$.
+Let
+\[
+M_T = ((\ldots((M'_\sigma \to_{a_1} M^{a_1}_{T^{a_1}}) \to_{a_2} M^{c_2}_{T^{a_2}}) \to_{a_3} \ldots )
+		\to_{a_n} M^{a_n}_{T^{a_n}}).
+\]
+Our proof is decomposed into four parts.
+Firstly, we show that $M_T \in \treeClass$ and therefore implicitly $M_T \in \forestClass$.
+model.
+Secondly, we show that $\vdash \sqex{M_T} \phi$.
+Thirdly, we show $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
+Lastly, we show that $M_T \in \eventClass_B$.\\
+\\
+According to Definition \ref{finTree} $M_T = (\Sigma, R, pre, T)$ is a finite tree event model if
+and only if the following four conditions must hold:
+\begin{enumerate}
+	\item $\Sigma$ is finite \label{treeConFinite}
+	\item $T = \{\sigma\}$, where $R \sigma = \varnothing$ \label{treeConRoot}
+	\item for each $s \in \Sigma \setminus T$ there is only one $a \in A$ and only one $p \in \Sigma$
+	such that $p R_a s$ \label{treeConOneAgent}
+	\item for each $s \in \Sigma$ there is a unique finite sequence of points in $\Sigma$, $\sigma =
+	s_0, s_1, s_2, \ldots, s_k = s$ and a sequence of agents $a_1, a_2, \ldots, a_k$ such that $s_0
+	R_{a_1} s_1, s_1 R_{a_2} s_2, \ldots, a_{k-1} R_k
+	a_k$ \label{treeConUniquePath}
+\end{enumerate}
+
+We note that condition \ref{treeConFinite} is satisfied by the definition of $M_T$ as
+\[
+  \Sigma = \{\sigma\} \bigcup_{a \in A} (\bigcup_{\gamma \in \Gamma}
+      \Sigma^{\gamma})
+\]
+where $\Gamma$ is a finite set and each $\Sigma^\gamma$ is finite.
+Therefore, $\Sigma$ itself must also be finite.\\
+\\
+Condition \ref{treeConRoot} is satisfied by the definition of $M_T$ and the definition of $\to$
+(Definition \ref{considers}).
+$\to$ only adds relations to $\sigma R$, and $R \sigma$ begins as $\varnothing$.
+Thus $\sigma$ is not accessible from any other points.\\
+\\
+We next show \ref{treeConOneAgent} is satisfied.
+To do so we much show that for each $s$ in $\Sigma \setminus T = \Sigma \setminus \{ \sigma \}$, there
+is a unique $p \in \Sigma$ and $a \in A$ such that $p R_a s$.
+Suppose that there is some $a \in A$ such that $s \in \Sigma^a$.
+If $s \in T^a$, then $R_a s = \{ \sigma \}$ by the definition of $M_T$.
+Otherwise, by the definition of $M^a$, any $s \notin T^a$ is in some subforest of $M^a$
+and therefore there is a unique $p \in \Sigma^a$ and a unique agent $a' \in A$ such that $p R_{a'}
+s$.\\
+\\
+Lastly, we show that \ref{treeConUniquePath} holds.
+Suppose $s = \sigma$; the sequence of action points is of length 0 and thus no agents are involved.
+Now, suppose $s \in \Sigma \setminus \{ \sigma \}$.
+Then for some $a \in A$ we have $s \in \Sigma^a$.
+Then for some $s' \in T^a$ there is a unique sequence of agents $a_1, a_2, \ldots, a_n$ and action
+points $s' = s_0, s_1, s_2, \ldots, s_n = s$ such that $s_i R_{a_{i+1}} s_{i+1}$ for any $0 \leq i
+\leq n-1$.
+Furthermore, $\sigma R_a s'$ by the definition of $M_T$, so we can combine the previous statement
+with $\sigma R_a s'$ to say that there is a unique sequence of agents and points from $\sigma$ to
+$s$.
+Thus, $M_T \in \treeClass \implies M_T \in \forestClass$ by Lemma \ref{treeIsForest}.\\
+\\
+Next, we shall show that $\vdash \sqex{M_T} \phi$.
+We will show that each of the following holds
+\begin{enumerate}
+	\item $\vdash \sqex{M_T} \pi$
+	\item $\vdash \sqex{M_T} \Box_c \bigwedge_{\gamma \in \Gamma_c} \gamma$ for every $c \in C$
+	\item $\vdash \sqex{M_T} \bigvee_{\gamma \in \Gamma_c} \Diamond_c \gamma$ for every $c \in C$
+\end{enumerate}
+
+Firstly we show $\vdash \sqex{M_T} \pi$.
+\begin{align}
+	& \vdash \phi \implies \pi \label{cfa_c1_1} \\
+	& \vdash \neg \pi \implies \neg \phi \label{cfa_c1_2}\\
+	& \vdash \forall (\neg \pi \implies \neg \phi) \label{cfa_c1_3}\\
+	& \vdash \forall \neg \pi \implies \forall \neg \phi \label{cfa_c1_4}\\
+	& \vdash \neg \forall \neg \phi \implies \neg \forall \neg \pi \label{cfa_c1_5}\\
+	& \vdash \exists \phi \implies \exists_B \pi \label{cfa_c1_6}\\
+	& \vdash pre(\sigma) \implies \pi \label{cfa_c1_7}\\
+	& \vdash \sqex{M_\sigma} \pi \label{cfa_c1_8}
+\end{align}
+(\ref{cfa_c1_3}) follows from \axNecR, (\ref{cfa_c1_4}) follows from \axR, (\ref{cfa_c1_6}) follows from
+$\exists$, (\ref{cfa_c1_7}) follows from the definition of $M$ (as $pre(\sigma) = \exists \phi$) and
+(\ref{cfa_c1_8}) follows from \axAP.\\
+\\
+Now we suppose $c \in C$ and show $\vdash \sqex{M_T} \Box_c \bigwedge_{\gamma \in \Gamma} \gamma$.
+\begin{align}
+	& \vdash \sqex{M^{\gamma}_{T^{\gamma}}} \gamma \text{ for every }\gamma \in \Gamma^c
+	\label{cfa_c2_1} \\
+	& \vdash \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every }\gamma \in \Gamma^c \label{cfa_c2_2} \\
+	& \vdash \Box \bigwedge_{v \in T^\gamma} \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in
+	\Gamma^c\label{cfa_c2_3} \\
+	& \vdash \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma \text{ for every } \gamma \in
+	\Gamma^c\label{cfa_c2_4} \\
+	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma\label{cfa_c2_5} \\
+	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v}
+	\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_6} \\
+	& \vdash \bigwedge_{v \in \sigma R} \Box_c \sqex{M_v}\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_7} \\
+	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in
+		\Gamma^c} \gamma'\label{cfa_c2_8} \\
+	& \vdash \sqex{M_\sigma} \Box_c \bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_9} 
+\end{align}
+(\ref{cfa_c2_1}) follows from our hypothesis, (\ref{cfa_c2_2}) follows from \axAU, and (\ref{cfa_c2_8})
+	follows from \axAK.\\
+\\
+Finally, let $c \in C$. We then show $\vdash \sqex{M_\sigma}\bigwedge_{\gamma \in \Gamma^c}
+\Diamond_c \gamma$.\\
+\\
+Suppose that $c \in B$.
+Then
+\begin{align}
+	& \vdash \exists_B \phi \implies \exists_B \cover_c \Gamma_c \label{cfa_c3_1a}\\
+	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists_B
+	\gamma\label{cfa_c3_2a}
+\end{align}
+(\ref{cfa_c3_1a}) follows from similiar reasoning for (\ref{cfa_c1_1} - \ref{cfa_c1_6}) and
+(\ref{cfa_c3_2a}) follows from \axRK.\\
+\\
+Now suppose $c \notin B$.
+Then
+\begin{align}
+	& \vdash \exists_B \phi \implies \exists_B \cover_c \Gamma_c \label{cfa_c3_1b}\\
+	& \vdash \exists_B \phi \implies \cover_c \{\exists_B \gamma | \gamma \in \Gamma_c \}a
+	\label{cfa_c3_2b}\\
+	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \exists_B \gamma
+	\label{cfa_c3_3b}
+\end{align}
+(\ref{cfa_c3_1b}) follows from similiar reasoning for (\ref{cfa_c1_1} - \ref{cfa_c1_6}).
+(\ref{cfa_c3_2b}) follows from \axRComm.
+(\ref{cfa_c3_3b}) follows from the definition of the cover operator (Definition \ref{coverDef}).\\
+\\
+Thus for any $c \in C$ we have that $\vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma}
+\Diamond_c \exists_B \gamma$.
+Then for any $c \in C$
+\begin{align}
+	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
+	M^\gamma_{T^{\gamma}} } \gamma\label{cfa_c3_3}\\
+	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
+	\bigvee_{v \in T^\gamma} M^\gamma_{v} } \gamma\label{cfa_c3_4}\\
+	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
+	\bigvee_{v \in \sigma R} M^\gamma_{v} } \gamma\label{cfa_c3_5}\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \bigvee_{v \in \sigma R_c}
+	\Diamond_c \anex{ M^\gamma_{v} } \gamma)\label{cfa_c3_6}\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \anex{ M^\gamma_{\sigma}
+	} \Diamond_c \gamma)\label{cfa_c3_7}\\
+	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond_c \gamma)\label{cfa_c3_8}
+\end{align}
+We have (\ref{cfa_c3_3}) follows from (\ref{cfa_c3_3b}) and (\ref{cfa_c3_2a}).
+Then (\ref{cfa_c3_4}) follows from hypothesis, (\ref{cfa_c3_5}) from \axAU, (\ref{cfa_c3_6}) and
+(\ref{cfa_c3_7}) from the definition of $M$ and (\ref{cfa_c3_8}) from \axAK.\\
+\\
+Together, we combine our result to show
+\begin{align}
+	& \vdash \sqex{M_\sigma} (\pi \land \bigwedge_{c \in C} \left( \sqex{M_\sigma} \Box_c \bigvee_{\gamma \in
+		\Gamma^c} \gamma \land
+	\bigwedge_{\gamma \in \Gamma^c} \sqex{M_\sigma} \Diamond_c \gamma \right) \label{cfa_cc_1} \\
+	& \vdash \sqex{M_\sigma}(\pi \land \bigwedge_{c \in C} \cover_c \Gamma_c) \label{cfa_cc_2}
+\end{align}
+(\ref{cfa_cc_1}) follows from (\ref{cfa_c1_8}), (\ref{cfa_c2_7}) and (\ref{cfa_c3_8}) and
+(\ref{cfa_cc_2}) follows from \axAC.\\
+\\
+Next, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
+\begin{align}
+	& \vdash \anex{ M_\sigma } \phi \iff (pre(\sigma) \land [ M_\sigma ] \phi \label{cfa_cc1_1}\\
+	& \vdash \anex{ M_\sigma } \phi \iff pre(\sigma) \label{cfa_cc1_2}\\
+	& \vdash \anex{ M_\sigma } \phi \iff \exists \phi\label{cfa_cc1_3}
+\end{align}
+(\ref{cfa_cc1_1}) follows from a simple semantic argument, (\ref{cfa_cc1_2}) follows from
+(\ref{cfa_cc_2}) and (\ref{cfa_cc1_3}) follows from the definition of $M$.\\
+\\
+Lastly, we show that $M_\sigma \in \eventClass_B$.
+\end{proof}
+
+\begin{lemma} \label{disjunctionFormulaAchievementK}
+Let $\phi = \alpha \lor \beta \in \langArbAct$ and $B \subseteq A$.
+Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
+$M^\gamma_{T^\gamma} \in \forestClass$ and $M^\gamma_{T^\gamma} \in \eventClass_B$ such that
+$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$
+and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
+Then there exists a finite forest event model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
+such that $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
+\end{lemma}
+
+\begin{proof}
+Let $M_T = M^\alpha_{T^\alpha} \sqcup M^\beta_{T\beta}$.
+We will show three things.
+Firstly, that $M_T$ is a finite forest event model.
+Secondly, that $\vdash \sqex{M_T}\phi$.
+Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.
+We assume, without loss of generality, that $\Sigma^\alpha$ and $\Sigma^\beta$ are disjoint.\\
+\\
+To show that $M_T$ is a finite forest event model, we observe that $M_T$ is a disjoint union of two
+finite forest event models who are both disjoint.
+Then by Lemma \ref{disjForestIsForest} $M_T$ is a finite forest event model.
+Note that each action point in $M_T$ is bisimilar to a corresponding point in $M^\alpha_{T^\alpha}$ or
+$M^\beta_{T^\beta}$.\\
+\\
+Next, we show that $\vdash \sqex{M_T}\phi$.
+\begin{align}
+	&\vdash \sqex{M^\alpha_{T^\alpha}}\alpha \land \sqex{M^\beta_{T^\beta}}\beta \label{djfa_c1_1}\\
+	&\vdash \sqex{M_{T^\alpha}}\alpha \land \sqex{M_{T^\beta}}\beta \label{djfa_c1_2}\\
+	&\vdash \sqex{M_{T^\alpha}}(\alpha \lor \beta) \land \sqex{M_{T^\beta}}(\alpha \lor \beta) \label{djfa_c1_3} \\
+	&\vdash \sqex{M_T}(\alpha \lor \beta) \label{djfa_c1_4}
+\end{align}
+(\ref{djfa_c1_1}) follows from our hypothesis, (\ref{djfa_c1_2}) follows from Lemma \ref{eventModelEquivalent} and the fact that
+$M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta} \sim M^\beta{T^\beta}$.
+(\ref{djfa_c1_3}) is a simple introduction of disjunctions and (\ref{djfa_c1_4}) follows from \axAU, as
+$T = T^\alpha \cup T^\beta$.\\
+\\
+Now we show that $M_T$ is a $B$-restricted event model.
+Since $M^\alpha, M^\beta \in \eventClass_B$, by Lemma \ref{brestrictDisjoint} $M_T \in
+\eventClass_B$.\\
+\\
+Finally, we show that $\anex{M_T} \iff \exists \phi$.
+\begin{align}
+	&\vdash \exists (\alpha \lor \beta) \implies (\exists \alpha \lor \exists \beta) \label{djfa_c2_1} \\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{ M^\alpha_{T^\alpha} } \alpha \lor
+			\anex{ M^\beta_{T^\beta} }\beta) \label{djfa_c2_2}\\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} \alpha \lor \anex{M_{T^\beta}}
+			\beta)\label{djfa_c2_3}\\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} (\alpha \lor \beta) \lor \anex{M_{T^\beta}}
+			(\alpha \lor \beta))\label{djfa_c2_4}\\
+	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_T} (\alpha \lor \beta))\label{djfa_c2_5}
+\end{align}
+(\ref{djfa_c2_1}) follows from \axR, (\ref{djfa_c2_2}) follows from hypothesis and
+(\ref{djfa_c2_3}) follows from Lemma \ref{eventModelEquivalent} and $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta}
+\sim M^\beta_{T^\beta}$.
+(\ref{djfa_c2_4}) is a simple disjunction introduction, and (\ref{djfa_c2_5}) follows from \axAU.\\
+\\
+The converse, $\vdash \anex{M_T} \phi \implies \exists \phi$ follows from a semantic
+argument, from $M_T \in \eventClass_B$, from Lemma \ref{eventModelsRefine} and the completeness of \AXAAML.\\
+\end{proof}
+
+\begin{thm} \label{goalAchievementK}
+Let $\phi \in \langArbAct$ be a finite formula.
+Then there exists a finite forest event model $M_T \in \eventClass$ such that
+$\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists \phi$.
+\end{thm}
+
+\begin{proof}
+Without loss of generality from Lemma {\FIXME} we may assume that $\phi \in \lang$, and from Lemma
+\ref{allInCoverNormal} we may further assume that $\phi$ is in cover disjunctive normal form.
+We proceed with an inductive case on the structure of $\phi$.\\
+\\
+Suppose that $\phi = \pi \land \cover \Gamma$ where $\pi \in \langProp$ and $\Gamma \subseteq \lang$
+is a finite set of formulae.
+From the induction hypothesis, for every $\gamma \in \Gamma$ there exists a finite forest event
+model $N^\gamma_{T^\gamma} \in \eventClass$ such that $\vdash \sqex{N^\gamma_{T^\gamma}} \gamma$ and
+$\vdash \anex{N^\gamma_{T^\gamma}} \gamma \iff \exists \gamma$.
+Then from Lemma \ref{coverFormulaAchievementK} there exists a finite forest event model $M_T$ such
+that $\vdash \sqex{M_T} \phi$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
+We note that the base case for the induction occurs when $\Gamma = \varnothing$ and thus $\phi =
+\pi$.\\
+\\
+Suppose that $\phi = \alpha \lor \beta$.
+Then from the induction hypothesis there exists finite forest event models $N^\alpha_{T^\alpha}$ and
+$N^\beta_{T^\beta} \in \eventClass$ such that for $\gamma \in \{\alpha, \beta\}:
+\vdash \sqex{N^\gamma_{T^\gamma}} \gamma \land \vdash \anex{N^\gamma_{T^\gamma}} \iff \exists
+\gamma$.
+Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite forest event model $M_T$ such
+that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
+\end{proof}
+
