@@ -200,6 +200,21 @@ which we will term ``insanity models".
 	The relation $\sim$ is an equivalence relation.
 \end{lemma}
 
+\begin{defn} \label{nBisimKripke}
+Let $M_s, M'_{s'} \in \kripkeClass$.
+We define $n$-bisimilarity inductively as follows.
+We say that $M_s$ is $0$-bisimilar to $M'_{s'}$ if and only if $V(s) = V'(s)$.
+Then for $n > 0$ we say that $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if for every $a \in A$
+\begin{itemize}
+	\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
+	\item {\bf $n$-front-$a$}: for each $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
+	$n-1$-bisimilar to $M'_{t'}$
+	\item {\bf $n$-back-$a$}: for each $t' \in s' R'_a$ there is a $t \in s R_a$ such that $M_t$ is
+	$n-1$-bisimilar to $M'_{t'}$
+\end{itemize}
+We denote $M_s$ and $M'_{s'}$ being $n$-bisimilar by $M_s \sim_n M'_{s'}$.
+\end{defn}
+
 \begin{defn} \label{refinement}
 Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
 \times \Sigma'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
@@ -208,6 +223,16 @@ every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
 If $(\sigma, \sigma') \in \lesssim$ then we say $M'_{\sigma'}$ is a $B$-simulation of $M_\sigma$ and
 $M_\sigma$ a $B$-refinement of $M'_{\sigma'}$.
 We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsim M_{\sigma}$.
+
+\begin{lemma} \label{refinementPreorder}
+The relation $\lesssim_B$ is a preorder.
+\end{lemma}
+This is shown by van Ditsmarch and French in \FIXME.
+
+\begin{lemma} \label{bisimilarIsRefinement}
+Let $M_\sigma, M'_{\sigma'} \in \kripkeClass$ and $B \subseteq A$.
+Then $M_\sigma \sim M'_{\sigma'} \implies M_\sigma \lesssim_B M'_{\sigma'}$.
+\end{lemma}
 
 \begin{defn} \label{brestrict}
 Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
@@ -355,6 +380,33 @@ Then $N_s \otimes M_\sigma \lesssim N_s$.
 Let $M_\sigma$, $M'_{\sigma'} \in \eventClass$ be event models such that $M_\sigma \sim M'_{\sigma'}$
 and let $N_s \in \kripkeClass$ such that $N_s \models pre(\sigma)$.
 Then $N_s \otimes M_\sigma \sim N_s \otimes M'_{\sigma'}$.
+\end{lemma}
+
+\begin{lemma} \label{nBisimilarKripkeExec}
+Let $M_s$, $M'_{s'} \in \kripkeClass$ such that $M_s \sim_n M'_{s'}$ and let $N_t \in \eventClass$.
+For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N_t \models \phi
+\iff M'_{s'} \otimes N_t \models \phi.$
+\end{lemma}
+
+\begin{defn} \label{nBisimEvent}
+	Let $M_s, M'_{s'} \in \eventClass$ with preconditions defined on $\langArbAct$.
+	We inductively define $n$-bisimilarity for event models.
+	We say $M_s$ is $0$-bisimilar to $M'_{s'}$ if and only if $pre(s) \iff pre'(s')$.
+	Then for $n>0$ $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if each of the following hold
+	\begin{itemize}
+		\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
+		\item {\bf $n$-forth-$a$} for every $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
+		$n-1$-bisimilar to $M'_{t'}$
+		\item {\bf $n$-back-$a$} for every $t' \in s' R'_a$, there is a $t \in s R_a$ such that $M_t$ is
+		$n-1$-bisimilar to $M'_{t'}$
+	\end{itemize}
+	We write $M_s \sim_n M'_{s'}$ to denote that $M_s$ is $n$-bisimilar to $M'_{s'}$.
+\end{defn}
+
+\begin{lemma} \label{nBisimilarEventExec}
+	Let $M_s, M'_{s'} \in \eventClass$ such that $M_s \sim_n M'_{s'}$ and $N_t \in \kripkeClass$.
+	For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $N_t \otimes M_s \models \phi
+	\iff N_t \otimes M'_{s'} \models \phi$.
 \end{lemma}
 
 %\FIXME: WHO?! Please cite.
@@ -650,8 +702,8 @@ As $M^\gamma \in \eventClass_B$, then $N_s \otimes M^\gamma_\sigma \lesssim_B N_
 We note that due to $M'$ being a disjoint union of event models, $M'_\sigma \sim M^\gamma_\sigma$.
 Then from Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M^\gamma_\sigma \sim N_s
 \otimes M'_\sigma$.
-From Lemma \FIXME, we have $N_s \otimes M'_\sigma \lesssim_B N_s \otimes M^\gamma_\sigma$.
-From Lemma \FIXME, $\lesssim_B$ is a transitive relation.
+From Lemma \ref{bisimilarIsRefinement}, we have $N_s \otimes M'_\sigma \lesssim_B N_s \otimes M^\gamma_\sigma$.
+From Lemma \ref{refinementPreorder}, $\lesssim_B$ is a transitive relation.
 Then $N_s \otimes M'_\sigma \lesssim_B N_s$.
 Thus
 \[
