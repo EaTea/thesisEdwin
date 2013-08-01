@@ -1102,7 +1102,7 @@ $n$-disjoint.
 That is there is no sequence of $n$ action points $t = s_1, s_2, \ldots,
 s_n = t'$ and agents $a_1, a_2, \ldots, a_{n-1}$ such that $s_1 R_{a_1} s_2,
     \ldots, s_{n-1} R_{a_{n-1}} s_n$.
-We will show inductively that for any $n$, the following three conditions hold
+We will show inductively that for any $n$, the following two conditions hold
 \begin{itemize}
 \item there is a forest event model $M'_{T'} \in \forestClass$ such that $M'_{T'} \sim_n M_T$
 \item for each $t \in T$, there is a $t' \in T'$ and subtree of $M'_{T'}$, $M^{t'}_{t'}$ such that
@@ -1211,7 +1211,7 @@ $M_{t'}$.
 This allows us to satisfy {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} for every $a \in A$.
 We now only need show that $M^s_s \sim_{k-1} M'_s$.
 It is clear from a simple inductive argument that this holds, by virtue of each $M^{s'}_{s'}$ being
-$k-2$ bisimilar to $M_{t'}$ (Lemma \FIXME).
+$k-2$-bisimilar to $M_{t'}$ (Lemma \FIXME).
 Then $M^s_s \sim_k M_t$, where $s \in T'$ and $M^s_s$ a subtree of $M_{T'}$.\\
 \\
 Lastly, we show that $M'_{T'} \sim_k M_T$.
