@@ -1093,10 +1093,57 @@ Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite fores
 that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
 \end{proof}
 
-\begin{thm} \label{everyBRestrictedEventModel}
-Let $M_T \in \eventClass_B$.
+\begin{thm} \label{approximatingEventModel}
+Let $M_T \in \eventClass$.
 Then there is some $M'_{T'} \in \forestClass$ such that $M_T \sim_n M'_{T'}$.
 \end{thm}
+
+\begin{proof}
+Without loss of generality, for each pair $t, t' \in T$, we say that they are
+$n$-disjoint.
+That is there is no sequence of $n$ action points $t = s_1, s_2, \ldots,
+s_n = t'$ and agents $a_1, a_2, \ldots, a_{n-1}$ such that $s_1 R_{a_1} s_2,
+    \ldots, s_{n-1} R_{a_{n-1}} s_n$.
+We will show inductively that for any $n$, there is a forest event model
+$M'_{T'} \in \forestClass$ such that $M'_{T'} \sim_n M_T$.\\
+\\
+Suppose $n = 0$ as our base case.
+Let $t \in T$, and consider the insanity model $M'_{t} \in \insaneClass
+\subseteq \forestClass$ such that $pre'(t) \iff pre(t)$.
+By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $M'_{t}
+\sim_0 M_t$.
+Now, let
+\[
+  M'_{T'} = \bigsqcup_{t' \in T} M'_{t} \in \forestClass
+\]
+By Lemma \ref{disjForestIsForest}, $M'_{T'} \in \forestClass$.
+Furthermore, it is clear that each point $t \in T$ corresponds to some $t'
+\in T'$ such that $M_t \sim_0 M'_{t'}$.
+Thus our induction hypothesis holds for $n = 0$.\\
+\\
+Now, suppose that the induction hypothesis holds for $n = k-1$ and let $n = k$.
+Let $s \in T$ and $a \in A$.
+For each $t \in s R_a$, we can construct $M'_t \in \forestClass$ such that
+$M'_t \sim_{k-1} M_t$.
+Consider $M'_s \in \insaneClass \subseteq \forestClass$ such that $pre'(s) \iff
+pre(s)$.
+By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $M'_{s}
+\sim_0 M_s$.\\
+\\
+Then, let
+\[
+  M'_{T'} = \bigsqcup_{s \in T} M'_s \to_a (\bigsqcup_{t \in s R_a} M'_{t})
+\]
+Our proof is two-fold.
+First, we show that $M'_{T'} \sim_k M_T$.
+Then we show that $M'_{T'} \in \forestClass$.
+\end{proof}
+
+\begin{corr} \label{approximatingBRestricted}
+Let $\phi \in \langArbAct$ and $B \subseteq A$.
+Then there is some $M_T \in \forestClass$ such that $\sqex{M_T} \phi$ and
+$\anex{M_T} \phi \iff \exists_B \phi$.
+\end{corr}
 
 \section{Multi-agent goal achievement in $\langArbAct$}
 
@@ -1111,7 +1158,7 @@ knowledge.\\
 In order to do so, we must define an operation that ensures that if $M^1$ was to
 be executed, a group of agents in $B$ would believe $M^2$ would be executed
 instead.
-%TODO: Add in the story/motivation --- why is this useful
+%\FIXME: Add in the story/motivation --- why is this useful
 \begin{defn} \label{believes}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of
 generality let $M^1$ and $M^2$ be disjoint.
@@ -1161,7 +1208,7 @@ It is clear that adding disjoint union to either of these sets of operators
 allows us to form all forests of tree event models.
 It also provides us with an alternate way to form tree event models.\\
 \\
-%TODO: this isn't true; how to resolve this properly? definition is not sound at the moment
+%\FIXME: this isn't true; how to resolve this properly? definition is not sound at the moment
 However, we cannot form tree event models with just $\mapsto$.
 Consider $M = (\Sigma, R, pre, T)$ such that
 \begin{itemize}
