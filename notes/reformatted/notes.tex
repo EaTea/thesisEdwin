@@ -4,7 +4,7 @@
 \usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
 \usepackage{mathtools}
 \usepackage[usenames, dvipsnames]{color} %Color naming packages
-\usepackage[margin=1.5cm]{geometry}
+\usepackage{geometry}
 \usepackage{float}
 \usepackage{verbatim} %for code
 \usepackage[pdftex]{graphics}
@@ -218,6 +218,9 @@ Then for $n > 0$ we say that $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if 
 \end{itemize}
 We denote $M_s$ and $M'_{s'}$ being $n$-bisimilar by $M_s \sim_n M'_{s'}$.
 \end{defn}
+For a multi-pointed Kripke model $M_T$ and $M'_{T'}$, we have that $M_T \sim_n
+M'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
+such that $M_t \sim_n M'_{t'}$ and vice versa.
 
 \begin{defn} \label{refinement}
 Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
@@ -405,8 +408,19 @@ Then $N_s \otimes M_\sigma \sim N_s \otimes M'_{\sigma'}$.
 \begin{lemma} \label{nBisimilarKripkeExec}
 Let $M_s$, $M'_{s'} \in \kripkeClass$ such that $M_s \sim_n M'_{s'}$ and let $N_t \in \eventClass$.
 For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N_t \models \phi
-\iff M'_{s'} \otimes N_t \models \phi.$
+\iff M'_{s'} \otimes N_t \models \phi$.
 \end{lemma}
+
+\begin{proof}
+We use an inductive proof on $mod(\phi)$, the modal depth of $\phi$.
+Our inductive hypothesis is as follows: supposing that $mod(\phi) = k$ then $M_s
+\otimes N_t \models \phi \iff M'_{s'} \otimes N_t \models \phi$.\\
+\\
+For our base case, suppose $mod(\phi) = 0$.
+Then $\phi \in \langProp$.
+By the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}) $M_s
+\sim_n M'_{s'} \implies M_s \sim_0 M'_{s'} \implies V(s) = V'(s')$.
+\end{proof}
 
 \begin{defn} \label{nBisimEvent}
 	Let $M_s, M'_{s'} \in \eventClass$ with preconditions defined on $\langArbAct$.
@@ -422,6 +436,10 @@ For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N
 	\end{itemize}
 	We write $M_s \sim_n M'_{s'}$ to denote that $M_s$ is $n$-bisimilar to $M'_{s'}$.
 \end{defn}
+
+For a multi-pointed event model $M_T$ and $M'_{T'}$, we have that $M_T \sim_n
+M'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
+such that $M_t \sim_n M'_{t'}$ and vice versa.
 
 \begin{lemma} \label{nBisimilarEventExec}
 	Let $M_s, M'_{s'} \in \eventClass$ such that $M_s \sim_n M'_{s'}$ and $N_t \in \kripkeClass$.
@@ -556,6 +574,14 @@ $M$ is a finite tree event model if
 \end{itemize}
 \end{defn}
 
+\begin{lemma} \label{insaneIsTree}
+The event model class $\insaneClass$ is contained within the event model class
+$\treeClass$, that is $\insaneClass \subseteq \treeClass$.
+\end{lemma}
+
+It is clear that by our earlier definitions, an insanity event model is also a finite forest event
+model.
+
 We say that the class of finite tree event models is $\treeClass$.
 
 \begin{defn} \label{forest}
@@ -578,7 +604,7 @@ The event model class $\treeClass$ is contained within the event model class
 $\forestClass$, that is $\treeClass \subseteq \forestClass$.
 \end{lemma}
 
-It is clear that by our earlier definitions, a finite tree event model is also a finite forest event
+Again, it is clear that by our earlier definitions, a finite tree event model is also a finite forest event
 model.
 
 \begin{defn} \label{subtree}
@@ -1111,7 +1137,8 @@ $M'_{t'} \sim_n M_t$
 Suppose $n = 0$ as our base case.
 Let $t \in T$, and consider the insanity model $M'_{t} \in \insaneClass$ such that $pre'(t) \iff
 pre(t)$.
-By \FIXME $M'_{t} \in \treeClass$ and therefore by \FIXME $M'_{t} \in \forestClass$ also holds.
+By Lemma \ref{insaneIsTree} $M'_{t} \in \treeClass$ and therefore by Lemma \ref{treeIsForest}
+$M'_{t} \in \forestClass$ also holds.
 By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $M'_{t}
 \sim_0 M_t$.
 Now, let
@@ -1211,7 +1238,7 @@ $M_{t'}$.
 This allows us to satisfy {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} for every $a \in A$.
 We now only need show that $M^s_s \sim_{k-1} M'_s$.
 It is clear from a simple inductive argument that this holds, by virtue of each $M^{s'}_{s'}$ being
-$k-2$-bisimilar to $M_{t'}$ (Lemma \FIXME).
+$k-2$-bisimilar to $M_{t'}$ (Definition \ref{nBisimEvent}).
 Then $M^s_s \sim_k M_t$, where $s \in T'$ and $M^s_s$ a subtree of $M_{T'}$.\\
 \\
 Lastly, we show that $M'_{T'} \sim_k M_T$.
