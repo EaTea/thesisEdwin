@@ -145,7 +145,7 @@ the same concept, and we use them interchangeably throughout this paper to refer
 \begin{defn} \label{evModelEx}
 Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
 		R^N, pre^N) \in
-\mathcal{AM}$ as follows.
+\eventClass$ as follows.
 The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
 \begin{itemize}
 	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \vdash pre^N(u)\}$
@@ -413,13 +413,55 @@ For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N
 
 \begin{proof}
 We use an inductive proof on $mod(\phi)$, the modal depth of $\phi$.
-Our inductive hypothesis is as follows: supposing that $mod(\phi) = k$ then $M_s
-\otimes N_t \models \phi \iff M'_{s'} \otimes N_t \models \phi$.\\
+Our inductive hypothesis is as follows: supposing that $mod(\phi) = k$ then
+$M^1_{(s,t}) = M_s \otimes N_t \models \phi \iff M^2_{(s',t)} = M'_{s'} \otimes
+N_t \models \phi$.\\
 \\
-For our base case, suppose $mod(\phi) = 0$.
-Then $\phi \in \langProp$.
-By the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}) $M_s
-\sim_n M'_{s'} \implies M_s \sim_0 M'_{s'} \implies V(s) = V'(s')$.
+For our base case, suppose $mod(\phi) = 0 \implies \phi \in \langProp$ and let
+$M^1_{(s,t)} \models \phi$.
+\begin{align}
+  & \implies \phi \in V^1_((s,t)) \label{baseOne} \\
+  & \implies \phi \in V(s) \label{baseTwo} \\
+  & \implies \phi \in V'(s) \label{baseThree} \\
+  & \implies \phi \in V^2((s',t)) \label{baseFour} \\
+  & \implies M^2_{(s',t)} \models \phi \label{baseFive}
+\end{align}
+(\ref{baseOne}) follows from the definition of a Kripke model (Definition
+\ref{model}). (\ref{baseTwo}) follows from the definition of event model execution
+(Definition \ref{evModelEx}). (\ref{baseThree}) follows from hypothesis.
+(\ref{baseFour}) follows from the definition of event model execution and
+(\ref{baseFive}) follows from the definition of Kripke model (Definition
+\ref{model}).
+Therefore, we have $M^1_{(s,t)} \models \phi \implies M^2_{(s',t)}$.
+The converse follows a similar argument.\\
+\\
+Now, suppose our induction hypothesis holds for $mod(\phi) = k < n$.
+Let $mod(\phi) = k+1$ and let $M^1_{(s,t)} \models \phi$.\\
+\\
+Let us suppose that $a \in A$ and $\phi = \Box_a \psi$, where $mod(\psi) = k$.
+\begin{align}
+  & \implies M_t \models \psi \text{for each $t \in s R_a$} \label{inductOneA} \\
+  & \implies M'_{t'} \models \psi \text{for each $t' \in s' R'_a$} \label{inductTwoA} \\
+  & \implies M'_{s'} \models \psi \label{inductThreeA}
+\end{align}
+(\ref{inductOneA}) follows from event model execution preserving sentences
+before execution, (\ref{inductTwoA}) follows from hypothesis and {\bf
+$n$-forth-$a$} (Definition \ref{nBisimKripke}) and (\ref{inductThreeA}) follows from the definition of $\Box_a$
+(Definition \ref{modalLogic}).
+
+Let us suppose that $a \in A$ and $\phi = \Diamond_a \psi$, where $mod(\psi) = k$.
+\begin{align}
+  & \implies M_t \models \psi \text{for some $t \in s R_a$} \label{inductOneB} \\
+  & \implies M'_{t'} \models \psi \text{for each $t' \in s' R'_a$} \label{inductTwoB} \\
+  & \implies M'_{s'} \models \psi \label{inductThreeB}
+\end{align}
+(\ref{inductOneB}) follows from event model execution preserving sentences
+before execution, (\ref{inductTwoB}) follows from hypothesis and {\bf
+$n$-forth-$a$} (Definition \ref{nBisimKripke}) and (\ref{inductThreeB}) follows from the definition of $\Diamond_a$
+(Definition \ref{modalLogic}).\\
+\\
+A similar argument follows for the converse, except it uses {\bf $n$-back-$a$}.
+Thus we have $M^1_{(s,t)} \models \phi \iff M^2_{(s',t)} \models \phi$.
 \end{proof}
 
 \begin{defn} \label{nBisimEvent}
