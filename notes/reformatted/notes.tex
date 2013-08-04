@@ -148,7 +148,7 @@ Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event mod
 \eventClass$ as follows.
 The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
 \begin{itemize}
-	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \vdash pre^N(u)\}$
+	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \models pre^N(u)\}$
 	\item $(s, u) R_a' (t, v) \iff s R_a t \land u R_a^N v$
 	\item $V'((s,u)) = V(s)$
 \end{itemize}
@@ -436,32 +436,38 @@ Therefore, we have $M^1_{(s,t)} \models \phi \implies M^2_{(s',t)}$.
 The converse follows a similar argument.\\
 \\
 Now, suppose our induction hypothesis holds for $mod(\phi) = k < n$.
-Let $mod(\phi) = k+1$ and let $M^1_{(s,t)} \models \phi$.\\
+Let $mod(\phi) = k+1$ and let $M^1_{(s,t)} \models \phi$.
+Now, without loss of generality, let $a \in A$ and $\phi = \Box_a \psi$ or $\phi = \Diamond_a \psi$,
+$mod(\psi) = k$.\\
 \\
-Let us suppose that $a \in A$ and $\phi = \Box_a \psi$, where $mod(\psi) = k$.
-\begin{align}
-  & \implies M_t \models \psi \text{for each $t \in s R_a$} \label{inductOneA} \\
-  & \implies M'_{t'} \models \psi \text{for each $t' \in s' R'_a$} \label{inductTwoA} \\
-  & \implies M'_{s'} \models \psi \label{inductThreeA}
-\end{align}
-(\ref{inductOneA}) follows from event model execution preserving sentences
-before execution, (\ref{inductTwoA}) follows from hypothesis and {\bf
-$n$-forth-$a$} (Definition \ref{nBisimKripke}) and (\ref{inductThreeA}) follows from the definition of $\Box_a$
-(Definition \ref{modalLogic}).
+Let us suppose that $\phi = \Box_a \psi$.
 
-Let us suppose that $a \in A$ and $\phi = \Diamond_a \psi$, where $mod(\psi) = k$.
 \begin{align}
-  & \implies M_t \models \psi \text{for some $t \in s R_a$} \label{inductOneB} \\
-  & \implies M'_{t'} \models \psi \text{for each $t' \in s' R'_a$} \label{inductTwoB} \\
-  & \implies M'_{s'} \models \psi \label{inductThreeB}
+	& \implies M^1_{(s,t)} \models \Box_a \psi \label{nBisKriIn1A} \\
+	& \implies M^1_{(u,v)} \models \psi \text{ for each $(u,v) \in (s,t) R^1_a$} \label{nBisKriIn2A} \\
+	& \implies M^1_{(u,v)} \models \psi \text{ for each $u \in s R_a$ and $v \in t R^N_a$ and $M_{u}
+		\models pre^N(v)$} \label{nBisKriIn3A} \\
+	& \implies M_u \models \psi \text{ for each $u \in s R_a$ such that there is some $v \in t
+		R^N_a$ and $M_u \models pre^N(v)$} \ref{nBisKriIn4A} \\
+	& \implies M'_{u'} \models \psi \text{ for each $u' \in s' R'_a$ such that there is some $v \in t
+		R^N_a$ and $M_{u'} \models pre^N(v)$} \ref{nBisKriIn5A} \\
+	& \implies M'_{(u',v)} \models \psi \text{ for each $u' \in s' R'_a$ and $v \in t R^N_a$ and
+		$M'_{u'} \models \pre^N(v)$} \ref{nBisKriIn6A} \\
+	& \implies M'_{(s',t)} \models \Box_a \psi \ref{nBisKriIn7A} \\
+	& \implies M'_{(s',t)} \models \phi \ref{nBisKriIn8A}
 \end{align}
-(\ref{inductOneB}) follows from event model execution preserving sentences
-before execution, (\ref{inductTwoB}) follows from hypothesis and {\bf
-$n$-forth-$a$} (Definition \ref{nBisimKripke}) and (\ref{inductThreeB}) follows from the definition of $\Diamond_a$
-(Definition \ref{modalLogic}).\\
+(\ref{nBisKriIn2A}) follows from the definition of $\Box_a$ in the semantics of modal logic (Lemma \ref{modalLogic}).
+(\ref{nBisKriIn3A}) follows from the definition of event model execution (Definition
+\ref{evModelEx}).
+(\ref{nBisKriIn4A}) follows from the definition of positive formulae (Definition \FIXME).
+(\ref{nBisKriIn5A}) follows from $mod(\psi) = k < n$, each point $M_u$ being $n-1$-bisimilar to some
+point $M'_{u'}$ (by {\bf $n$-forth-a}) and thus $M_u \models \psi \iff M'_{u'} \models \psi$
+(Definition \ref{nBisimKripke}).
+(\ref{nBisKriIn6A}) follows from the definition of event model execution (Definition \ref{evModelEx}).
+(\ref{nBisKriIn7A}) follows from the definition of $\Box_a$ (Lemma \ref{modalLogic}).\\
 \\
-A similar argument follows for the converse, except it uses {\bf $n$-back-$a$}.
-Thus we have $M^1_{(s,t)} \models \phi \iff M^2_{(s',t)} \models \phi$.
+Showing the converse uses a similar process.
+A similar argument follows for when $\phi = \Diamond_a \psi$.
 \end{proof}
 
 \begin{defn} \label{nBisimEvent}
@@ -488,6 +494,51 @@ such that $M_t \sim_n M'_{t'}$ and vice versa.
 	For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $N_t \otimes M_s \models \phi
 	\iff N_t \otimes M'_{s'} \models \phi$.
 \end{lemma}
+
+\begin{proof}
+We will inductively show that given $M_s \sim_n M'_{s'}$ then for a formula $\phi$ with modal depth
+$mod(\phi) = k \leq n$, $M^1_{(t,s)} = N_t \otimes M_s \models \phi \iff M^2_{(t,s')} = N_t \otimes
+M'_{s'} \models \phi$.\\
+\\
+We begin with a base case of $mod(\phi) = k = 0$.
+Then $\phi \in \langProp$.
+Suppose $M^1_{(t,s)} \models \phi$.
+Then
+\begin{align}
+	& \implies \phi \in V^1_{(t,s)} \label{nBisEvbase1} \\
+	& \implies \phi \in V(t) \label{nBisEvbase2} \\
+	& \implies N_t \models pre(s) \label{nBisEvbase4} \\
+	& \implies N_t \models pre'(s') \label{nBisEvbase5} \\
+	& \implies \phi \in V^2_{(t,s')} \label{nBisEvbase6}\\
+	& \implies M^2_{(t,s')} \models \phi \label{nBisEvbase7}
+\end{align}
+(\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
+(\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of event model execution (Definition
+\ref{evModelEx}).
+(\ref{nBisEvbase5}) follows from hypothesis and the definition of $n$-bisimilarity (Definition
+\ref{nBisimEvent}).
+(\ref{nBisEvbase6}) follows from the definition of event model execution (Definition
+\ref{evModelEx}).
+Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Definition
+\ref{propLogic}).\\
+\\
+Now, suppose our induction hypothesis holds for any $\phi$ such that $mod(\phi) = k$.
+Let $mod(\phi) = k+1$.
+Without loss of generality, let $a \in A$ and $\phi = \Box_a \psi$ or $\phi = \Diamond_a \psi$,
+where $mod(\psi) = k$.\\
+\\
+Suppose $\phi = \Box_a \psi$.
+Then
+\begin{align}
+	& \implies M^1_{(t,s)} \models \Box_a \psi \label{nBisEvInd1A} \\
+	& \implies M^1_{(u,v)} \models \psi \text{ for each $(u,v)  \in (t,s) R^1_a$} \label{nBisEvInd2A} \\
+	& \implies M^1_{(u,v)} \models \psi \text{ for each $u \in t R^N_a$ and $v \in s R_a$ and $M_v
+		\models pre(u)$} \label{nBisEvInd3A} \\
+	& \implies M^1_{(u,v)} \models \psi \text{ for each $u \in t R^N_a$ and $v \in s R_a$ and $M_v
+		\models pre(u)$} \label{nBisEvInd4A} \\
+\end{align}
+
+\end{proof}
 
 %\FIXME: WHO?! Please cite.
 
@@ -1215,8 +1266,7 @@ Lastly we show that $M'_{T'} \sim_k M_T$.\\
 \\
 To show that $M'_{T'} \in \forestClass$, the following four conditions must hold
 \begin{enumerate}
-	\item each point $t \in T'$ is the root of a finite tree event model $M^t_t = (\Sigma^t, R^t,
-	pre^t, t)$ \label{forestConOne}
+	\item each point $t \in T'$ is the root of a finite tree event model $M^t_t = (\Sigma^t, R^t, pre^t, t)$ \label{forestConOne}
   \item $\Sigma' = \bigcup_{t \in T'} \Sigma^t$ \label{forestConTwo}
   \item for each $a \in A \implies R'_a = \bigcup_{t \in T'} R^t_a$ \label{forestConFive}
 	\item for each $\sigma \in \Sigma^t$, $pre'(\sigma) = pre^t(\sigma)$ \label{forestConThree}
