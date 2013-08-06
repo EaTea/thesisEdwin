@@ -56,10 +56,10 @@ the same concept, and we use them interchangeably throughout this paper to refer
 \begin{defn} \label{evModelEx}
 Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
 		R^N, pre^N) \in
-\mathcal{AM}$ as follows.
+\eventClass$ as follows.
 The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
 \begin{itemize}
-	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \vdash pre^N(u)\}$
+	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \models pre^N(u)\}$
 	\item $(s, u) R_a' (t, v) \iff s R_a t \land u R_a^N v$
 	\item $V'((s,u)) = V(s)$
 \end{itemize}
@@ -129,6 +129,9 @@ Then for $n > 0$ we say that $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if 
 \end{itemize}
 We denote $M_s$ and $M'_{s'}$ being $n$-bisimilar by $M_s \sim_n M'_{s'}$.
 \end{defn}
+For a multi-pointed Kripke model $M_T$ and $M'_{T'}$, we have that $M_T \sim_n
+M'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
+such that $M_t \sim_n M'_{t'}$ and vice versa.
 
 \begin{defn} \label{refinement}
 Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
@@ -225,7 +228,20 @@ We note that this is a simple abbreviation, and we can define $\Box_a$ and
 $\Diamond_a$ in terms of it.
 $\Box_a \phi \iff \cover_a \phi \lor \cover_a \varnothing$, while $\Diamond_a
 \phi \iff \cover_a \{\phi, \top\}$.
-$\cover$ is the basis for the axiomatisation of refinement modal logic.
+$\cover$ is the basis for the axiomatisation of refinement modal logic.\\
+\\
+Finally, we discuss modal depth.
+We define modal depth as follows
+\begin{defn} \label{modalDepth}
+We define the modal depth of a formula $\phi \in \lang$ ($MD(\phi)$) as follows
+\begin{itemize}
+	\item $MD(p) = 0$ for atomic formula $p$
+	\item $MD(\top) = MD(\bot)$
+	\item $MD(\neg \phi) = MD(\phi)$
+	\item $MD(\phi \land \psi) = MAX(MD(\phi), MD(\psi))$
+	\item $MD(\Box_a \phi) = 1 + MD(\phi)$
+\end{itemize}
+\end{defn}
 
 \begin{defn} \label{actModelLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $N = (\Sigma^N, R^N, pre^N) \in
@@ -314,10 +330,87 @@ Then $N_s \otimes M_\sigma \sim N_s \otimes M'_{\sigma'}$.
 \end{lemma}
 
 \begin{lemma} \label{nBisimilarKripkeExec}
-Let $M_s$, $M'_{s'} \in \kripkeClass$ such that $M_s \sim_n M'_{s'}$ and let $N_t \in \eventClass$.
-For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N_t \models \phi
-\iff M'_{s'} \otimes N_t \models \phi.$
+Let $M_s$, $M'_{s'} \in \kripkeClass$ and $\phi \in \lang$ such that the modal depth of $\phi$,
+$MD(\phi) \leq n$.
+Suppose that $M_s \sim_{2n} M'_{s'}$ and let $N_t \in
+\eventClass$ such that $pre^N(t)$ is of modal depth $n$.
+Then $M_s \otimes N_t \models \phi \iff M'_{s'} \otimes N_t \models \phi$.
 \end{lemma}
+
+\begin{proof}
+We use an inductive proof on the complexity of $\phi$.
+We inductively show that $M^1_{(s,t}) = M_s \otimes N_t \models \phi \iff M^2_{(s',t)} = M'_{s'}
+\otimes N_t \models \phi$.\\
+\\
+For our base case, suppose $\phi = p$, where $p$ is an atomic proposition and let
+$M^1_{(s,t)} \models \phi$.
+\begin{align}
+  & \iff p \in V^1_((s,t)) \label{baseOne} \\
+  & \iff p \in V(s) \label{baseTwo} \\
+  & \iff p \in V'(s) \label{baseThree} \\
+  & \iff p \in V^2((s',t)) \label{baseFour} \\
+  & \iff M^2_{(s',t)} \models \phi \label{baseFive}
+\end{align}
+(\ref{baseOne}) follows from the definition of a Kripke model (Definition
+\ref{model}).
+(\ref{baseTwo}) follows from the definition of event model execution
+(Definition \ref{evModelEx}).
+(\ref{baseThree}) follows from hypothesis, as $M_s \sim_{2n} M'_{s'} \implies M_s \sim_0 M'_{s'}$
+(Definition \ref{nBisimKripke}).
+(\ref{baseFour}) follows from the definition of event model execution and
+(\ref{baseFive}) follows from the definition of Kripke model (Definition
+\ref{model}).
+Therefore, we have $M^1_{(s,t)} \models \phi \implies M^2_{(s',t)}$.
+The converse follows a similar argument.\\
+\\
+We handle each of the inductive cases separately now.
+Let $\phi = \neg \psi$.
+Suppose $M^1_{(s,t)} \models \phi$.
+\begin{align}
+	& \implies \neg (M^1_{(s,t)} \models \psi) \label{nBisKriNeg1} \\
+	& \implies \neg (M^2_{(s',t)} \models \psi) \label{nBisKriNeg2}
+\end{align}
+(\ref{nBisKriNeg1}) follows from the semantics of propositional logic and the inductive case for
+$\neg$ (Lemma \ref{propLogic}).
+(\ref{nBisKriNeg2}) follows from the induction hypothesis.\\
+\\
+Let $\phi = \psi_1 \land \psi_2$.
+Suppose $M^1_{(s,t)} \models \phi$.
+\begin{align}
+	& \implies M^1_{(s,t)} \models \psi_1 \label{nBisKriConj1} \\
+	& \iff M^2_{(s',t)} \models \psi_1 \label{nBisKriConj2}
+\end{align}
+(\ref{nBisKriConj1}) follows from the semantics of propositional logic and the inductive case for
+$\land$ (Lemma \ref{propLogic}).
+(\ref{nBisKriConj2}) follows from the induction hypothesis.\\
+\\
+We can employ a similar argument to show that $M^2_{(s',t)} \models \psi_2$ and together with
+(\ref{nBisKriConj2}) we have $M^2_{(s',t)} \models \psi_1 \land M^2_{(s',t)} \models \psi_2 \implies
+M^2_{(s',t)} \models \psi_1 \land \psi_2 = \phi$.\\
+\\
+Now, let $\phi = \Diamond_a \psi$ and suppose $M^1_{(s,t)} \models \phi$.
+\begin{align}
+	& \implies M^1_{(u,v)} \models \psi \text{ for some $(u,v) \in (s,t) R^1_a$} \label{nBisKriMod1} \\
+	& \implies M^1_{(u,v)} \models \psi \text{ for some $u \in s R_a$ and $v \in R^N_a$ and $M_s
+		\models pre(t)$ and $M_u \models pre(v)$} \label{nBisKriMod2}
+\end{align}
+(\ref{nBisKriMod1}) follows from the semantics of modal logic and the inductive case for
+$\Diamond_a$ (Lemma \ref{modalLogic}).
+(\ref{nBisKriMod2}) follows from the definition of event model execution (Definition
+		\ref{evModelEx}).\\
+\\
+From our hypothesis, given that $pre(t) \leq m$ we have that $M_s \sim_{2n} M'_{s'} \implies (M_s \models pre(t) \iff M'_{s'} \models
+pre(t))$.
+But by the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}), $M_u$ is
+$2n-1$-bisimilar to some point $M'_{u'}$.
+If $MD(pre^N(v)) \leq n-1$ we have by our induction hypothesis that $M_u \models pre(v) \iff M'_{u'}
+\models pre(v)$.\\
+\\
+Then by the induction hypothesis, $M_u \sim_{2n} M'_{u'} \land MD(\psi) \leq k \implies
+M^2_{(u',v)}  \models \psi$.
+By the semantics of modal logic (Lemma \ref{modalLogic}) we have that $M^2_{(s',t)} \models
+\Diamond_a \psi \implies M^2_{(s',t)} \models \phi$.
+\end{proof}
 
 \begin{defn} \label{nBisimEvent}
 	Let $M_s, M'_{s'} \in \eventClass$ with preconditions defined on $\langArbAct$.
@@ -334,11 +427,84 @@ For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $M_s \otimes N
 	We write $M_s \sim_n M'_{s'}$ to denote that $M_s$ is $n$-bisimilar to $M'_{s'}$.
 \end{defn}
 
+For a multi-pointed event model $M_T$ and $M'_{T'}$, we have that $M_T \sim_n
+M'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
+such that $M_t \sim_n M'_{t'}$ and vice versa.
+
 \begin{lemma} \label{nBisimilarEventExec}
 	Let $M_s, M'_{s'} \in \eventClass$ such that $M_s \sim_n M'_{s'}$ and $N_t \in \kripkeClass$.
-	For any $\phi \in \lang$ with modal depth $mod(\phi) \leq n$ then $N_t \otimes M_s \models \phi
+	For any $\phi \in \lang$ with modal depth $MD(\phi) \leq n$ then $N_t \otimes M_s \models \phi
 	\iff N_t \otimes M'_{s'} \models \phi$.
 \end{lemma}
+
+\begin{proof}
+We use an inductive proof on the complexity of $\phi$.
+We inductively show that $M^1_{(t,s}) = N_t \otimes M_s \models \phi \iff M^2_{(t,s')} = N_t \otimes
+M'_{s'} \models \phi$.\\
+\\
+We begin with a base case of $\phi = p$, a single atomic proposition.
+Suppose $M^1_{(t,s)} \models \phi$.
+Then
+\begin{align}
+	& \implies p \in V^1_{(t,s)} \label{nBisEvbase1} \\
+	& \implies p \in V(t) \label{nBisEvbase2} \\
+	& \implies N_t \models pre(s) \label{nBisEvbase4} \\
+	& \implies N_t \models pre'(s') \label{nBisEvbase5} \\
+	& \implies p \in V^2_{(t,s')} \label{nBisEvbase6}\\
+	& \implies M^2_{(t,s')} \models \phi \label{nBisEvbase7}
+\end{align}
+(\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
+(\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of event model execution (Definition
+\ref{evModelEx}).
+(\ref{nBisEvbase5}) follows from hypothesis and the definition of $n$-bisimilarity (Definition
+\ref{nBisimEvent}).
+(\ref{nBisEvbase6}) follows from the definition of event model execution (Definition
+\ref{evModelEx}).
+Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Definition
+\ref{propLogic}).\\
+\\
+We go through each of the inductive cases.
+Let $\phi = \neg \psi$, and suppose $M^1_{(t,s)} \models \phi$.
+Then
+\begin{align}
+	& \implies \neg (M^1_{(t,s)} \models \psi) \label{nBisEvNeg1} \\
+	& \implies \neg (M^2_{(t,s')} \models \psi) \label{nBisEvNeg2} \\
+	& \implies M^2_{(t,s')} \models \neg \psi \label{nBisEvNeg3} \\
+	& \implies M^2_{(t,s')} \models \phi \label{nBisEvNeg4}
+\end{align}
+(\ref{nBisEvNeg1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
+(\ref{nBisEvNeg2}) follows from the induction hypothesis.
+(\ref{nBisEvNeg3}) again follows from the semantics of propositional logic (Definition
+		\ref{propLogic}) and (\ref{nBisEvNeg4}) is obvious.\\
+\\
+Let $\phi = \psi_1 \land \psi_2$ and suppose $M^1_{(t,s)} \models \phi$.
+Then
+\begin{align}
+	& \implies M^1_{(t,s}) \models \psi_1 \label{nBisEvCon1} \\
+	& \implies M^2_{(t,s'}) \models \psi_1 \label{nBisEvCon2}
+\end{align}
+(\ref{nBisEvCon1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
+(\ref{nBisEvCon2}) follows from the induction hypothesis.
+Employing a similar process allows us to show that $M^2_{(t,s'}) \models \psi_2$ and together they 
+show that $M^2_{(t,s')} \models \phi$.\\
+\\
+Our final inductive case is to let $a \in A$ and $\phi = \Diamond_a \psi$.
+Suppose that $M^1_{(t,s)} \models \phi$.
+\begin{align}
+	& \iff M^1_{(t,s)} \models \Diamond_a \psi \label{nBisEvMod1} \\
+	& \iff M^1_{(v,u)} \models \psi \text{ for some $(v,u) \in (t,s) R^1_a$} \label{nBisEvMod2} \\
+	& \iff M^1_{(v,u)} \models \psi \text{ for $v \in t R^N_a$ and $u \in s R_a$ and $N_t \models
+		pre(s)$ and $N_v \models pre(u)$} \label{nBisEvMod3} \\
+\end{align}
+
+As $M_s \sim_n M'_{s'}$, then there is some $u' \in s R'_a$ such that $M_u \sim_{n-1} M'_{u'}$.
+Then we have that $N_v \models pre(u) \iff N_v \models pre'(u)$, since $M_u \sim_{n-1} M'_{u'}
+\implies M_u \sim_0 M'_{u'}$.
+Then by our induction hypothesis we have that $M^1_{(v,u)} \models \psi \iff M^2_{(v, u')} \models
+\psi$.
+From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $M^2_{(v,u')}
+\models \psi \implies M^2_{(t,s')} \models \Diamond_a \psi$.
+\end{proof}
 
 %\FIXME: WHO?! Please cite.
 
@@ -431,4 +597,3 @@ The axiomatisation \AXAAML contains the axioms and rules from \AXRML and \AXAML.
 \begin{thm} \label{axiomAAMLSoundComplete}
 The axiomatisation \AXAAML is sound and complete with respect to the logic $\langArbAct$.
 \end{thm}
-
