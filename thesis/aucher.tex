@@ -1,4 +1,4 @@
-\section{Similar Approaches}
+\section{Relation to dynamic epistemic logic sequent calculus}
 \begin{itemize}
 	\item What can we do with my language?
 	\item What can we not do with my language?
@@ -8,3 +8,48 @@
 	\item Are there any parallels with what we have done?
 	\item Is a synthesis of our work possible to achieve a more useful result?
 \end{itemize}
+
+So far, we have been particularly interested in constructing event models.
+We have shown that we can approximate event models according to what
+postconditions are true.
+This was through the construction of a particular event model that fulfilled
+the postconditions that we aimed to fulfill.\\
+\\
+This approach is powerful in the sense that we can construct an event model
+that, given any Kripke model, will either ensure that a postcondition
+is realised or destroy the Kripke model as a result of its execution.
+It allows us to guarantee the realisation of a postcondition, without giving
+regard to the preceding Kripke model.\\
+\\
+Another approach to this problem is as follows.
+Suppose that we can describe an epistemic situation by a formula $\phi$.
+Furthermore, we aim to achieve an epistemic state $\phi''$.
+Let $M_s, M''_{s''} \in \kripkeClass$ and $M_s \models \phi$ and $M''_{s''}
+\models \phi$, and suppose $M'_{s'} \in \eventClass$ such that $M_s \otimes
+M'_{s'} \sim M''_{s''}$.
+We are interested in reasoning about all $\phi'$ such that $M'_{s'}
+\models \phi'$.\\
+\\
+Aucher, in \FIXME, discusses a solution to this problem by introducing a
+sequent calculus for dynamic epistemic logics.
+This sequent calculus allows us to reason about informative updates from
+a pre-update epistemic situation to a post-update epistemic situation.
+
+\subsection{Technical Preliminaries}
+
+We reproduce Aucher's sequent calculus
+
+\begin{defn}
+Let $\phi, \phi'' \in \lang$ and $\phi' \in \langAct$, we say that
+$\phi, \phi'' \models^2 \phi' \iff$ for each $M_s, M''_{s''} \in \kripkeClass$
+such that $M_s \models \phi$ and $M''_{s''} \models \phi''$, and every $M'_{s'}
+\in \eventClass$ such that $M_s \models pre'(s)$ and $M_s \otimes M'_{s'}
+\sim M''_{s''}$ it holds that $M'_{s'} \models \phi'$.
+\end{defn}
+
+\begin{itemize}
+  \item unsure what else I could put in here...
+  \item maybe defining the Sequent Calcuus $SC^2$; see the 2012 paper
+  \item what would we be proving though?
+\end{itemize}
+
