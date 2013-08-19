@@ -5,7 +5,7 @@ epistemic goals or cause a model to crash in the process.
 We examine this goal achievement for a subset of agents $B \subseteq A$.\\
 \\
 %\FIXME: citations here
-In \FIXME, Hales demonstrates that it is possible to determine whether an
+In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine whether an
 finite epistemic goal can be achieved.
 Furthermore, if it is achievable Hales constructs event models that will realise
 that goal.
@@ -713,14 +713,14 @@ Thus we have $M_T \sim_k M'_{T'}$ and our induction hypothesis holds for $n = k$
 
 \begin{corr} \label{approximatingBRestricted}
 Let $\phi \in \langArbAct$ and $B \subseteq A$.
-Then there is some $M_T \in \forestClass$ such that $\sqex{M_T} \phi$ and
-$\anex{M_T} \phi \iff \exists_B \phi$.
+Then there is some $M_T \in \forestClass$ such that $\vdash \sqex{M_T} \phi$ and
+$\vdash \anex{M_T} \phi \iff \exists_B \phi$ is valid.
 \end{corr}
 
 \begin{proof}
 Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
-By \FIXME there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
-Furthermore, \FIXME allows us to translate it into cover disjunctive normal form.
+By Lemma \ref{allInCoverNormal} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
+Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
 From \FIXME, Hales synthesises an event model $M'_{T'}$ such that $\sqex{M_T} \phi$ and $\anex{M_T}
 \phi \iff \exists_B \phi$.\\
 \\

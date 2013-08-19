@@ -113,7 +113,8 @@ Allowing them to believe such contradictions means that they are effectively ins
 	The relation $\sim$ is an equivalence relation.
 \end{lemma}
 
-This is a well-known result shown by de Rijke, Venema and Blackburn in \FIXME.
+This is a well-known result.
+See \cite{blackburn2002modal} by de Rijke, Venema and Blackburn for further reading..
 
 \begin{defn} \label{nBisimKripke}
 Let $M_s, M'_{s'} \in \kripkeClass$.
@@ -145,12 +146,14 @@ We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsi
 \begin{lemma} \label{refinementPreorder}
 The relation $\lesssim_B$ is a preorder.
 \end{lemma}
-This is shown by van Ditsmarch and French in \FIXME.
+This is shown by van Ditsmarch and French in \cite{van2009simulation}.
 
 \begin{lemma} \label{bisimilarIsRefinement}
 Let $M_\sigma, M'_{\sigma'} \in \kripkeClass$ and $B \subseteq A$.
 Then $M_\sigma \sim M'_{\sigma'} \implies M_\sigma \lesssim_B M'_{\sigma'}$.
 \end{lemma}
+
+This follows trivially from Definition \ref{refinement} and Definition \ref{bisimKripke}.
 
 \begin{defn} \label{brestrict}
 Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
@@ -168,7 +171,7 @@ arbitrary action model logic which will rely upon each of the languages we discu
 Let $M = (\Sigma, R, V) \in \kripkeClass$.
 The language of propositional logic $\langProp$ is inductively defined by
 \[
-	\phi ::== p | \neg \phi | (\phi \land \phi)
+	\phi ::= p | \neg \phi | (\phi \land \phi)
 \]
 The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
 \begin{itemize}
@@ -180,7 +183,7 @@ for $s \in \Sigma$.
 \end{defn}
 We will adopt the standard abbreviations for propositional logic, such as $\phi \lor \phi =
 \neg(\neg \phi \land \neg \phi)$.
-These are defined in \FIXME.
+These are defined in \cite{blackburn2002modal}.
 
 \begin{defn} \label{modalLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$.
@@ -196,9 +199,8 @@ additional inductive case
 for $a \in A$ and $s \in \Sigma$.
 \end{defn}
 The Kripke semantics for modal logic are well-known.
-We will adopt the standard abbreviations for Kripke semantics --- see \FIXME.\\
+We will adopt the standard abbreviations for Kripke semantics --- see \cite{blackburn2002modal}.\\
 \\
-%\FIXME: Add in citations and stuff
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
 its dual operator, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
 We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigwedge_{b \in B}
@@ -213,7 +215,8 @@ Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for 
 \kripkeClass$, $M \models \phi$.\\
 \\
 %\FIXME: Add citation
-In addition to $\Box_a$ we introduce the cover operator $\cover_a$, as first defined in \FIXME.
+In addition to $\Box_a$ we introduce the cover operator $\cover_a$, following the definition used in
+\cite{venemaproofsystems}.
 \begin{defn} \label{coverDef}
 Let $\Gamma \subseteq \lang$ be a finite set of formulae.
 Then
@@ -243,6 +246,10 @@ We define the modal depth of a formula $\phi \in \lang$ ($MD(\phi)$) as follows
 \end{itemize}
 \end{defn}
 
+Next, we build upon our logics to introduce the concepts updates and refinements as modal logics.
+We begin by introducing action model logic, as first defined by Baltag, Moss and Solecki in
+\cite{baltag1998lpa}.
+
 \begin{defn} \label{actModelLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $N = (\Sigma^N, R^N, pre^N) \in
 \eventClass$ a multi-pointed event model.
@@ -265,9 +272,10 @@ We adopt the standard convention for the dual operators, with $\anex{ N_\sigma }
 read as ``the successful execution of the informative update modelled by $N_\sigma$ may result in
 $\phi$ being true".
 Again, $\anex{ N_T } \phi$ can be read as ``the successful execution of the informative
-update modelled by $N_T$ may result in $\phi$ being true".
-
-%\FIXME: Add in citations to Baltag, Moss and Solecki
+update modelled by $N_T$ may result in $\phi$ being true".\\
+\\
+We also introduce refinement modal logic, as first introduced by van Ditmarsch and French in
+\cite{van2009simulation}.
 
 \begin{defn} \label{refineLogic}
 Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model.
@@ -282,11 +290,10 @@ We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will ho
 Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that $\phi$ will hold".
 As in the previous operations, when $B = A$ we will write $\forall \phi$.
 In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
-
-%\FIXME: Add in citations to Tim, Rowan, James
+Our text interpretation is taken from an interpretation used by Hales, French and Davies in \cite{hales2012refinement}.
 
 \begin{defn} \label{arbActLogic}
-The language of arbitrary action model logic, $\langArbAct$ is first defined in \FIXME.
+The language of arbitrary action model logic, $\langArbAct$ is first defined in \cite{hales13synthesis}.
 We inductively define $\langArbAct$ by
 \[
 	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | \sqex{N_T} \phi | \forall_B \phi
@@ -297,8 +304,7 @@ $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\
 
 %\FIXME: Add in James' alternate definition for \forall
 
-%\FIXME: Add in the citations of James
-
+% \FIXME: Need more motivating text.
 \subsubsection{Miscellaneous Semantic Results}
 We provide other results that we will use in the main technical findings of this paper.
 
@@ -511,15 +517,20 @@ From this we have (by the semantics of modal logic, in Definition \ref{modalLogi
 \begin{defn} \label{coverNormal}
 A formula in cover disjunctive normal form is defined inductively as
 \[
-	\alpha ::== \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b | \alpha \lor \alpha
+	\alpha ::= \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b \: | \: \alpha \lor \alpha
 \]
 where $\pi \in \langProp$, $B \subseteq A$ and for every $b \in B$, $\Gamma_b$ is a finite set of
 formulae in cover disjunctive normal form.
 \end{defn}
 
+We note that the above has a base case when $\alpha = \pi$, that is when $B = \varnothing$ or for
+each $b \in B \implies \Gamma_b = \varnothing$.
+
 \begin{lemma} \label{allInCoverNormal}
 Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal form.
 \end{lemma}
+
+This is shown by Bozelli et. al in \cite{DBLP:journals/corr/abs-1202-3538}.
 
 \subsection{Axiomatisations}
 We will present axiomatisations derived by Hales for $\langArbAct$.
