@@ -171,16 +171,20 @@ arbitrary action model logic which will rely upon each of the languages we discu
 Let $M = (\Sigma, R, V) \in \kripkeClass$.
 The language of propositional logic $\langProp$ is inductively defined by
 \[
-	\phi ::= p | \neg \phi | (\phi \land \phi)
+	\phi ::= p \: | \: \neg \phi \: | \: (\phi \land \phi)
 \]
+
 The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
+
 \begin{itemize}
 	\item $M_s \models p$ iff $p \in V(s)$
 	\item $M_s \models \neg \phi$ iff $M_s \not \models \phi$
 	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
 \end{itemize}
+
 for $s \in \Sigma$.
 \end{defn}
+
 We will adopt the standard abbreviations for propositional logic, such as $\phi \lor \phi =
 \neg(\neg \phi \land \neg \phi)$.
 These are defined in \cite{blackburn2002modal}.
@@ -221,10 +225,10 @@ In addition to $\Box_a$ we introduce the cover operator $\cover_a$, following th
 Let $\Gamma \subseteq \lang$ be a finite set of formulae.
 Then
 \[
-  \cover_a \Gamma ::== \Box_a \bigvee_{\gamma \in \Gamma} \gamma \land
+  \cover_a \Gamma \hat{=} \Box_a \bigvee_{\gamma \in \Gamma} \gamma \land
   \bigwedge_{\gamma \in \Gamma} \Diamond_a \gamma
 \]
-Similarly, if $B \subseteq A$, then $\cover_B \Gamma ::== \bigwedge_{b \in B}
+Similarly, if $B \subseteq A$, then $\cover_B \Gamma \hat{=} \bigwedge_{b \in B}
 \cover_b \Gamma$.
 \end{defn}
 We note that this is a simple abbreviation, and we can define $\Box_a$ and
@@ -296,7 +300,8 @@ Our text interpretation is taken from an interpretation used by Hales, French an
 The language of arbitrary action model logic, $\langArbAct$ is first defined in \cite{hales13synthesis}.
 We inductively define $\langArbAct$ by
 \[
-	\phi ::== p | \neg \phi | \phi \land \phi | \Box_a \phi | \sqex{N_T} \phi | \forall_B \phi
+	\phi ::= p \: | \: \neg \phi \: | \: \phi \land \phi \: | \: \Box_a \phi \: |
+  \:\sqex{N_T} \phi \: | \: \forall_B \phi
 \]
 for $N_T \in \eventClass$ and $B \subseteq A$.
 \end{defn}
@@ -516,9 +521,11 @@ From this we have (by the semantics of modal logic, in Definition \ref{modalLogi
 
 \begin{defn} \label{coverNormal}
 A formula in cover disjunctive normal form is defined inductively as
+
 \[
 	\alpha ::= \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b \: | \: \alpha \lor \alpha
 \]
+
 where $\pi \in \langProp$, $B \subseteq A$ and for every $b \in B$, $\Gamma_b$ is a finite set of
 formulae in cover disjunctive normal form.
 \end{defn}
@@ -530,7 +537,7 @@ each $b \in B \implies \Gamma_b = \varnothing$.
 Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal form.
 \end{lemma}
 
-This is shown by Bozelli et. al in \cite{DBLP:journals/corr/abs-1202-3538}.
+This is shown by Bozelli et. al in \cite{DBLPjournalscorrabs12023538}.
 
 \subsection{Axiomatisations}
 We will present axiomatisations derived by Hales for $\langArbAct$.
