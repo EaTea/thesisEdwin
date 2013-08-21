@@ -171,7 +171,7 @@ arbitrary action model logic which will rely upon each of the languages we discu
 Let $M = (\Sigma, R, V) \in \kripkeClass$.
 The language of propositional logic $\langProp$ is inductively defined by
 \[
-	\phi ::= p \: | \: \neg \phi \: | \: (\phi \land \phi)
+	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } (\phi \land \phi)
 \]
 
 The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
@@ -300,8 +300,8 @@ Our text interpretation is taken from an interpretation used by Hales, French an
 The language of arbitrary action model logic, $\langArbAct$ is first defined in \cite{hales13synthesis}.
 We inductively define $\langArbAct$ by
 \[
-	\phi ::= p \: | \: \neg \phi \: | \: \phi \land \phi \: | \: \Box_a \phi \: |
-  \:\sqex{N_T} \phi \: | \: \forall_B \phi
+	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } \phi \land \phi \text{ } | \text{ } \Box_a \phi \text{ } |
+  \text{ }\sqex{N_T} \phi \text{ } | \text{ } \forall_B \phi
 \]
 for $N_T \in \eventClass$ and $B \subseteq A$.
 \end{defn}
@@ -523,7 +523,7 @@ From this we have (by the semantics of modal logic, in Definition \ref{modalLogi
 A formula in cover disjunctive normal form is defined inductively as
 
 \[
-	\alpha ::= \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b \: | \: \alpha \lor \alpha
+	\alpha ::= \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b \text{ } | \text{ } \alpha \lor \alpha
 \]
 
 where $\pi \in \langProp$, $B \subseteq A$ and for every $b \in B$, $\Gamma_b$ is a finite set of

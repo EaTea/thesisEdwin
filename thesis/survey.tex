@@ -1,4 +1,4 @@
-\section{Literature Survey --- fixed by 25 August 2013} \label{lit_survey}
+\section{Literature Survey} \label{lit_survey}
 
 Within this chapter we consider the relevant writings and logics to describe
 the epistemic state and how we can change and informatively update the epistemic
@@ -29,7 +29,7 @@ uncertain which of the outcomes is true.
 Agent uncertainty in this multi-agent system is another aspect we must attempt
 to capture.
 
-\subsection{Epistemic Modal logic}\label{epistemic_modal_logic}
+\subsection{Epistemic Modal logic}\label{survey_epistemic_modal_logic}
 In our coin-flipping game, we can make the following observations.
 \begin{itemize}
 	\item $A$ considers $H$ to be possible, as well as $T$ to be possible
@@ -96,16 +96,17 @@ a proposition or formula to be true.
 \end{defn}
 We also define the dual operator of knowing, which is to consider something
 possible.
+
 \begin{defn}
-	The operator $\diamond_B T$ stands for ``$B$ considers $T$ to be possible".
-	$\diamond_B \phi$ is true at a possible world $w$ if there is one
-	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.\\
-	
+	The operator $\Diamond_B T$ stands for ``$B$ considers $T$ to be possible".
+	$\Diamond_B \phi$ is true at a possible world $w$ if there is one
+	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.
 \end{defn}
-N.B.: Notice that we can define $\diamond$ in terms of $\Box$, where $\diamond
-\phi \iff \neg \Box \neg \phi$.
+
+\note{N.B.}: Notice that we can define $\Diamond$ in terms of $\Box$, where $\Diamond
+\phi \iff \neg \Box \neg \phi$.\\
 \\
-We will omit the name of the agent for operators $\Box$ and $\diamond$ when we
+We will omit the name of the agent for operators $\Box$ and $\Diamond$ when we
 discuss a single-agent case, as follows.
 We now show, without proof, four axioms that must hold for our modality of
 knowledge.
@@ -125,7 +126,7 @@ In order to satisfy these conditions, binary relations between possible worlds
 in our epistemic models become equivalence relations.\\
 \\
 Also, if we replaced {\bf T} with an axiom {\bf D} which states $\Box \phi
-\implies \diamond \phi$, then we can model doxastic models of belief, instead of
+\implies \Diamond \phi$, then we can model doxastic models of belief, instead of
 epistemic models of knowledge.\\
 \\
 We can now make formal reasonings, such as deciding that $\Box_A H$ and $\Box_A
@@ -152,7 +153,7 @@ This deficiency raises the following questions:
 	from the pre-change state to the post-change state?
 \end{itemize}
 
-\section{Public Announcement logic}\label{pal}
+\subsection{Public Announcement logic}\label{pal}
 To model the announcement of facts and information, we turn to the use of public
 announcement logic.
 Public announcements are announcements to multiple agents of facts.
@@ -255,7 +256,7 @@ model them raises more questions:
 	\item what kind of an execution is required for a more nontrivial update?
 \end{itemize}
 
-\section{Epistemic Actions and Action Models} \label{estAct}
+\subsection{Epistemic Actions and Action Models} \label{estAct}
 We can now successfully capture the simple act of announcing a fact.
 However, in public announcements, we cannot capture certain updates to the
 epistemic state, such as
@@ -274,12 +275,12 @@ as something that causes our agents knowledge systems to simply crash.\\
 We will examine two contrasting approaches to model these epistemic updates.
 Our investigation will show the main differences in terms of what the frameworks
 can describe and how we can use them to reason about updates.
-\subsection{Epistemic Relational Actions} \label{epi_acts}
+\subsubsection{Epistemic Relational Actions} \label{epi_acts}
 van Ditmarsch approaches epistemic actions from a syntactical point of view,
 aiming to create a language to specify actions in.
 His work in constructing an epistemic action syntax extends some of the
 syntax of established languages such as propositional dynamic
-logic\cite{ditmarsch99knowledge,ditmarsch2002dga}.\\
+logic \cite{ditmarsch99knowledge,ditmarsch2002dga}.\\
 \\
 van Ditmarsch provides operations to construct dynamic epistemic formulae, and
 further extends the language with dynamic or action-oriented constructs.
@@ -301,15 +302,15 @@ In the next section, we review a different framework to model epistemic updates
 which can describe as many updates as van Ditmarsch's language.
 This framework resolves the issues with van Ditmarsch's epistemic actions and
 has uncertainty about actions naturally encoded within it.
-\subsection{Epistemic Action Models} \label{act_mods}
+\subsubsection{Epistemic Action Models} \label{act_mods}
 As an alternative to approaching epistemic actions syntactically, Baltag, Moss
 and Solecki examine epistemic actions from a modelling point of view.
 They aim to construct {\em epistemic action models}, which resemble the possible 
-worlds models that were discussed in Section \ref{epistemic}
+worlds models that were discussed in Section \ref{survey_epistemic_modal_logic}
 \cite{baltag1998lpa}.
 Aucher resolves this into a possible actions model that allows us to make
 reasonings about updates that are similar to reasonings about the epistemic
-state\cite{aucher09revisited}.
+state \cite{aucher09revisited}.
 This ``possible actions" model addresses the issues regarding reasoning about
 actions and their outcomes using van Ditmarsch's framework, as discussed in
 Section \ref{epi_acts} \cite{hoek2008dynamic}.\\
@@ -400,7 +401,7 @@ We can represent them as a ``possible actions" model, as we show in Figure
 \ref{amprivatea}.
 Baltag, Moss and Solecki define an operation to execute the model in Figure
 \ref{amprivatea} on Figure \ref{ambeforefigure}, yielding Figure
-\ref{amafterfigure}\cite{baltag1998lpa}.
+\ref{amafterfigure} \cite{baltag1998lpa}.
 
 \begin{figure}[H]
 \centering
@@ -451,7 +452,7 @@ This indicates that, given $N$ possible actions in an action model, $N^2$
 actions must be computed in the new state of information before the model can
 be refined.
 
-\subsubsection{Comparison to relational epistemic actions} \label{epi_compare}
+\subsubsubsection{Comparison to relational epistemic actions} \label{epi_compare}
 Both relational epistemic actions \cite{hoek2008dynamic} and action models
 \cite{baltag1998lpa} describe a larger range of epistemic updates for our game of heads and tails.
 The examples we chose earlier, regarding $C$ telling $A$ about the state of the
@@ -567,20 +568,28 @@ Employing the work of Hales' would allow us to synthesise this action model.\\
 An alternative approach is shown by Aucher in
 \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703}, which compliments, but is not
 equivalent to Hales' work.
-Aucher discusses epistemic planning; that is, supposing we had an information goal
-and a current information state, what is the update we would need to get to the information goal
-from the current state?
-What is most interesting is that Aucher provides a framework to reason about the properties of updates.
+Aucher discusses the concepts of epistemic planning.
+To define epistemic planning, suppose that we have an information state where
+some epistemic sentence $\phi$ is true.
+We want to construct an information state such that the epistemic sentence
+$\phi''$ is true.
+Epistemic planning involves finding an update that moves from $\phi$ to
+$\phi''$.
+It is very similar to Hales' work, but unlike Hales' action models it allows a
+finer degree of control about the situation prior to an event.\\
+\\
+Aucher provides a framework to infer properties about an update that will
+realise $\phi''$ from $\phi$.
+What is most interesting is that Aucher provides a framework to reason about the
+properties of an update that realises $\phi''$ from $\phi$.
 His contribution is novel, but parallel to the work of Hales' since it describes properties of event
 models that can affect a change, whilst Hales describes the actual change itself and gives
 rudimentary analysis of his procedure.\\
 \\
-We thus have that tthe state of the art in action models and this section of dynamic epistemic
-logic is thus focused upon improving descriptions of information updates, or how
+The state of the art in action models and this section of dynamic epistemic
+logic is thus focused on improving descriptions of information updates, or how
 we can use them to achieve a given epistemic state.
-
-\FIXME stuff goes here
 
 \subsection{Belief Revision}
 
-subsection{Refinement quantified modal logics}
+\subsection{Refinement quantified modal logics}

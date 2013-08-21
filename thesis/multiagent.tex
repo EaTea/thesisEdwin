@@ -729,3 +729,45 @@ Since $MD(\phi) \leq n$ and $M_T \sim_n M'_{T'}$ we have by \ref{nBisimilarEvent
 formula $\phi \in \lang$ can be achieved by $M_T$ such that $\sqex{M_T} \phi$ and $\anex{M_T} \phi
 \iff \exists_B \phi$.
 \end{proof}
+
+\subsection{Comparison to sequent calculi for epistemic planning}
+
+So far, we have been particularly interested in constructing event models.
+We have shown that we can approximate event models according to what
+postconditions are true.
+This was through the construction of a particular event model that fulfilled
+the postconditions that we aimed to fulfill.\\
+\\
+This approach is powerful in the sense that we can construct an event model
+that, given any Kripke model, will either ensure that a postcondition
+is realised or destroy the Kripke model as a result of its execution.
+It allows us to guarantee the realisation of a postcondition, without giving
+regard to the preceding Kripke model.\\
+\\
+Another approach to this problem is as follows.
+Suppose that we can describe an epistemic situation by a formula $\phi$.
+Furthermore, we aim to achieve an epistemic state $\phi''$.
+Let $M_s, M''_{s''} \in \kripkeClass$ and $M_s \models \phi$ and $M''_{s''}
+\models \phi$, and suppose $M'_{s'} \in \eventClass$ such that $M_s \otimes
+M'_{s'} \sim M''_{s''}$.
+We are interested in reasoning about all $\phi'$ such that $M'_{s'}
+\models \phi'$.\\
+\\
+Aucher, in \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703},
+discusses a solution to this problem by introducing a sequent calculus for dynamic 
+epistemic logics.
+This sequent calculus allows us to reason about informative updates from
+a pre-update epistemic situation to a post-update epistemic situation.\\
+\\
+We reproduce formally Aucher's sequent calculus from
+\cite{doi:10.1080/11663081.2012.736703}.
+
+\begin{defn}
+Let $\phi, \phi'' \in \lang$ and $\phi' \in \langAct$, we say that
+$\phi, \phi'' \models^2 \phi' \iff$ for each $M_s, M''_{s''} \in \kripkeClass$
+such that $M_s \models \phi$ and $M''_{s''} \models \phi''$, and every $M'_{s'}
+\in \eventClass$ such that $M_s \models pre'(s)$ and $M_s \otimes M'_{s'}
+\sim M''_{s''}$ it holds that $M'_{s'} \models \phi'$.
+\end{defn}
+
+
