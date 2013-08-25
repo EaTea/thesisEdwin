@@ -738,15 +738,51 @@ postconditions are true.
 This was through the construction of a particular event model that fulfilled
 the postconditions that we aimed to fulfill.\\
 \\
-This approach is powerful in the sense that we can construct an event model
+This approach is powerful in the sense that we are guaranteed to construct an event model
 that, given any Kripke model, will either ensure that a postcondition
 is realised or destroy the Kripke model as a result of its execution.
-It allows us to guarantee the realisation of a postcondition, without giving
+It allows us to ensure the realisation of a postcondition, without giving
 regard to the preceding Kripke model.\\
 \\
-Another approach to this problem is as follows.
-Suppose that we can describe an epistemic situation by a formula $\phi$.
-Furthermore, we aim to achieve an epistemic state $\phi''$.
+A weakness of our approach is that we tie our realisation of a postcondition to a specific model.
+Whether our model is the smallest model, or the model of minimal change is another matter entirely.
+For example, suppose $\phi$ is a formula that we want to achieve for a group of agents $B \subseteq
+A$.
+Let $p \in \langProp$ and let $\phi = p \land \Box p \land \Box^2 p \land \ldots \Box^n p$.
+Applying Corollary \ref{approximatingBRestricted}, we obtain model $M^1$, such that $\sqex{M^1}\phi$
+and $\anex{M^1}\phi \iff \exists_B \phi$.
+Let $M^2 \in \publicAnnClass$ be the public announcement of $p$.
+We also have that $\sqex{M^2} \phi$ and $\anex{M^2} \phi \iff \exists_B \phi$.
+
+\begin{figure}
+	\centering
+	\FIXME
+	\caption{\FIXME: make two subfigures here}
+	\label{comparePublicAnnounces}
+\end{figure}
+
+It is clear that $M^1$ contains more states and relations that $M^2$, but that they both achieve our
+epistemic goal $\phi$.
+This is illustrative of the weakness with regards to tersity of the models we build.
+We have shown methods to build event models, but only concentrated on one singular event model to
+build with the express purpose of goal achievement.\\
+\\
+A second example we could use is to let our goal state, $\phi = $.
+Let $M^1$ be the model we obtain from Corollary \ref{approximatingBRestricted}.
+Similarly, let $M^2$ be \FIXME.
+This time, we note that $M^2$ \FIXME.
+
+\begin{figure}
+	\centering
+	\FIXME
+	\caption{\FIXME: make two subfigures here}
+	\label{compareModelsMinimalChange}
+\end{figure}
+
+Let us examine a parallel approach to the problem.
+Suppose that we can describe an epistemic situation $\phi$ is true in our current epistemic state of
+information.
+Furthermore, let us aim to achieve an epistemic state $\phi''$.
 Let $M_s, M''_{s''} \in \kripkeClass$ and $M_s \models \phi$ and $M''_{s''}
 \models \phi$, and suppose $M'_{s'} \in \eventClass$ such that $M_s \otimes
 M'_{s'} \sim M''_{s''}$.
@@ -770,4 +806,17 @@ such that $M_s \models \phi$ and $M''_{s''} \models \phi''$, and every $M'_{s'}
 \sim M''_{s''}$ it holds that $M'_{s'} \models \phi'$.
 \end{defn}
 
+We can use Aucher's sequent calculus to say \FIXME: examples of sequent calculus.\\
+\\
+Next, we define the idea of the ``minimal change".
 
+\begin{defn}
+	\FIXME
+\end{defn}
+
+An example of a minimal change is shown in \FIXME.\\
+\\
+We now reason about updates \FIXME \\
+\\
+We now pose two open questions which we leave as open questions.
+\FIXME
