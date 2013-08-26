@@ -1,4 +1,4 @@
-\section{Literature Survey} \label{lit_survey}
+\section{Literature survey} \label{lit_survey}
 
 Within this chapter we consider the relevant writings and logics to describe
 the epistemic state and how we can change and informatively update the epistemic
@@ -29,7 +29,7 @@ uncertain which of the outcomes is true.
 Agent uncertainty in this multi-agent system is another aspect we must attempt
 to capture.
 
-\subsection{Epistemic Modal logic}\label{survey_epistemic_modal_logic}
+\subsection{Epistemic modal logic}\label{survey_epistemic_modal_logic}
 In our coin-flipping game, we can make the following observations.
 \begin{itemize}
 	\item $A$ considers $H$ to be possible, as well as $T$ to be possible
@@ -153,7 +153,7 @@ This deficiency raises the following questions:
 	from the pre-change state to the post-change state?
 \end{itemize}
 
-\subsection{Public Announcement logic}\label{pal}
+\subsection{Public announcement logic}\label{pal}
 To model the announcement of facts and information, we turn to the use of public
 announcement logic.
 Public announcements are announcements to multiple agents of facts.
@@ -256,7 +256,7 @@ model them raises more questions:
 	\item what kind of an execution is required for a more nontrivial update?
 \end{itemize}
 
-\subsection{Epistemic Actions and Action Models} \label{estAct}
+\subsection{Epistemic actions and action models} \label{estAct}
 We can now successfully capture the simple act of announcing a fact.
 However, in public announcements, we cannot capture certain updates to the
 epistemic state, such as
@@ -302,7 +302,7 @@ In the next section, we review a different framework to model epistemic updates
 which can describe as many updates as van Ditmarsch's language.
 This framework resolves the issues with van Ditmarsch's epistemic actions and
 has uncertainty about actions naturally encoded within it.
-\subsubsection{Epistemic Action Models} \label{act_mods}
+\subsubsection{Epistemic action models} \label{act_mods}
 As an alternative to approaching epistemic actions syntactically, Baltag, Moss
 and Solecki examine epistemic actions from a modelling point of view.
 They aim to construct {\em epistemic action models}, which resemble the possible 
@@ -452,7 +452,7 @@ This indicates that, given $N$ possible actions in an action model, $N^2$
 actions must be computed in the new state of information before the model can
 be refined.
 
-\subsubsubsection{Comparison to relational epistemic actions} \label{epi_compare}
+\subsubsection{Comparison to relational epistemic actions} \label{epi_compare}
 Both relational epistemic actions \cite{hoek2008dynamic} and action models
 \cite{baltag1998lpa} describe a larger range of epistemic updates for our game of heads and tails.
 The examples we chose earlier, regarding $C$ telling $A$ about the state of the
@@ -590,7 +590,7 @@ The state of the art in action models and this section of dynamic epistemic
 logic is thus focused on improving descriptions of information updates, or how
 we can use them to achieve a given epistemic state.
 
-\subsection{Belief Revision}
+\subsection{Belief revision}
 
 Suppose that $A$ and $B$ are playing the heads-or-tails game with $C$ again.
 $C$ checks the coin and announces ``The coin is heads up".
@@ -618,10 +618,34 @@ consistency which Doyle introduces in \cite{Doyle1979231}.\\
 Belief revision is more robust than the frameworks we considered as it allows
 for beliefs that are inconsistent with the actual state of the world.
 This robustness invites more obvious applications for revision belief in fields such as
-artificial intelligence and database management/consistency.
+artificial intelligence or database management and consistency.
 It is a powerful approach in resolving conflicts between knowledge and facts.
 This approach is tangential to what we are interested in, however, as we are
 examining methods of constructing updates, as opposed to reconciling what we
 know and what we have observed.
 
 \subsection{Refinement quantified modal logics}
+
+A final, tangential approach to dynamic epistemic logic is to consider the concept of refinements.
+Refinements are an alternate treatment of updates.
+They are another way of viewing updates; van Ditmarsch and French show in \cite{van2009simulation}
+that refinements and informative updates are equivalent.
+What is most interesting about refinements is the ability to quantify over them.
+This means that we can actually quantify over the set of informative updates, and to thus make
+reasonings about all updates, or possible updates.\\
+\\
+van Ditmarsch and French also propose methods to augment existing logics with their quantification
+in \cite{van2009simulation}.
+van Ditmarsch, French and Pinchinat also combine their work to construct a modal logic augmented
+with this quantification, the future event logic \cite{van2010future}.
+These steps were the beginning to being able to quantify across informative updates and models.\\
+\\
+Hales unifies the work propose in \cite{van2009simulation}, by proposing an arbitrary action model
+logic in \cite{hales13synthesis}.
+Hales also completes the semantics for this new logic, by showing that quantification over
+refinements is the same as quantifying over updates.\\
+\\
+These ideas are not directly related to update construction, but later they play a part in forming
+models effectively.
+We will employ the power of refinement quantification and the semantics given by Hales to
+effectively construct action models \cite{hales13synthesis}.
