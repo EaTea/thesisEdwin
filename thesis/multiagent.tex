@@ -19,14 +19,14 @@ The event models that Hales employs resemble finite trees.
 We give a rigourous definition for them as follows
 
 \begin{defn} \label{finTree}
-Let $M = (\Sigma, R, pre, r)$ be a pointed event model.
+Let $M = (S, R, pre, r)$ be a pointed event model.
 $M$ is a finite tree event model if
 \begin{itemize}
-	\item $\Sigma$, the set of action points is finite
+	\item $S$, the set of action points is finite
 	\item $r$ is the root of the tree and is not accessible from any other action point
-	\item for each $s \in \Sigma \setminus \{ r \}$ there is a unique agent $a \in A$ and a unique
-	action $p \in \Sigma$ such that $(p,s) \in R(a)$
-	\item for each $s \in \Sigma$ there exists a unique sequence of actions in $\Sigma$, $r = s_0,
+	\item for each $s \in S \setminus \{ r \}$ there is a unique agent $a \in A$ and a unique
+	action $p \in S$ such that $(p,s) \in R(a)$
+	\item for each $s \in S$ there exists a unique sequence of actions in $S$, $r = s_0,
 	s_1, \ldots, s_n = s$ and a sequence of agents $a_1, a_2, \ldots, a_n$ such that $s_0 R_{a_1}
 	s_1$, $s_1 R_{a_2} s_2$, $\ldots, s_{n-1} R_{a_n} s_n$
 \end{itemize}
@@ -43,14 +43,14 @@ model.
 We say that the class of finite tree event models is $\treeClass$.
 
 \begin{defn} \label{forest}
-Let $M_T = (\Sigma, R, pre, T)$ be a multi-pointed event model.
+Let $M_T = (S, R, pre, T)$ be a multi-pointed event model.
 $M_T$ is a finite forest event model if
 \begin{itemize}
-	\item each point $t$ in $T$ is the root of a finite tree event model $M^t = (\Sigma^t, R^t,
+	\item each point $t$ in $T$ is the root of a finite tree event model $M^t = (S^t, R^t,
 	pre^t, t)$
-  \item $\Sigma = \bigcup_{t \in T} \Sigma^t$
-	\item for each $\sigma \in \Sigma^t$, $pre(\sigma) = pre^t(\sigma)$
-	\item if $s, t \in T$ such that $s \neq t$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+  \item $S = \bigcup_{t \in T} S^t$
+	\item for each $s \in S^t$, $pre(s) = pre^t(s)$
+	\item if $s, t \in T$ such that $s \neq t$, then $S^s$ and $S^t$ are disjoint
   \item for each $a \in A \implies R_a = \bigcup_{t \in T} R_a^t$
 \end{itemize}
 \end{defn}
@@ -66,21 +66,21 @@ Again, it is clear that by our earlier definitions, a finite tree event model is
 model.
 
 \begin{defn} \label{subtree}
-Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
-We say the pointed event model $M' = (\Sigma', R', pre', r')$ is a subtree of $M$ if
+Let $M = (S, R, pre, T)$ be a finite forest event model.
+We say the pointed event model $M' = (S', R', pre', r')$ is a subtree of $M$ if
 \begin{itemize}
-	\item $\Sigma' \subseteq \Sigma$
+	\item $S' \subseteq S$
 	\item $\forall a \in A \implies R_a' \subseteq R_a$
-	\item $\forall \sigma \in \Sigma' \implies pre(\sigma) = pre'(\sigma) $
+	\item $\forall s \in S' \implies pre(s) = pre'(s) $
 	\item $M'$ is $R$-generable
 	\item $M'$ is a finite tree event model
 \end{itemize}
 \end{defn}
 
 \begin{defn} \label{leaf}
-Let $M = (\Sigma, R, pre, r)$ be a finite tree event model.
-Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
-$M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and $\Sigma' = \{ r'\}$.
+Let $M = (S, R, pre, r)$ be a finite tree event model.
+Let $M' = (S', R', pre', r')$ be a subtree of $M$.
+$M'$ is a leaf node of $M$ if $\forall a \in A \implies R'_a = \varnothing$ and $S' = \{ r'\}$.
 \end{defn}
 
 In order to generate these models, we must construct an algebra that can construct event models.
@@ -94,7 +94,7 @@ generality let $M^1$ and $M^2$ be disjoint.
 Let $B$ be a subset of agents participating in $M^1$ or $M^2$.
 We define $M = M^1 \to_B M^2$ as 
 \begin{itemize}
-  \item $\Sigma = \Sigma^1 \cup \Sigma^2$
+  \item $S = S^1 \cup S^2$
   \item $R_a = R^1_a \cup R^2_a \text{if } a \notin B$
 	\item $R_a =
       R^1_a \cup
@@ -118,7 +118,7 @@ Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of generalit
 $M^2$ be disjoint.
 We define $M = M^1 \sqcup M^2$ as
 \begin{itemize}
-	\item $\Sigma = \Sigma^1 \cup \Sigma^2$
+	\item $S = S^1 \cup S^2$
 	\item $R_a = R^1_a \cup R^2_a$
 	\item $pre = pre^1 \cup pre^2$
 	\item $T = T^1 \cup T^2$
@@ -137,10 +137,10 @@ Then $M_T = M^1_{T^1} \sqcup M^2_{T^2} \in \forestClass$.
 We must show each of the following
 \begin{enumerate}
 	\item each $t \in T$ corresponds to a finite tree event model $M^t \in \treeClass$ \label{treeCorrespondence}
-	\item for each $M^t$, $\Sigma^t \subseteq \Sigma$ \label{forestStateSubsets}
+	\item for each $M^t$, $S^t \subseteq S$ \label{forestStateSubsets}
 	\item for each $M^t$, $R^t \subseteq R$ \label{forestEdgeSubsets}
-	\item for each $M^t$, for each $s \in \Sigma^t$, $pre^t(s) = pre(s)$ \label{preconMatch}
-	\item for each $s, t \in T$, $\Sigma^s$ and $\Sigma^t$ are disjoint \label{subtreeStatesDisjoint}
+	\item for each $M^t$, for each $s \in S^t$, $pre^t(s) = pre(s)$ \label{preconMatch}
+	\item for each $s, t \in T$, $S^s$ and $S^t$ are disjoint \label{subtreeStatesDisjoint}
 \end{enumerate}
 
 We note that $T = T^1 \sqcup T^2$.
@@ -149,14 +149,14 @@ Since $M^1_{T^1}$ and $M^2_{T^2}$ are both finite forest event models then there
 subtree event model $M^t \in \treeClass$ that corresponds to $t$.
 Without loss of generality, let $t \in T^1$.\\
 \\
-Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $M^t$, $\Sigma^t \subseteq \Sigma^1 \subseteq \Sigma$.
-Also, $R^t \subseteq R^1 \subseteq R$ and for all $s \in \Sigma^1 \implies pre^t(s) = pre^1(s) =
+Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $M^t$, $S^t \subseteq S^1 \subseteq S$.
+Also, $R^t \subseteq R^1 \subseteq R$ and for all $s \in S^1 \implies pre^t(s) = pre^1(s) =
 pre(s)$.
 Finally, if $t, t' \in T$, each $M^t$ is disjoint from any other $M^{t'}$ since
 \begin{itemize}
 	\item $t' \in T^1 \implies$ that condition \ref{subtreeStatesDisjoint} previously held for
-	$M^1_{T^1} \in \forestClass$ and thus $\Sigma^{t'}$ is disjoint $\Sigma^t$
-	\item $t' \in T^2$ will ensure that $\Sigma^{t'}$ and $\Sigma^t$ are disjoint by the premise of
+	$M^1_{T^1} \in \forestClass$ and thus $S^{t'}$ is disjoint $S^t$
+	\item $t' \in T^2$ will ensure that $S^{t'}$ and $S^t$ are disjoint by the premise of
 	the lemma
 \end{itemize}
 \end{proof}
@@ -164,7 +164,7 @@ Finally, if $t, t' \in T$, each $M^t$ is disjoint from any other $M^{t'}$ since
 A final miscellaneous result shown by Hales in \cite{hales13synthesis}, which we employ later, is reproduced here.
 
 \begin{lemma} \label{brestrictDisjoint}
-Suppose $\{ M^i_{T^i} = (\Sigma^i, R^i, pre^i, T^i) | i \in [1, n] \}$ is a finite set of $n$ event
+Suppose $\{ M^i_{T^i} = (S^i, R^i, pre^i, T^i) | i \in [1, n] \}$ is a finite set of $n$ event
 models.
 Furthermore, let each $M^i_{T^i} \in \eventClass_B$.
 Then
@@ -195,15 +195,15 @@ We note that since $M'_{T'}$ is a disjoint union of event models, $M'_{T^i} \sim
 trivial bisimilarity.
 Similarly, $M'_{T^K} \sim M^K_{T^K}$ is a trivial bisimilarity.\\
 \\
-Let $\gamma$ be either of $K$ or $k+1$, and suppose $\sigma \in \Sigma^\gamma$.
+Let $\gamma$ be either of $K$ or $k+1$, and suppose $s \in S^\gamma$.
 Let $N_s \in \kripkeClass$.
-As $M^\gamma \in \eventClass_B$, then $N_s \otimes M^\gamma_\sigma \lesssim_B N_s$.
-We note that due to $M'$ being a disjoint union of event models, $M'_\sigma \sim M^\gamma_\sigma$.
-Then from Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M^\gamma_\sigma \sim N_s
-\otimes M'_\sigma$.
-From Lemma \ref{bisimilarIsRefinement}, we have $N_s \otimes M'_\sigma \lesssim_B N_s \otimes M^\gamma_\sigma$.
+As $M^\gamma \in \eventClass_B$, then $N_s \otimes M^\gamma_s \lesssim_B N_s$.
+We note that due to $M'$ being a disjoint union of event models, $M'_s \sim M^\gamma_s$.
+Then from Lemma \ref{eventModelEquivalent} we have that $N_s \otimes M^\gamma_s \sim N_s
+\otimes M'_s$.
+From Lemma \ref{bisimilarIsRefinement}, we have $N_s \otimes M'_s \lesssim_B N_s \otimes M^\gamma_s$.
 From Lemma \ref{refinementPreorder}, $\lesssim_B$ is a transitive relation.
-Then $N_s \otimes M'_\sigma \lesssim_B N_s$.
+Then $N_s \otimes M'_s \lesssim_B N_s$.
 Thus
 \[
 M'_{T'} = \bigsqcup_{i = 1}^{k+1} M^i_{T^i} \in \eventClass_B.
@@ -216,20 +216,20 @@ forest event models, as we show in the next section.
 \subsection{Completeness}
 
 \begin{lemma} \label{finTreeConstruct}
-Suppose $M = (\Sigma, R, pre, r)$ is a finite tree event model.
+Suppose $M = (S, R, pre, r)$ is a finite tree event model.
 $M$ can be constructed using insanity event models and $\to$.
 \end{lemma}
 \begin{proof}
-Let $M' = (\Sigma', R', pre', r')$ be a subtree of $M$.
+Let $M' = (S', R', pre', r')$ be a subtree of $M$.
 We will show by induction that for any $M'$ we can use insanity event models and $\to$ to
 construct $M'$.\\
 \\
-Suppose that $M' = (\Sigma', R', pre', r')$ is a leaf node.
+Suppose that $M' = (S', R', pre', r')$ is a leaf node.
 Let $pre'(r') = \phi$, a formula in our logical language.
 $M'$ is an insanity event model by definition.
 Thus, we can construct $M'$ using insanity event models when $M'$ is a leaf node of $M$.\\
 \\
-Let $M' = (\Sigma', R', pre', r')$ be an arbitrary subtree of $M$.
+Let $M' = (S', R', pre', r')$ be an arbitrary subtree of $M$.
 Suppose $pre'(r') = \phi$, where $\phi$ is a formula in our logical language.
 Let $M^1, M^2, \ldots, M^n$ be all the disjoint subtrees of $M'$.
 Suppose that each of $M^1, M^2, \ldots, M^n$ fulfill the induction hypothesis.
@@ -258,12 +258,12 @@ fulfills the induction hypothesis.
 \end{proof}
 
 \begin{lemma} \label{forestCon}
-Let $M = (\Sigma, R, pre, T)$ be a finite forest event model.
+Let $M = (S, R, pre, T)$ be a finite forest event model.
 Then $M$ can be constructed using $\to$, $\sqcup$ and insanity event models.
 \end{lemma}
 
 \begin{proof}
-Let $M^t = (\Sigma^t, R^t, pre^t, t) \in \treeClass$ be the
+Let $M^t = (S^t, R^t, pre^t, t) \in \treeClass$ be the
 subtree of $M$ that corresponds to point $t \in T$ (Definition \ref{forest}).
 By Lemma \ref{finTreeConstruct} we can generate from $\insaneClass$ and $\to$.
 By Lemma \ref{treeIsForest} $M^t \in \forestClass$.
@@ -273,7 +273,7 @@ forest event model.
 \end{proof}
 
 \begin{corr} \label{forestConCorr}
-Let $M = (\Sigma, R, pre, T)$ be a finite forest event model, and for each $t \in T$ let $M^t \in
+Let $M = (S, R, pre, T)$ be a finite forest event model, and for each $t \in T$ let $M^t \in
 \treeClass$ be the subtree of $M$ corresponding to $t$.
 Then $M = \bigsqcup_{t \in T} M^t$.
 \end{corr}
@@ -308,13 +308,13 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %\\
 %If $a \notin C$ then let (\FIXME plz)
 %\[
-%	M^a_{T^a} = (\{\sigma\}, \varnothing, \{(\sigma, \top)\}, \{\sigma\}) \in \insaneClass.
+%	M^a_{T^a} = (\{s\}, \varnothing, \{(s, \top)\}, \{s\}) \in \insaneClass.
 %\]
-%Consider the insanity model $M'_\sigma \in \insaneClass$ such that $pre(\sigma) =
+%Consider the insanity model $M'_s \in \insaneClass$ such that $pre(s) =
 %\exists_B \phi$.
 %Let
 %\[
-%M_T = ((\ldots((M'_\sigma \to_{a_1} M^{a_1}_{T^{a_1}}) \to_{a_2} M^{c_2}_{T^{a_2}}) \to_{a_3} \ldots )
+%M_T = ((\ldots((M'_s \to_{a_1} M^{a_1}_{T^{a_1}}) \to_{a_2} M^{c_2}_{T^{a_2}}) \to_{a_3} \ldots )
 %		\to_{a_n} M^{a_n}_{T^{a_n}}).
 %\]
 %Our proof is decomposed into four parts.
@@ -324,14 +324,14 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %Thirdly, we show $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 %Lastly, we show that $M_T \in \eventClass_B$.\\
 %\\
-%According to Definition \ref{finTree} $M_T = (\Sigma, R, pre, T)$ is a finite tree event model if
+%According to Definition \ref{finTree} $M_T = (S, R, pre, T)$ is a finite tree event model if
 %and only if the following four conditions must hold:
 %\begin{enumerate}
-%	\item $\Sigma$ is finite \label{treeConFinite}
-%	\item $T = \{\sigma\}$, where $R \sigma = \varnothing$ \label{treeConRoot}
-%	\item for each $s \in \Sigma \setminus T$ there is only one $a \in A$ and only one $p \in \Sigma$
+%	\item $S$ is finite \label{treeConFinite}
+%	\item $T = \{s\}$, where $R s = \varnothing$ \label{treeConRoot}
+%	\item for each $s \in S \setminus T$ there is only one $a \in A$ and only one $p \in S$
 %	such that $p R_a s$ \label{treeConOneAgent}
-%	\item for each $s \in \Sigma$ there is a unique finite sequence of points in $\Sigma$, $\sigma =
+%	\item for each $s \in S$ there is a unique finite sequence of points in $S$, $s =
 %	s_0, s_1, s_2, \ldots, s_k = s$ and a sequence of agents $a_1, a_2, \ldots, a_k$ such that $s_0
 %	R_{a_1} s_1, s_1 R_{a_2} s_2, \ldots, a_{k-1} R_k
 %	a_k$ \label{treeConUniquePath}
@@ -339,35 +339,35 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %
 %We note that condition \ref{treeConFinite} is satisfied by the definition of $M_T$ as
 %\[
-%  \Sigma = \{\sigma\} \bigcup_{a \in A} (\bigcup_{\gamma \in \Gamma}
-%      \Sigma^{\gamma})
+%  S = \{s\} \bigcup_{a \in A} (\bigcup_{\gamma \in \Gamma}
+%      S^{\gamma})
 %\]
-%where $\Gamma$ is a finite set and each $\Sigma^\gamma$ is finite.
-%Therefore, $\Sigma$ itself must also be finite.\\
+%where $\Gamma$ is a finite set and each $S^\gamma$ is finite.
+%Therefore, $S$ itself must also be finite.\\
 %\\
 %Condition \ref{treeConRoot} is satisfied by the definition of $M_T$ and the definition of $\to$
 %(Definition \ref{considers}).
-%$\to$ only adds relations to $\sigma R$, and $R \sigma$ begins as $\varnothing$.
-%Thus $\sigma$ is not accessible from any other points.\\
+%$\to$ only adds relations to $s R$, and $R s$ begins as $\varnothing$.
+%Thus $s$ is not accessible from any other points.\\
 %\\
 %We next show \ref{treeConOneAgent} is satisfied.
-%To do so we much show that for each $s$ in $\Sigma \setminus T = \Sigma \setminus \{ \sigma \}$, there
-%is a unique $p \in \Sigma$ and $a \in A$ such that $p R_a s$.
-%Suppose that there is some $a \in A$ such that $s \in \Sigma^a$.
-%If $s \in T^a$, then $R_a s = \{ \sigma \}$ by the definition of $M_T$.
+%To do so we much show that for each $s$ in $S \setminus T = S \setminus \{ s \}$, there
+%is a unique $p \in S$ and $a \in A$ such that $p R_a s$.
+%Suppose that there is some $a \in A$ such that $s \in S^a$.
+%If $s \in T^a$, then $R_a s = \{ s \}$ by the definition of $M_T$.
 %Otherwise, by the definition of $M^a$, any $s \notin T^a$ is in some subforest of $M^a$
-%and therefore there is a unique $p \in \Sigma^a$ and a unique agent $a' \in A$ such that $p R_{a'}
+%and therefore there is a unique $p \in S^a$ and a unique agent $a' \in A$ such that $p R_{a'}
 %s$.\\
 %\\
 %Lastly, we show that \ref{treeConUniquePath} holds.
-%Suppose $s = \sigma$; the sequence of action points is of length 0 and thus no agents are involved.
-%Now, suppose $s \in \Sigma \setminus \{ \sigma \}$.
-%Then for some $a \in A$ we have $s \in \Sigma^a$.
+%Suppose $s = s$; the sequence of action points is of length 0 and thus no agents are involved.
+%Now, suppose $s \in S \setminus \{ s \}$.
+%Then for some $a \in A$ we have $s \in S^a$.
 %Then for some $s' \in T^a$ there is a unique sequence of agents $a_1, a_2, \ldots, a_n$ and action
 %points $s' = s_0, s_1, s_2, \ldots, s_n = s$ such that $s_i R_{a_{i+1}} s_{i+1}$ for any $0 \leq i
 %\leq n-1$.
-%Furthermore, $\sigma R_a s'$ by the definition of $M_T$, so we can combine the previous statement
-%with $\sigma R_a s'$ to say that there is a unique sequence of agents and points from $\sigma$ to
+%Furthermore, $s R_a s'$ by the definition of $M_T$, so we can combine the previous statement
+%with $s R_a s'$ to say that there is a unique sequence of agents and points from $s$ to
 %$s$.
 %Thus, $M_T \in \treeClass \implies M_T \in \forestClass$ by Lemma \ref{treeIsForest}.\\
 %\\
@@ -387,11 +387,11 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %	& \vdash \forall \neg \pi \implies \forall \neg \phi \label{cfa_c1_4}\\
 %	& \vdash \neg \forall \neg \phi \implies \neg \forall \neg \pi \label{cfa_c1_5}\\
 %	& \vdash \exists \phi \implies \exists_B \pi \label{cfa_c1_6}\\
-%	& \vdash pre(\sigma) \implies \pi \label{cfa_c1_7}\\
-%	& \vdash \sqex{M_\sigma} \pi \label{cfa_c1_8}
+%	& \vdash pre(s) \implies \pi \label{cfa_c1_7}\\
+%	& \vdash \sqex{M_s} \pi \label{cfa_c1_8}
 %\end{align}
 %(\ref{cfa_c1_3}) follows from \axNecR, (\ref{cfa_c1_4}) follows from \axR, (\ref{cfa_c1_6}) follows from
-%$\exists$, (\ref{cfa_c1_7}) follows from the definition of $M$ (as $pre(\sigma) = \exists \phi$) and
+%$\exists$, (\ref{cfa_c1_7}) follows from the definition of $M$ (as $pre(s) = \exists \phi$) and
 %(\ref{cfa_c1_8}) follows from \axAP.\\
 %\\
 %Now we suppose $c \in C$ and show $\vdash \sqex{M_T} \Box_c \bigwedge_{\gamma \in \Gamma} \gamma$.
@@ -406,15 +406,15 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v} \gamma\label{cfa_c2_5} \\
 %	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v}
 %	\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_6} \\
-%	& \vdash \bigwedge_{v \in \sigma R} \Box_c \sqex{M_v}\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_7} \\
-%	& \vdash pre(\sigma) \implies \bigwedge_{v \in \sigma R} \Box \sqex{M_v} \bigvee_{\gamma' \in
+%	& \vdash \bigwedge_{v \in s R} \Box_c \sqex{M_v}\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_7} \\
+%	& \vdash pre(s) \implies \bigwedge_{v \in s R} \Box \sqex{M_v} \bigvee_{\gamma' \in
 %		\Gamma^c} \gamma'\label{cfa_c2_8} \\
-%	& \vdash \sqex{M_\sigma} \Box_c \bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_9} 
+%	& \vdash \sqex{M_s} \Box_c \bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_9} 
 %\end{align}
 %(\ref{cfa_c2_1}) follows from our hypothesis, (\ref{cfa_c2_2}) follows from \axAU, and (\ref{cfa_c2_8})
 %	follows from \axAK.\\
 %\\
-%Finally, let $c \in C$. We then show $\vdash \sqex{M_\sigma}\bigwedge_{\gamma \in \Gamma^c}
+%Finally, let $c \in C$. We then show $\vdash \sqex{M_s}\bigwedge_{\gamma \in \Gamma^c}
 %\Diamond_c \gamma$.\\
 %\\
 %Suppose that $c \in B$.
@@ -449,12 +449,12 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
 %	\bigvee_{v \in T^\gamma} M^\gamma_{v} } \gamma\label{cfa_c3_4}\\
 %	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
-%	\bigvee_{v \in \sigma R} M^\gamma_{v} } \gamma\label{cfa_c3_5}\\
-%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \bigvee_{v \in \sigma R_c}
+%	\bigvee_{v \in s R} M^\gamma_{v} } \gamma\label{cfa_c3_5}\\
+%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \bigvee_{v \in s R_c}
 %	\Diamond_c \anex{ M^\gamma_{v} } \gamma)\label{cfa_c3_6}\\
-%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \anex{ M^\gamma_{\sigma}
+%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \anex{ M^\gamma_{s}
 %	} \Diamond_c \gamma)\label{cfa_c3_7}\\
-%	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{\sigma}] \Diamond_c \gamma)\label{cfa_c3_8}
+%	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{s}] \Diamond_c \gamma)\label{cfa_c3_8}
 %\end{align}
 %We have (\ref{cfa_c3_3}) follows from (\ref{cfa_c3_3b}) and (\ref{cfa_c3_2a}).
 %Then (\ref{cfa_c3_4}) follows from hypothesis, (\ref{cfa_c3_5}) from \axAU, (\ref{cfa_c3_6}) and
@@ -462,24 +462,24 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %\\
 %Together, we combine our result to show
 %\begin{align}
-%	& \vdash \sqex{M_\sigma} (\pi \land \bigwedge_{c \in C} \left( \sqex{M_\sigma} \Box_c \bigvee_{\gamma \in
+%	& \vdash \sqex{M_s} (\pi \land \bigwedge_{c \in C} \left( \sqex{M_s} \Box_c \bigvee_{\gamma \in
 %		\Gamma^c} \gamma \land
-%	\bigwedge_{\gamma \in \Gamma^c} \sqex{M_\sigma} \Diamond_c \gamma \right) \label{cfa_cc_1} \\
-%	& \vdash \sqex{M_\sigma}(\pi \land \bigwedge_{c \in C} \cover_c \Gamma_c) \label{cfa_cc_2}
+%	\bigwedge_{\gamma \in \Gamma^c} \sqex{M_s} \Diamond_c \gamma \right) \label{cfa_cc_1} \\
+%	& \vdash \sqex{M_s}(\pi \land \bigwedge_{c \in C} \cover_c \Gamma_c) \label{cfa_cc_2}
 %\end{align}
 %(\ref{cfa_cc_1}) follows from (\ref{cfa_c1_8}), (\ref{cfa_c2_7}) and (\ref{cfa_c3_8}) and
 %(\ref{cfa_cc_2}) follows from \axAC.\\
 %\\
 %Next, we show that $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 %\begin{align}
-%	& \vdash \anex{ M_\sigma } \phi \iff (pre(\sigma) \land [ M_\sigma ] \phi \label{cfa_cc1_1}\\
-%	& \vdash \anex{ M_\sigma } \phi \iff pre(\sigma) \label{cfa_cc1_2}\\
-%	& \vdash \anex{ M_\sigma } \phi \iff \exists \phi\label{cfa_cc1_3}
+%	& \vdash \anex{ M_s } \phi \iff (pre(s) \land [ M_s ] \phi \label{cfa_cc1_1}\\
+%	& \vdash \anex{ M_s } \phi \iff pre(s) \label{cfa_cc1_2}\\
+%	& \vdash \anex{ M_s } \phi \iff \exists \phi\label{cfa_cc1_3}
 %\end{align}
 %(\ref{cfa_cc1_1}) follows from a simple semantic argument, (\ref{cfa_cc1_2}) follows from
 %(\ref{cfa_cc_2}) and (\ref{cfa_cc1_3}) follows from the definition of $M$.\\
 %\\
-%Lastly, we show that $M_\sigma \in \eventClass_B$.
+%Lastly, we show that $M_s \in \eventClass_B$.
 %\end{proof}
 %
 %\begin{lemma} \label{disjunctionFormulaAchievementK}
@@ -498,7 +498,7 @@ Then $M = \bigsqcup_{t \in T} M^t$.
 %Firstly, that $M_T$ is a finite forest event model.
 %Secondly, that $\vdash \sqex{M_T}\phi$.
 %Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.
-%We assume, without loss of generality, that $\Sigma^\alpha$ and $\Sigma^\beta$ are disjoint.\\
+%We assume, without loss of generality, that $S^\alpha$ and $S^\beta$ are disjoint.\\
 %\\
 %To show that $M_T$ is a finite forest event model, we observe that $M_T$ is a disjoint union of two
 %finite forest event models who are both disjoint.
@@ -604,7 +604,7 @@ By Lemma \ref{disjForestIsForest}, $M'_{T'} \in \forestClass$.
 Furthermore, it is clear that each point $t \in T$ corresponds to some $t' \in T'$ such that $M_t
 \sim_0 M'_{t'}$.
 Lastly, since $M'_{T'}$ is the disjoint union of multiple finite tree event models, for $t, t' \in
-T'$ we have that $\Sigma_t$ and $\Sigma_{t'}$ are disjoint.
+T'$ we have that $S_t$ and $S_{t'}$ are disjoint.
 Thus our induction hypothesis holds for $n = 0$.\\
 \\
 Now, suppose that the induction hypothesis holds for $n = k-1$ and let $n = k$.
@@ -628,17 +628,17 @@ Lastly we show that $M'_{T'} \sim_k M_T$.\\
 \\
 To show that $M'_{T'} \in \forestClass$, the following four conditions must hold
 \begin{enumerate}
-	\item each point $t \in T'$ is the root of a finite tree event model $M^t_t = (\Sigma^t, R^t, pre^t, t)$ \label{forestConOne}
-  \item $\Sigma' = \bigcup_{t \in T'} \Sigma^t$ \label{forestConTwo}
+	\item each point $t \in T'$ is the root of a finite tree event model $M^t_t = (S^t, R^t, pre^t, t)$ \label{forestConOne}
+  \item $S' = \bigcup_{t \in T'} S^t$ \label{forestConTwo}
   \item for each $a \in A \implies R'_a = \bigcup_{t \in T'} R^t_a$ \label{forestConFive}
-	\item for each $\sigma \in \Sigma^t$, $pre'(\sigma) = pre^t(\sigma)$ \label{forestConThree}
-	\item if $s, t \in T'$ such that $s \neq t$, then $\Sigma^s$ and $\Sigma^t$ are disjoint
+	\item for each $s \in S^t$, $pre'(s) = pre^t(s)$ \label{forestConThree}
+	\item if $s, t \in T'$ such that $s \neq t$, then $S^s$ and $S^t$ are disjoint
 	\label{forestConFour}
 \end{enumerate}
 
 To show that \ref{forestConOne} holds, suppose $t \in T'$.
 We must show that $M'_t \in \treeClass$.
-We observe that $\Sigma'$, the set of action points is finite, since it is the finite union of a set
+We observe that $S'$, the set of action points is finite, since it is the finite union of a set
 of finite forest event models which in turn have finite sets of points. This follows from the
 definition of $M'_{T'}$.\\
 \\
@@ -646,9 +646,9 @@ Next, $t$ is the root of the tree and is not accessible from any other action po
 from the definition of $M'_{T'}$ being a disjoint union of multiple models, and relations only
 being added to $t R_a$ and none added to $R_a t$ for any $a \in A$.\\
 \\
-Suppose $s \in \Sigma' \setminus \{ t \}$.
+Suppose $s \in S' \setminus \{ t \}$.
 Then there is an agent $a \in A$ and $s' \in t R'_a$ such that $s$ is an action point in
-$\Sigma^{s'}_{s'}$, the set of action points for the subtree $M^{s'}_{s'}$ of $M'_t$ with its root at
+$S^{s'}_{s'}$, the set of action points for the subtree $M^{s'}_{s'}$ of $M'_t$ with its root at
 $s'$.\\
 \\
 Suppose $s = s'$.
@@ -656,20 +656,20 @@ Then the $R'_a s = \{ t \}$, and for any other $a'$, $R'_{a'} s = \varnothing$.\
 \\
 Suppose $s \neq s'$.
 Since $M^{s'}_{s'} \in \treeClass$ by the definition of a finite tree event model (Definition \ref{finTree}) we have that there is some
-$p \in \Sigma^{s'}$ and $a' \in A$ such that $p R'_{a'} s$.\\
+$p \in S^{s'}$ and $a' \in A$ such that $p R'_{a'} s$.\\
 \\
-Finally let $s \in \Sigma'_t$.
+Finally let $s \in S'_t$.
 We must show that there is a finite sequence of action points $t = s_0, s_1, s_2, \ldots, s_n = s
-\in \Sigma'_t$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $s_0 R_{a_1} s_1, \ldots, s_{n-1}
+\in S'_t$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $s_0 R_{a_1} s_1, \ldots, s_{n-1}
 R_{a_n} s_n$.
 If $s = t$ then there is a sequence of length 0 of such points.
 Suppose $s \neq t$.
-If so then there is some agent $a \in A$ and $s' \in t R'_a$ such that $s \in \Sigma^{s'}_{s'}$, the set
+If so then there is some agent $a \in A$ and $s' \in t R'_a$ such that $s \in S^{s'}_{s'}$, the set
 of action points for the subtree $M^{s'}_{s'}$ of $M'_t$ with its root at $s'$.\\
 \\
 Since $M^{s'}_{s'} \in \treeClass$ by the definition of a finite tree event model (Definition
 \ref{finTree}) we have that there is some sequence of action points $s' = s_0, s_1, s_2, \ldots, s_n =
-s \in \Sigma^{s'}_t$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $s_0 R'_{a_1} s_1, \ldots,
+s \in S^{s'}_t$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $s_0 R'_{a_1} s_1, \ldots,
 s_{n-1} R'_{a_n} s_n$.
 We already have shown that $R'_a s' = \{ t \}$.
 Then there is a sequence $t R'_a s', s_0 R'_{a_1} s_1, \ldots, s_{n-1} R'_{a_n} s_n$.
@@ -679,8 +679,8 @@ Conditions \ref{forestConTwo}, \ref{forestConFive} and \ref{forestConThree} hold
 of $\to$ (Definition \ref{considers}).
 What remains is to show that \ref{forestConFour} holds.
 Suppose that $s, t \in T'$ and $s \neq t$.
-From hypothesis $\Sigma^s_s$ and $\Sigma^t_t$ are disjoint trees.
-From the definition of $\to$ (Definition \ref{considers}) each of $\Sigma^s_s$ and $\Sigma^t_t$
+From hypothesis $S^s_s$ and $S^t_t$ are disjoint trees.
+From the definition of $\to$ (Definition \ref{considers}) each of $S^s_s$ and $S^t_t$
 remain disjoint.\\
 \\
 Next, we show that if $t \in T$ there is some $s \in T'$ and some subtree of $M'_{T'}$, $M^{s}_{s}$
@@ -767,11 +767,11 @@ We also have that $\sqex{M^2} \phi$ and $\anex{M^2} \phi \iff \exists_B \phi$.
 			\node[vertex] (4) [right of=3] {$\eta_{n}$};
 			\path[edge]
 						(1) edge node {$A$} (2)
-						(3) edge node {$A$} (4)
-      \draw[loosely dotted] (2) -- (3)
+						(3) edge node {$A$} (4);
+      \draw[loosely dotted] (2) -- (3);
 	\end{tikzpicture}
 	\caption{$M^1$, the model we would have generated using Corollary
-    \ref{approximatingBRestricted}}. Here, $pre^1(\eta_k) = p$ for every $k \leq n$.}
+    \ref{approximatingBRestricted}. Here, $pre^1(\eta_k) = p$ for every $k \leq n$.}
 	\label{beforefigure}
 	\end{subfigure}
 	~
