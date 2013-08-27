@@ -22,57 +22,68 @@ information.
 	well-formed	sentence in $L$ to a subset of $\Sigma$.
 	We say $V$ is a valuation function on $F$.\\
 	\\
-	Then $M = (F, V) = (\Sigma, R, V)$ is a Kripke
+	Then $\krMo = (F, V) = (\Sigma, R, V)$ is a Kripke
 	model.
 \end{defn}
-A multi-pointed model is a model $M = (\Sigma, R, V)$ with a set of designated states, $T$.
+A multi-pointed model is a model $\krMo = (\Sigma, R, V)$ with a set of designated states, $T$.
 When $T = \{s\}$ is a single state, we say that the model is a pointed model and write $M_s$.
 We say $\kripkeClass$ is the class of all Kripke models.
 
 \begin{defn} \label{evModel}
 	Let $L$ be a logical language.
 	Let $F = (\Sigma, R)$ be a frame, and $A$ a set of agents.
-	An event model $M = (\Sigma, R, pre)$ with preconditions defined on $\mathcal{L}$ consists of
+	An event model $\aMod{\evMo = (\Sigma, R, pre)}$ with preconditions defined on $\mathcal{L}$ consists of
 	\begin{itemize}
-		\item a domain $\Sigma$ of possible atomic action points
-		\item an accessibility function, $R: A \to \mathcal{P}(S \times S)$, a function from agents to
+		\item a domain $\aMod{\Sigma}$ of possible atomic action points
+		\item an accessibility function, $\aMod{R: A \to \mathcal{P}(\Sigma \times
+        \Sigma)}$, a function from agents to
 		accessibility relations on $\Sigma$.\\
-		We refer to $R(a)$ as $R_a$.
-		We will refer to all accessible action points from $s$ as $s R_a$, and all action points that
-		can access $t$ as $R_a t$.
-		Furthermore, we say $s R_a t$ means $t$ is $a$-accessible from $s$.
-		\item a precondition function, $pre: \Sigma \to \mathcal{L}$ which maps an action point to a
+		We refer to $\aMod{R(a)}$ as $\aMod{R_a}$.
+		We will refer to all accessible action points from $\aMod{s}$ as
+    $\aMod{s R_a}$, and all action points that
+		can access $\aMod{t}$ as $\aMod{R_a t}$.
+		Furthermore, we say $\aMod{s R_a t}$ means $\aMod{t}$ is
+    $\aMod{a}$-accessible from $\aMod{s}$.
+		\item a precondition function, $\aMod{pre: \Sigma} \to \mathcal{L}$ which maps an action point to a
 		sentence in $\mathcal{L}$
 	\end{itemize}
 \end{defn}
 
+We adopt the convention that an event model is written using sans-serif fonts.
 Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
 models.
-We adopt the convention for pointed event models that $M^1 = \{\Sigma^1, R^1,
-pre^1, T^1\}$ and $M^\alpha = \{\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha\}$.
+We adopt the convention for pointed event models that $\aMod{\evMo^1 = (\Sigma^1, R^1,
+pre^1, T^1)}$ and $\aMod{\evMo^\alpha =
+  (\Sigma^\alpha,R^\alpha,pre^\alpha,T^\alpha)}$.
 Furthermore, in literature both of the terms event models and action models are used to describe
 the same concept, and we use them interchangeably throughout this paper to refer to event models.
 
 \begin{defn} \label{evModelEx}
-Let $M = (\Sigma, R, V) \in L$. We define event model execution for an event model $N = (\Sigma^N,
-		R^N, pre^N) \in
+Let $\kripkeClass = (\Sigma, R, V) \in \kripkeClass$. We define event model
+execution for an event model $\aMod{\evMo = (\Sigma,
+		R, pre)} \in
 \eventClass$ as follows.
-The result of executing $N$ on the model $M$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
+The result of executing $\evMo$ on the model $\krMo$ is denoted by $M \otimes N = M' = (\Sigma', R', V')$ where
 \begin{itemize}
-	\item $\Sigma' = \{(s,u) | s \in \Sigma, u \in \Sigma^N \text{ such that } M_s \models pre^N(u)\}$
-	\item $(s, u) R_a' (t, v) \iff s R_a t \land u R_a^N v$
+	\item $\Sigma' = \{(s,\aMod{u}) | s \in \Sigma, \aMod{u \in
+    \Sigma} \text{ such that } M_s \models \aMod{pre(u)}\}$
+	\item $(s, u) R_a' (t, v) \iff s R_a t \land \aMod{u R_a v}$
 	\item $V'((s,u)) = V(s)$
 \end{itemize}
-We define pointed event model execution as $M_s \otimes N_u = (M \otimes N)_{(s, u)}$.
-This pointed model execution is only sensible if and only if $M_s \models pre^N(u)$ and thus $(s,u)
+We define pointed event model execution as $\krMo_s \otimes
+\aMod{\evMo_u}
+= (\krMo \otimes \aMod{\evMo})_{(s, \aMod{u})}$.
+This pointed model execution is only sensible if and only if $M_s \models
+\aMod{pre(u)}$ and thus $(s,\aMod{u})
 	\in \Sigma'$.
 \end{defn}
 
 We say $\eventClass$ is the class of all event models.
 
 \begin{defn} \label{pub}
-Let $M = (\{ \sigma \}, R, \{ (\sigma, \phi)\})$ be an event model.
-Let $\sigma$ be a single action point and $R_a = \{(\sigma, \sigma)\}$ for each $a \in A$ and $\phi
+Let $\aMod{\evMo = (\{ \sigma \}, R, \{ (\sigma, \phi)\}})$ be an event model.
+Let $\aMod{\sigma}$ be a single action point and $\aMod{R_a =
+  \{(\sigma, \sigma)\}}$ for each $a \in A$ and $\phi
 \in \mathcal{L}$.
 Then $M$ is a public announcement of $\phi$.
 We say $\publicAnnClass$ is the class of all action models that
@@ -80,10 +91,10 @@ are public announcements of a sentence in $L$.
 \end{defn}
 
 \begin{defn} \label{insanity}
-Let $M = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\}) $ be an action model
-where $\phi \in L$ and $\sigma$ is an action point.
-$M$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
-$\insaneClass = \{M | \phi \in L\}$ is the class of all such action models.
+Let $\aMod{\evMo = (\{ \sigma \}, \varnothing, \{(\sigma, \phi)\})}$ be an action model
+where $\phi \in L$ and $\aMod{\sigma}$ is an action point.
+$\aMod{\evMo}$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
+$\insaneClass = \{\aMod{\evMo} | \phi \in L\}$ is the class of all such action models.
 \end{defn}
 We call this class of models ``insanity models".
 This is because after the execution of an insanity model, all agents have renounced every belief
@@ -94,7 +105,7 @@ Allowing them to believe such contradictions means that they are effectively ins
 \subsection{Bisimilarity, simulation and refinement}
 
 \begin{defn} \label{bisimKripke}
-	Let $M$, $M'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
+	Let $\krMo$, $\krMo'$ be Kripke models and $\sim \subseteq \Sigma \times \Sigma'$ be a non-empty binary
 	relation such that
 	\begin{itemize}
 		\item {\bf atoms}: for each $s \in \Sigma$ and $s' \in \Sigma'$ such that $s \sim s'$, $V(s) = V'(s')$
@@ -117,10 +128,10 @@ This is a well-known result.
 See \cite{blackburn2002modal} by de Rijke, Venema and Blackburn for further reading..
 
 \begin{defn} \label{nBisimKripke}
-Let $M_s, M'_{s'} \in \kripkeClass$.
+Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$.
 We define $n$-bisimilarity inductively as follows.
-We say that $M_s$ is $0$-bisimilar to $M'_{s'}$ if and only if $V(s) = V'(s)$.
-Then for $n > 0$ we say that $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if for every $a \in A$
+We say that $\krMo_s$ is $0$-bisimilar to $\krMo'_{s'}$ if and only if $V(s) = V'(s)$.
+Then for $n > 0$ we say that $\krMo_s$ is $n$-bisimilar to $\krMo'_{s'}$ if and only if for every $a \in A$
 \begin{itemize}
 	\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
 	\item {\bf $n$-front-$a$}: for each $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
@@ -128,20 +139,24 @@ Then for $n > 0$ we say that $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if 
 	\item {\bf $n$-back-$a$}: for each $t' \in s' R'_a$ there is a $t \in s R_a$ such that $M_t$ is
 	$n-1$-bisimilar to $M'_{t'}$
 \end{itemize}
-We denote $M_s$ and $M'_{s'}$ being $n$-bisimilar by $M_s \sim_n M'_{s'}$.
+We denote $\krMo_s$ and $\krMo'_{s'}$ being $n$-bisimilar by $\krMo_s \sim_n
+\krMo'_{s'}$.
 \end{defn}
-For a multi-pointed Kripke model $M_T$ and $M'_{T'}$, we have that $M_T \sim_n
-M'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
-such that $M_t \sim_n M'_{t'}$ and vice versa.
+For a multi-pointed Kripke model $\krMo_T$ and $\krMo'_{T'}$, we have that
+$\krMo_T \sim_n
+\krMo'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
+such that $\krMo_t \sim_n \krMo'_{t'}$ and vice versa.
 
 \begin{defn} \label{refinement}
-Let $B \subseteq A$ and $M$ and $M'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
+Let $B \subseteq A$ and $\krMo$ and $\krMo'$ be Kripke models. A non-empty relation $\lesssim \subseteq \Sigma
 \times \Sigma'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
 every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
 \end{defn}
-If $(\sigma, \sigma') \in \lesssim$ then we say $M'_{\sigma'}$ is a $B$-simulation of $M_\sigma$ and
-$M_\sigma$ a $B$-refinement of $M'_{\sigma'}$.
-We write $M_{\sigma} \lesssim M'_{\sigma'}$ or equivalently $M'_{\sigma'} \gtrsim M_{\sigma}$.
+If $(\sigma, \sigma') \in \lesssim$ then we say $\krMo'_{\sigma'}$ is a
+$B$-simulation of $\krMo_\sigma$ and
+$\krMo_\sigma$ a $B$-refinement of $\krMo'_{\sigma'}$.
+We write $\krMo_{\sigma} \lesssim \krMo'_{\sigma'}$ or equivalently
+$\krMo'_{\sigma'} \gtrsim \krMo_{\sigma}$.
 
 \begin{lemma} \label{refinementPreorder}
 The relation $\lesssim_B$ is a preorder.
@@ -149,26 +164,28 @@ The relation $\lesssim_B$ is a preorder.
 This is shown by van Ditsmarch and French in \cite{van2009simulation}.
 
 \begin{lemma} \label{bisimilarIsRefinement}
-Let $M_\sigma, M'_{\sigma'} \in \kripkeClass$ and $B \subseteq A$.
-Then $M_\sigma \sim M'_{\sigma'} \implies M_\sigma \lesssim_B M'_{\sigma'}$.
+Let $\krMo_\sigma, \krMo'_{\sigma'} \in \kripkeClass$ and $B \subseteq A$.
+Then $\krMo_\sigma \sim \krMo'_{\sigma'} \implies \krMo_\sigma \lesssim_B \krMo'_{\sigma'}$.
 \end{lemma}
 
 This follows trivially from Definition \ref{refinement} and Definition \ref{bisimKripke}.
 
 \begin{defn} \label{brestrict}
-Let $B \subseteq A$ and let $N \in \eventClass$. Then $N$ is a $B$-restricted event model if and
-only if for every $u \in \Sigma$ and every $M_s \in \kripkeClass$ such that $M_s \models pre(u)$ we
-have $M_s \otimes N_u \gtrsim_B M_s$.
+Let $B \subseteq A$ and let $\aMod{\evMo} \in \eventClass$. Then $\aMod{\evMo}$ is a $B$-restricted event model if and
+only if for every $\aMod{u \in \Sigma}$ and every $\krMo_s \in \kripkeClass$
+such that $\krMo_s \models pre(u)$ we
+have $\krMo_s \otimes \evMo_u \gtrsim_B \krMo_s$.
 We say the class of $B$-restricted action models is $\eventClass_B$.
 \end{defn}
-%\FIXME: citation here
+
+\FIXME: citation here
 
 \subsection{Language semantics}
 We now discuss the semantics and syntax of several different languages, culminating with language of
 arbitrary action model logic which will rely upon each of the languages we discuss.
 
 \begin{defn} \label{propLogic}
-Let $M = (\Sigma, R, V) \in \kripkeClass$.
+Let $\krMo = (\Sigma, R, V) \in \kripkeClass$.
 The language of propositional logic $\langProp$ is inductively defined by
 \[
 	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } (\phi \land \phi)
@@ -177,9 +194,9 @@ The language of propositional logic $\langProp$ is inductively defined by
 The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
 
 \begin{itemize}
-	\item $M_s \models p$ iff $p \in V(s)$
-	\item $M_s \models \neg \phi$ iff $M_s \not \models \phi$
-	\item $M_s \models \phi \land \psi$ iff $M_s \models \phi$ and $M_s \models \psi$
+	\item $\krMo_s \models p$ iff $p \in V(s)$
+	\item $\krMo_s \models \neg \phi$ iff $\krMo_s \not \models \phi$
+	\item $\krMo_s \models \phi \land \psi$ iff $\krMo_s \models \phi$ and $\krMo_s \models \psi$
 \end{itemize}
 
 for $s \in \Sigma$.
@@ -190,7 +207,7 @@ We will adopt the standard abbreviations for propositional logic, such as $\phi 
 These are defined in \cite{blackburn2002modal}.
 
 \begin{defn} \label{modalLogic}
-Let $M = (\Sigma, R, V) \in \kripkeClass$.
+Let $\krMoM = (\Sigma, R, V) \in \kripkeClass$.
 The language of modal logic $\lang$ is $\langProp$ with the additional inductive case
 \[
 	 \Box_a \phi
@@ -198,7 +215,7 @@ The language of modal logic $\lang$ is $\langProp$ with the additional inductive
 The interpretation of $\phi \in \lang$ in the logic $K$ is the same as $\langProp$, with the
 additional inductive case
 \[
-	M_s \models \Box_a \phi \text{ iff for every }t \in s R_a: M_t \models \phi
+	\krMo_s \models \Box_a \phi \text{ iff for every }t \in s R_a: \krMo_t \models \phi
 \]
 for $a \in A$ and $s \in \Sigma$.
 \end{defn}
@@ -209,14 +226,16 @@ In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/beli
 its dual operator, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
 We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigwedge_{b \in B}
 \Box_b \phi$.
-In the case where $B = A$ we write $M_s \models \Box \phi$.\\
+In the case where $B = A$ we write $\krMo_s \models \Box \phi$.\\
 \\
-We say that a formula $\phi$ is satisfied by a pointed model Kripke model $M_s \in \kripkeClass$ iff
-$M_s \models \phi$.
-We say that $\phi$ is satisfied by a model $M = (\Sigma, R, V)$ (denoted by $M \models \phi$) iff
-for all $\sigma \in \Sigma$, $M_\sigma \models \phi$.
-Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for every model $M \in
-\kripkeClass$, $M \models \phi$.\\
+We say that a formula $\phi$ is satisfied by a pointed model Kripke model $\krMo_s \in \kripkeClass$ iff
+$\krMo_s \models \phi$.
+We say that $\phi$ is satisfied by a model $\krMo = (\Sigma, R, V)$ (denoted by
+    $\krMo \models \phi$) iff
+for all $\sigma \in \Sigma$, $\krMo_\sigma \models \phi$.
+Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for
+every model $\krMo \in
+\kripkeClass$, $\krMo \models \phi$.\\
 \\
 %\FIXME: Add citation
 In addition to $\Box_a$ we introduce the cover operator $\cover_a$, following the definition used in
@@ -242,11 +261,11 @@ We define modal depth as follows
 \begin{defn} \label{modalDepth}
 We define the modal depth of a formula $\phi \in \lang$ ($MD(\phi)$) as follows
 \begin{itemize}
-	\item $MD(p) = 0$ for atomic formula $p$
-	\item $MD(\top) = MD(\bot)$
-	\item $MD(\neg \phi) = MD(\phi)$
-	\item $MD(\phi \land \psi) = MAX(MD(\phi), MD(\psi))$
-	\item $MD(\Box_a \phi) = 1 + MD(\phi)$
+	\item $\mDep(p) = 0$ for atomic formula $p$
+	\item $\mDep(\top) = \mDep(\bot)$
+	\item $\mDep(\neg \phi) = \mDep(\phi)$
+	\item $\mDep(\phi \land \psi) = MAX(\mDep(\phi), \mDep(\psi))$
+	\item $\mDep(\Box_a \phi) = 1 + \mDep(\phi)$
 \end{itemize}
 \end{defn}
 
@@ -255,39 +274,45 @@ We begin by introducing action model logic, as first defined by Baltag, Moss and
 \cite{baltag1998lpa}.
 
 \begin{defn} \label{actModelLogic}
-Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $N = (\Sigma^N, R^N, pre^N) \in
+Let $\krMo = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model and $\aMod{\evMo
+  = (\Sigma, R, pre)} \in
 \eventClass$ a multi-pointed event model.
 The interpretation of $\phi \in \langActEx$ is the same as its interpretation in $\lang$
 (\ref{modalLogic}), but with the additional
 inductive cases
 \begin{itemize}
-	\item $M_s \models \sqex{N_\sigma} \phi$ iff $M_s \models \phi \implies M_s \otimes N_\sigma \models
+	\item $\krMo_s \models \sqex{\aMod{\evMo_\sigma}} \phi$ iff $\krMo_s \models
+  \phi \implies \krMo_s \otimes \aMod{\evMo_\sigma} \models
 	\phi$ (see Definition \ref{evModelEx})
-	\item $M_s \models \sqex{N_T} \phi$ iff for every $\sigma \in T$, $M_s \models \sqex{N_\sigma} \phi$ 
+	\item $\krMo_s \models \sqex{\aMod{\evMo_T}} \phi$ iff for every $\aMod{\sigma
+    \in T}$, $\krMo_s \models \sqex{\aMod{\evMo_\sigma}} \phi$ 
 \end{itemize}
 \end{defn}
-$\sqex{N_\sigma} \phi$ can be read as ``the successful execution of the informative update modelled by
-$N_\sigma$ will result in $\phi$ being true".
-Similarly, $\sqex{N_T} \phi$ can be read as ``the successful execution of the informative update
-modelled by $N_T$ will result in $\phi$ being true".
-If $T = \Sigma^N$ then we write $M_s \models \sqex{N} \phi$.\\
+$\sqex{\aMod{\evMo_\sigma}} \phi$ can be read as ``the successful execution of the informative update modelled by
+$\aMod{\evMo_\sigma}$ will result in $\phi$ being true".
+Similarly, $\sqex{\aMod{\evMo_T}} \phi$ can be read as ``the successful execution of the informative update
+modelled by $\aMod{\evMo_T}$ will result in $\phi$ being true".
+If $\aMod{T = \Sigma}$ then we write $M_s \models \sqex{\aMod{\evMo}} \phi$.\\
 \\
-We adopt the standard convention for the dual operators, with $\anex{ N_\sigma } \phi$ being
-read as ``the successful execution of the informative update modelled by $N_\sigma$ may result in
+We adopt the standard convention for the dual operators, with $\anex{
+  \aMod{\evMo_\sigma} } \phi$ being
+read as ``the successful execution of the informative update modelled by
+$\aMod{\evMo_\sigma}$ may result in
 $\phi$ being true".
-Again, $\anex{ N_T } \phi$ can be read as ``the successful execution of the informative
-update modelled by $N_T$ may result in $\phi$ being true".\\
+Again, $\anex{ \aMod{\evMo_T} } \phi$ can be read as ``the successful execution of the informative
+update modelled by $\aMod{\evMo_T}$ may result in $\phi$ being true".\\
 \\
 We also introduce refinement modal logic, as first introduced by van Ditmarsch and French in
 \cite{van2009simulation}.
 
 \begin{defn} \label{refineLogic}
-Let $M = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model.
+Let $\krMo = (\Sigma, R, V) \in \kripkeClass$ be a Kripke model.
 The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the same as $\lang$
 (\ref{modalLogic}), but with the additional inductive case
 \[
-	M_s \models \forall_B \phi \text{ iff } \forall M'_{s'} \in \eventClass \text{ such that } M'_{s'}
-	\lesssim_B M_s : M'_{s'} \models \phi
+	\krMo_s \models \forall_B \phi \text{ iff } \forall \krMo'_{s'} \in
+  \eventClass \text{ such that } \krMo'_{s'}
+	\lesssim_B \krMo_s : \krMo'_{s'} \models \phi
 \]
 \end{defn}
 We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold".
@@ -303,7 +328,7 @@ We inductively define $\langArbAct$ by
 	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } \phi \land \phi \text{ } | \text{ } \Box_a \phi \text{ } |
   \text{ }\sqex{N_T} \phi \text{ } | \text{ } \forall_B \phi
 \]
-for $N_T \in \eventClass$ and $B \subseteq A$.
+for $\aMod{\evMo_T} \in \eventClass$ and $B \subseteq A$.
 \end{defn}
 $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{N_T}$.
 
@@ -314,18 +339,20 @@ $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\
 We provide other results that we will use in the main technical findings of this paper.
 
 \begin{defn} \label{bisimEvent}
-	Let $M, M' \in \eventClass$ with preconditions defined on $\langArbAct$.
-	A non-empty relation $\sim$ on $M \times M'$ is a bisimulation if and only if for every $a \in A$
-	and $(s, s') \in \sim$, the following three conditions hold:
+	Let $\aMod{\evMo, \evMo'} \in \eventClass$ with preconditions defined on $\langArbAct$.
+	A non-empty relation $\sim$ on $\aMod{\evMo} \times \aMod{\evMo'}$ is a bisimulation if and only if for every $a \in A$
+	and $\aMod{(s, s') \in \sim}$, the following three conditions hold:
 	\begin{itemize}
-		\item {\bf pre}: $pre(s) \iff pre'(s')$
-		\item {\bf forth-$a$}: for every $v \in s R_a$ there is a $v' \in s' R'_a$ such that $(v,v') \in
-		\sim$
-		\item {\bf back-$a$}: for every $v' \in s' R'_a$ there is a $v \in s R_a$ such that $(v,v') \in
+		\item {\bf pre}: $\aMod{pre(s)} \iff \aMod{pre'(s')}$
+		\item {\bf forth-$a$}: for every $\aMod{v \in s R_a}$ there is a $\aMod{v'
+      \in s' R'_a}$ such that $\aMod{(v,v')} \in \sim$
+		\item {\bf back-$a$}: for every $\aMod{v' \in s' R'_a}$ there is a $\aMod{v
+      \in s R_a}$ such that $\aMod{(v,v')} \in
 		\sim$
 	\end{itemize}
-	If $(s, s') \in \sim$ we write $M_s \sim M'_{s'}$ to denote that $M_s$ and $M'_{s'}$ are bisimilar and
-	that there is a bisimulation between $M_s$ and $M'_{s'}$.
+	If $\aMod{(s, s') \in \sim}$ we write $\aMod{\evMo_s \sim '\evMo_{s'}}$ to
+  denote that $\evMo_s$ and $\evMo'_{s'}$ are bisimilar and
+	that there is a bisimulation between $\evMo_s$ and $\evMo'_{s'}$.
 \end{defn}
 
 \begin{lemma} \label{eventModelsRefine}

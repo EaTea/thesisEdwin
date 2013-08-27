@@ -13,9 +13,9 @@
 \usepackage{tikz}
 \usepackage{comment}
 \usepackage[nottoc]{tocbibind}
-%\usepackage[square]{natbib}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{sansmath}
 
 \usetikzlibrary{arrows,shapes}
 
@@ -65,12 +65,24 @@
 \newcommand{\axRDist}{{\bf RDist}}
 \newcommand{\axNecR}{{\bf NecR}}
 
+\newcommand{\krMo}{M}
+\newcommand{\evMo}{N}
+\newcommand{\actMod}[1]{
+  \ensuremath{
+    \begin{sansmath}
+    \mathrm{#1}
+    \end{sansmath}
+  }
+}
+
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
 \newcommand{\insaneClass}{\eventClass_{IN}}
 \newcommand{\publicAnnClass}{\eventClass_{PA}}
 \newcommand{\treeClass}{\eventClass_{TR}}
 \newcommand{\forestClass}{\eventClass_{FOR}}
+
+\newcommand{\mDep}{ {\bf MD}}
 
 \newcommand{\FIXME}{{\bf FIXME}}
 % Drawings of frames
