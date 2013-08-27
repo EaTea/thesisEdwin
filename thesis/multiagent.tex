@@ -4,7 +4,6 @@ In this chapter, we examine an algebra for constructing event models that will, 
 epistemic goals or cause a model to crash in the process.
 We examine this goal achievement for a subset of agents $B \subseteq A$.\\
 \\
-%\FIXME: citations here
 In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine whether an
 finite epistemic goal can be achieved.
 Furthermore, if it is achievable Hales constructs event models that will realise
@@ -112,9 +111,7 @@ $M^1 \to_B M^2$ indicates that if $M^1$ was executed, an agent in $B$ considers 
 possible update.
 In the case that $B = A$, we will denote this by $\to$, and if $B = \{a\}$, then
 we will write $\to_a$.
-We also present the disjoint union operator defined by \FIXME.
-
-%\FIXME: who introduced this? (Baltag and Moss)
+We also present the disjoint union operator defined by Baltag and Moss in \cite{baltag2005programs}.
 
 \begin{defn} \label{disjoint}
 Let $M^1$ and $M^2$ be multi-pointed event models, and without loss of generality let $M^1$ and
@@ -129,8 +126,7 @@ We define $M = M^1 \sqcup M^2$ as
 \end{defn}
 This is the disjoint union of the two event models, which we can refer to as the agents in $A$
 knowing that one of the two models has occurred.
-Baltag and Moss call this a non-deterministic choice.
-%\FIXME: cite
+Baltag and Moss call this a non-deterministic choice \cite{baltag2005programs}.
 
 \begin{lemma} \label{disjForestIsForest}
 Let $M^1_{T^1}, M^2_{T^2} \in \forestClass$ be two disjoint forest event models.
@@ -165,7 +161,7 @@ Finally, if $t, t' \in T$, each $M^t$ is disjoint from any other $M^{t'}$ since
 \end{itemize}
 \end{proof}
 
-A final miscellaneous result shown by Hales in \FIXME, which we employ later, is reproduced here.
+A final miscellaneous result shown by Hales in \cite{hales13synthesis}, which we employ later, is reproduced here.
 
 \begin{lemma} \label{brestrictDisjoint}
 Suppose $\{ M^i_{T^i} = (\Sigma^i, R^i, pre^i, T^i) | i \in [1, n] \}$ is a finite set of $n$ event
@@ -721,7 +717,7 @@ $\vdash \anex{M_T} \phi \iff \exists_B \phi$ is valid.
 Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
 By Lemma \ref{allInCoverNormal} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
 Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
-From \FIXME, Hales synthesises an event model $M'_{T'}$ such that $\sqex{M_T} \phi$ and $\anex{M_T}
+From \cite{hales13synthesis}, Hales synthesises an event model $M'_{T'}$ such that $\sqex{M_T} \phi$ and $\anex{M_T}
 \phi \iff \exists_B \phi$.\\
 \\
 We construct $M_T \in \forestClass$ such that $M_T \sim_n M'_{T'}$.
@@ -746,6 +742,10 @@ regard to the preceding Kripke model.\\
 \\
 A weakness of our approach is that we tie our realisation of a postcondition to a specific model.
 Whether our model is the smallest model, or the model of minimal change is another matter entirely.
+Thus, we can guarantee that a postcondition is realised after our model
+execution but we cannot say much about the size or after-effects of the
+execution of our model.\\
+\\
 For example, suppose $\phi$ is a formula that we want to achieve for a group of agents $B \subseteq
 A$.
 Let $p \in \langProp$ and let $\phi = p \land \Box p \land \Box^2 p \land \ldots \Box^n p$.
@@ -758,7 +758,7 @@ We also have that $\sqex{M^2} \phi$ and $\anex{M^2} \phi \iff \exists_B \phi$.
 	\centering
 	\begin{subfigure}[b]{.45\textwidth}
 	\centering
-	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
 				thick]
 
 			\node[vertex] (1) {$\eta_0$};
@@ -767,11 +767,11 @@ We also have that $\sqex{M^2} \phi$ and $\anex{M^2} \phi \iff \exists_B \phi$.
 			\node[vertex] (4) [right of=3] {$\eta_{n}$};
 			\path[edge]
 						(1) edge node {$A$} (2)
-						$\ldots$
-						(2) edge node {$A$} (3)
 						(3) edge node {$A$} (4)
+      \draw[loosely dotted] (2) -- (3)
 	\end{tikzpicture}
-	\caption{$M^1$, the model we would have generated using Corollary \ref{approximatingBRestricted}}.}
+	\caption{$M^1$, the model we would have generated using Corollary
+    \ref{approximatingBRestricted}}. Here, $pre^1(\eta_k) = p$ for every $k \leq n$.}
 	\label{beforefigure}
 	\end{subfigure}
 	~
@@ -787,7 +787,7 @@ We also have that $\sqex{M^2} \phi$ and $\anex{M^2} \phi \iff \exists_B \phi$.
 	\caption{$M^2$, the public announcement of $p$ where $pre(\eta) = p$.}
 	\label{publicAnnounce}
 	\end{subfigure}
-	\caption{We compare models $M^1$ and $M^2$. It is clear to see that although $M^1$ and $M^2$
+	\caption{We compare models $M^1$ and $M^2$. Although $M^1$ and $M^2$
 		fulfill the postcondition of $\phi$ after their execution, $M^2$ is much smaller than $M^1$.}
 	\label{comparePublicAnnounces}
 \end{figure}
