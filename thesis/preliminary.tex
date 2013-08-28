@@ -259,7 +259,7 @@ $\cover$ is the basis for the axiomatisation of refinement modal logic.\\
 Finally, we discuss modal depth.
 We define modal depth as follows
 \begin{defn} \label{modalDepth}
-We define the modal depth of a formula $\phi \in \lang$ ($MD(\phi)$) as follows
+We define the modal depth of a formula $\phi \in \lang$ ($\mDep(\phi)$) as follows
 \begin{itemize}
 	\item $\mDep(p) = 0$ for atomic formula $p$
 	\item $\mDep(\top) = \mDep(\bot)$
@@ -330,9 +330,10 @@ We inductively define $\langArbAct$ by
 \]
 for $\aMod{\evMo_T} \in \eventClass$ and $B \subseteq A$.
 \end{defn}
-$\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{N_T}$.
-
-%\FIXME: Add in James' alternate definition for \forall
+$\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{\evMo_\evT}$.
+\\
+\\
+\FIXME: Add in James' alternate definition for $\forall$
 
 \subsubsection{Miscellaneous Semantic Results}
 We provide other results that we will use in the main technical findings of this paper.
@@ -439,59 +440,66 @@ $\Diamond_a$ (Lemma \ref{modalLogic}).
 (\ref{nBisKriMod2}) follows from the definition of event model execution (Definition
 		\ref{evModelEx}).\\
 \\
-From our hypothesis, given that $pre(t) \leq m$ we have that $M_s \sim_{2n} M'_{s'} \implies (M_s \models pre(t) \iff M'_{s'} \models
-pre(t))$.
-But by the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}), $M_u$ is
-$2n-1$-bisimilar to some point $M'_{u'}$.
-If $MD(pre^N(v)) \leq n-1$ we have by our induction hypothesis that $M_u \models pre(v) \iff M'_{u'}
-\models pre(v)$.\\
+From our hypothesis, given that $\aMod{pre(t)} \leq m$ we have that $\krMo_s \sim_{2n} \krMo'_{s'}
+\implies (\krMo_s \models \aMod{pre(t)} \iff \krMo'_{s'} \models
+\aMod{pre(t)})$.
+But by the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}), $\krMo_u$ is
+$2n-1$-bisimilar to some point $\krMo'_{u'}$.
+If $\mDep(\aMod{pre(v)}) \leq n-1$ we have by our induction hypothesis that $\krMo_u \models
+\aMod{pre(v)} \iff \krMo'_{u'}
+\models \aMod{pre(v)}$.\\
 \\
-Then by the induction hypothesis, $M_u \sim_{2n} M'_{u'} \land MD(\psi) \leq k \implies
-M^2_{(u',v)}  \models \psi$.
-By the semantics of modal logic (Lemma \ref{modalLogic}) we have that $M^2_{(s',t)} \models
-\Diamond_a \psi \implies M^2_{(s',t)} \models \phi$.
+Then by the induction hypothesis, $\krMo_u \sim_{2n} \krMo'_{u'} \land \mDep(\psi) \leq k \implies
+\krMo^2_{(u',\aMod{v})}  \models \psi$.
+By the semantics of modal logic (Lemma \ref{modalLogic}) we have that $\krMo^2_{(s',\aMod{t})} \models
+\Diamond_a \psi \implies \krMo^2_{(s',\aMod{t})} \models \phi$.
 \end{proof}
 
 \begin{defn} \label{nBisimEvent}
-	Let $M_s, M'_{s'} \in \eventClass$ with preconditions defined on $\langArbAct$.
+	Let $\aMod{\evMo_s, \evMo'_{s'}} \in \eventClass$ with preconditions defined on $\langArbAct$.
 	We inductively define $n$-bisimilarity for event models.
-	We say $M_s$ is $0$-bisimilar to $M'_{s'}$ if and only if $pre(s) \iff pre'(s')$.
-	Then for $n>0$ $M_s$ is $n$-bisimilar to $M'_{s'}$ if and only if each of the following hold
+	We say $\aMod{\evMo_s}$ is $0$-bisimilar to $\aMod{\evMo'_{s'}}$ if and only if $\aMod{pre(s) \iff
+		pre'(s')}$.
+	Then for $n > 0$ $\aMod{\evMo_s}$ is $n$-bisimilar to $\aMod{\evMo'_{s'}}$ if and only if each of the following hold
 	\begin{itemize}
-		\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
-		\item {\bf $n$-forth-$a$} for every $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
-		$n-1$-bisimilar to $M'_{t'}$
-		\item {\bf $n$-back-$a$} for every $t' \in s' R'_a$, there is a $t \in s R_a$ such that $M_t$ is
-		$n-1$-bisimilar to $M'_{t'}$
+		\item $\aMod{\evMo_s}$ is $n-1$-bisimilar to $\aMod{\evMo'_{s'}}$
+		\item {\bf $n$-forth-$a$} for every $\aMod{t \in s R_a}$, there is a $\aMod{t' \in s' R'_a}$
+		such that $\aMod{\evMo_t}$ is
+		$n-1$-bisimilar to $\aMod{\evMo'_{t'}}$
+		\item {\bf $n$-back-$a$} for every $\aMod{t' \in s' R'_a}$, there is a $\aMod{t \in s R_a}$ such
+		that $\aMod{\evMo_t}$ is
+		$n-1$-bisimilar to $\aMod{\evMo'_{t'}}$
 	\end{itemize}
-	We write $M_s \sim_n M'_{s'}$ to denote that $M_s$ is $n$-bisimilar to $M'_{s'}$.
+	We write $\evMo_\evs \sim_n \evMo'_{\evs'}$ to denote that $\evMo_\evs$ is $n$-bisimilar to
+	$\evMo'_{\evs'}$.
 \end{defn}
 
-For a multi-pointed event model $M_T$ and $M'_{T'}$, we have that $M_T \sim_n
-M'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
-such that $M_t \sim_n M'_{t'}$ and vice versa.
+For a multi-pointed event model $\aMod{\evMo_T}$ and $\aMod{\evMo'_{T'}}$, we have that $\evMo_\evT \sim_n
+\evMo'_{\evT'}$ if and only if for each point $\evt \in \evT$ there is a point $\evt' \in \evT'$
+such that $\evMo_\evt \sim_n \evMo'_{\evt'}$ and vice versa.
 
 \begin{lemma} \label{nBisimilarEventExec}
-	Let $M_s, M'_{s'} \in \eventClass$ such that $M_s \sim_n M'_{s'}$ and $N_t \in \kripkeClass$.
-	For any $\phi \in \lang$ with modal depth $MD(\phi) \leq n$ then $N_t \otimes M_s \models \phi
-	\iff N_t \otimes M'_{s'} \models \phi$.
+	Let $\evMo_\evs, \evMo'_{\evs'} \in \eventClass$ such that $\evMo_\evs \sim_n \evM'_{\evs'}$ and
+	$\krMo_t \in \kripkeClass$.
+	For any $\phi \in \lang$ with modal depth $MD(\phi) \leq n$ then $\krMo_t \otimes \evMo_\evs \models \phi
+	\iff \krMo_t \otimes \evMo'_{\evs'} \models \phi$.
 \end{lemma}
 
 \begin{proof}
 We use an inductive proof on the complexity of $\phi$.
-We inductively show that $M^1_{(t,s}) = N_t \otimes M_s \models \phi \iff M^2_{(t,s')} = N_t \otimes
-M'_{s'} \models \phi$.\\
+We inductively show that $\evMo^1_{(t,\evs}) = \krMo_t \otimes \evMo_\evs \models \phi \iff \evMo^2_{(t,\evs')} = \krMo_t \otimes
+\evMo'_{\evs'} \models \phi$.\\
 \\
 We begin with a base case of $\phi = p$, a single atomic proposition.
-Suppose $M^1_{(t,s)} \models \phi$.
+Suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
 \begin{align}
-	& \implies p \in V^1_{(t,s)} \label{nBisEvbase1} \\
+	& \implies p \in V^1_{(t,\evs)} \label{nBisEvbase1} \\
 	& \implies p \in V(t) \label{nBisEvbase2} \\
-	& \implies N_t \models pre(s) \label{nBisEvbase4} \\
-	& \implies N_t \models pre'(s') \label{nBisEvbase5} \\
-	& \implies p \in V^2_{(t,s')} \label{nBisEvbase6}\\
-	& \implies M^2_{(t,s')} \models \phi \label{nBisEvbase7}
+	& \implies \krMo_t \models \evpr(\evs) \label{nBisEvbase4} \\
+	& \implies \krMo_t \models \evpr'(\evs') \label{nBisEvbase5} \\
+	& \implies p \in V^2_{(t,\evs')} \label{nBisEvbase6}\\
+	& \implies \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
 \end{align}
 (\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
 (\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of event model execution (Definition
@@ -504,49 +512,49 @@ Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Def
 \ref{propLogic}).\\
 \\
 We go through each of the inductive cases.
-Let $\phi = \neg \psi$, and suppose $M^1_{(t,s)} \models \phi$.
+Let $\phi = \neg \psi$, and suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
 \begin{align}
-	& \implies \neg (M^1_{(t,s)} \models \psi) \label{nBisEvNeg1} \\
-	& \implies \neg (M^2_{(t,s')} \models \psi) \label{nBisEvNeg2} \\
-	& \implies M^2_{(t,s')} \models \neg \psi \label{nBisEvNeg3} \\
-	& \implies M^2_{(t,s')} \models \phi \label{nBisEvNeg4}
+	& \implies \neg (\evMo^1_{(t,\evs)} \models \psi) \label{nBisEvNeg1} \\
+	& \implies \neg (\evMo^2_{(t,\evs')} \models \psi) \label{nBisEvNeg2} \\
+	& \implies \evMo^2_{(t,\evs')} \models \neg \psi \label{nBisEvNeg3} \\
+	& \implies \evMo^2_{(t,\evs')} \models \phi \label{nBisEvNeg4}
 \end{align}
 (\ref{nBisEvNeg1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
 (\ref{nBisEvNeg2}) follows from the induction hypothesis.
 (\ref{nBisEvNeg3}) again follows from the semantics of propositional logic (Definition
 		\ref{propLogic}) and (\ref{nBisEvNeg4}) is obvious.\\
 \\
-Let $\phi = \psi_1 \land \psi_2$ and suppose $M^1_{(t,s)} \models \phi$.
+Let $\phi = \psi_1 \land \psi_2$ and suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
 \begin{align}
-	& \implies M^1_{(t,s}) \models \psi_1 \label{nBisEvCon1} \\
-	& \implies M^2_{(t,s'}) \models \psi_1 \label{nBisEvCon2}
+	& \implies \evMo^1_{(t,\evs}) \models \psi_1 \label{nBisEvCon1} \\
+	& \implies \evMo^2_{(t,\evs'}) \models \psi_1 \label{nBisEvCon2}
 \end{align}
 (\ref{nBisEvCon1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
 (\ref{nBisEvCon2}) follows from the induction hypothesis.
-Employing a similar process allows us to show that $M^2_{(t,s'}) \models \psi_2$ and together they 
-show that $M^2_{(t,s')} \models \phi$.\\
+Employing a similar process allows us to show that $\evMo^2_{(t,\evs'}) \models \psi_2$ and together they 
+show that $\evMo^2_{(t,\evs')} \models \phi$.\\
 \\
 Our final inductive case is to let $a \in A$ and $\phi = \Diamond_a \psi$.
-Suppose that $M^1_{(t,s)} \models \phi$.
+Suppose that $\evMo^1_{(t,\evs)} \models \phi$.
 \begin{align}
-	& \iff M^1_{(t,s)} \models \Diamond_a \psi \label{nBisEvMod1} \\
-	& \iff M^1_{(v,u)} \models \psi \text{ for some $(v,u) \in (t,s) R^1_a$} \label{nBisEvMod2} \\
-	& \iff M^1_{(v,u)} \models \psi \text{ for $v \in t R^N_a$ and $u \in s R_a$ and $N_t \models
-		pre(s)$ and $N_v \models pre(u)$} \label{nBisEvMod3} \\
+	& \iff \evMo^1_{(t,\evs)} \models \Diamond_a \psi \label{nBisEvMod1} \\
+	& \iff \evMo^1_{(v,\evu)} \models \psi \text{ for some $(v,\evu) \in (t,\evs) R^1_a$} \label{nBisEvMod2} \\
+	& \iff \evMo^1_{(v,\evu)} \models \psi \text{ for $v \in t R^\krMo_a$ and $\evu \in \evs R_a$ and $\krMo_t \models
+		\evpr(\evs)$ and $\krMo_v \models \evpr(\evu)$} \label{nBisEvMod3} \\
 \end{align}
 
-As $M_s \sim_n M'_{s'}$, then there is some $u' \in s R'_a$ such that $M_u \sim_{n-1} M'_{u'}$.
-Then we have that $N_v \models pre(u) \iff N_v \models pre'(u)$, since $M_u \sim_{n-1} M'_{u'}
-\implies M_u \sim_0 M'_{u'}$.
-Then by our induction hypothesis we have that $M^1_{(v,u)} \models \psi \iff M^2_{(v, u')} \models
+As $\evMo_\evs \sim_n \evMo'_{\evs'}$, then there is some $\evu' \in \evs R'_a$ such that $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}$.
+Then we have that $\krMo_v \models \evpr(\evu) \iff \krMo_v \models \evpr'(\evu)$, since $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}
+\implies \evMo_\evu \sim_0 \evMo'_{\evu'}$.
+Then by our induction hypothesis we have that $\evMo^1_{(v,\evu)} \models \psi \iff \evMo^2_{(v, \evu')} \models
 \psi$.
-From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $M^2_{(v,u')}
-\models \psi \implies M^2_{(t,s')} \models \Diamond_a \psi$.
+From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $\evMo^2_{(v,\evu')}
+\models \psi \implies \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
 \end{proof}
 
-%\FIXME: WHO?! Please cite.
+\FIXME: WHO?! Please cite.
 
 \begin{defn} \label{coverNormal}
 A formula in cover disjunctive normal form is defined inductively as
@@ -598,16 +606,17 @@ The axiomatisation \AXK is sound and complete with respect to the logic $\lang$.
 \begin{defn} \label{axiomAML}
 The axiomatisation \AXAML contains the axioms and rules from \AXK, as well as the following axioms
 \begin{alignat*}{2}
-	& \axAP && \quad \sqex{M_s}\pi \iff (pre(s) \implies \pi) \text{ for $\pi \in \langProp$}\\
-	& \axAN && \quad \sqex{M_s} \neg \phi \iff (pre(s) \implies \neg \sqex{M_s} \phi)\\
-	& \axAC && \quad \sqex{M_s}(\phi \land \psi) \iff (\sqex{M_s}\phi \land \sqex{M_s}\psi\\
-	& \axAK && \quad \sqex{M_s}\Box_a\phi \iff (pre(s) \implies \bigwedge_{v \in s R_a}
-		\Box_a \sqex{M_v} \phi) \\
-	& \axAU && \quad \sqex{M_T} \phi \iff \bigwedge_{u \in T} \sqex{M_u} \phi
+	& \axAP && \quad \sqex{\evMo_\evs}\pi \iff (\evpr(s) \implies \pi) \text{ for $\pi \in \langProp$}\\
+	& \axAN && \quad \sqex{\evMo_\evs} \neg \phi \iff (\evpr(s) \implies \neg \sqex{\evM_\evs} \phi)\\
+	& \axAC && \quad \sqex{\evMo_\evs}(\phi \land \psi) \iff (\sqex{\evM_\evs}\phi \land
+			\sqex{\evM_\evs}\psi\\
+	& \axAK && \quad \sqex{\evMo_\evs}\Box_a\phi \iff (\evpr(s) \implies \bigwedge_{v \in s R_a}
+		\Box_a \sqex{\evMo_\evv} \phi) \\
+	& \axAU && \quad \sqex{\evMo_\evT} \phi \iff \bigwedge_{\evu \in \evT} \sqex{\evM_\evu} \phi
 \end{alignat*}
 and the rule
 \[
-	\axNecA \quad \text{From $\vdash \phi$ infer $\vdash \sqex{M_s} \phi$}
+	\axNecA \quad \text{From $\vdash \phi$ infer $\vdash \sqex{\evM_\evs} \phi$}
 \]
 \end{defn}
 

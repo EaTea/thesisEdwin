@@ -66,12 +66,19 @@
 \newcommand{\axNecR}{{\bf NecR}}
 
 \newcommand{\krMo}{M}
-\newcommand{\evMo}{N}
 \newcommand{\aMod}[1]{
-  \ensuremath{
-    \mathrm{#1}
-  }
+  \ensuremath {\text{\begin{sansmath}$ \mathrm{#1}$\end{sansmath}}}
 }
+\newcommand{\evMo}{\aMod{N}}
+\newcommand{\evM}{\evMo}
+\newcommand{\evS}{\aMod{S}}
+\newcommand{\evR}{\aMod{R}}
+\newcommand{\evpr}{\aMod{pre}}
+\newcommand{\evT}{\aMod{T}}
+\newcommand{\evs}{\aMod{s}}
+\newcommand{\evt}{\aMod{t}}
+\newcommand{\evu}{\aMod{u}}
+\newcommand{\evv}{\aMod{v}}
 
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
