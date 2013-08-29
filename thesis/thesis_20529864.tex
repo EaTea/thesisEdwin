@@ -15,7 +15,6 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{sansmath}
 
 \usetikzlibrary{arrows,shapes}
 
@@ -67,18 +66,22 @@
 
 \newcommand{\krMo}{M}
 \newcommand{\aMod}[1]{
-  \ensuremath {\text{\begin{sansmath}$ \mathrm{#1}$\end{sansmath}}}
+  \ensuremath {\mathrm{\mathsf{#1}}}
 }
 \newcommand{\evMo}{\aMod{N}}
 \newcommand{\evM}{\evMo}
 \newcommand{\evS}{\aMod{S}}
 \newcommand{\evR}{\aMod{R}}
 \newcommand{\evpr}{\aMod{pre}}
+\newcommand{\evpre}{\evpr}
 \newcommand{\evT}{\aMod{T}}
+\newcommand{\evr}{\aMod{r}}
 \newcommand{\evs}{\aMod{s}}
 \newcommand{\evt}{\aMod{t}}
 \newcommand{\evu}{\aMod{u}}
 \newcommand{\evv}{\aMod{v}}
+\newcommand{\evp}{\aMod{p}}
+\newcommand{\evq}{\aMod{q}}
 
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
