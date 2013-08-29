@@ -1,4 +1,4 @@
-\section{Technical preliminaries}
+\section{Technical preliminaries --- mot text added 3 September 2013}
 In order to discuss event model synthesis, we first define essential concepts regarding event
 models and the semantics of the logics we are working within.
 
@@ -104,6 +104,11 @@ Allowing them to believe such contradictions means that they are effectively ins
 
 \subsection{Bisimilarity, simulation and refinement}
 
+In order to reason about models, we would like to say whether two models are ``equivalent".
+This equivalence should come in the form that presents models as being externally the same.
+That is, the same reasonings could be made about two models, despite their structures possibly being
+different.
+
 \begin{defn} \label{bisimKripke}
 	Let $\krMo$, $\krMo'$ be Kripke models and $\sim \subseteq S \times S'$ be a non-empty binary
 	relation such that
@@ -118,14 +123,20 @@ Allowing them to believe such contradictions means that they are effectively ins
 	and {\bf back-$a$} hold for each $a \in A$.
 	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
 \end{defn}
-% \FIXME: add in citations
 
 \begin{lemma} \label{bisimEquivalence}
 	The relation $\sim$ is an equivalence relation.
 \end{lemma}
 
 This is a well-known result.
-See \cite{blackburn2002modal} by de Rijke, Venema and Blackburn for further reading..
+See \cite{blackburn2002modal} by de Rijke, Venema and Blackburn for further reading and
+definitions.\\
+\\
+We have a notion of absolute equivalence by employing bisimilarity.
+However, bisimilarity is an extremely strong notion; it mandates that all reasonings that we make
+about one model will be true reasonings for another bisimilar model.
+It is useful to have a weaker notion of equivalence, one that mandates that reasonings up to a
+subset will be true reasonings for another model.
 
 \begin{defn} \label{nBisimKripke}
 Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$.
@@ -147,6 +158,20 @@ $\krMo_T \sim_n
 \krMo'_{T'}$ if and only if for each point $t \in T$ there is a point $t' \in T'$
 such that $\krMo_t \sim_n \krMo'_{t'}$ and vice versa.
 
+We have notions of equivalence that are of differing strength.
+It allows us to say that, for two models
+\begin{itemize}
+	\item all reasonings made one model are the same (using bisimilarity)
+	\item all propositional logic statements made about a model are the same (using $0$-bisimilarity)
+	\item all modal logic reasonings of depth one about a model are the same (using $1$-bisimilarity)
+\end{itemize}
+
+Our equivalences have been defined by the notion of ``reasonings" about the information models
+contain.
+It would be desirable to say that, given two models, one model can be reasoned about more than
+another.
+Put another way, we can say that one Kripke model has more information than another Kripke model.
+
 \begin{defn} \label{refinement}
 Let $B \subseteq A$ and $\krMo$ and $\krMo'$ be Kripke models. A non-empty relation $\lesssim \subseteq S
 \times S'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
@@ -156,7 +181,11 @@ If $(s, s') \in \lesssim$ then we say $\krMo'_{s'}$ is a
 $B$-simulation of $\krMo_s$ and
 $\krMo_s$ a $B$-refinement of $\krMo'_{s'}$.
 We write $\krMo_{s} \lesssim \krMo'_{s'}$ or equivalently
-$\krMo'_{s'} \gtrsim \krMo_{s}$.
+$\krMo'_{s'} \gtrsim \krMo_{s}$.\\
+\\
+We can say that $\krMo \lesssim \krMo'$ can be represented in natural language as ``$\krMo$ contains
+less uncertainty than $\krMo'$", or that ``$\krMo$ captures more information that $krMo'$".
+Given the operators we are using, the former meaning regarding less uncertainty is preferable.
 
 \begin{lemma} \label{refinementPreorder}
 The relation $\lesssim_B$ is a preorder.
@@ -237,9 +266,12 @@ Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for
 every model $\krMo \in
 \kripkeClass$, $\krMo \models \phi$.\\
 \\
-%\FIXME: Add citation
+\FIXME: Add an example
 In addition to $\Box_a$ we introduce the cover operator $\cover_a$, following the definition used in
 \cite{venemaproofsystems}.
+The cover operator forms the basis for the axiomatisations for refinement modal logic, which we use
+later.
+
 \begin{defn} \label{coverDef}
 Let $\Gamma \subseteq \lang$ be a finite set of formulae.
 Then
@@ -268,6 +300,8 @@ We define the modal depth of a formula $\phi \in \lang$ ($\mDep(\phi)$) as follo
 	\item $\mDep(\Box_a \phi) = 1 + \mDep(\phi)$
 \end{itemize}
 \end{defn}
+
+\FIXME: modal depth example
 
 Next, we build upon our logics to introduce the concepts updates and refinements as modal logics.
 We begin by introducing action model logic, as first defined by Baltag, Moss and Solecki in
@@ -320,6 +354,8 @@ Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that 
 As in the previous operations, when $B = A$ we will write $\forall \phi$.
 In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
 Our text interpretation is taken from an interpretation used by Hales, French and Davies in \cite{hales2012refinement}.
+
+\FIXME: a simple refinement example here
 
 \begin{defn} \label{arbActLogic}
 The language of arbitrary action model logic, $\langArbAct$ is first defined in \cite{hales13synthesis}.

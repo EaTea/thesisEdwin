@@ -1,4 +1,5 @@
-\section{Multi-agent epistemic goal achievement in $\langArbAct$}
+\section{Multi-agent epistemic goal achievement in $\langArbAct$ --- filler text added 3 September
+	2013}
 
 In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
@@ -730,7 +731,7 @@ formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\e
 \iff \exists_B \phi$.
 \end{proof}
 
-\subsection{Comparison to sequent calculi for epistemic planning --- fixed by 1 September 2013}
+\subsection{Comparison to sequent calculi for epistemic planning --- fixed by 3 September 2013}
 
 So far, we have been particularly interested in constructing event models.
 We have shown that we can approximate event models according to what
@@ -753,10 +754,11 @@ execution of our model.\\
 For example, suppose $\phi$ is a formula that we want to achieve for a group of agents $B \subseteq
 A$.
 Let $p \in \langProp$ and let $\phi = p \land \Box p \land \Box^2 p \land \ldots \Box^n p$.
-Applying Corollary \ref{approximatingBRestricted}, we obtain model $\evM^1$, such that $\sqex{\evM^1}\phi$
-and $\anex{\evM^1}\phi \iff \exists_B \phi$.
-Let $\evM^2 \in \publicAnnClass$ be the public announcement of $p$.
-We also have that $\sqex{\evM^2} \phi$ and $\anex{\evM^2} \phi \iff \exists_B \phi$.
+Applying Corollary \ref{approximatingBRestricted}, we obtain model $\evM^1_{\evs_0}$, such that
+$\sqex{\evM^1_{\evs_0}}\phi$
+and $\anex{\evM^1_{\evs_0}}\phi \iff \exists_B \phi$.
+Let $\evM^2_\evs \in \publicAnnClass$ be the public announcement of $p$.
+We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \exists_B \phi$.
 
 \begin{figure}[ht!]
 	\centering
@@ -765,17 +767,17 @@ We also have that $\sqex{\evM^2} \phi$ and $\anex{\evM^2} \phi \iff \exists_B \p
 	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
 				thick]
 
-			\node[vertex] (1) {$\eta_0$};
-			\node[vertex] (2) [right of=1] {$\eta_1$};
-			\node[vertex] (3) [right of=2] {$\eta_{n-1}$};
-			\node[vertex] (4) [right of=3] {$\eta_{n}$};
+			\node[vertex] (1) {$\evs_0$};
+			\node[vertex] (2) [right of=1] {$\evs_1$};
+			\node[vertex] (3) [right of=2] {$\evs_{n-1}$};
+			\node[vertex] (4) [right of=3] {$\evs_{n}$};
 			\path[edge]
 						(1) edge node {$A$} (2)
 						(3) edge node {$A$} (4);
       \draw[loosely dotted] (2) -- (3);
 	\end{tikzpicture}
-	\caption{$\evM^1$, the model we would have generated using Corollary
-    \ref{approximatingBRestricted}. Here, $\evpr^1(\eta_k) = p$ for every $k \leq n$.}
+	\caption{$\evM^1_\evs$, the model we would have generated using Corollary
+    \ref{approximatingBRestricted}. Here, $\evpr^1(\evs_k) = p$ for every $k \leq n$.}
 	\label{beforefigure}
 	\end{subfigure}
 	~
@@ -784,15 +786,17 @@ We also have that $\sqex{\evM^2} \phi$ and $\anex{\evM^2} \phi \iff \exists_B \p
 	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
 				thick]
 
-			\node[vertex] (1) {$\eta$};
+			\node[vertex] (1) {$\evs$};
 			\path[edge]
 						(1) edge [loop left] node {$A$} (1);
 	\end{tikzpicture}
-	\caption{$M^2$, the public announcement of $p$ where $\evpr(\eta) = p$.}
+	\caption{$\evM^2_\evs$, the public announcement of $p$ where $\evpr(\evs) = p$.}
 	\label{publicAnnounce}
 	\end{subfigure}
-	\caption{We compare models $\evM^1$ and $\evM^2$. Although $\evM^1$ and $\evM^2$
-		fulfill the postcondition of $\phi$ after their execution, $\evM^2$ is much smaller than $\evM^1$.}
+	\caption{We compare models $\evM^1_\evs$ and $\evM^2_\evs$. Although $\evM^1_\evs$ and
+		$\evM^2_\evs$
+		fulfill the postcondition of $\phi$ after their execution, $\evM^2_\evs$ is much smaller than
+		$\evM^1_\evs$.}
 	\label{comparePublicAnnounces}
 \end{figure}
 
