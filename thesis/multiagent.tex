@@ -769,15 +769,15 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 
 			\node[vertex] (1) {$\evs_0$};
 			\node[vertex] (2) [right of=1] {$\evs_1$};
-			\node[vertex] (3) [right of=2] {$\evs_{n-1}$};
-			\node[vertex] (4) [right of=3] {$\evs_{n}$};
+			\node[vertex] (3) [right of=2] {$\evs_{n-2}$};
+			\node[vertex] (4) [right of=3] {$\evs_{n-1}$};
 			\path[edge]
 						(1) edge node {$A$} (2)
 						(3) edge node {$A$} (4);
       \draw[loosely dotted] (2) -- (3);
 	\end{tikzpicture}
-	\caption{$\evM^1_\evs$, the model we would have generated using Corollary
-    \ref{approximatingBRestricted}. Here, $\evpr^1(\evs_k) = p$ for every $k \leq n$.}
+	\caption{$\evM^1_{\evs_0}$, the model we would have generated using Corollary
+    \ref{approximatingBRestricted}. Here, $\evpr^1(\evs_k) = \exists \Box^{n-k-1}p$ for every $k < n$.}
 	\label{beforefigure}
 	\end{subfigure}
 	~
@@ -793,7 +793,7 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 	\caption{$\evM^2_\evs$, the public announcement of $p$ where $\evpr(\evs) = p$.}
 	\label{publicAnnounce}
 	\end{subfigure}
-	\caption{We compare models $\evM^1_\evs$ and $\evM^2_\evs$. Although $\evM^1_\evs$ and
+	\caption{We compare models $\evM^1_{\evs_0}$ and $\evM^2_\evs$. Although $\evM^1_{\evs_0}$ and
 		$\evM^2_\evs$
 		fulfill the postcondition of $\phi$ after their execution, $\evM^2_\evs$ is much smaller than
 		$\evM^1_\evs$.}
@@ -806,16 +806,52 @@ This is illustrative of the weakness with regards to tersity of the models we bu
 We have shown methods to build event models, but only concentrated on one singular event model to
 build with the express purpose of goal achievement.\\
 \\
-A second example we could use is to let our goal state, $\phi = $.
+A second example we could use is to let our goal state, $\phi = \Box(\alpha \lor \beta)$ in a single
+agent system.
 Let $\evM^1$ be the model we obtain from Corollary \ref{approximatingBRestricted}.
-Similarly, let $\evM^2$ be \FIXME.
-This time, we note that $\evM^2$ \FIXME.
+Then, let $\evM^2$ be the choice of the public announcements of $\alpha$ or $\beta$.
+This time, we note that $\evM^2$ is a change that is less destructive after its execution.
+That is, it is minimal in the sense that it was the smallest change to our knowledge and inferences
+in order to realise $\phi$.
 
 \begin{figure}[ht!]
 	\centering
-	\FIXME
-	\caption{\FIXME: make two subfigures here}
-	\label{compareModelsMinimalChange}
+	\begin{subfigure}[b]{.45\textwidth}
+	\centering
+	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
+				thick]
+
+			\node[vertex] (1) {$\evs_0$};
+			\node[vertex] (2) [below left of=1] {$\evs_1$};
+			\node[vertex] (3) [right of=2] {$\evs_2$};
+			\path[edge]
+						(1) edge node {} (2)
+						(1) edge node {} (3);
+	\end{tikzpicture}
+	\caption{$\evM^1_{\evs_0}$, the model we would have generated using Corollary
+    \ref{approximatingBRestricted}. We have that $\evpre(\evs_0) = \exists \phi$, $\evpr(\evs_1) =
+			\exists \alpha$ and $\evpre(\evs_2) = \exists \beta$.}
+	\label{beforefigure}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{.45\textwidth}
+	\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+				thick]
+
+			\node[vertex] (1) {$\evs$};
+			\node[vertex] (2) [right of=1] {$\evt$};
+			\path[edge]
+						(1) edge [loop left] node {} (1)
+						(2) edge [loop right] node {} (2);
+	\end{tikzpicture}
+	\caption{$\evM^2_\evT$, where $\evT = \{\evs,\evt\}$. This is the disjoint union of the public
+		announcement of $p$ where $\evpr(\evs) = \alpha$ and $\evpr(\evt) = \beta$.}
+	\label{publicAnnounce}
+	\end{subfigure}
+	\caption{We compare models $\evM^1_{\evs_0}$ and $\evM^2_\evT$. It is clear that after executing
+		$\evM^2_{\evT}$ a smaller change to our knowledge and inference base has occurred.}
+	\label{comparePublicAnnounces}
 \end{figure}
 
 Let us examine a parallel approach to the problem.
@@ -845,17 +881,43 @@ such that $\krMo_s \models \phi$ and $\krMo''_{s''} \models \phi''$, and every $
 \sim \krMo''_{s''}$ it holds that $\evMo'_{\evs'} \models \phi'$.
 \end{defn}
 
-We can use Aucher's sequent calculus to say \FIXME: examples of sequent calculus.\\
+We can use Aucher's sequent calculus to say \FIXME: examples of sequent calculus.
+In particular, the inference relation $\models^2$ describes a set of event models that fulfill its
+properties.
+We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of event models such that, for a $\phi,
+	 \phi'' \in \lang$, if $\evM_\evs \in \mathcal{M}2(\phi,\phi'') \iff (\forall \phi' \in \langActEx
+	 \text{ such that } \phi,\phi'' \models^2 \phi' \implies \evM_\evs \models \phi'$).\\
 \\
 Next, we define the idea of the ``minimal change".
 
 \begin{defn}
-	\FIXME
+Let $\evM_\evt \in \eventClass$, and suppose that the execution of $\evM_\evt$ always results in the
+postcondition $\phi$.
+We say that $\evM_\evt$ is the minimal change of $\phi$ if for any other $\evM'_{\evt'}$ such that
+$\phi$ is a postcondition of $\phi$, for all models $\krMo_s \in \kripkeClass$, we have that
+\[
+	\forall \psi \in \lang \text{ such that } \krMo_s \otimes \evM'_{\evt'} \models \psi \implies
+	\krMo_s \otimes \evM_\evt \models \psi
+\]
 \end{defn}
 
-An example of a minimal change is shown in \FIXME.\\
+We have given two examples of minimal change above --- for $\phi = \Box^n p$ the minimal change is
+the public announcement of $\phi$.
+Similarly, for $\psi = \Box(\alpha \lor \beta)$, the disjoint union of the public announcement of
+$\alpha$ and the public announcement of $\beta$ is a minimal change.\\
 \\
-We now reason about updates \FIXME \\
+We can now reason about our updates in their event model form.
+It allows us to reason about their structure, about necessary preconditions and consequences of an
+update's execution.\\
 \\
-We now pose two open questions which we leave as open questions.
-\FIXME
+We now pose two open questions which we leave as extensions involving the synthesis of this work
+into Aucher's framework.
+These questions relate to achieving an epistemic goal $\phi \in \lang$.
+\begin{enumerate}
+	\item what is the smallest event model $\evM_\evt$ (in terms of possible actions) such that
+	$\evM_\evt \in \mathcal{M}2(\top,\sqex{\evM_\evt}\phi \land (\anex{\evM_\evt} \iff \exists
+				\phi))$?
+	\item what is the event model $\evM_\evt$ representing a minimal change such that
+	$\evM_\evt \in \mathcal{M}2(\top,\sqex{\evM_\evt}\phi \land (\anex{\evM_\evt} \iff \exists
+				\phi))$?
+\end{enumerate}
