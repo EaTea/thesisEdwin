@@ -1,16 +1,118 @@
 \section{Constructing event models in $\mathcal{K}45$ --- fixed by 7th October 2013}
 
-\begin{itemize}
-	\item current models not bound by K45 axioms
-	\item why do we want to constrain ourselves to K45 models?
-	\item what makes K45 difficult?
-	\item what do we need to add or change about our current language?
-	\item or is the process used to generate models simply different?
-	\item what comments can we make about multi-agent K45?
-\end{itemize}
+We have discussed models in the axiom system of $\mathcal{K}$.
+In particular, we have focused on approximating arbitrary models.
+Our approximations can fulfill postconditions and the effects of event model execution, up to modal
+depth $n$.
+We will replicate a similar result of event model approximation in the axiomatic system
+of $\mathcal{K}45$.
+This chapter details our results for our event model approximation in the axiomatic system
+$\mathcal{K}45$.
 
 \subsection{Background --- fixed by 5 September 2013}
 
+Previously, we constructed models that were tree-like in their nature.
+We defined many concepts used to describe trees, such as a ``root", ``subtrees" and ``forests".
+This allowed us to approximate arbitrary models in $\mathcal{K}$, to model any post-condition we
+were interested in.
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
+			thick]
+
+		\node[vertex] (1) {$\evs_0$};
+		\node[vertex] (2) [below left of=1] {$\evs_1$};
+		\node[vertex] (3) [right of=2] {$\evs_2$};
+		\path[edge]
+					(1) edge node {} (2)
+					(1) edge node {} (3);
+\end{tikzpicture}
+\caption{A very simple model that we our previous methodology constructed.
+We can immediately see the concept of a ``root" node and ``leaf" nodes.}
+\label{exampleModel}
+\end{figure}
+
+However, the models we previously generated are not so sensible under an epistemic interpretation.
+Indeed, although we can approximate an epistemic event model and the informative update that it
+encodes, our resultant model is not so easily interpreted within the original logical systems we
+used.
+At present, we can thus approximate any event model, whether it is interpretable under epistemic
+logics or not.\\
+\\
+In order to discuss epistemic logic, we need to first impose more restrictions on what axioms our
+models must now abide by.
+Within a modal logic context, knowledge has a specific structure which results from the axioms
+specified in the axiomatic system.
+We will move closer to the mainstream axiomatic systems used in epistemic logic by moving to the
+axiomatic system \AXK45.
+We define the axiomatic system of \AXK45 as follows
+
+\begin{lemma} \label{k45axioms}
+\FIXME the axioms of K45
+\end{lemma}
+
+\begin{lemma} \label{k45SoundComplete}
+\FIXME k45 is sound and complete
+\end{lemma}
+
+$\mathcal{K}45$ was first constructed by \FIXME and proved to be a sound and complete axiomatic
+system by \FIXME.\\
+\\
+The impact these axioms have on our models is not immediately obvious.
+We observe the following effects of the axioms
+\begin{itemize}
+	\item \FIXME formatting --- 4 causes every relation to be transitive
+	\item \FIXME formatting --- 5 causes every relation to need to relate to any other accessible
+world
+\end{itemize}
+
+We demonstrate this through by comparing models in \AXK and \AXK45 and how we need to change
+our models to obey these axioms.\\
+\\
+\FIXME comparative examples\\
+\\
+We can approximate models in \AXK45 using our previous method, but as we mentioned
+the generated model is far from resembling an epistemic event model.
+Models in the axiomatic system \AXK45 resemble epistemic event models much more closely.
+Furthermore, any epistemic event model will obey the axioms of \AXK45.\\
+\\
+An open question, related to our previous chapter --- can we now generate \AXK45 models to
+approximate other \AXK45 models?
+
 \subsection{Technical Preliminaries --- fixed by 11 September 2013}
 
+\FIXME this should change to pointed event models
+
+We first define what a $B$-insane set is.
+It is a necessary condition in order to generate our approximating \AXK45 models.
+Here, we say that $\evS$ is a finite set of action points from some event model.
+
+\begin{defn} \label{binsane}
+	Let $\evS$ be a finite set of action points and $B \subseteq A$.
+	We say that $\evS$ is $B$-insane if and only if for all $\evs \in \evS$, there is no $\evt \in
+\evS$ and $b
+\in B$ such that $\evs \evR_b \evt$.
+\end{defn}
+
+If $B = \{b\}$, we say that the set $\evS$ is $b$-insane.
+Similarly if $B = A$ we say that $\evS$ is simply insane.\\
+\\
+What does it mean for a set of states to be $B$-insane?
+If $\evS$ is $B$-insane, then any agent $b$ in $B$ can distinguish between worlds, but only knows
+facts at each world.
+They do not actually have any knowledge about what they know at each world.\\
+\\
+\begin{defn} \label{makeEquivalence}
+	Let $B \subseteq A$ and $\evS$ be a $B$-insane set of action points.
+	We say that \FIXME needs finite event models but essentially put in the new operator for making an
+equivalence class
+\end{defn}
+
+\FIXME example here\\
+\\
+\FIXME recap the language perhaps?
+
 \subsection{Some Interesting Technical Results --- fixed by 27 September 2013}
+
+\FIXME go through the process
