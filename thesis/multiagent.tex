@@ -745,7 +745,7 @@ is realised or destroy the Kripke model as a result of its execution.
 It allows us to ensure the realisation of a postcondition, without giving
 regard to the preceding Kripke model.\\
 \\
-A weakness of our approach is that we tie our realisation of a postcondition to a specific model.
+A weakness of this approach is that we tie our realisation of a postcondition to a specific model.
 Whether our model is the smallest model, or the model of minimal change is another matter entirely.
 Thus, we can guarantee that a postcondition is realised after our model
 execution but we cannot say much about the size or after-effects of the
@@ -778,7 +778,7 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 	\end{tikzpicture}
 	\caption{$\evM^1_{\evs_0}$, the model we would have generated using Corollary
     \ref{approximatingBRestricted}. Here, $\evpr^1(\evs_k) = \exists \Box^{n-k-1}p$ for every $k < n$.}
-	\label{beforefigure}
+	\label{TheLongChain}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{.45\textwidth}
@@ -791,9 +791,10 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 						(1) edge [loop left] node {$A$} (1);
 	\end{tikzpicture}
 	\caption{$\evM^2_\evs$, the public announcement of $p$ where $\evpr(\evs) = p$.}
-	\label{publicAnnounce}
+	\label{TheShortAnnounce}
 	\end{subfigure}
-	\caption{We compare models $\evM^1_{\evs_0}$ and $\evM^2_\evs$. Although $\evM^1_{\evs_0}$ and
+	\caption{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheLongChain}) and $\evM^2_\evs$
+		(Subfigure \ref{TheShortAnnounce}). Although $\evM^1_{\evs_0}$ and
 		$\evM^2_\evs$
 		fulfill the postcondition of $\phi$ after their execution, $\evM^2_\evs$ is much smaller than
 		$\evM^1_\evs$.}
@@ -831,7 +832,7 @@ in order to realise $\phi$.
 	\caption{$\evM^1_{\evs_0}$, the model we would have generated using Corollary
     \ref{approximatingBRestricted}. We have that $\evpre(\evs_0) = \exists \phi$, $\evpr(\evs_1) =
 			\exists \alpha$ and $\evpre(\evs_2) = \exists \beta$.}
-	\label{beforefigure}
+	\label{TheStupidTree}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{.45\textwidth}
@@ -847,9 +848,10 @@ in order to realise $\phi$.
 	\end{tikzpicture}
 	\caption{$\evM^2_\evT$, where $\evT = \{\evs,\evt\}$. This is the disjoint union of the public
 		announcement of $p$ where $\evpr(\evs) = \alpha$ and $\evpr(\evt) = \beta$.}
-	\label{publicAnnounce}
+	\label{TheDualAnnounce}
 	\end{subfigure}
-	\caption{We compare models $\evM^1_{\evs_0}$ and $\evM^2_\evT$. It is clear that after executing
+	\caption{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheStupidTree}) and $\evM^2_\evT$
+		(Subfigure \ref{TheDualAnnounce}). It is clear that after executing
 		$\evM^2_{\evT}$ a smaller change to our knowledge and inference base has occurred.}
 	\label{comparePublicAnnounces}
 \end{figure}
@@ -868,43 +870,44 @@ Aucher, in \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703},
 discusses a solution to this problem by introducing a sequent calculus for dynamic 
 epistemic logics.
 This sequent calculus allows us to reason about informative updates from
-a \evpr-update epistemic situation to a post-update epistemic situation.\\
+a pre-update epistemic situation to a post-update epistemic situation.
+This in turn allows us to build the most general description of an action model whose informative
+update achieves our epistemic goal.\\
 \\
 We reproduce formally Aucher's sequent calculus from
 \cite{doi:10.1080/11663081.2012.736703}.
 
 \begin{defn}
-Let $\phi, \phi'' \in \lang$ and $\phi' \in \langActEx$, we say that
+	Let $\phi, \phi'' \in \lang$ and $\phi' \in \langActEx$ (Definition \ref{actModelLogic}), we say that
 $\phi, \phi'' \models^2 \phi' \iff$ for each $\krMo_s, \krMo''_{s''} \in \kripkeClass$
 such that $\krMo_s \models \phi$ and $\krMo''_{s''} \models \phi''$, and every $\evM'_{\evs'}
 \in \eventClass$ such that $\evM_\evs \models \evpr'(s)$ and $\krMo_s \otimes \evM'_{\evs'}
 \sim \krMo''_{s''}$ it holds that $\evMo'_{\evs'} \models \phi'$.
 \end{defn}
 
-We can use Aucher's sequent calculus to say \FIXME: examples of sequent calculus.
 In particular, the inference relation $\models^2$ describes a set of event models that fulfill its
 properties.
 We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of event models such that, for a $\phi,
-	 \phi'' \in \lang$, if $\evM_\evs \in \mathcal{M}2(\phi,\phi'') \iff (\forall \phi' \in \langActEx
-	 \text{ such that } \phi,\phi'' \models^2 \phi' \implies \evM_\evs \models \phi'$).\\
+	 \phi'' \in \lang$, if
+\[
+	 \evM_\evs \in \mathcal{M}2(\phi,\phi'') \iff (\forall \phi' \in \langActEx
+	 \text{ such that } \phi,\phi'' \models^2 \phi' \implies \evM_\evs \models \phi').
+\]
 \\
 Next, we define the idea of the ``minimal change".
 
 \begin{defn}
 Let $\evM_\evt \in \eventClass$, and suppose that the execution of $\evM_\evt$ always results in the
-postcondition $\phi$.
+postcondition $\phi \in \lang$.
 We say that $\evM_\evt$ is the minimal change of $\phi$ if for any other $\evM'_{\evt'}$ such that
-$\phi$ is a postcondition of $\phi$, for all models $\krMo_s \in \kripkeClass$, we have that
-\[
-	\forall \psi \in \lang \text{ such that } \krMo_s \otimes \evM'_{\evt'} \models \psi \implies
-	\krMo_s \otimes \evM_\evt \models \psi
-\]
+executing $\evM'_{\evt'}$ results in $\phi$ being true, there is some $\psi \in \lang$ such that $\psi \implies
+\phi$ and $\psi \neq \phi$ where executing $\evM'_{\evt'}$ always results in $\psi$ being true.
 \end{defn}
 
 We have given two examples of minimal change above --- for $\phi = \Box^n p$ the minimal change is
-the public announcement of $\phi$.
+the public announcement of $\phi$ (Figure \ref{ThePublicAnnounce}).
 Similarly, for $\psi = \Box(\alpha \lor \beta)$, the disjoint union of the public announcement of
-$\alpha$ and the public announcement of $\beta$ is a minimal change.\\
+$\alpha$ and the public announcement of $\beta$ is a minimal change (Figure \ref{TheDualAnnounce}).\\
 \\
 We can now reason about our updates in their event model form.
 It allows us to reason about their structure, about necessary preconditions and consequences of an
@@ -912,12 +915,15 @@ update's execution.\\
 \\
 We now pose two open questions which we leave as extensions involving the synthesis of this work
 into Aucher's framework.
+They extend the minimal description that Aucher defines (which describe which models will fulfill an
+update) by asking ``how" to build these models, and hopefully unify the approach we discuss and
+Aucher's sequence calculus.
 These questions relate to achieving an epistemic goal $\phi \in \lang$.
 \begin{enumerate}
-	\item what is the smallest event model $\evM_\evt$ (in terms of possible actions) such that
-	$\evM_\evt \in \mathcal{M}2(\top,\sqex{\evM_\evt}\phi \land (\anex{\evM_\evt} \iff \exists
-				\phi))$?
-	\item what is the event model $\evM_\evt$ representing a minimal change such that
-	$\evM_\evt \in \mathcal{M}2(\top,\sqex{\evM_\evt}\phi \land (\anex{\evM_\evt} \iff \exists
-				\phi))$?
+	\item How can we build the smallest event model in terms of size that achieves $\phi$?
+		It is worth noting that ``size" is at this rudimentary stage unclear, and we are implicitly discussing the
+		number of event points.
+		However, ``size" might instead be number of relations, or some other measure.
+	\item How can we build the event model that minimally changes the epistemic situation and achieves
+		$\phi$?
 \end{enumerate}
