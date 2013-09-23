@@ -48,23 +48,31 @@ We will move closer to the mainstream axiomatic systems used in epistemic logic 
 axiomatic system \AXKFF.
 We define the axiomatic system of \AXKFF as follows
 
-\begin{lemma} \label{k45axioms}
-\FIXME the axioms of K45
+\begin{lemma} \label{axiomK45}
+The axiomatisation \AXKFF contains the axioms and rules from \AXK (Definition
+    \ref{axiomK}), as well as the following axioms
+\begin{alignat*}{2}
+  & \axFo && \quad \Box \phi \implies \Box \Box \phi \\
+  & \axFi && \quad \Diamond \phi \implies \Box \Diamond \phi
+\end{alignat*}
 \end{lemma}
 
-\begin{lemma} \label{k45SoundComplete}
-\FIXME k45 is sound and complete
+\begin{lemma} \label{axiomK45SoundComplete}
+The axiomatisation \AXKFF is sound and complete with respect to the logic
+$\lang$.
 \end{lemma}
 
-$\mathcal{K}45$ was first constructed by \FIXME and proved to be a sound and complete axiomatic
-system by \FIXME.\\
+\AXKFF was first constructed by \FIXME and proved to be a sound and complete axiomatic
+system by Grossi in \cite{grossi2007designing}.\\
 \\
 The impact these axioms have on our models is not immediately obvious.
 We observe the following effects of the axioms
 \begin{itemize}
-	\item \FIXME formatting --- 4 causes every relation to be transitive
-	\item \FIXME formatting --- 5 causes every relation to need to relate to any other accessible
-world
+	\item \axFo causes every relation to be transitive
+	\item \axFi has more subtle consequences.
+    Suppose $A$ is related to $B$.
+    Then if $C$ is related to $A$, $C$ must also be related to $B$.
+    A further consequence is that $B$ must also be related to $C$.
 \end{itemize}
 
 We demonstrate this through by comparing models in \AXK and \AXKFF and how we need to change
@@ -82,36 +90,63 @@ approximate other \AXKFF models?
 
 \subsection{Technical Preliminaries --- fixed by 11 September 2013}
 
-\FIXME this should change to pointed event models
-
 We first define what a $B$-insane set is.
 It is a necessary condition in order to generate our approximating \AXKFF models.
-Here, we say that $\evS$ is a finite set of action points from some event model.
 
 \begin{defn} \label{binsane}
-	Let $\evS$ be a finite set of action points and $B \subseteq A$.
-	We say that $\evS$ is $B$-insane if and only if for all $\evs \in \evS$, there is no $\evt \in
-\evS$ and $b
-\in B$ such that $\evs \evR_b \evt$.
+	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed event model and $B \subseteq A$.
+	We say that $\evM_\evT$ is $B$-insane if and only if for all $\evs \in \evT$,
+  there is no $\evt \in \evS$ and $b \in B$ such that $\evs \evR_b \evt$.
 \end{defn}
 
-If $B = \{b\}$, we say that the set $\evS$ is $b$-insane.
-Similarly if $B = A$ we say that $\evS$ is simply insane.\\
+If $B = \{b\}$, we say that the set $\evM_\evT$ is $b$-insane.
+Similarly if $B = A$ we say that $\evM_\evT$ is simply insane, which fulfills
+our previous definition of insanity models (Definition \ref{insanity}).\\
 \\
 What does it mean for a set of states to be $B$-insane?
-If $\evS$ is $B$-insane, then any agent $b$ in $B$ can distinguish between worlds, but only knows
-facts at each world.
-They do not actually have any knowledge about what they know at each world.\\
+If $\evM_\evT$ is $B$-insane, then any agent $b$ in $B$ can distinguish between
+action points, but only knows the preconditions of each action point.
+They do not actually have any knowledge about what they know or any
+introspection at each action point.\\
 \\
+We now define the main operation to construct event models in \AXKFF for the
+purposes of realising a post condition.
+
 \begin{defn} \label{makeEquivalence}
-	Let $B \subseteq A$ and $\evS$ be a $B$-insane set of action points.
-	We say that \FIXME needs finite event models but essentially put in the new operator for making an
-equivalence class
+	Let $B \subseteq A$ and $\evM_\evT$ be a $B$-insane forest event model.
+  For each $\evt \in \evT$ let $\evM_\evt$ be a tree event model in \AXKFF.
+  Then the operation $I_B(\evM_\evT)$ constructs the event model $\evM'_{\evT'} =
+  ((\evS',\evR',\evpr'),\evT')$ such that
+  \begin{itemize}
+    \item $\evS' = \evS$
+    \item $\evR'_a = \evR_a$ if $a \notin B$
+    \item $\evR'_a = \evR_a \cup \{(\evs, \evt) | \evs, \evt \in \evT\}$ if $a
+    \in B$
+    \item $\evpr' = \evpr$
+    \item $\evT' = \evT$
+  \end{itemize}
 \end{defn}
+
+We will say that $I_B$ is an operation that makes all the action
+points in a ``distinguished" set of a $B$-insane event model ``equivalent" to a
+group of agents $B$.
+That is, any agent in $B$ considers each action point $\evs \in \evT$ to be the
+same.
 
 \FIXME example here\\
 \\
-\FIXME recap the language perhaps?
+The addition of our new operator results in us having the following language for
+event model construction in \AXKFF.
+\[
+  \evM_\evT = \evM_\evT \text{ } | \text{ }\evM_\evT \to \evM'_{\evT'} \text{ }|
+  \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } E_B(\evM_\evT)
+\]
+where $\evM_\evT, \evM'_\evT'$ are multi-pointed event models and $B \subseteq
+A$.\\
+\\
+We will now show that this language always constructs models in \AXKFF, and
+furthermore that some post condition in the language \lang can be realised by
+some event model that our language can construct.
 
 \subsection{Some Interesting Technical Results --- fixed by 27 September 2013}
 
