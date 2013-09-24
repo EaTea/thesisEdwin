@@ -76,10 +76,75 @@ We observe the following effects of the axioms
 \end{itemize}
 
 We demonstrate this through by comparing models in \AXK and \AXKFF and how we need to change
-our models to obey these axioms.\\
-\\
-\FIXME comparative examples\\
-\\
+our models to obey these axioms.
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\alpha$};
+    \node[vertex] (2) [right of=1] {$\beta$};
+    \node[vertex] (3) [above right of=2] {$\gamma$};
+    \node[vertex] (4) [below right of=2] {$\omega$};
+    \path[edge]
+          (1) edge node {} (2)
+          (2) edge node {} (3)
+          (2) edge node {} (4);
+\end{tikzpicture}
+\caption{Suppose for our Kripke model $\krMo$ (which obeys the rules and axioms in \AXK)
+  that $\krMo_\alpha \models p$, $\krMo_\beta \models q$, $\krMo_\gamma \models r$ and
+  $\krMo_\omega \models q \land p$.
+We can say that $\krMo_\alpha \models \Box q$, but we cannot say that $\krMo_\alpha
+\models \Box \Box q$.
+Then \axFo is disobeyed and thus $\krMo$ is not a \AXKFF event model.}
+\label{kmodel}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\alpha$};
+    \node[vertex] (2) [right of=1] {$\beta$};
+    \node[vertex] (3) [above right of=2] {$\gamma$};
+    \node[vertex] (4) [below right of=2] {$\omega$};
+    \path[edge]
+          (1) edge node {} (2)
+              edge node {} (3)
+              edge node {} (4)
+          (2) edge node {} (3)
+              edge node {} (4)
+              edge [loop right] node {} (2)
+          (3) edge node {} (2)
+              edge node {} (4)
+              edge [loop above] node {} (3)
+          (4) edge node {} (2)
+              edge node {} (3)
+              edge [loop below] node {} (4);
+\end{tikzpicture}
+\caption{Now our event model $\krMo'$ obeys \AXKFF.
+Let $\krMo'_\alpha \models p, \krMo'_\beta \models q, \krMo'_\gamma \models q \land r$ and
+  $\krMo'_\omega) \models q \land p$.
+Here, we see that (by \axFo) in order to say $\krMo'_\alpha \models \Box q$, we must also be
+able to say $\krMo'_\alpha \models \Box \Box q$.
+Furthermore, by \axFi for any formula $k \in \lang$ such that $\krMo'_\alpha \models
+\Diamond k$, we have that $\krMo'_\alpha \models \Box \Diamond k$.
+That is, for any action point that $\alpha$ was connected to (say $\alpha$), every subsequent
+action point (in this case $\gamma$ and $\omega$)}
+\label{k45model}
+\end{subfigure}
+\caption{We compare two Kripke models, $\krMo$ (Subfigure \ref{kmodel}) and
+  $\krMo'$ (Subfigure \ref{k45model}).
+The effect of \axFo and \axFi on $\krMo'$ is evident when comparing Subfigure
+\ref{kmodel} and Subfigure \ref{k45model}.
+For example, we can see that \axFi forces the action points to all be related to each other.}
+\label{k45VsKModels}
+\end{figure}
+
 We can approximate models in \AXKFF using our previous method, but as we mentioned
 the generated model is far from resembling an epistemic event model.
 Models in the axiomatic system \AXKFF resemble epistemic event models much more closely.
@@ -107,8 +172,30 @@ What does it mean for a set of states to be $B$-insane?
 If $\evM_\evT$ is $B$-insane, then any agent $b$ in $B$ can distinguish between
 action points, but only knows the preconditions of each action point.
 They do not actually have any knowledge about what they know or any
-introspection at each action point.\\
-\\
+introspection at each action point.
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\alpha$};
+    \node[vertex] (2) [below of=1] {$\beta$};
+    \node[vertex] (3) [right of=1] {$\gamma$};
+    \node[vertex] (4) [below of=3] {$\omega$};
+    \path[edge]
+          (1) edge node {$B$} (2)
+          (3) edge node {$C$} (4)
+          (4) edge [loop below] node {$B$} (4);
+\end{tikzpicture}
+\caption{Consider our event model $\evM$. Let $B$ and $C$ be mutually exclusive
+  subsets of $A$. Here, $\evM_\beta$ and $\evM_\gamma$
+  are $B$-insane, since there are no outgoing $B$-edges from these event points.
+This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge,
+     and $\evM_\omega$ which has a reflexive $B$-edge.}
+\label{bInsaneExample}
+\end{figure}
+
 We now define the main operation to construct event models in \AXKFF for the
 purposes of realising a post condition.
 
@@ -131,9 +218,9 @@ We will say that $I_B$ is an operation that makes all the action
 points in a ``distinguished" set of a $B$-insane event model ``equivalent" to a
 group of agents $B$.
 That is, any agent in $B$ considers each action point $\evs \in \evT$ to be the
-same.
-
-\FIXME example here\\
+same.\\
+\\
+\FIXME stuff stuff\\
 \\
 The addition of our new operator results in us having the following language for
 event model construction in \AXKFF.
