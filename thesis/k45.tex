@@ -130,21 +130,24 @@ Then \axFo is disobeyed and thus $\krMo$ is not a \AXKFF event model.}
 Let $\krMo'_\alpha \models p, \krMo'_\beta \models q, \krMo'_\gamma \models q \land r$ and
   $\krMo'_\omega) \models q \land p$.
 Here, we see that (by \axFo) in order to say $\krMo'_\alpha \models \Box q$, we must also be
-able to say $\krMo'_\alpha \models \Box \Box q$.
-Furthermore, by \axFi for any formula $k \in \lang$ such that $\krMo'_\alpha \models
-\Diamond k$, we have that $\krMo'_\alpha \models \Box \Diamond k$.
-That is, for any action point that $\alpha$ was connected to (say $\alpha$), every subsequent
-action point (in this case $\gamma$ and $\omega$)}
+able to say $\krMo'_\alpha \models \Box \Box q$.}
 \label{k45model}
 \end{subfigure}
 \caption{We compare two Kripke models, $\krMo$ (Subfigure \ref{kmodel}) and
-  $\krMo'$ (Subfigure \ref{k45model}).
-The effect of \axFo and \axFi on $\krMo'$ is evident when comparing Subfigure
-\ref{kmodel} and Subfigure \ref{k45model}.
-For example, we can see that \axFi forces the action points to all be related to each other.}
+  $\krMo'$ (Subfigure \ref{k45model}).}
 \label{k45VsKModels}
 \end{figure}
 
+In Figure \ref{k45VsKModels} we compare an event model in \AXK to a model in \AXKFF.
+We have already briefly discussed how \axFo affects the reasonings we can make on the $\krMo_\alpha$ versus
+$\krMo'_\alpha$.
+Another observation we can make is with regards to the effect of \axFi on $\krMo'_\alpha$ (Subfigure
+\ref{k45model}).
+By \axFi for any formula $k \in \lang$ such that $\krMo'_\alpha \models
+\Diamond k$, we have that $\krMo'_\alpha \models \Box \Diamond k$.
+This causes action points $\beta, \gamma$ and $\omega$ to become a completely connected component,
+with an edge running to each one of them, as well as reflexive edges for each point.\\
+\\
 We can approximate models in \AXKFF using our previous method, but as we mentioned
 the generated model is far from resembling an epistemic event model.
 Models in the axiomatic system \AXKFF resemble epistemic event models much more closely.
@@ -218,23 +221,86 @@ We will say that $I_B$ is an operation that makes all the action
 points in a ``distinguished" set of a $B$-insane event model ``equivalent" to a
 group of agents $B$.
 That is, any agent in $B$ considers each action point $\evs \in \evT$ to be the
-same.\\
-\\
-\FIXME stuff stuff\\
-\\
+same.
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\alpha$};
+    \node[vertex] (2) [below of=1] {$\beta$};
+		\node[vertex] (5) [right of=2] {$\tau$};
+    \node[vertex] (4) [right of=5] {$\omega$};
+    \node[vertex] (3) [above of=4] {$\gamma$};
+    \path[edge]
+          (1) edge node {$B$} (2)
+          (3) edge node {$C$} (4)
+          (4) edge [loop below] node {$B$} (4);
+\end{tikzpicture}
+\caption{Consider the model $\evMo_\evT$, with $\evT = \{\beta, \tau, \gamma\}$.}
+\label{beforeOperation}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\alpha$};
+    \node[vertex] (2) [below of=1] {$\beta$};
+		\node[vertex] (5) [right of=2] {$\tau$};
+    \node[vertex] (4) [right of=5] {$\omega$};
+    \node[vertex] (3) [above of=4] {$\gamma$};
+    \path[edge]
+          (1) edge node {$B$} (2)
+					(2) edge [loop below] node {$B$} (2)
+							edge node {$B$} (5)
+							edge node {$B$} (3)
+					(5) edge [loop below] node {$B$} (5)
+							edge node {} (2)
+							edge node {$B$} (3)
+          (3) edge node {$C$} (4)
+							edge [loop above] node {$B$} (3)
+							edge node {} (2)
+							edge node {} (5)
+          (4) edge [loop below] node {$B$} (4);
+\end{tikzpicture}
+\caption{Consider our new model $I_B(\evMo_\evT)$, with $\evMo_\evT$ defined as in Subfigure
+\ref{beforeOperation}.}
+\label{afterOperation}
+\end{subfigure}
+\caption{Subfigures \ref{beforeOperation} and \ref{afterOperation} demonstrate the effect of
+applying our operation $I_B$ onto a model.
+Note the }
+\label{k45VsKModels}
+\end{figure}
+
 The addition of our new operator results in us having the following language for
 event model construction in \AXKFF.
 \[
   \evM_\evT = \evM_\evT \text{ } | \text{ }\evM_\evT \to \evM'_{\evT'} \text{ }|
   \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } E_B(\evM_\evT)
 \]
-where $\evM_\evT, \evM'_\evT'$ are multi-pointed event models and $B \subseteq
+where $\evM_\evT, \evM'_{\evT'}$ are multi-pointed event models and $B \subseteq
 A$.\\
 \\
 We will now show that this language always constructs models in \AXKFF, and
-furthermore that some post condition in the language \lang can be realised by
+furthermore that some post condition in the language $\lang$ can be realised by
 some event model that our language can construct.
 
 \subsection{Some Interesting Technical Results --- fixed by 27 September 2013}
 
-\FIXME go through the process
+\FIXME Add in motivational text and lead ins
+
+\begin{lemma}
+	\FIXME this lemma will say that we will form K45 event models and prove why the models
+	formed with our language are K45 event models
+\end{lemma}
+
+\begin{lemma}
+	\FIXME this lemma will say that the K45 event models we form will allow us to approximate other
+	K45 event models to an arbitrary degree
+\end{lemma}
