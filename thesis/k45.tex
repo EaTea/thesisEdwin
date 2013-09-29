@@ -290,24 +290,146 @@ Note the }
 The addition of our new operator results in us having the following language for
 event model construction in $\AXKFF$.
 \[
-	\evM_\evT = \aMod{M_s} \text{ } | \text{ }\evM_\evT \to \evM'_{\evT'} \text{ }|
+	\evM_\evT ::= \aMod{M_s} \text{ } | \text{ }\evM_\evT \to \evM'_{\evT'} \text{ }|
   \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } I_B(\evM_\evT)
 \]
 where $\aMod{M_s} \in \insaneClass, \evM_\evT, \evM'_{\evT'}$ are multi-pointed event models and $B \subseteq
-A$.\\
+A$ is a subset of agents.\\
 \\
-We will now show that this language always constructs models in $\AXKFF$, and
-furthermore that some post condition in the language $\lang$ can be realised by
-some event model that our language can construct.
+We will now show that this language always constructs models that preserve $\AXKFF$, and that any
+event model that preserves the axioms of $\AXKFF$ can be constructed by our language.
 
-\subsection{Some Interesting Technical Results --- fixed by 27 September 2013}
+\subsection{Some Interesting Technical Results}
 
-\FIXME Add in motivational text and lead ins
+To show that we can construct event models that preserve $\AXKFF$, there are two propositions that
+must hold
+\begin{enumerate}
+	\item we can use our language to construct event models that will preserve $\AXKFF$
+	\item an event model that preserves $\AXKFF$ can be constructed (up to $n$-bisimilarity) by our
+		language
+\end{enumerate}
+
+To show the first proposition, we must first define what event models preserve $\AXKFF$.
+We define them formally below.
+
+\begin{lemma} \label{k45EventModel}
+	Suppose $\evM_\evT = ((\evS,\evR,\evpre),\evT)$ is a multi-pointed event model with $\evpre$
+	defined over $\langArbAct$.
+	$\evM_\evT$ preserves the axioms of $\AXKFF$ iff
+	\begin{enumerate}
+		\item \label{k45EventModelConFour} suppose $a \in A$ and $\evs \in \evS$.
+			If $p \in \langArbAct$ and for every $\evt \in \evs \evR_a$, $\evpr(\evt) \implies p$.
+			Then we have that for every $\evt' \in \evt \evR_a$,
+			$\evpr(\evt') \implies p$.
+			This corresponds to preserving $\axFo$.
+		\item \label{k45EventModelConFive} suppose $a \in A$ and $\evs \in \evS$.
+			Suppose $\evt \in \evs \evR_a$ and $p \in \langArbAct$ such that $\evpr(\evt) \implies p$.
+			Then we have that for every $\evs' \in \evs \evR_a$, there is some $\evt' \in \evs' \evR_a$
+			such that $\evpre(\evt') \implies p$.
+			This corresponds to preserving $\axFi$.
+	\end{enumerate}
+	We will refer to these event models as $\AXKFF$ event models.
+\end{lemma}
+\begin{proof}
+	\FIXME: needed?
+\end{proof}
+
+We now have a class of models which, upon execution on $\AXKFF$ Kripke models, will preserve the
+axioms of $\AXKFF$.
+We now present our method for constructing event models using our language.
+We will first show that it constructs $\AXKFF$ model.
 
 \begin{lemma}
-	\FIXME this lemma will say that we will form K45 event models and prove why the models
-	formed with our language are K45 event models
+	Suppose $B \subseteq A$ be a subset of agents.
+	Let $\evM'_{\evT'}$ be a $B$-insane $\AXKFF$ event model.
+	Let $\aMod{M_p} \in \insaneClass$.
+	Then
+	\[
+		\aMod{M_p} \to_B I_B(\evM'_{\evT'})
+	\]
+	is an $\AXKFF$ event model.
 \end{lemma}
+\begin{proof}
+	We will prove this in two parts.
+	Firstly, we will show that $\evM_\evT = I_B(\evM'_{\evT'})$ is a $\AXKFF$ event model.
+	By Lemma \ref{k45EventModel}, there are two conditions we must show.\\
+	\\
+	We will first show that the first condition (\ref{k45EventModelConFour}) holds at any action point
+	in $I_B(\evM'_{\evT'})$.
+	Let $\evs \in \evS$, $a \in A$ and suppose $p \in \langArbAct$ such that for all $\evt \in
+	\evS$ we have $\evpr(\evt) \implies p$.
+	If $a \notin B$, no new relations are added to $R_a$ and thus the condition must hold.
+	Similarly, for $\evs \notin \evT'$, for all $a' \in A$ we have that $\evs R_{a'}$ is not changed and
+	thus the condition must hold at these points.\\
+	\\
+	Thus, we presume that $\evs \in \evT'$ and $a \in B$.
+	\begin{align}
+		& \vdash \text{for all } \evt \in \evs \evR_a \implies (\evpr(\evt) \implies p)
+		\label{conFourProof1} \\
+		& \vdash \text{for all } \evs' \in \evT' \implies (\evpr(\evs') \implies p)
+		\label{conFourProof2} \\
+		& \vdash \text{for all } \evt' \in \evt \evR_a \implies (\evpr(\evt') \implies p)
+		\label{conFourProof3}
+	\end{align}
+	\ref{conFourProof1} follows from hypothesis, \ref{conFourProof2} from the definition of $I_B$
+	(Definition \ref{makeEquivalence}) causing $\evs \evR_a = \evT'$, and \ref{conFourProof3} following
+	from the definition of $I_B$ causing $\evt \evR_a = \evT'$ and \ref{conFourProof2}.
+	This allows us to fulfill Condition \ref{k45EventModelConFour}.\\
+	\\
+	The second condition we show is (\ref{k45EventModelConFive}) holds at any action point in
+	$\evM_\evT$.
+	Let $\evs \in \evS$, $a \in A$ and suppose that $p \in \langArbAct$ such that for some $\evt \in \evS$ 
+	we have $\evpr(\evt) \implies p$.
+	Again, we note that $a \notin B$ or $\evs \notin \evT'$ automatically fulfills the condition since
+	\begin{itemize}
+		\item when $a \notin B$, no relations are added to $\evR_a$
+		\item when $\evs \notin \evT'$ no relations are added to $\evs \evR_{a'}$ for all $a' \in A$
+	\end{itemize}
+
+	Again we presume that $\evs \in \evT'$ and $a \in B$.
+	\begin{align}
+		& \vdash \text{for some } \evt \in \evs \evR_a \implies (\evpr(\evt) \implies p)
+		\label{conFiveProof1} \\
+		& \vdash \text{for all } \evs' \in \evT' \implies (\evs' \evR_a = \evT') \label{conFiveProof2}
+		\\
+		& \vdash \text{for all } \evs' \in \evs \evR_a \implies (\evt \in \evs' \evR_a)
+		\label{conFiveProof3}
+	\end{align}
+	\ref{conFiveProof1} follows from hypothesis, \ref{conFiveProof2} follows from the definition of
+	$I_B$ (Definition \ref{makeEquivalence}) and \ref{conFiveProof3} follows from \ref{conFiveProof2}.
+	We thus show Condition \ref{k45EventModelConFive}.\\
+	\\
+	We have shown that $I_B(\evM'_{\evT'})$ is a $\AXKFF$ event model.
+	We now must show that $\evM''_{\evT''} = \aMod{M_p} \to_B I_B(\evM'_{\evT'})$ is a $\AXKFF$ event
+	model.
+	Since we have shown this for $I_B(\evM'_{\evT'})$, we need only show that conditions
+	\ref{k45EventModelConFour} and \ref{k45EventModelConFive} hold at $\evM''_\evp$.
+	We can discard having to check other action points since no relations from them are added, and we
+	need not check any agents outside of $B$ since they to have no relations added.\\
+	\\
+	We first check that \ref{k45EventModelConFour} holds.
+	Suppose that $a \in B$.
+	Suppose $p \in \langArbAct$ and for all $\evt \in \evp \evR''_a = \evT'$ we had
+	$\evpr''(\evt) \implies	p$.
+	Since $\evt \evR''_a = \evt \evR_a = \evT'$ then for all $\evt'	\in \evt \evR''_a$ we have that
+	$\evpr''(\evt') \implies p$.
+	Thus \ref{k45EventModelConFour} holds.\\
+	\\
+	Similarly, we can check that \ref{k45EventModelConFive} holds.
+	Suppose $a \in B$ and that for $p \in \langArbAct$ there is some $\evt \in \evp \evR''_a = \evT'$
+	such that $\evpr''(\evt) \implies p$.
+	We can make a similar argument in \ref{conFiveProof2} and \ref{conFiveProof3} to show that for all
+	$\evt' \in \evp \evR''_a$, $\evt \in \evt' \evR''_a$.
+	Thus \ref{k45EventModelConFive} holds.\\
+	\\
+	We have thus shown that both conditions \ref{k45EventModelConFour} and \ref{k45EventModelConFive}
+	of Lemma \ref{k45EventModel} hold.
+	Then
+	\[
+		\aMod{M}_\evp \to_B I_B(\evM'_{\evT'})
+	\]
+	is a \AXKFF event model.
+\end{proof}
 
 \begin{lemma}
 	\FIXME this lemma will say that the K45 event models we form will allow us to approximate other
