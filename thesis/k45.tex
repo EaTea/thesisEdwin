@@ -88,7 +88,7 @@ our models to obey these axioms.
     \node[vertex] (1) {$\alpha$};
     \node[vertex] (2) [right of=1] {$\beta$};
     \node[vertex] (3) [above right of=2] {$\gamma$};
-    \node[vertex] (4) [below right of=2] {$\omega$};
+    \node[vertex] (4) [below right of=2] {$\delta$};
     \path[edge]
           (1) edge node {} (2)
           (2) edge node {} (3)
@@ -96,7 +96,7 @@ our models to obey these axioms.
 \end{tikzpicture}
 \caption{Suppose for our Kripke model $\krMo$ (which obeys the rules and axioms in $\AXK$)
   that $\krMo_\alpha \models p$, $\krMo_\beta \models q$, $\krMo_\gamma \models r$ and
-  $\krMo_\omega \models q \land p$.
+  $\krMo_\delta \models q \land p$.
 We can say that $\krMo_\alpha \models \Box q$, but we cannot say that $\krMo_\alpha
 \models \Box \Box q$.
 Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ event model.}
@@ -111,7 +111,7 @@ Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ event model.}
     \node[vertex] (1) {$\alpha$};
     \node[vertex] (2) [right of=1] {$\beta$};
     \node[vertex] (3) [above right of=2] {$\gamma$};
-    \node[vertex] (4) [below right of=2] {$\omega$};
+    \node[vertex] (4) [below right of=2] {$\delta$};
     \path[edge]
           (1) edge node {} (2)
               edge node {} (3)
@@ -128,7 +128,7 @@ Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ event model.}
 \end{tikzpicture}
 \caption{Now our event model $\krMo'$ obeys $\AXKFF$.
 Let $\krMo'_\alpha \models p, \krMo'_\beta \models q, \krMo'_\gamma \models q \land r$ and
-  $\krMo'_\omega) \models q \land p$.
+  $\krMo'_\delta) \models q \land p$.
 Here, we see that (by $\axFo$) in order to say $\krMo'_\alpha \models \Box q$, we must also be
 able to say $\krMo'_\alpha \models \Box \Box q$.}
 \label{k45model}
@@ -145,7 +145,7 @@ Another observation we can make is with regards to the effect of $\axFi$ on $\kr
 \ref{k45model}).
 By $\axFi$ for any formula $k \in \lang$ such that $\krMo'_\alpha \models
 \Diamond k$, we have that $\krMo'_\alpha \models \Box \Diamond k$.
-This causes action points $\beta, \gamma$ and $\omega$ to become a completely connected component,
+This causes action points $\beta, \gamma$ and $\delta$ to become a completely connected component,
 with an edge running to each one of them, as well as reflexive edges for each point.\\
 \\
 We can approximate models in $\AXKFF$ using our previous method, but as we mentioned
@@ -185,7 +185,7 @@ introspection at each action point.
     \node[vertex] (1) {$\alpha$};
     \node[vertex] (2) [below of=1] {$\beta$};
     \node[vertex] (3) [right of=1] {$\gamma$};
-    \node[vertex] (4) [below of=3] {$\omega$};
+    \node[vertex] (4) [below of=3] {$\delta$};
     \path[edge]
           (1) edge node {$B$} (2)
           (3) edge node {$C$} (4)
@@ -195,15 +195,16 @@ introspection at each action point.
   subsets of $A$. Here, $\evM_\beta$ and $\evM_\gamma$
   are $B$-insane, since there are no outgoing $B$-edges from these event points.
 This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge,
-     and $\evM_\omega$ which has a reflexive $B$-edge.}
+     and $\evM_\delta$ which has a reflexive $B$-edge.}
 \label{bInsaneExample}
 \end{figure}
 
 We now define the main operation to construct event models in $\AXKFF$ for the
 purposes of realising a post condition.
+From this point on, we consider all event models to abide by the axioms of $\AXKFF$.
 
 \begin{defn} \label{makeEquivalence}
-	Let $B \subseteq A$ and $\evM_\evT$ be a $B$-insane forest event model.
+	Let $B \subseteq A$ and $\evM_\evT$ be a $B$-insane event model.
   For each $\evt \in \evT$ let $\evM_\evt$ be a tree event model in $\AXKFF$.
   Then the operation $I_B(\evM_\evT)$ constructs the event model $\evM'_{\evT'} =
   ((\evS',\evR',\evpr'),\evT')$ such that
@@ -233,7 +234,7 @@ same.
     \node[vertex] (1) {$\alpha$};
     \node[vertex] (2) [below of=1] {$\beta$};
 		\node[vertex] (5) [right of=2] {$\tau$};
-    \node[vertex] (4) [right of=5] {$\omega$};
+    \node[vertex] (4) [right of=5] {$\delta$};
     \node[vertex] (3) [above of=4] {$\gamma$};
     \path[edge]
           (1) edge node {$B$} (2)
@@ -252,7 +253,7 @@ same.
     \node[vertex] (1) {$\alpha$};
     \node[vertex] (2) [below of=1] {$\beta$};
 		\node[vertex] (5) [right of=2] {$\tau$};
-    \node[vertex] (4) [right of=5] {$\omega$};
+    \node[vertex] (4) [right of=5] {$\delta$};
     \node[vertex] (3) [above of=4] {$\gamma$};
     \path[edge]
           (1) edge node {$B$} (2)
