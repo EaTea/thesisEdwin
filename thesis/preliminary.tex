@@ -623,7 +623,7 @@ We denote that $\phi$ is provable by $\vdash \phi$.
 When discussing provability, it should be contextually clear which axiomatisation we are using.
 
 \begin{defn} \label{axiomK}
-The axiomatisation \AXK consists of the following axioms
+The axiomatisation $\AXK$ consists of the following axioms
 \begin{alignat*}{2}
 	& \axP && \quad \text{All propositional tautologies} \\
 	& \axK && \quad \Box_a(\phi \implies \psi) \implies (\Box_a \phi \implies \Box_a \psi)
@@ -636,11 +636,11 @@ and the following rules
 \end{defn}
 
 \begin{lemma} \label{axiomKSoundComplete}
-The axiomatisation \AXK is sound and complete with respect to the logic $\lang$.
+The axiomatisation $\AXK$ is sound and complete with respect to the logic $\lang$.
 \end{lemma}
 
 \begin{defn} \label{axiomAML}
-The axiomatisation \AXAML contains the axioms and rules from \AXK, as well as the following axioms
+The axiomatisation $\AXAML$ contains the axioms and rules from $\AXK$, as well as the following axioms
 \begin{alignat*}{2}
 	& \axAP && \quad \sqex{\evMo_\evs}\pi \iff (\evpr(s) \implies \pi) \text{ for $\pi \in \langProp$}\\
 	& \axAN && \quad \sqex{\evMo_\evs} \neg \phi \iff (\evpr(s) \implies \neg \sqex{\evM_\evs} \phi)\\
@@ -657,11 +657,11 @@ and the rule
 \end{defn}
 
 \begin{lemma} \label{axiomAMLSoundComplete}
-The axiomatisation \AXAML is sound and complete with respect to the logic $\langActEx$.
+The axiomatisation $\AXAML$ is sound and complete with respect to the logic $\langActEx$.
 \end{lemma}
 
 \begin{defn} \label{axiomRML}
-The axiomatisation \AXRML contains the axioms and rules from \AXK, as well as the following axioms
+The axiomatisation $\AXRML$ contains the axioms and rules from $\AXK$, as well as the following axioms
 \begin{alignat*}{2}
 	& \axR && \quad \forall_B (\phi \implies \psi) \implies (\forall_B \phi \implies \forall_B \psi) \\
 	& \axRP && \quad \forall_B \pi \iff \pi \text{ where } \pi \in \langProp \\
@@ -679,13 +679,15 @@ and the rule
 \end{defn}
 
 \begin{lemma} \label{axiomRMLSoundComplete}
-The axiomatisation \AXRML is sound and complete with respect to the logic $\langRefine$.
+The axiomatisation $\AXRML$ is sound and complete with respect to the logic $\langRefine$.
 \end{lemma}
 
 \begin{defn} \label{axiomAAML}
-The axiomatisation \AXAAML contains the axioms and rules from \AXRML and \AXAML.
+The axiomatisation $\AXAAML$ contains the axioms and rules from $\AXRML$ and $\AXAML$.
 \end{defn}
 
 \begin{thm} \label{axiomAAMLSoundComplete}
-The axiomatisation \AXAAML is sound and complete with respect to the logic $\langArbAct$.
+The axiomatisation $\AXAAML$ is sound and complete with respect to the logic $\langArbAct$.
 \end{thm}
+
+\FIXME need a theorem to show equivalence between $\lang$ and $\langArbAct$

@@ -1,19 +1,19 @@
-\section{Constructing event models in $\mathcal{K}45$ --- fixed by 7th October 2013}
+\section{Constructing event models in $\AXKFF$ --- fixed by 7th October 2013}
 
-We have discussed models in the axiom system of $\mathcal{K}$.
+We have discussed models in the axiom system of $\AXK$.
 In particular, we have focused on approximating arbitrary models.
 Our approximations can fulfill postconditions and the effects of event model execution, up to modal
 depth $n$.
 We will replicate a similar result of event model approximation in the axiomatic system
-of $\mathcal{K}45$.
+of $\AXKFF$.
 This chapter details our results for our event model approximation in the axiomatic system
-$\mathcal{K}45$.
+$\AXKFF$.
 
 \subsection{Background --- fixed by 5 September 2013}
 
 Previously, we constructed models that were tree-like in their nature.
 We defined many concepts used to describe trees, such as a ``root", ``subtrees" and ``forests".
-This allowed us to approximate arbitrary models in $\mathcal{K}$, to model any post-condition we
+This allowed us to approximate arbitrary models in $\AXK$, to model any post-condition we
 were interested in.
 
 \begin{figure}[ht!]
@@ -45,11 +45,11 @@ models must now abide by.
 Within a modal logic context, knowledge has a specific structure which results from the axioms
 specified in the axiomatic system.
 We will move closer to the mainstream axiomatic systems used in epistemic logic by moving to the
-axiomatic system \AXKFF.
-We define the axiomatic system of \AXKFF as follows
+axiomatic system $\AXKFF$.
+We define the axiomatic system of $\AXKFF$ as follows
 
 \begin{lemma} \label{axiomK45}
-The axiomatisation \AXKFF contains the axioms and rules from \AXK (Definition
+The axiomatisation $\AXKFF$ contains the axioms and rules from $\AXK$ (Definition
     \ref{axiomK}), as well as the following axioms
 \begin{alignat*}{2}
   & \axFo && \quad \Box \phi \implies \Box \Box \phi \\
@@ -58,24 +58,24 @@ The axiomatisation \AXKFF contains the axioms and rules from \AXK (Definition
 \end{lemma}
 
 \begin{lemma} \label{axiomK45SoundComplete}
-The axiomatisation \AXKFF is sound and complete with respect to the logic
+The axiomatisation $\AXKFF$ is sound and complete with respect to the logic
 $\lang$.
 \end{lemma}
 
-\AXKFF was first constructed by \FIXME and proved to be a sound and complete axiomatic
+$\AXKFF$ was first constructed by \FIXME and proved to be a sound and complete axiomatic
 system by Grossi in \cite{grossi2007designing}.\\
 \\
 The impact these axioms have on our models is not immediately obvious.
 We observe the following effects of the axioms
 \begin{itemize}
-	\item \axFo causes every relation to be transitive
-	\item \axFi has more subtle consequences.
+	\item $\axFo$ causes every relation to be transitive
+	\item $\axFi$ has more subtle consequences.
     Suppose $A$ is related to $B$.
     Then if $C$ is related to $A$, $C$ must also be related to $B$.
     A further consequence is that $B$ must also be related to $C$.
 \end{itemize}
 
-We demonstrate this through by comparing models in \AXK and \AXKFF and how we need to change
+We demonstrate this through by comparing models in $\AXK$ and $\AXKFF$ and how we need to change
 our models to obey these axioms.
 
 \begin{figure}[ht!]
@@ -94,12 +94,12 @@ our models to obey these axioms.
           (2) edge node {} (3)
           (2) edge node {} (4);
 \end{tikzpicture}
-\caption{Suppose for our Kripke model $\krMo$ (which obeys the rules and axioms in \AXK)
+\caption{Suppose for our Kripke model $\krMo$ (which obeys the rules and axioms in $\AXK$)
   that $\krMo_\alpha \models p$, $\krMo_\beta \models q$, $\krMo_\gamma \models r$ and
   $\krMo_\omega \models q \land p$.
 We can say that $\krMo_\alpha \models \Box q$, but we cannot say that $\krMo_\alpha
 \models \Box \Box q$.
-Then \axFo is disobeyed and thus $\krMo$ is not a \AXKFF event model.}
+Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ event model.}
 \label{kmodel}
 \end{subfigure}
 ~
@@ -126,10 +126,10 @@ Then \axFo is disobeyed and thus $\krMo$ is not a \AXKFF event model.}
               edge node {} (3)
               edge [loop below] node {} (4);
 \end{tikzpicture}
-\caption{Now our event model $\krMo'$ obeys \AXKFF.
+\caption{Now our event model $\krMo'$ obeys $\AXKFF$.
 Let $\krMo'_\alpha \models p, \krMo'_\beta \models q, \krMo'_\gamma \models q \land r$ and
   $\krMo'_\omega) \models q \land p$.
-Here, we see that (by \axFo) in order to say $\krMo'_\alpha \models \Box q$, we must also be
+Here, we see that (by $\axFo$) in order to say $\krMo'_\alpha \models \Box q$, we must also be
 able to say $\krMo'_\alpha \models \Box \Box q$.}
 \label{k45model}
 \end{subfigure}
@@ -138,28 +138,28 @@ able to say $\krMo'_\alpha \models \Box \Box q$.}
 \label{k45VsKModels}
 \end{figure}
 
-In Figure \ref{k45VsKModels} we compare an event model in \AXK to a model in \AXKFF.
-We have already briefly discussed how \axFo affects the reasonings we can make on the $\krMo_\alpha$ versus
+In Figure \ref{k45VsKModels} we compare an event model in $\AXK$ to a model in $\AXKFF$.
+We have already briefly discussed how $\axFo$ affects the reasonings we can make on the $\krMo_\alpha$ versus
 $\krMo'_\alpha$.
-Another observation we can make is with regards to the effect of \axFi on $\krMo'_\alpha$ (Subfigure
+Another observation we can make is with regards to the effect of $\axFi$ on $\krMo'_\alpha$ (Subfigure
 \ref{k45model}).
-By \axFi for any formula $k \in \lang$ such that $\krMo'_\alpha \models
+By $\axFi$ for any formula $k \in \lang$ such that $\krMo'_\alpha \models
 \Diamond k$, we have that $\krMo'_\alpha \models \Box \Diamond k$.
 This causes action points $\beta, \gamma$ and $\omega$ to become a completely connected component,
 with an edge running to each one of them, as well as reflexive edges for each point.\\
 \\
-We can approximate models in \AXKFF using our previous method, but as we mentioned
+We can approximate models in $\AXKFF$ using our previous method, but as we mentioned
 the generated model is far from resembling an epistemic event model.
-Models in the axiomatic system \AXKFF resemble epistemic event models much more closely.
-Furthermore, any epistemic event model will obey the axioms of \AXKFF.\\
+Models in the axiomatic system $\AXKFF$ resemble epistemic event models much more closely.
+Furthermore, any epistemic event model will obey the axioms of $\AXKFF$.\\
 \\
-An open question, related to our previous chapter --- can we now generate \AXKFF models to
-approximate other \AXKFF models?
+An open question, related to our previous chapter --- can we now generate $\AXKFF$ models to
+approximate other $\AXKFF$ models?
 
 \subsection{Technical Preliminaries --- fixed by 11 September 2013}
 
 We first define what a $B$-insane set is.
-It is a necessary condition in order to generate our approximating \AXKFF models.
+It is a necessary condition in order to generate our approximating $\AXKFF$ models.
 
 \begin{defn} \label{binsane}
 	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed event model and $B \subseteq A$.
@@ -199,12 +199,12 @@ This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge,
 \label{bInsaneExample}
 \end{figure}
 
-We now define the main operation to construct event models in \AXKFF for the
+We now define the main operation to construct event models in $\AXKFF$ for the
 purposes of realising a post condition.
 
 \begin{defn} \label{makeEquivalence}
 	Let $B \subseteq A$ and $\evM_\evT$ be a $B$-insane forest event model.
-  For each $\evt \in \evT$ let $\evM_\evt$ be a tree event model in \AXKFF.
+  For each $\evt \in \evT$ let $\evM_\evt$ be a tree event model in $\AXKFF$.
   Then the operation $I_B(\evM_\evT)$ constructs the event model $\evM'_{\evT'} =
   ((\evS',\evR',\evpr'),\evT')$ such that
   \begin{itemize}
@@ -279,7 +279,7 @@ Note the }
 \end{figure}
 
 The addition of our new operator results in us having the following language for
-event model construction in \AXKFF.
+event model construction in $\AXKFF$.
 \[
   \evM_\evT = \evM_\evT \text{ } | \text{ }\evM_\evT \to \evM'_{\evT'} \text{ }|
   \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } E_B(\evM_\evT)
@@ -287,7 +287,7 @@ event model construction in \AXKFF.
 where $\evM_\evT, \evM'_{\evT'}$ are multi-pointed event models and $B \subseteq
 A$.\\
 \\
-We will now show that this language always constructs models in \AXKFF, and
+We will now show that this language always constructs models in $\AXKFF$, and
 furthermore that some post condition in the language $\lang$ can be realised by
 some event model that our language can construct.
 
