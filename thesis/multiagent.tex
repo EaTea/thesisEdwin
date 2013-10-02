@@ -54,7 +54,7 @@ $\evM_\evT$ is a finite forest event model if
   \item $\evS = \bigcup_{\evt \in \evT} \evS^\evt$
 	\item for each $\evs \in \evS^\evt$, $\evpr(\evs) = \evpr^\evt(\evs)$
 	\item if $\evs, \evt \in \evT$ such that $\evs \neq \evt$, then $\evS^\evs$ and $\evS^\evt$ are disjoint
-  \item for each $a \in A \implies \evR_a = \bigcup_{\evt \in \evT} \evR_a^\evt$
+  \item for each $a \in A \Rightarrow \evR_a = \bigcup_{\evt \in \evT} \evR_a^\evt$
 \end{itemize}
 \end{defn}
 
@@ -73,8 +73,8 @@ Let $\evM_\evr = (\evS, \evR, \evpr, \evT)$ be a finite forest event model.
 We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a subtree of $\evM$ if
 \begin{itemize}
 	\item $\evS' \subseteq \evS$
-	\item $\forall a \in A \implies \evR_a' \subseteq \evR_a$
-	\item $\forall \evs \in \evS' \implies \evpr(\evs) = \evpr'(\evs) $
+	\item $\forall a \in A \Rightarrow \evR_a' \subseteq \evR_a$
+	\item $\forall \evs \in \evS' \Rightarrow \evpr(\evs) = \evpr'(\evs) $
 	\item $\evM'$ is $\evR$-generable
 	\item $\evM'$ is a finite tree event model
 \end{itemize}
@@ -83,7 +83,7 @@ We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a subt
 \begin{defn} \label{leaf}
 Let $\evM_\evr = (\evS, \evR, \evpr, \evr)$ be a finite tree event model.
 Let $\evM' = (\evS', \evR', \evpr', \evr')$ be a subtree of $\evM$.
-$\evM'$ is a leaf node of $\evM$ if $\forall a \in A \implies \evR'_a = \varnothing$ and $\evS' = \{
+$\evM'$ is a leaf node of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
 \evr'\}$.
 \end{defn}
 
@@ -148,17 +148,17 @@ We must show each of the following
 \end{enumerate}
 
 We note that $\evT = \evT^1 \sqcup \evT^2$.
-Thus $\evt \in \evT \implies (\evt \in \evT^1 \lor \evt \in \evT^2)$.
+Thus $\evt \in \evT \Rightarrow (\evt \in \evT^1 \lor \evt \in \evT^2)$.
 Since $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$ are both finite forest event models then there must be some
 subtree event model $\evM^\evt \in \treeClass$ that corresponds to $\evt$.
 Without loss of generality, let $\evt \in \evT^1$.\\
 \\
 Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $\evM^\evt$, $\evS^\evt \subseteq \evS^1 \subseteq \evS$.
-Also, $\evR^\evt \subseteq \evR^1 \subseteq \evR$ and for all $s \in \evS^1 \implies \evpr^\evt(s) = \evpr^1(s) =
+Also, $\evR^\evt \subseteq \evR^1 \subseteq \evR$ and for all $s \in \evS^1 \Rightarrow \evpr^\evt(s) = \evpr^1(s) =
 \evpr(s)$.
 Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other $\evM^{\evt'}$ since
 \begin{itemize}
-	\item $\evt' \in \evT^1 \implies$ that condition \ref{subtreeStatesDisjoint} previously held for
+	\item $\evt' \in \evT^1 \Rightarrow$ that condition \ref{subtreeStatesDisjoint} previously held for
 	$\evM^1_{\evT^1} \in \forestClass$ and thus $\evS^{\evt'}$ is disjoint $\evS^\evt$
 	\item $\evt' \in \evT^2$ will ensure that $\evS^{\evt'}$ and $\evS^\evt$ are disjoint by the premise of
 	the lemma
@@ -374,7 +374,7 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %Furthermore, $s R_a s'$ by the definition of $M_T$, so we can combine the previous statement
 %with $s R_a s'$ to say that there is a unique sequence of agents and points from $s$ to
 %$s$.
-%Thus, $M_T \in \treeClass \implies M_T \in \forestClass$ by Lemma \ref{treeIsForest}.\\
+%Thus, $M_T \in \treeClass \Rightarrow M_T \in \forestClass$ by Lemma \ref{treeIsForest}.\\
 %\\
 %Next, we shall show that $\vdash \sqex{M_T} \phi$.
 %We will show that each of the following holds
@@ -386,13 +386,13 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %
 %Firstly we show $\vdash \sqex{M_T} \pi$.
 %\begin{align}
-%	& \vdash \phi \implies \pi \label{cfa_c1_1} \\
-%	& \vdash \neg \pi \implies \neg \phi \label{cfa_c1_2}\\
-%	& \vdash \forall (\neg \pi \implies \neg \phi) \label{cfa_c1_3}\\
-%	& \vdash \forall \neg \pi \implies \forall \neg \phi \label{cfa_c1_4}\\
-%	& \vdash \neg \forall \neg \phi \implies \neg \forall \neg \pi \label{cfa_c1_5}\\
-%	& \vdash \exists \phi \implies \exists_B \pi \label{cfa_c1_6}\\
-%	& \vdash \evpr(s) \implies \pi \label{cfa_c1_7}\\
+%	& \vdash \phi \Rightarrow \pi \label{cfa_c1_1} \\
+%	& \vdash \neg \pi \Rightarrow \neg \phi \label{cfa_c1_2}\\
+%	& \vdash \forall (\neg \pi \Rightarrow \neg \phi) \label{cfa_c1_3}\\
+%	& \vdash \forall \neg \pi \Rightarrow \forall \neg \phi \label{cfa_c1_4}\\
+%	& \vdash \neg \forall \neg \phi \Rightarrow \neg \forall \neg \pi \label{cfa_c1_5}\\
+%	& \vdash \exists \phi \Rightarrow \exists_B \pi \label{cfa_c1_6}\\
+%	& \vdash \evpr(s) \Rightarrow \pi \label{cfa_c1_7}\\
 %	& \vdash \sqex{M_s} \pi \label{cfa_c1_8}
 %\end{align}
 %(\ref{cfa_c1_3}) follows from \axNecR, (\ref{cfa_c1_4}) follows from \axR, (\ref{cfa_c1_6}) follows from
@@ -412,7 +412,7 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %	& \vdash \bigwedge_{\gamma \in \Gamma^c} \bigwedge_{v \in T^\gamma} \Box_c \sqex{M^\gamma_v}
 %	\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_6} \\
 %	& \vdash \bigwedge_{v \in s R} \Box_c \sqex{M_v}\bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_7} \\
-%	& \vdash \evpr(s) \implies \bigwedge_{v \in s R} \Box \sqex{M_v} \bigvee_{\gamma' \in
+%	& \vdash \evpr(s) \Rightarrow \bigwedge_{v \in s R} \Box \sqex{M_v} \bigvee_{\gamma' \in
 %		\Gamma^c} \gamma'\label{cfa_c2_8} \\
 %	& \vdash \sqex{M_s} \Box_c \bigvee_{\gamma' \in \Gamma^c} \gamma'\label{cfa_c2_9} 
 %\end{align}
@@ -425,8 +425,8 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %Suppose that $c \in B$.
 %Then
 %\begin{align}
-%	& \vdash \exists_B \phi \implies \exists_B \cover_c \Gamma_c \label{cfa_c3_1a}\\
-%	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond \exists_B
+%	& \vdash \exists_B \phi \Rightarrow \exists_B \cover_c \Gamma_c \label{cfa_c3_1a}\\
+%	& \vdash \exists_B \phi \Rightarrow \bigwedge_{\gamma \in \Gamma} \Diamond \exists_B
 %	\gamma\label{cfa_c3_2a}
 %\end{align}
 %(\ref{cfa_c3_1a}) follows from similiar reasoning for (\ref{cfa_c1_1} - \ref{cfa_c1_6}) and
@@ -435,29 +435,29 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %Now suppose $c \notin B$.
 %Then
 %\begin{align}
-%	& \vdash \exists_B \phi \implies \exists_B \cover_c \Gamma_c \label{cfa_c3_1b}\\
-%	& \vdash \exists_B \phi \implies \cover_c \{\exists_B \gamma | \gamma \in \Gamma_c \}a
+%	& \vdash \exists_B \phi \Rightarrow \exists_B \cover_c \Gamma_c \label{cfa_c3_1b}\\
+%	& \vdash \exists_B \phi \Rightarrow \cover_c \{\exists_B \gamma | \gamma \in \Gamma_c \}a
 %	\label{cfa_c3_2b}\\
-%	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \exists_B \gamma
+%	& \vdash \exists_B \phi \Rightarrow \bigwedge_{\gamma \in \Gamma} \Diamond_c \exists_B \gamma
 %	\label{cfa_c3_3b}
 %\end{align}
 %(\ref{cfa_c3_1b}) follows from similiar reasoning for (\ref{cfa_c1_1} - \ref{cfa_c1_6}).
 %(\ref{cfa_c3_2b}) follows from \axRComm.
 %(\ref{cfa_c3_3b}) follows from the definition of the cover operator (Definition \ref{coverDef}).\\
 %\\
-%Thus for any $c \in C$ we have that $\vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma}
+%Thus for any $c \in C$ we have that $\vdash \exists_B \phi \Rightarrow \bigwedge_{\gamma \in \Gamma}
 %\Diamond_c \exists_B \gamma$.
 %Then for any $c \in C$
 %\begin{align}
-%	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
+%	& \vdash \exists_B \phi \Rightarrow \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
 %	M^\gamma_{T^{\gamma}} } \gamma\label{cfa_c3_3}\\
-%	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
+%	& \vdash \exists_B \phi \Rightarrow \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
 %	\bigvee_{v \in T^\gamma} M^\gamma_{v} } \gamma\label{cfa_c3_4}\\
-%	& \vdash \exists_B \phi \implies \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
+%	& \vdash \exists_B \phi \Rightarrow \bigwedge_{\gamma \in \Gamma} \Diamond_c \anex{
 %	\bigvee_{v \in s R} M^\gamma_{v} } \gamma\label{cfa_c3_5}\\
-%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \bigvee_{v \in s R_c}
+%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \Rightarrow \bigvee_{v \in s R_c}
 %	\Diamond_c \anex{ M^\gamma_{v} } \gamma)\label{cfa_c3_6}\\
-%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \implies \anex{ M^\gamma_{s}
+%	& \vdash \bigwedge_{\gamma \in \Gamma} (\exists_B \phi \Rightarrow \anex{ M^\gamma_{s}
 %	} \Diamond_c \gamma)\label{cfa_c3_7}\\
 %	& \vdash \bigwedge_{\gamma \in \Gamma} ([M^\gamma_{s}] \Diamond_c \gamma)\label{cfa_c3_8}
 %\end{align}
@@ -529,21 +529,21 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %\\
 %Finally, we show that $\anex{M_T} \iff \exists \phi$.
 %\begin{align}
-%	&\vdash \exists (\alpha \lor \beta) \implies (\exists \alpha \lor \exists \beta) \label{djfa_c2_1} \\
-%	&\vdash \exists (\alpha \lor \beta) \implies (\anex{ M^\alpha_{T^\alpha} } \alpha \lor
+%	&\vdash \exists (\alpha \lor \beta) \Rightarrow (\exists \alpha \lor \exists \beta) \label{djfa_c2_1} \\
+%	&\vdash \exists (\alpha \lor \beta) \Rightarrow (\anex{ M^\alpha_{T^\alpha} } \alpha \lor
 %			\anex{ M^\beta_{T^\beta} }\beta) \label{djfa_c2_2}\\
-%	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} \alpha \lor \anex{M_{T^\beta}}
+%	&\vdash \exists (\alpha \lor \beta) \Rightarrow (\anex{M_{T^\alpha}} \alpha \lor \anex{M_{T^\beta}}
 %			\beta)\label{djfa_c2_3}\\
-%	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_{T^\alpha}} (\alpha \lor \beta) \lor \anex{M_{T^\beta}}
+%	&\vdash \exists (\alpha \lor \beta) \Rightarrow (\anex{M_{T^\alpha}} (\alpha \lor \beta) \lor \anex{M_{T^\beta}}
 %			(\alpha \lor \beta))\label{djfa_c2_4}\\
-%	&\vdash \exists (\alpha \lor \beta) \implies (\anex{M_T} (\alpha \lor \beta))\label{djfa_c2_5}
+%	&\vdash \exists (\alpha \lor \beta) \Rightarrow (\anex{M_T} (\alpha \lor \beta))\label{djfa_c2_5}
 %\end{align}
 %(\ref{djfa_c2_1}) follows from \axR, (\ref{djfa_c2_2}) follows from hypothesis and
 %(\ref{djfa_c2_3}) follows from Lemma \ref{eventModelEquivalent} and $M_{T^\alpha} \sim M^\alpha_{T^\alpha}$ and $M_{T^\beta}
 %\sim M^\beta_{T^\beta}$.
 %(\ref{djfa_c2_4}) is a simple disjunction introduction, and (\ref{djfa_c2_5}) follows from \axAU.\\
 %\\
-%The converse, $\vdash \anex{M_T} \phi \implies \exists \phi$ follows from a semantic
+%The converse, $\vdash \anex{M_T} \phi \Rightarrow \exists \phi$ follows from a semantic
 %argument, from $M_T \in \eventClass_B$, from Lemma \ref{eventModelsRefine} and the completeness of \AXAAML.\\
 %\end{proof}
 %
@@ -635,7 +635,7 @@ To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions mus
 \begin{enumerate}
 	\item each point $\evt \in \evT'$ is the root of a finite tree event model $\evM^\evt_\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt)$ \label{forestConOne}
   \item $\evS' = \bigcup_{\evt \in \evT'} \evS^\evt$ \label{forestConTwo}
-  \item for each $a \in A \implies \evR'_a = \bigcup_{\evt \in \evT'} \evR^\evt_a$ \label{forestConFive}
+  \item for each $a \in A \Rightarrow \evR'_a = \bigcup_{\evt \in \evT'} \evR^\evt_a$ \label{forestConFive}
 	\item for each $\evs \in \evS^\evt$, $\evpr'(\evs) = \evpr^\evt(\evs)$ \label{forestConThree}
 	\item if $\evs, \evt \in \evT'$ such that $\evs \neq \evt$, then $\evS^\evs$ and $\evS^\evt$ are disjoint
 	\label{forestConFour}
@@ -891,7 +891,7 @@ We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of event mo
 	 \phi'' \in \lang$, if
 \[
 	 \evM_\evs \in \mathcal{M}2(\phi,\phi'') \iff (\forall \phi' \in \langActEx
-	 \text{ such that } \phi,\phi'' \models^2 \phi' \implies \evM_\evs \models \phi').
+	 \text{ such that } \phi,\phi'' \models^2 \phi' \Rightarrow \evM_\evs \models \phi').
 \]
 \\
 Next, we define the idea of the ``minimal change".
@@ -900,7 +900,7 @@ Next, we define the idea of the ``minimal change".
 Let $\evM_\evt \in \eventClass$, and suppose that the execution of $\evM_\evt$ always results in the
 postcondition $\phi \in \lang$.
 We say that $\evM_\evt$ is the minimal change of $\phi$ if for any other $\evM'_{\evt'}$ such that
-executing $\evM'_{\evt'}$ results in $\phi$ being true, there is some $\psi \in \lang$ such that $\psi \implies
+executing $\evM'_{\evt'}$ results in $\phi$ being true, there is some $\psi \in \lang$ such that $\psi \Rightarrow
 \phi$ and $\psi \neq \phi$ where executing $\evM'_{\evt'}$ always results in $\psi$ being true.
 \end{defn}
 

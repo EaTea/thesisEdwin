@@ -194,7 +194,7 @@ This is shown by van Ditsmarch and French in \cite{van2009simulation}.
 
 \begin{lemma} \label{bisimilarIsRefinement}
 Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$ and $B \subseteq A$.
-Then $\krMo_s \sim \krMo'_{s'} \implies \krMo_s \lesssim_B \krMo'_{s'}$.
+Then $\krMo_s \sim \krMo'_{s'} \Rightarrow \krMo_s \lesssim_B \krMo'_{s'}$.
 \end{lemma}
 
 This follows trivially from Definition \ref{refinement} and Definition \ref{bisimKripke}.
@@ -316,7 +316,7 @@ The interpretation of $\phi \in \langActEx$ is the same as its interpretation in
 inductive cases
 \begin{itemize}
 	\item $\krMo_s \models \sqex{\aMod{\evMo_s}} \phi$ iff $\krMo_s \models
-  \phi \implies \krMo_s \otimes \aMod{\evMo_s} \models
+  \phi \Rightarrow \krMo_s \otimes \aMod{\evMo_s} \models
 	\phi$ (see Definition \ref{evModelEx})
 	\item $\krMo_s \models \sqex{\aMod{\evMo_T}} \phi$ iff for every $\aMod{s
     \in T}$, $\krMo_s \models \sqex{\aMod{\evMo_s}} \phi$ 
@@ -431,21 +431,21 @@ $\krMo^1_{(s,\aMod{t})} \models \phi$.
 \ref{model}).
 (\ref{baseTwo}) follows from the definition of event model execution
 (Definition \ref{evModelEx}).
-(\ref{baseThree}) follows from hypothesis, as $\krMo_s \sim_{2n} \krMo'_{s'} \implies \krMo_s \sim_0
+(\ref{baseThree}) follows from hypothesis, as $\krMo_s \sim_{2n} \krMo'_{s'} \Rightarrow \krMo_s \sim_0
 \krMo'_{s'}$
 (Definition \ref{nBisimKripke}).
 (\ref{baseFour}) follows from the definition of event model execution and
 (\ref{baseFive}) follows from the definition of Kripke model (Definition
 \ref{model}).
-Therefore, we have $\krMo^1_{(s,\aMod{t})} \models \phi \implies \krMo^2_{(s',\aMod{t})}$.
+Therefore, we have $\krMo^1_{(s,\aMod{t})} \models \phi \Rightarrow \krMo^2_{(s',\aMod{t})}$.
 The converse follows a similar argument.\\
 \\
 We handle each of the inductive cases separately now.
 Let $\phi = \neg \psi$.
 Suppose $M^1_{(s,t)} \models \phi$.
 \begin{align}
-	& \implies \neg (\krMo^1_{(s,\aMod{t})} \models \psi) \label{nBisKriNeg1} \\
-	& \implies \neg (\krMo^2_{(s',\aMod{t})} \models \psi) \label{nBisKriNeg2}
+	& \Rightarrow \neg (\krMo^1_{(s,\aMod{t})} \models \psi) \label{nBisKriNeg1} \\
+	& \Rightarrow \neg (\krMo^2_{(s',\aMod{t})} \models \psi) \label{nBisKriNeg2}
 \end{align}
 (\ref{nBisKriNeg1}) follows from the semantics of propositional logic and the inductive case for
 $\neg$ (Lemma \ref{propLogic}).
@@ -454,7 +454,7 @@ $\neg$ (Lemma \ref{propLogic}).
 Let $\phi = \psi_1 \land \psi_2$.
 Suppose $\krMo^1_{(s,\aMod{t})} \models \phi$.
 \begin{align}
-	& \implies \krMo^1_{(s,\aMod{t})} \models \psi_1 \label{nBisKriConj1} \\
+	& \Rightarrow \krMo^1_{(s,\aMod{t})} \models \psi_1 \label{nBisKriConj1} \\
 	& \iff \krMo^2_{(s',\aMod{t})} \models \psi_1 \label{nBisKriConj2}
 \end{align}
 (\ref{nBisKriConj1}) follows from the semantics of propositional logic and the inductive case for
@@ -462,13 +462,13 @@ $\land$ (Lemma \ref{propLogic}).
 (\ref{nBisKriConj2}) follows from the induction hypothesis.\\
 \\
 We can employ a similar argument to show that $\krMo^2_{(s',\aMod{t})} \models \psi_2$ and together with
-(\ref{nBisKriConj2}) we have $\krMo^2_{(s',\aMod{t})} \models \psi_1 \land \krMo^2_{(s',\aMod{t})} \models \psi_2 \implies
+(\ref{nBisKriConj2}) we have $\krMo^2_{(s',\aMod{t})} \models \psi_1 \land \krMo^2_{(s',\aMod{t})} \models \psi_2 \Rightarrow
 \krMo^2_{(s',\aMod{t})} \models \psi_1 \land \psi_2 = \phi$.\\
 \\
 Now, let $\phi = \Diamond_a \psi$ and suppose $\krMo^1_{(s,\aMod{t})} \models \phi$.
 \begin{align}
-	& \implies \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $(u,\aMod{v}) \in (s,\aMod{t}) R^1_a$} \label{nBisKriMod1} \\
-	& \implies \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $u \in s R_a$ and $v \in R^N_a$ and $\krMo_s
+	& \Rightarrow \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $(u,\aMod{v}) \in (s,\aMod{t}) R^1_a$} \label{nBisKriMod1} \\
+	& \Rightarrow \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $u \in s R_a$ and $v \in R^N_a$ and $\krMo_s
 		\models pre(t)$ and $\krMo_u \models \aMod{pre(v)}$} \label{nBisKriMod2}
 \end{align}
 (\ref{nBisKriMod1}) follows from the semantics of modal logic and the inductive case for
@@ -477,7 +477,7 @@ $\Diamond_a$ (Lemma \ref{modalLogic}).
 		\ref{evModelEx}).\\
 \\
 From our hypothesis, given that $\aMod{pre(t)} \leq m$ we have that $\krMo_s \sim_{2n} \krMo'_{s'}
-\implies (\krMo_s \models \aMod{pre(t)} \iff \krMo'_{s'} \models
+\Rightarrow (\krMo_s \models \aMod{pre(t)} \iff \krMo'_{s'} \models
 \aMod{pre(t)})$.
 But by the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}), $\krMo_u$ is
 $2n-1$-bisimilar to some point $\krMo'_{u'}$.
@@ -485,10 +485,10 @@ If $\mDep(\aMod{pre(v)}) \leq n-1$ we have by our induction hypothesis that $\kr
 \aMod{pre(v)} \iff \krMo'_{u'}
 \models \aMod{pre(v)}$.\\
 \\
-Then by the induction hypothesis, $\krMo_u \sim_{2n} \krMo'_{u'} \land \mDep(\psi) \leq k \implies
+Then by the induction hypothesis, $\krMo_u \sim_{2n} \krMo'_{u'} \land \mDep(\psi) \leq k \Rightarrow
 \krMo^2_{(u',\aMod{v})}  \models \psi$.
 By the semantics of modal logic (Lemma \ref{modalLogic}) we have that $\krMo^2_{(s',\aMod{t})} \models
-\Diamond_a \psi \implies \krMo^2_{(s',\aMod{t})} \models \phi$.
+\Diamond_a \psi \Rightarrow \krMo^2_{(s',\aMod{t})} \models \phi$.
 \end{proof}
 
 \begin{defn} \label{nBisimEvent}
@@ -530,12 +530,12 @@ We begin with a base case of $\phi = p$, a single atomic proposition.
 Suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
 \begin{align}
-	& \implies p \in V^1_{(t,\evs)} \label{nBisEvbase1} \\
-	& \implies p \in V(t) \label{nBisEvbase2} \\
-	& \implies \krMo_t \models \evpr(\evs) \label{nBisEvbase4} \\
-	& \implies \krMo_t \models \evpr'(\evs') \label{nBisEvbase5} \\
-	& \implies p \in V^2_{(t,\evs')} \label{nBisEvbase6}\\
-	& \implies \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
+	& \Rightarrow p \in V^1_{(t,\evs)} \label{nBisEvbase1} \\
+	& \Rightarrow p \in V(t) \label{nBisEvbase2} \\
+	& \Rightarrow \krMo_t \models \evpr(\evs) \label{nBisEvbase4} \\
+	& \Rightarrow \krMo_t \models \evpr'(\evs') \label{nBisEvbase5} \\
+	& \Rightarrow p \in V^2_{(t,\evs')} \label{nBisEvbase6}\\
+	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
 \end{align}
 (\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
 (\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of event model execution (Definition
@@ -551,10 +551,10 @@ We go through each of the inductive cases.
 Let $\phi = \neg \psi$, and suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
 \begin{align}
-	& \implies \neg (\evMo^1_{(t,\evs)} \models \psi) \label{nBisEvNeg1} \\
-	& \implies \neg (\evMo^2_{(t,\evs')} \models \psi) \label{nBisEvNeg2} \\
-	& \implies \evMo^2_{(t,\evs')} \models \neg \psi \label{nBisEvNeg3} \\
-	& \implies \evMo^2_{(t,\evs')} \models \phi \label{nBisEvNeg4}
+	& \Rightarrow \neg (\evMo^1_{(t,\evs)} \models \psi) \label{nBisEvNeg1} \\
+	& \Rightarrow \neg (\evMo^2_{(t,\evs')} \models \psi) \label{nBisEvNeg2} \\
+	& \Rightarrow \evMo^2_{(t,\evs')} \models \neg \psi \label{nBisEvNeg3} \\
+	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvNeg4}
 \end{align}
 (\ref{nBisEvNeg1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
 (\ref{nBisEvNeg2}) follows from the induction hypothesis.
@@ -564,8 +564,8 @@ Then
 Let $\phi = \psi_1 \land \psi_2$ and suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
 \begin{align}
-	& \implies \evMo^1_{(t,\evs}) \models \psi_1 \label{nBisEvCon1} \\
-	& \implies \evMo^2_{(t,\evs'}) \models \psi_1 \label{nBisEvCon2}
+	& \Rightarrow \evMo^1_{(t,\evs}) \models \psi_1 \label{nBisEvCon1} \\
+	& \Rightarrow \evMo^2_{(t,\evs'}) \models \psi_1 \label{nBisEvCon2}
 \end{align}
 (\ref{nBisEvCon1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
 (\ref{nBisEvCon2}) follows from the induction hypothesis.
@@ -583,11 +583,11 @@ Suppose that $\evMo^1_{(t,\evs)} \models \phi$.
 
 As $\evMo_\evs \sim_n \evMo'_{\evs'}$, then there is some $\evu' \in \evs R'_a$ such that $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}$.
 Then we have that $\krMo_v \models \evpr(\evu) \iff \krMo_v \models \evpr'(\evu)$, since $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}
-\implies \evMo_\evu \sim_0 \evMo'_{\evu'}$.
+\Rightarrow \evMo_\evu \sim_0 \evMo'_{\evu'}$.
 Then by our induction hypothesis we have that $\evMo^1_{(v,\evu)} \models \psi \iff \evMo^2_{(v, \evu')} \models
 \psi$.
 From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $\evMo^2_{(v,\evu')}
-\models \psi \implies \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
+\models \psi \Rightarrow \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
 \end{proof}
 
 \FIXME: WHO?! Please cite.
@@ -604,7 +604,7 @@ formulae in cover disjunctive normal form.
 \end{defn}
 
 We note that the above has a base case when $\alpha = \pi$, that is when $B = \varnothing$ or for
-each $b \in B \implies \Gamma_b = \varnothing$.
+each $b \in B \Rightarrow \Gamma_b = \varnothing$.
 
 \begin{lemma} \label{allInCoverNormal}
 Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal form.
@@ -626,11 +626,11 @@ When discussing provability, it should be contextually clear which axiomatisatio
 The axiomatisation $\AXK$ consists of the following axioms
 \begin{alignat*}{2}
 	& \axP && \quad \text{All propositional tautologies} \\
-	& \axK && \quad \Box_a(\phi \implies \psi) \implies (\Box_a \phi \implies \Box_a \psi)
+	& \axK && \quad \Box_a(\phi \Rightarrow \psi) \Rightarrow (\Box_a \phi \Rightarrow \Box_a \psi)
 \end{alignat*}
 and the following rules
 \begin{alignat*}{2}
-	& \axMP && \quad \text{From $\vdash \phi \implies \psi$ and $\vdash \phi$, infer $\vdash \psi$} \\
+	& \axMP && \quad \text{From $\vdash \phi \Rightarrow \psi$ and $\vdash \phi$, infer $\vdash \psi$} \\
 	& \axNecK && \quad \text{From $\vdash \phi$, infer $\vdash \Box_a \phi$}
 \end{alignat*}
 \end{defn}
@@ -642,11 +642,11 @@ The axiomatisation $\AXK$ is sound and complete with respect to the logic $\lang
 \begin{defn} \label{axiomAML}
 The axiomatisation $\AXAML$ contains the axioms and rules from $\AXK$, as well as the following axioms
 \begin{alignat*}{2}
-	& \axAP && \quad \sqex{\evMo_\evs}\pi \iff (\evpr(s) \implies \pi) \text{ for $\pi \in \langProp$}\\
-	& \axAN && \quad \sqex{\evMo_\evs} \neg \phi \iff (\evpr(s) \implies \neg \sqex{\evM_\evs} \phi)\\
+	& \axAP && \quad \sqex{\evMo_\evs}\pi \iff (\evpr(s) \Rightarrow \pi) \text{ for $\pi \in \langProp$}\\
+	& \axAN && \quad \sqex{\evMo_\evs} \neg \phi \iff (\evpr(s) \Rightarrow \neg \sqex{\evM_\evs} \phi)\\
 	& \axAC && \quad \sqex{\evMo_\evs}(\phi \land \psi) \iff (\sqex{\evM_\evs}\phi \land
 			\sqex{\evM_\evs}\psi\\
-	& \axAK && \quad \sqex{\evMo_\evs}\Box_a\phi \iff (\evpr(s) \implies \bigwedge_{v \in s R_a}
+	& \axAK && \quad \sqex{\evMo_\evs}\Box_a\phi \iff (\evpr(s) \Rightarrow \bigwedge_{v \in s R_a}
 		\Box_a \sqex{\evMo_\evv} \phi) \\
 	& \axAU && \quad \sqex{\evMo_\evT} \phi \iff \bigwedge_{\evu \in \evT} \sqex{\evM_\evu} \phi
 \end{alignat*}
@@ -663,7 +663,7 @@ The axiomatisation $\AXAML$ is sound and complete with respect to the logic $\la
 \begin{defn} \label{axiomRML}
 The axiomatisation $\AXRML$ contains the axioms and rules from $\AXK$, as well as the following axioms
 \begin{alignat*}{2}
-	& \axR && \quad \forall_B (\phi \implies \psi) \implies (\forall_B \phi \implies \forall_B \psi) \\
+	& \axR && \quad \forall_B (\phi \Rightarrow \psi) \Rightarrow (\forall_B \phi \Rightarrow \forall_B \psi) \\
 	& \axRP && \quad \forall_B \pi \iff \pi \text{ where } \pi \in \langProp \\
 	& \axRK && \quad\exists_B \cover_a \Gamma_a \iff \bigwedge_{\gamma \in \Gamma} \Diamond_a \exists_B
 	\gamma \text{ where } a \in B \\

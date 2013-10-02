@@ -52,8 +52,8 @@ We define the axiomatic system of $\AXKFF$ as follows
 The axiomatisation $\AXKFF$ contains the axioms and rules from $\AXK$ (Definition
     \ref{axiomK}), as well as the following axioms
 \begin{alignat*}{2}
-  & \axFo && \quad \Box \phi \implies \Box \Box \phi \\
-  & \axFi && \quad \Diamond \phi \implies \Box \Diamond \phi
+  & \axFo && \quad \Box \phi \Rightarrow \Box \Box \phi \\
+  & \axFi && \quad \Diamond \phi \Rightarrow \Box \Diamond \phi
 \end{alignat*}
 \end{lemma}
 
@@ -290,7 +290,7 @@ Note the }
 The addition of our new operator results in us having the following language for
 event model construction in $\AXKFF$.
 \[
-	\evM_\evT ::= \aMod{M_s} \text{ } | \text{ }\evM_\evT \to \evM'_{\evT'} \text{ }|
+	\evM_\evT ::= \aMod{M_s} \text{ } | \text{ }\evM_\evT \to_B \evM'_{\evT'} \text{ }|
   \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } I_B(\evM_\evT)
 \]
 where $\aMod{M_s} \in \insaneClass, \evM_\evT, \evM'_{\evT'}$ are multi-pointed event models and $B \subseteq
@@ -318,14 +318,14 @@ We define them formally below.
 	$\evM_\evT$ preserves the axioms of $\AXKFF$ iff
 	\begin{enumerate}
 		\item \label{k45EventModelConFour} suppose $a \in A$ and $\evs \in \evS$.
-			If $p \in \langArbAct$ and for every $\evt \in \evs \evR_a$, $\evpr(\evt) \implies p$.
+			If $p \in \langArbAct$ and for every $\evt \in \evs \evR_a$, $\evpr(\evt) \Rightarrow p$.
 			Then we have that for every $\evt' \in \evt \evR_a$,
-			$\evpr(\evt') \implies p$.
+			$\evpr(\evt') \Rightarrow p$.
 			This corresponds to preserving $\axFo$.
 		\item \label{k45EventModelConFive} suppose $a \in A$ and $\evs \in \evS$.
-			Suppose $\evt \in \evs \evR_a$ and $p \in \langArbAct$ such that $\evpr(\evt) \implies p$.
+			Suppose $\evt \in \evs \evR_a$ and $p \in \langArbAct$ such that $\evpr(\evt) \Rightarrow p$.
 			Then we have that for every $\evs' \in \evs \evR_a$, there is some $\evt' \in \evs' \evR_a$
-			such that $\evpre(\evt') \implies p$.
+			such that $\evpre(\evt') \Rightarrow p$.
 			This corresponds to preserving $\axFi$.
 	\end{enumerate}
 	We will refer to these event models as $\AXKFF$ event models.
@@ -357,18 +357,18 @@ We will first show that it constructs $\AXKFF$ model.
 	We will first show that the first condition (\ref{k45EventModelConFour}) holds at any action point
 	in $I_B(\evM'_{\evT'})$.
 	Let $\evs \in \evS$, $a \in A$ and suppose $p \in \langArbAct$ such that for all $\evt \in
-	\evS$ we have $\evpr(\evt) \implies p$.
+	\evS$ we have $\evpr(\evt) \Rightarrow p$.
 	If $a \notin B$, no new relations are added to $R_a$ and thus the condition must hold.
 	Similarly, for $\evs \notin \evT'$, for all $a' \in A$ we have that $\evs R_{a'}$ is not changed and
 	thus the condition must hold at these points.\\
 	\\
 	Thus, we presume that $\evs \in \evT'$ and $a \in B$.
 	\begin{align}
-		& \vdash \text{for all } \evt \in \evs \evR_a \implies (\evpr(\evt) \implies p)
+		& \vdash \text{for all } \evt \in \evs \evR_a \Rightarrow (\evpr(\evt) \Rightarrow p)
 		\label{conFourProof1} \\
-		& \vdash \text{for all } \evs' \in \evT' \implies (\evpr(\evs') \implies p)
+		& \vdash \text{for all } \evs' \in \evT' \Rightarrow (\evpr(\evs') \Rightarrow p)
 		\label{conFourProof2} \\
-		& \vdash \text{for all } \evt' \in \evt \evR_a \implies (\evpr(\evt') \implies p)
+		& \vdash \text{for all } \evt' \in \evt \evR_a \Rightarrow (\evpr(\evt') \Rightarrow p)
 		\label{conFourProof3}
 	\end{align}
 	\ref{conFourProof1} follows from hypothesis, \ref{conFourProof2} from the definition of $I_B$
@@ -379,7 +379,7 @@ We will first show that it constructs $\AXKFF$ model.
 	The second condition we show is (\ref{k45EventModelConFive}) holds at any action point in
 	$\evM_\evT$.
 	Let $\evs \in \evS$, $a \in A$ and suppose that $p \in \langArbAct$ such that for some $\evt \in \evS$ 
-	we have $\evpr(\evt) \implies p$.
+	we have $\evpr(\evt) \Rightarrow p$.
 	Again, we note that $a \notin B$ or $\evs \notin \evT'$ automatically fulfills the condition since
 	\begin{itemize}
 		\item when $a \notin B$, no relations are added to $\evR_a$
@@ -388,11 +388,11 @@ We will first show that it constructs $\AXKFF$ model.
 
 	Again we presume that $\evs \in \evT'$ and $a \in B$.
 	\begin{align}
-		& \vdash \text{for some } \evt \in \evs \evR_a \implies (\evpr(\evt) \implies p)
+		& \vdash \text{for some } \evt \in \evs \evR_a \Rightarrow (\evpr(\evt) \Rightarrow p)
 		\label{conFiveProof1} \\
-		& \vdash \text{for all } \evs' \in \evT' \implies (\evs' \evR_a = \evT') \label{conFiveProof2}
+		& \vdash \text{for all } \evs' \in \evT' \Rightarrow (\evs' \evR_a = \evT') \label{conFiveProof2}
 		\\
-		& \vdash \text{for all } \evs' \in \evs \evR_a \implies (\evt \in \evs' \evR_a)
+		& \vdash \text{for all } \evs' \in \evs \evR_a \Rightarrow (\evt \in \evs' \evR_a)
 		\label{conFiveProof3}
 	\end{align}
 	\ref{conFiveProof1} follows from hypothesis, \ref{conFiveProof2} follows from the definition of
@@ -410,14 +410,14 @@ We will first show that it constructs $\AXKFF$ model.
 	We first check that \ref{k45EventModelConFour} holds.
 	Suppose that $a \in B$.
 	Suppose $p \in \langArbAct$ and for all $\evt \in \evp \evR''_a = \evT'$ we had
-	$\evpr''(\evt) \implies	p$.
+	$\evpr''(\evt) \Rightarrow	p$.
 	Since $\evt \evR''_a = \evt \evR_a = \evT'$ then for all $\evt'	\in \evt \evR''_a$ we have that
-	$\evpr''(\evt') \implies p$.
+	$\evpr''(\evt') \Rightarrow p$.
 	Thus \ref{k45EventModelConFour} holds.\\
 	\\
 	Similarly, we can check that \ref{k45EventModelConFive} holds.
 	Suppose $a \in B$ and that for $p \in \langArbAct$ there is some $\evt \in \evp \evR''_a = \evT'$
-	such that $\evpr''(\evt) \implies p$.
+	such that $\evpr''(\evt) \Rightarrow p$.
 	We can make a similar argument in \ref{conFiveProof2} and \ref{conFiveProof3} to show that for all
 	$\evt' \in \evp \evR''_a$, $\evt \in \evt' \evR''_a$.
 	Thus \ref{k45EventModelConFive} holds.\\
@@ -430,6 +430,71 @@ We will first show that it constructs $\AXKFF$ model.
 	\]
 	is a \AXKFF event model.
 \end{proof}
+
+\newcommand{\EM}{\ensuremath{\eventClass}}
+
+We have shown that any event models generated from $\EM(\to_B,\sqcup, I_B)$ are
+$\AXKFF$ event models.
+Thus, we can guarantee that if $\evM_\evT$ is a model generated by
+$\EM(\to_B,\sqcup,I_B)$ and $\axMo_T$ is a $\AXKFF$ Kripke model, $\axMo_T
+\otimes \evM_\evT$ is also a $\AXKFF$ Kripke model.
+This shows that the constructions we use --- $\EM(\to_B, \sqcup, I_B)$ are
+sound, and will preserve the axioms of $\AXKFF$ after their execution.\\
+\\
+Let us turn to the second goal we have and suppose that we have an event model, $\evM_\evT
+= ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed event model.
+Now, consider $n$ some positive integer.
+Can we construct an event model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
+using $\EM(\to_B,\sqcup,I_B)$ that is $n$-bisimilar to $\evM_\evT$?\\
+\\
+In order to show this to be possible, we must first conceptualise several
+transformations to our models.
+Firstly, we will define the idea of a ``generated tree" from a model.
+
+\begin{lemma} \label{generateTree}
+  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
+  event model.
+  There is an event model, $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') \sim
+  \evM_\evT$, which fulfills the conditions of being a forest event model
+  (Definition \ref{forest}), with the exception that
+  \begin{itemize}
+    \item $\evS'$ is not a finite set
+    \item for every $\evs$ in $\evS'$, if $\evR_a \evs$ is non-empty then
+    $\evs \evR_a$ is empty
+    \item for all $\evs \in \evS'$, if $\evp, \evq \in \evs \evR_a$ then $\evp
+    \evR_a \evq$
+  \end{itemize}
+  We say that $\evM'_{\evT'}$ is the ``generated tree" of $\evM_\evT$.
+\end{lemma}
+\begin{proof}
+  \FIXME finish proof
+\end{proof}
+
+The generated tree is an infinite pseudo-forest event model.
+This means that the model somewhat resembles our original forest event models,
+but with interior relations between the action points, and without the
+restriction of finiteness.
+We show an example of this in Figure \ref{generatedTreeExample}
+
+\begin{figure}
+\centering
+\caption{\FIXME Left subfigure should be original, right subfigure should be the
+generated tree.} \label{generatedTreeExample}
+\end{figure}
+
+The generated tree is bisimilar to the original $\AXKFF$ event model.
+However, as it is an infinite event model, it is undesirable to try and
+construct this model.
+Furthermore, most of the time, we might only be interested in the
+post-conditions of a event model that are up to some modal depth.
+If we instead consider a finite subtree of the generated tree event
+model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
+
+\begin{lemma}
+  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
+  event model, and let $\evM'_\evT' = ((\evS', \evR', \evpr'),\evT')$ be the generated tree of $\evM_\evT$.
+  Suppose $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ is the submodel of $\evM'_\evT'$ such that 
+\end{lemma}
 
 \begin{lemma}
 	\FIXME this lemma will say that the K45 event models we form will allow us to approximate other
