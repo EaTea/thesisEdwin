@@ -449,9 +449,9 @@ using $\EM(\to_B,\sqcup,I_B)$ that is $n$-bisimilar to $\evM_\evT$?\\
 \\
 In order to show this to be possible, we must first conceptualise several
 transformations to our models.
-Firstly, we will define the idea of a ``generated tree" from a model.
+Firstly, we will define the idea of an unwound model from a model.
 
-\begin{lemma} \label{generateTree}
+\begin{lemma} \label{unwoundModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
   event model.
   There is an event model, $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') \sim
@@ -464,13 +464,13 @@ Firstly, we will define the idea of a ``generated tree" from a model.
     \item for all $\evs \in \evS'$, if $\evp, \evq \in \evs \evR_a$ then $\evp
     \evR_a \evq$
   \end{itemize}
-  We say that $\evM'_{\evT'}$ is the ``generated tree" of $\evM_\evT$.
+  We say that $\evM'_{\evT'}$ is the {\em unwound model} of $\evM_\evT$.
 \end{lemma}
 \begin{proof}
   \FIXME finish proof
 \end{proof}
 
-The generated tree is an infinite pseudo-forest event model.
+The unwound model is an infinite pseudo-forest event model.
 This means that the model somewhat resembles our original forest event models,
 but with interior relations between the action points, and without the
 restriction of finiteness.
@@ -479,24 +479,78 @@ We show an example of this in Figure \ref{generatedTreeExample}
 \begin{figure}
 \centering
 \caption{\FIXME Left subfigure should be original, right subfigure should be the
-generated tree.} \label{generatedTreeExample}
+unwound model.} \label{generatedTreeExample}
 \end{figure}
 
-The generated tree is bisimilar to the original $\AXKFF$ event model.
-However, as it is an infinite event model, it is undesirable to try and
-construct this model.
+The unwound model is bisimilar to the original $\AXKFF$ event model.
+However, as it is an infinite event model (in terms of the number of action
+points), it is undesirable to try and construct this model.
 Furthermore, most of the time, we might only be interested in the
 post-conditions of a event model that are up to some modal depth.
-If we instead consider a finite subtree of the generated tree event
+If we instead consider a finite subtree of the unwound model event
 model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
 
-\begin{lemma}
+\begin{lemma} \label{unwoundNModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model, and let $\evM'_\evT' = ((\evS', \evR', \evpr'),\evT')$ be the generated tree of $\evM_\evT$.
-  Suppose $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ is the submodel of $\evM'_\evT'$ such that 
+  event model, and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$ be the unwound model of $\evM_\evT$.
+  Let $n$ be some positive integer.
+  Suppose $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ is the submodel of $\evM'_\evT'$ such that
+  \begin{itemize}
+    \item $\evS^n \subseteq \evS'$
+    \item $\evR^n \subseteq \evR'$
+    \item $\evpr^n \subseteq \evpr'$
+    \item $\evT^n = \evT'$
+    \item for every $\evs \in \evS$ there is some $\evt \in \evT$ such that a
+    sequence of worlds $\evs_1, \evs_2, \ldots, \evs_k \in \evS$ and agents
+    $a_1,a_2, \ldots, a_{k-1}$ exists where
+    \[
+      \evt = \evs_1 \evR_{a_1} \evs_2, \evs_2 \evR_{a_2} \evs_3, \ldots,
+      \evs_{k-1} \evR_{a_{k-1}} \evs_k = \evs
+    \]
+  \end{itemize}
+  Then $\evM^n_{\evT^n}$ is $n$-bisimilar to $\evM'_{\evT'}$ and thus is
+  $n$-bisimilar to $\evM_\evT$.
+  We say that $\evM^n_{\evT^n}$ is the {\em unwound $n$-model} of $\evM_\evT$.
 \end{lemma}
+\begin{proof}
+\FIXME proof goes here
+\end{proof}
 
-\begin{lemma}
-	\FIXME this lemma will say that the K45 event models we form will allow us to approximate other
-	K45 event models to an arbitrary degree
+This submodel of the unwound model is $n$-bisimilar to our original $\evM_\evT$
+and is finite, which are both desirable properties.
+Using our previous example, we show in Figure \ref{genSubtreeExample} the
+finite submodel that is $n$-bisimilar.
+
+\begin{figure}
+\centering
+\caption{\FIXME Show finite version of figure \ref{generatedTreeExample}} \label{genSubtreeExample}
+\end{figure}
+
+It remains to be shown that we can actually construct an unwound $n$-model using
+$\EM(\to_B,\sqcup,I_B)$.
+We will now show that we can actually construct any unwound $n$-model using $\EM(\to_B,
+\sqcup, I_B)$.
+
+\begin{lemma} \label{unwoundNModelGenerated}
+  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
+  event model, and let $\evM^n_{\evT^n} = ((\evS', \evR', \evpr'),\evT')$ be the
+  unwound $n$-model of $\evM_\evT$.
+  $\evM^n_{\evT^n}$ can be constructed by $\EM(\to_B, \sqcup, I_B)$.
 \end{lemma}
+\begin{proof}
+\end{proof}
+
+Using this result, we can now construct, up to $n$-bisimilarity, an
+approximation of any update using semantically meaningful operations.
+This means that we can approximate any update, with the size of our resulting
+model dependent on the depth of the post-conditions we are interested in.
+A corollary to this result follows with regards to the single agent case.
+
+\begin{corr}
+  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
+  event model involving only one agent, $a$.
+  We can construct $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ by
+  $\EM(\to,\sqcup,I)$ where $\evM'_{\evT'} \sim \evM_\evT$.
+\end{corr}
+\begin{proof}
+\end{proof}
