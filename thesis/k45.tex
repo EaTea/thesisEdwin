@@ -126,7 +126,7 @@ Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ event model.}
               edge node {} (3)
               edge [loop below] node {} (4);
 \end{tikzpicture}
-\caption{Now our event model $\krMo'$ obeys $\AXKFF$.
+\caption{Now our Kripke model $\krMo'$ obeys $\AXKFF$.
 Let $\krMo'_\alpha \models p, \krMo'_\beta \models q, \krMo'_\gamma \models q \land r$ and
   $\krMo'_\delta) \models q \land p$.
 Here, we see that (by $\axFo$) in order to say $\krMo'_\alpha \models \Box q$, we must also be
@@ -138,7 +138,7 @@ able to say $\krMo'_\alpha \models \Box \Box q$.}
 \label{k45VsKModels}
 \end{figure}
 
-In Figure \ref{k45VsKModels} we compare an event model in $\AXK$ to a model in $\AXKFF$.
+In Figure \ref{k45VsKModels} we compare a Kripke model in $\AXK$ to a model in $\AXKFF$.
 We have already briefly discussed how $\axFo$ affects the reasonings we can make on the $\krMo_\alpha$ versus
 $\krMo'_\alpha$.
 Another observation we can make is with regards to the effect of $\axFi$ on $\krMo'_\alpha$ (Subfigure
@@ -148,11 +148,51 @@ By $\axFi$ for any formula $k \in \lang$ such that $\krMo'_\alpha \models
 This causes points $\beta, \gamma$ and $\delta$ to become a completely connected component,
 with an edge running to each one of them, as well as reflexive edges for each point.\\
 \\
-%We can approximate informative updates in $\AXKFF$ using our previous method, but as we mentioned
-%the generated model is far from resembling an epistemic event model.
-%Event models in the axiomatic system $\AXKFF$ resemble epistemic event models much
-%more closely.
-%Furthermore, any epistemic event model will obey the axioms of $\AXKFF$.\\
+Up to now, what we have shown is an already well-defined idea for whether a Kripke model obeys the axioms of $\AXKFF$.
+Unfortunately, this does not translate well to event models due to the differences in their
+semantics.
+In order to determine if an event model obeys the axioms of $\AXKFF$, we will formalise the ``model"
+implications we previously discussed into conditions on the structure of the model (that is, the
+frame of the model --- see Definition \ref{frame}).
+These are the frame conditions of $\AXKFF$, and we will show that an event model that fulfills these
+frame conditions, when executed on a Kripke model that obeys the axioms of $\AXKFF$ will preserve
+these axioms post execution.
+
+\begin{lemma} \label{lemma:k45frameconditions}
+	Let $F = (S,R)$ be a frame.
+	We say that $F$ is a $\AXKFF$ frame if it fulfills the following conditions:
+	\begin{itemize}
+		\item if $R$ is a transitive relation, then $\axFo$ is valid in any model where $F$ is its
+			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \implies s R u$
+		\item if $R$ is a Euclidean relation, then $\axFi$ is valid in any model where $F$ is its
+			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \implies t R u$
+	\end{itemize}
+\end{lemma}
+
+This is given as an exercise in \cite{fagin1995reasoning}, and we leave it as an exercise to the
+reader to show that this holds.
+We can use the concept of an $\AXKFF$ frame to define a $\AXKFF$ event model.
+
+\begin{defn} \label{defn:k45eventModel}
+	Suppose $\evM = (\evS, \evR, \evpr)$ is an event model.
+	We say that $\evM$ is a {\em $\AXKFF$ event model} if $F = (\evS, \evR)$ is a $\AXKFF$ frame.
+\end{defn}
+
+The usefulness of a {\em $\AXKFF$ event model} is twofold.
+Firstly, it is a structure which has some correspondence to the axioms of $\AXKFF$.
+This means it has some epistemic meaning and can be interpreted in a setting that resembles
+reasonings about knowledge and belief.
+Secondly, we can show that if $\evM_\evT$ is a $\AXKFF$ event model then it preserves the axioms of
+$\AXKFF$.
+
+\begin{lemma} \label{lemma:k45preserved}
+	Let $\krMo_T$ is a $\AXKFF$ Kripke model and $\evM_\evT$ is a $\AXKFF$ event model, then
+	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ Kripke model.
+\end{lemma}
+\begin{proof}
+	\FIXME go proof gogogogogogo
+\end{proof}
+
 We can approximate informative updates using our previous method, but these updates do not preserve
 axioms $\axFo$ and $\axFi$.
 The resulting model barely resembles an epistemic model.
@@ -171,7 +211,7 @@ It is a necessary condition in order to generate our approximating $\AXKFF$ mode
 \begin{defn} \label{binsane}
 	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed event model and $B \subseteq A$.
 	We say that $\evM_\evT$ is {\em $B$-insane} if and only if for all $\evs \in \evT$,
-  there is no $\evt \in \evS$ and $b \in B$ such that $\evs \evR_b \evt$.
+	for all $b \in B$ we have that $\evs \evR_b = \evR_b \evs = \varnothing$.
 \end{defn}
 
 If $B = \{b\}$, we say that the set $\evM_\evT$ is $b$-insane.
@@ -201,10 +241,10 @@ This is demonstrated in Figure \ref{bInsaneExample}.
           (4) edge [loop below] node {$B$} (4);
 \end{tikzpicture}
 \caption{Consider our event model $\evM$. Let $B$ and $C$ be mutually exclusive
-  subsets of $A$. Here, $\evM_\beta$ and $\evM_\gamma$
-  are $B$-insane, since there are no outgoing $B$-edges from these event points.
-This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge,
-     and $\evM_\delta$ which has a reflexive $B$-edge.}
+  subsets of $A$. Here, $\evM_\gamma$
+  is $B$-insane, since there are no outgoing or incoming $B$-edges from these event points.
+This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge, $\evM_\beta$, which
+has an incoming $B$-edge, and $\evM_\delta$ which has a reflexive $B$-edge.}
 \label{bInsaneExample}
 \end{figure}
 
@@ -212,7 +252,7 @@ We now define the main operation to construct event models in $\AXKFF$ for the
 purposes of realising a post condition.
 
 \begin{defn} \label{makeEquivalence}
-	Let $B \subseteq A$ and $\evM_\evT$ be a multi-pointed event model.
+	Let $B \subseteq A$ and $\evM_\evT$ be a multi-pointed $B$-insane event model.
   For each $\evt \in \evT$ let $\evM_\evt$ be a tree event model in $\AXKFF$.
   Then the operation $I_B(\evM_\evT)$ constructs the event model $\evM'_{\evT'} =
   ((\evS',\evR',\evpr'),\evT')$ such that
@@ -249,7 +289,7 @@ same.
           (3) edge node {$C$} (4)
           (4) edge [loop below] node {$B$} (4);
 \end{tikzpicture}
-\caption{Consider the model $\evMo_\evT$, with $\evT = \{\beta, \tau, \gamma\}$.}
+\caption{Consider the model $\evMo_\evT$, with $\evT = \{\tau, \gamma\}$.}
 \label{beforeOperation}
 \end{subfigure}
 ~
@@ -266,14 +306,10 @@ same.
     \path[edge]
           (1) edge node {$B$} (2)
 					(2) edge [loop below] node {$B$} (2)
-							edge node {$B$} (5)
-							edge node {$B$} (3)
 					(5) edge [loop below] node {$B$} (5)
-							edge node {} (2)
 							edge node {$B$} (3)
           (3) edge node {$C$} (4)
 							edge [loop above] node {$B$} (3)
-							edge node {} (2)
 							edge node {} (5)
           (4) edge [loop below] node {$B$} (4);
 \end{tikzpicture}
@@ -287,6 +323,24 @@ Note the }
 \label{k45VsKModels}
 \end{figure}
 
+In order for us to use our previous operations in $\AXKFF$ we need to force further constraints on
+some of our operators.
+It is clear that $\sqcup$ will preserve the frame conditions of $\AXKFF$, but $\to_B$ does not.
+We will redefine $\to_B$ to ensure that within our language it cannot create event models that are
+are not $\AXKFF$ event models.
+
+\begin{defn} \label{defn:k45:considers}
+	Suppose $B \subseteq A$ is a subset of agents.
+	Let $\evM_\evT$ and $\evM'_{\evT'}$ be $\AXKFF$ $B$-insane event models.
+	$\evM_\evT \to_B \evM'_{\evT'}$ is defined as in Definition \ref{considers}.
+\end{defn}
+
+Note the constraints we place on $\evM_\evT$ and $\evM'_{\evT'}$ being $B$-insane models.
+These are necessary in order to preserve the frame conditions in Lemma
+\ref{lemma:k45frameconditions}.
+
+\newcommand{\EM}{\ensuremath{\eventClass}}
+
 The addition of our new operator results in us having the following language for
 event model construction in $\AXKFF$.
 \[
@@ -294,7 +348,8 @@ event model construction in $\AXKFF$.
   \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } I_B(\evM_\evT)
 \]
 where $\aMod{M_s} \in \insaneClass, \evM_\evT, \evM'_{\evT'}$ are multi-pointed event models and $B \subseteq
-A$ is a subset of agents.\\
+A$ is a subset of agents.
+We will refer to our language as $\EM(\to,\sqcup,I)$. \\
 \\
 We will now show that this language always constructs models that preserve $\AXKFF$, and that any
 event model that preserves the axioms of $\AXKFF$ can be constructed by our language.
@@ -309,143 +364,30 @@ must hold
 		language
 \end{enumerate}
 
-To show the first proposition, we must first define what event models preserve $\AXKFF$.
-We define them formally below.
-
-\begin{lemma} \label{k45EventModel}
-	Suppose $\evM_\evT = ((\evS,\evR,\evpre),\evT)$ is a multi-pointed event model with $\evpre$
-	defined over $\langArbAct$.
-	$\evM_\evT$ preserves the axioms of $\AXKFF$ iff
-	\begin{enumerate}
-		\item \label{k45EventModelConFour} suppose $a \in A$ and $\evs \in \evS$.
-			If $p \in \langArbAct$ and for every $\evt \in \evs \evR_a$, $\evpr(\evt) \Rightarrow p$.
-			Then we have that for every $\evt' \in \evt \evR_a$,
-			$\evpr(\evt') \Rightarrow p$.
-			This corresponds to preserving $\axFo$.
-		\item \label{k45EventModelConFive} suppose $a \in A$ and $\evs \in \evS$.
-			Suppose $\evt \in \evs \evR_a$ and $p \in \langArbAct$ such that $\evpr(\evt) \Rightarrow p$.
-			Then we have that for every $\evs' \in \evs \evR_a$, there is some $\evt' \in \evs' \evR_a$
-			such that $\evpre(\evt') \Rightarrow p$.
-			This corresponds to preserving $\axFi$.
-	\end{enumerate}
-	We will refer to these event models as $\AXKFF$ event models.
-\end{lemma}
-\begin{proof}
-	\FIXME: needed?
-\end{proof}
-
-We now have a class of models which, upon execution on $\AXKFF$ Kripke models, will preserve the
-axioms of $\AXKFF$.
-We now present our method for constructing event models using our language.
-We will first show that it constructs $\AXKFF$ model.
+Let us show that the first proposition --- that $\EM(\to,\sqcup,I)$ will construct $\AXKFF$ event
+models.
 
 \begin{lemma}
-	Suppose $B \subseteq A$ be a subset of agents.
-	Let $\evM'_{\evT'}$ be a $B$-insane $\AXKFF$ event model.
-	Let $\aMod{M_p} \in \insaneClass$.
-	Then
-	\[
-		\aMod{M_p} \to_B I_B(\evM'_{\evT'})
-	\]
-	is an $\AXKFF$ event model.
+	Let $\evM_\evT$ be a pointed event model constructed from the language $\EM(\to,\sqcup,I)$.
+	Then $\evM_\evT$ is a $\AXKFF$ event model.
 \end{lemma}
 \begin{proof}
-	We will prove this in two parts.
-	Firstly, we will show that $\evM_\evT = I_B(\evM'_{\evT'})$ is a $\AXKFF$ event model.
-	By Lemma \ref{k45EventModel}, there are two conditions we must show.\\
-	\\
-	We will first show that the first condition (\ref{k45EventModelConFour}) holds at any action point
-	in $I_B(\evM'_{\evT'})$.
-	Let $\evs \in \evS$, $a \in A$ and suppose $p \in \langArbAct$ such that for all $\evt \in
-	\evS$ we have $\evpr(\evt) \Rightarrow p$.
-	If $a \notin B$, no new relations are added to $R_a$ and thus the condition must hold.
-	Similarly, for $\evs \notin \evT'$, for all $a' \in A$ we have that $\evs R_{a'}$ is not changed and
-	thus the condition must hold at these points.\\
-	\\
-	Thus, we presume that $\evs \in \evT'$ and $a \in B$.
-	\begin{align}
-		& \vdash \text{for all } \evt \in \evs \evR_a \Rightarrow (\evpr(\evt) \Rightarrow p)
-		\label{conFourProof1} \\
-		& \vdash \text{for all } \evs' \in \evT' \Rightarrow (\evpr(\evs') \Rightarrow p)
-		\label{conFourProof2} \\
-		& \vdash \text{for all } \evt' \in \evt \evR_a \Rightarrow (\evpr(\evt') \Rightarrow p)
-		\label{conFourProof3}
-	\end{align}
-	\ref{conFourProof1} follows from hypothesis, \ref{conFourProof2} from the definition of $I_B$
-	(Definition \ref{makeEquivalence}) causing $\evs \evR_a = \evT'$, and \ref{conFourProof3} following
-	from the definition of $I_B$ causing $\evt \evR_a = \evT'$ and \ref{conFourProof2}.
-	This allows us to fulfill Condition \ref{k45EventModelConFour}.\\
-	\\
-	The second condition we show is (\ref{k45EventModelConFive}) holds at any action point in
-	$\evM_\evT$.
-	Let $\evs \in \evS$, $a \in A$ and suppose that $p \in \langArbAct$ such that for some $\evt \in \evS$ 
-	we have $\evpr(\evt) \Rightarrow p$.
-	Again, we note that $a \notin B$ or $\evs \notin \evT'$ automatically fulfills the condition since
-	\begin{itemize}
-		\item when $a \notin B$, no relations are added to $\evR_a$
-		\item when $\evs \notin \evT'$ no relations are added to $\evs \evR_{a'}$ for all $a' \in A$
-	\end{itemize}
-
-	Again we presume that $\evs \in \evT'$ and $a \in B$.
-	\begin{align}
-		& \vdash \text{for some } \evt \in \evs \evR_a \Rightarrow (\evpr(\evt) \Rightarrow p)
-		\label{conFiveProof1} \\
-		& \vdash \text{for all } \evs' \in \evT' \Rightarrow (\evs' \evR_a = \evT') \label{conFiveProof2}
-		\\
-		& \vdash \text{for all } \evs' \in \evs \evR_a \Rightarrow (\evt \in \evs' \evR_a)
-		\label{conFiveProof3}
-	\end{align}
-	\ref{conFiveProof1} follows from hypothesis, \ref{conFiveProof2} follows from the definition of
-	$I_B$ (Definition \ref{makeEquivalence}) and \ref{conFiveProof3} follows from \ref{conFiveProof2}.
-	We thus show Condition \ref{k45EventModelConFive}.\\
-	\\
-	We have shown that $I_B(\evM'_{\evT'})$ is a $\AXKFF$ event model.
-	We now must show that $\evM''_{\evT''} = \aMod{M_p} \to_B I_B(\evM'_{\evT'})$ is a $\AXKFF$ event
-	model.
-	Since we have shown this for $I_B(\evM'_{\evT'})$, we need only show that conditions
-	\ref{k45EventModelConFour} and \ref{k45EventModelConFive} hold at $\evM''_\evp$.
-	We can discard having to check other action points since no relations from them are added, and we
-	need not check any agents outside of $B$ since they to have no relations added.\\
-	\\
-	We first check that \ref{k45EventModelConFour} holds.
-	Suppose that $a \in B$.
-	Suppose $p \in \langArbAct$ and for all $\evt \in \evp \evR''_a = \evT'$ we had
-	$\evpr''(\evt) \Rightarrow	p$.
-	Since $\evt \evR''_a = \evt \evR_a = \evT'$ then for all $\evt'	\in \evt \evR''_a$ we have that
-	$\evpr''(\evt') \Rightarrow p$.
-	Thus \ref{k45EventModelConFour} holds.\\
-	\\
-	Similarly, we can check that \ref{k45EventModelConFive} holds.
-	Suppose $a \in B$ and that for $p \in \langArbAct$ there is some $\evt \in \evp \evR''_a = \evT'$
-	such that $\evpr''(\evt) \Rightarrow p$.
-	We can make a similar argument in \ref{conFiveProof2} and \ref{conFiveProof3} to show that for all
-	$\evt' \in \evp \evR''_a$, $\evt \in \evt' \evR''_a$.
-	Thus \ref{k45EventModelConFive} holds.\\
-	\\
-	We have thus shown that both conditions \ref{k45EventModelConFour} and \ref{k45EventModelConFive}
-	of Lemma \ref{k45EventModel} hold.
-	Then
-	\[
-		\aMod{M}_\evp \to_B I_B(\evM'_{\evT'})
-	\]
-	is a \AXKFF event model.
+	\FIXME prooooooooooooof
 \end{proof}
 
-\newcommand{\EM}{\ensuremath{\eventClass}}
-
-We have shown that any event models generated from $\EM(\to_B,\sqcup, I_B)$ are
+We have shown that any event models generated from $\EM(\to,\sqcup, I)$ are
 $\AXKFF$ event models.
 Thus, we can guarantee that if $\evM_\evT$ is a model generated by
-$\EM(\to_B,\sqcup,I_B)$ and $\axMo_T$ is a $\AXKFF$ Kripke model, $\axMo_T
+$\EM(\to,\sqcup,I)$ and $\krMo_T$ is a $\AXKFF$ Kripke model, $\krMo_T
 \otimes \evM_\evT$ is also a $\AXKFF$ Kripke model.
-This shows that the constructions we use --- $\EM(\to_B, \sqcup, I_B)$ are
+This shows that the constructions we use --- $\EM(\to, \sqcup, I)$ are
 sound, and will preserve the axioms of $\AXKFF$ after their execution.\\
 \\
 Let us turn to the second goal we have and suppose that we have an event model, $\evM_\evT
 = ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed event model.
 Now, consider $n$ some positive integer.
 Can we construct an event model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
-using $\EM(\to_B,\sqcup,I_B)$ that is $n$-bisimilar to $\evM_\evT$?\\
+using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?\\
 \\
 In order to show this to be possible, we must first conceptualise several
 transformations to our models.
@@ -494,7 +436,7 @@ model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
   event model, and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$ be the unwound model of $\evM_\evT$.
   Let $n$ be some positive integer.
-  Suppose $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ is the submodel of $\evM'_\evT'$ such that
+	Suppose $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ is the submodel of $\evM'_{\evT'}$ such that
   \begin{itemize}
     \item $\evS^n \subseteq \evS'$
     \item $\evR^n \subseteq \evR'$
@@ -527,17 +469,18 @@ finite submodel that is $n$-bisimilar.
 \end{figure}
 
 It remains to be shown that we can actually construct an unwound $n$-model using
-$\EM(\to_B,\sqcup,I_B)$.
-We will now show that we can actually construct any unwound $n$-model using $\EM(\to_B,
-\sqcup, I_B)$.
+$\EM(\to,\sqcup,I)$.
+We will now show that we can actually construct any unwound $n$-model using $\EM(\to,
+\sqcup, I)$.
 
 \begin{lemma} \label{unwoundNModelGenerated}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
   event model, and let $\evM^n_{\evT^n} = ((\evS', \evR', \evpr'),\evT')$ be the
   unwound $n$-model of $\evM_\evT$.
-  $\evM^n_{\evT^n}$ can be constructed by $\EM(\to_B, \sqcup, I_B)$.
+  $\evM^n_{\evT^n}$ can be constructed by $\EM(\to, \sqcup, I)$.
 \end{lemma}
 \begin{proof}
+	\FIXME proof appeared
 \end{proof}
 
 Using this result, we can now construct, up to $n$-bisimilarity, an
@@ -553,4 +496,5 @@ A corollary to this result follows with regards to the single agent case.
   $\EM(\to,\sqcup,I)$ where $\evM'_{\evT'} \sim \evM_\evT$.
 \end{corr}
 \begin{proof}
+	\FIXME proof, it's not safe to go alone
 \end{proof}
