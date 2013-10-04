@@ -193,11 +193,15 @@ $\AXKFF$.
 	\FIXME go proof gogogogogogo
 \end{proof}
 
-We can approximate informative updates using our previous method, but these updates do not preserve
+This shows us that what we consider a $\AXKFF$ event model behaves as we expect --- if we execute
+its update on a $\AXKFF$ Kripke model, the resulting Kripke model is also a $\AXKFF$ Kripke model.\\
+\\
+We can approximate informative updates using our previous method (detailed in Chapter
+\ref{chapter:Multiagent}, but these updates do not preserve
 axioms $\axFo$ and $\axFi$.
 The resulting model barely resembles an epistemic model.
 The approach in this chapter constructs event models that, after their execution on a model that
-fulfills the conditions of $\AXKFF$, will preserve those conditions.
+fulfills the conditions of $\AXKFF$, will preserve those conditions.\\
 \\
 An open question, related to our previous chapter --- can we now generate $\AXKFF$ models to
 approximate other $\AXKFF$ models?
@@ -391,7 +395,7 @@ using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?\\
 \\
 In order to show this to be possible, we must first conceptualise several
 transformations to our models.
-Firstly, we will define the idea of an unwound model from a model.
+Firstly, we will define the idea of an unwound model.
 
 \begin{lemma} \label{unwoundModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
@@ -418,7 +422,7 @@ but with interior relations between the action points, and without the
 restriction of finiteness.
 We show an example of this in Figure \ref{generatedTreeExample}
 
-\begin{figure}
+\begin{figure}[ht!]
 \centering
 \caption{\FIXME Left subfigure should be original, right subfigure should be the
 unwound model.} \label{generatedTreeExample}
@@ -463,7 +467,7 @@ and is finite, which are both desirable properties.
 Using our previous example, we show in Figure \ref{genSubtreeExample} the
 finite submodel that is $n$-bisimilar.
 
-\begin{figure}
+\begin{figure}[ht!]
 \centering
 \caption{\FIXME Show finite version of figure \ref{generatedTreeExample}} \label{genSubtreeExample}
 \end{figure}
