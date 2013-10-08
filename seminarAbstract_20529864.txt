@@ -1,15 +1,5 @@
 Languages for epistemic event model synthesis in multi-agent systems
 
-Event models are representations of updates in modal logic.
-These theoretical updates are useful, since we can reason about them and the
-effects that they have when they are executed.
-These properties are desirable in applications such as model checking,
-economics and artificial intelligence in games.
+Event models are representations of updates in modal logic. These theoretical updates are useful, since we can reason about them and the effects that they have when they are executed. These properties are desirable in applications such as model checking, economics and artificial intelligence in games.
 
-As a relatively new phenomena in epistemic logic, little has been done to
-investigate their construction in multi-agent systems.
-My work has investigated meaningful operations in two different modal logics,
-I will discuss methods for constructing models that can guarantee the
-realisation of specific conditions after the execution of a model.
-This work will assist future work in model checking for updates, and
-introduces possibilities for constructing new, meaningful updates and protocols.
+As a relatively new phenomena in epistemic logic, little has been done to investigate their construction in multi-agent systems. My work has investigated meaningful operations in two different modal logics, I will discuss methods for constructing models that can guarantee the realisation of specific conditions after the execution of a model. This work will assist future work in model checking for updates, and introduces possibilities for constructing new, meaningful updates and protocols.
