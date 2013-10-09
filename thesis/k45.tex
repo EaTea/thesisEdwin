@@ -186,11 +186,43 @@ Secondly, we can show that if $\evM_\evT$ is a $\AXKFF$ event model then it pres
 $\AXKFF$.
 
 \begin{lemma} \label{lemma:k45preserved}
-	Let $\krMo_T$ is a $\AXKFF$ Kripke model and $\evM_\evT$ is a $\AXKFF$ event model, then
+	Let $\krMo_T = ((S,R,V),T)$ is a $\AXKFF$ Kripke model and $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ event model, then
 	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ Kripke model.
 \end{lemma}
 \begin{proof}
-	\FIXME go proof gogogogogogo
+	Let $\krMo'_{T'} = \krMo_T \otimes \evM_\evT = ((S',R',V'),T')$.\\
+	\\
+	The first property that will be shown to hold is that $R'$ is a transitive relation.
+	Suppose that $s',t',u' \in S'$ such that $s' R'_a t'$ and $t' R'_a u'$.
+	From Definition \ref{evModelEx}, $s' = (s,\evs), t' = (t,\evt)$ and $u' = (u,\evu)$ for $s,t,u \in
+	S$ and $\evs,\evt,\evu \in \evS$, such that $V(s) \Rightarrow \evpr(\evs)$, $V(t) \Rightarrow
+	\evpr(\evt)$ and $V(u) \Rightarrow \evpr(\evu)$.
+	Furthermore, $s' R'_a t' \Rightarrow s R_a t \land \evs \evR_a \evt$, and $t' R'_a u' \Rightarrow
+	t R_a u \land \evt \evR_a \evu$.
+	From $s R_a t \land t R_a u$ we have $s R_a u$, since $R_a$ is a transitive relation by the
+	hypothesis.
+	Similarly, $\evs \evR_a \evt \land \evt \evR_a \evu \Rightarrow \evs \evR_a \evu$ since $\evR_a$
+	is also a transitive relation.
+	From Definition \ref{evModelEx}, $s R_a u \land \evs \evR_a \evu \implies (s,\evs) R'_a (u,\evu)
+	\Rightarrow s' R'_a u'$.
+	Then $R'$ is a transitive relation.\\
+	\\
+	Similarly we can show that $R'$ is an Euclidean relation.
+	Suppose that $s',t',u' \in S'$ such that $s' R'_a t'$ and $s' R'_a u'$.
+	From Definition \ref{evModelEx}, $s' = (s,\evs), t' = (t,\evt)$ and $u' = (u,\evu)$ for $s,t,u \in
+	S$ and $\evs,\evt,\evu \in \evS$, such that $V(s) \Rightarrow \evpr(\evs)$, $V(t) \Rightarrow
+	\evpr(\evt)$ and $V(u) \Rightarrow \evpr(\evu)$.
+	Furthermore, $s' R'_a t' \Rightarrow s R_a t \land \evs \evR_a \evt$, and $s' R'_a u' \Rightarrow
+	s R_a u \land \evs \evR_a \evu$.
+	From $s R_a t \land s R_a u$ we have $t R_a u$, since $R_a$ is an Euclidean relation by the
+	hypothesis.
+	Similarly, $\evs \evR_a \evt \land \evs \evR_a \evu \Rightarrow \evt \evR_a \evu$ since $\evR_a$
+	is also an Euclidean relation.
+	From Definition \ref{evModelEx}, $t R_a u \land \evt \evR_a \evu \implies (t,\evt) R'_a (u,\evu)
+	\Rightarrow t' R'_a u'$.
+	Then $R'$ is an Euclidean relation.\\
+	\\
+	Since the frame conditions on $(S',R')$ hold $\krMo'_{T'}$ is a $\AXKFF$ Kripke model.
 \end{proof}
 
 This shows us that what we consider a $\AXKFF$ event model behaves as we expect --- if we execute
@@ -404,19 +436,11 @@ Firstly, we will define the idea of an unwound model.
   event model.
   There is an event model, $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ such that
   \begin{itemize}
-		\item there is a many-to-one mapping $f$ from $\evS'$ to $\evS$ such that $\evpr(\evs) \iff
-			\evpr'(\evs')$, and its inverse $f^{-1}$ maps
-			$\evS$ to the powerset of $\evS'$
-		\item furthermore, for all $\evt' \in \evT'$ there is one unique $\evt \in \evT$ such that $f(\evt') = \evt$ ---
-		that is, the restricted function $f$ from $\evT' \to \evT$ is a bijection
-		\item for all $\evs' \in \evS'$, for all $\evt$ in $f(\evs') \evR_a$, there is some unique $\evt' \in
-			f^{-1}(\evt)$ such that $\evs' \evR'_a \evt'$
-    \item for every $\evs$ in $\evS'$, if $a \in A$ and $\evs \evR'_a$ is non-empty then for all $\evt$
-		in $\evR'_a$ we have $\evt$ is not in $\evs \evR'_{a'}$ for all other $a' \in A$
-    \item for all $\evs \in \evS'$, if $a \in A$ and $\evp, \evq \in \evs \evR'_a$ then $\evp
-    \evR'_a \evq$
-		\item for all $\evs, \evt, \evu \in \evS'$, for $a \in A$ and $\evs \evR_a \evt$ and $\evt
-			\evR_a \evu$ then $\evs \evR_a \evu$
+		\item $\evS'$ is the set of words $\evs \evS^\ast$, which can include the empty word
+		\item $\evR'_a$ is the transitive Euclidean closure of the set of relations $\{\evp \evt \evR'_a
+		\evp \evt \evu$ where $\evp \in \evS^\ast$ and $\evt \evR_a \evu \}$
+		\item $\evpr'(\evp \evt) = \evpr(\evt)$
+		\item $\evT' = \evT$
   \end{itemize}
   We say that $\evM'_{\evT'}$ is the {\em unwound model} of $\evM_\evT$.
 \end{defn}
@@ -430,8 +454,6 @@ Firstly, we will define the idea of an unwound model.
 \begin{proof}
 	By the definition of an unwound model, we can see that the frame conditions in Lemma 
 	\ref{lemma:k45frameconditions} will automatically be fulfilled.
-	Similarly, the mapping $f$, as defined in Definition \ref{def:unwoundModel}, ensure that event
-	model bisimilarity as defined in Definition \ref{bisimEvent} also hold.
 \end{proof}
 
 The unwound model is an infinite pseudo-forest event model.
