@@ -436,7 +436,13 @@ Firstly, we will define the idea of an unwound model.
   event model.
   There is an event model, $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ such that
   \begin{itemize}
-		\item $\evS'$ is the set of words $\evs \evS^\ast$, which can include the empty word
+		\item $\evS'$ is the set of words $\evs \evS^\ast$, where $\evs \in \evT'$
+			\footnote{We can consider each action point $\evs$ in the model to be labelled with the string of
+			points it took to go from an element $\evt \in \evT'$ to $\evs$.
+			Then $\evS^\ast$ is the set of strings (including $\lambda$, the empty word) over the alphabet 
+			of $\evS$.
+			Similarly, for $n$ some positive integer, $\evS^n$ is the set of strings over the alphabet
+			$\evS$ such that any string is less than $n$ in length.}
 		\item $\evR'_a$ is the transitive Euclidean closure of the set of relations $\{\evp \evt \evR'_a
 		\evp \evt \evu$ where $\evp \in \evS^\ast$ and $\evt \evR_a \evu \}$
 		\item $\evpr'(\evp \evt) = \evpr(\evt)$
@@ -453,7 +459,28 @@ Firstly, we will define the idea of an unwound model.
 \end{lemma}
 \begin{proof}
 	By the definition of an unwound model, we can see that the frame conditions in Lemma 
-	\ref{lemma:k45frameconditions} will automatically be fulfilled.
+	\ref{lemma:k45frameconditions} will automatically be fulfilled.\\
+	\\
+	It remains to be shown that $\evM'_{\evT'} \sim \evM_\evT$.
+	We define $\sim$ as
+	\[
+		\{(\evs',\evs) \text{ such that } \evs' \in \evS \land \evs \in \evS \land \evs' = \evp \evs
+			\text{ where } \evp \in \evS^\ast \land \evpr'(\evs') \iff \evpr(\evs) \}
+	\]
+
+	From our definition of $\sim$, we have that $\evs' \sim \evs \iff (\evpr'(\evs') \iff
+	\evpr(\evs))$.
+	We now must check {\bf forth-$a$} and {\bf back-$a$}.\\
+	\\
+	Let $a \in A$ and $\evs' \in \evS' \land \evs' \evR'_a \evt'$.
+	Suppose $\evs' \sim \evs \in \evS$.
+	By the definition of $\sim$, $\evs' = \evp \evs$ where $\evp \in \evS^\ast$.
+	From the definition of an unwound model, $\evt' = \evp \evs \evt$, where $\evt$ is some action
+	point such that $\evs \evR_a \evt$.
+	Since $\evs' \in \evS^\ast$, and we have $\evt' = \evs' \evt$ then $\evt' \sim \evt$.
+	Then {\bf forth-$a$} holds.
+	A similar proof can be shown for {\bf back-$a$}.
+	Since both of these hold, we can say that $\evM'_{\evT'} \sim \evM_\evT$.
 \end{proof}
 
 The unwound model is an infinite pseudo-forest event model.
@@ -477,65 +504,54 @@ If we instead consider a finite subtree of the unwound model event
 model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
 
 \begin{defn} \label{unwoundNModel}
-  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model, and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$ be the unwound model of $\evM_\evT$.
-  Let $n$ be some positive integer.
-	Suppose $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ is the submodel of $\evM'_{\evT'}$ such that
+  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed event model, and
+	let $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the unwound model of $\evM_\evT$.
+  Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be an event model such that
   \begin{itemize}
-    \item $\evS^n \subseteq \evS'$
-    \item $\evR^n \subseteq \evR'$
-    \item $\evpr^n \subseteq \evpr'$
-    \item $\evT^n = \evT'$
-    \item for every $\evs \in \evS$ there is some $\evt \in \evT$ such that a
-    sequence of worlds of length $k \leq n$, $\evs_1, \evs_2, \ldots, \evs_k \in \evS$ and agents
-    $a_1,a_2, \ldots, a_{k-1}$ where
-    \[
-      \evt = \evs_1 \evR_{a_1} \evs_2, \evs_2 \evR_{a_2} \evs_3, \ldots,
-      \evs_{k-1} \evR_{a_{k-1}} \evs_k = \evs
-    \]
+		\item $\evS' = \evs \evS^{n-1}$ and $\evs \in \evT$
+		\item $\evR'$ is $\evR''$ restricted to $\evS'$
+		\item $\evpr'$ is $\evpr''$ restricted to $\evS'$
+		\item $\evT' = \evT''$
   \end{itemize}
-  We say that $\evM^n_{\evT^n}$ is the {\em unwound $n$-model} of $\evM_\evT$.
+  We say that $\evM'_{\evT'}$ is the {\em unwound $n$-model} of $\evM_\evT$.
 \end{defn}
 
 \begin{lemma} \label{lemma:unwoundNModelNBisimilar}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
   event model.
-  Let $n$ be some positive integer and $\evM^n_{\evT^n} = ((\evS^n,\evR^n,\evpr^n),\evT^n)$ be the
+  Let $n$ be some positive integer and $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the
 	unwound $n$-model of $\evM_\evT$.
-	Then for every point $\evt \in \evT^n$, we have that $\evM^n_\evt \sim_n \evM'_{\evt}$; that is,
-	that $\evM^n_{\evt}$ is $n$-bisimilar to $\evM'_{\evT'}$ and thus is
-  $n$-bisimilar to $\evM_\evT$.
 \end{lemma}
 \begin{proof}
 	We will induct over $n$ to show that this holds.
-	We hypothesise that for every action point $\evt \in \evT^n$, $\evM^n_\evt \sim_k \evM'_{\evt}$
+	We hypothesise that for every action point $\evt \in \evT''$, $\evM''_\evt \sim_k \evM'_{\evt}$
 	for some $0 \leq k \leq n$.\\
 	\\
 	We begin with our base case of $k = 0$.
-	Since $\evT' = \evT^n$ then $\evt \in \evT^n \Rightarrow \evt \in \evT'$.
-	It is clear that $\evt$ is $0$-bisimilar to itself, and therefore we conclude that $\evM^n_\evt
+	Since $\evT' = \evT''$ then $\evt \in \evT'' \Rightarrow \evt \in \evT'$.
+	It is clear that $\evt$ is $0$-bisimilar to itself, and therefore we conclude that $\evM''_\evt
 	\sim_0 \evM'_\evt$.\\
 	\\
 	Now, suppose that for $k = m$, our hypothesis holds.\\
 	\\
 	We will show that it now holds for $k = m+1$.
-	We have already shown that $\evM^n_\evt \sim_{k-1} \evM'_\evt$, through the inductive step.
+	We have already shown that $\evM''_\evt \sim_{k-1} \evM'_\evt$, through the inductive step.
 	We must now show both of {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} as in Definition
 	\ref{nBisimEvent}.\\
 	\\
 	Let us show {\bf $k$-forth-$a$}.
-	Let $a \in A$, and suppose that $\evs \in \evt \evR^n_a$.
+	Let $a \in A$, and suppose that $\evs \in \evt \evR''_a$.
 	We want to show there is some $\evs' \in \evt \evR'_a$ such that $\evs' \sim_{k-1} \evs$.
 	To show that this is so, we would require that $\evs' \sim_{k-2} \evs$, and that {\bf
 	$k-1$-forth-$a$} and {\bf $k-1$-back-$a$} both hold at $\evs$.\\
 	\\
-	We can continue this argument until we reach some new point $\evs \in \evS^n$ that we require to be
+	We can continue this argument until we reach some new point $\evs \in \evS''$ that we require to be
 	$0$-bisimilar to some other point $\evs' \in \evS'$.
 	It is clear that these new points are 0-bisimilar, that is $\evs \sim_0 \evs'$, which allows us to
 	claim that {\bf $k$-forth-$a$} is originally satisfied at $\evt$.\\
 	\\
 	We can make a similar argument for {\bf $k$-back-$a$} and through this we can satisfy the
-	conditions of Definition \ref{nBisimEvent}, allowing us to claim that for all $\evM^n_\evt \sim_k
+	conditions of Definition \ref{nBisimEvent}, allowing us to claim that for all $\evM''_\evt \sim_k
 	\evM'_{\evt}$.
 \end{proof}
 
@@ -556,60 +572,13 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 
 \begin{lemma} \label{unwoundNModelGenerated}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model, and let $\evM^n_{\evT^n} = ((\evS^n, \evR^n, \evpr^n),\evT^n)$ be the
+  event model, and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$ be the
   unwound $n$-model of $\evM_\evT$.
-  $\evM^n_{\evT^n}$ can be constructed by $\EM(\to, \sqcup, I)$.
+  $\evM'_{\evT'}$ can be constructed by $\EM(\to, \sqcup, I)$, up to bisimilarity.
 \end{lemma}
 \begin{proof}
-	Showing that this condition holds is amenable to a proof by induction on the structure of the unwound $n$-model.
-	The induction hypothesis is as follows --- for any point $\evs \in \evS^n$, it is possible to construct the an event model
-	$\evM^{n'}_{\evs'}$ that is bisimilar to the submodel of the unwound $n$-model that is ``below" that point.
-	That is, one can construct the submodel of the unwound $n$-model (up to bisimilarity), $\evM^{n'}_{\evs'} = ((\evS^{n'},\evR^{n'},\evpr^{n'})\{\evs'\})$ defined as follows
-	\begin{itemize}
-		\item if $\evR^n_a \evs$ is nonempty, then $\evR^{n'}_a$ is empty
-		\item $\evM^{n'}_{\evs'}$ is $\evR$-generable
-	\end{itemize}
-	\\
-	Our base case is when $\evs$ has no outgoing relations.
-	Then $\evM^{n'}_{\evs} = ((\{\evs\}, \varnothing, \{(\evs,\evpr^n(\evs))\}),\{\evs\})$, which is an
-	insanity model that is used as an atom in this event model construction method.\\
-	\\
-	Now, consider some arbitrary point $\evs \in \evS^n$, and suppose that one can construct the submodels
-	``below" each point $\evt \in \evs \evR^n_a$, for every $a \in A$, except for any $a$ where
-	$\evR^n_a
-	\evs$ is nonempty.
-	In the original model $\evM^n$, $\evR^n_a \evt$ being nonempty implied that $\evt evR^n_a$
-	is a nonempty set and we can thus say that the submodel $\evM^n_\evt$ is $a$-insane.
-	Let $\evT^s = \evs \evR_a$, and consider the model
-	\[
-		\evM^\evs_{\evT^\evs} = \bigsqcup_{\evt \in \evT} \evM^n_\evt
-	\]
-	One can then use $I_a(\evM^\evs_{\evT^\evs})$ to construct what is essentially an equivalence relation
-	over $\evT^s$.
-	Since it has already been argued that $\evM^\evs_{\evT^\evs}$ is $a$-insane, the operation $I_a$ is
-	valid to execute.\\
-	\\
-	Now, consider
-	\[
-		\aMod{M}_{\evs'} = (\evS' = (\{\evs'\}, \evR' = \varnothing, \evpr' = \{(\evs',\evpr^n(\evs))\}),\{\evs'\})
-	\]
-	This model is also $a$-insane, since it has no outgoing $a$-edges.
-	Furthermore, for event model $I_a(\evM^\evs_{\evT^\evs})$, for every $\evt \in \evT^s$, $\evt \evR^\evs_a =
-	\evT^s$.
-	This permits the use of the consider operation, as defined in Definition
-	\ref{defn:k45:considers}, allowing the construction of the model
-	\[
-		\evM^{n'}_{\evs'} = \aMod{M}_{\evs'} \to_a I_a(\evM^\evs_{\evT^\evs})
-	\]
-	
-	It remains to be seen that $\evM^{n'}_{\evs'}$ is bisimilar to $\evM^n_\evs$, as in Definition \ref{bisimEvent}.
-	First, it should be noted that $\evpr'(\evs') = \evpr^n(\evs)$ and thus $\evpr'(\evs') \iff \evpr^n(\evs)$,
-	fulfilling {\bf pre}.
-	The remaining properties that need to be shown are {\bf forth-$a$} and {\bf back-$a$}.\\
-	\\
-	Consider {\bf forth-$a$} --- this states that if $\evt' \in \evs' \evR'_a$ then there is some $\evt \in \evs \evR^n_a$
-	such that $\evt' \sim \evt$.
-	
+	Showing that this condition holds is amenable to a proof by induction.
+	We will show that for any $\evs \in \evS$ we can construct an event model $\evM''_\evs$.
 \end{proof}
 
 Using this result, we can now construct, up to $n$-bisimilarity, an
