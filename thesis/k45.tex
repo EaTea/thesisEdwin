@@ -407,10 +407,12 @@ Firstly, we will define the idea of an unwound model.
 		\item there is a many-to-one mapping $f$ from $\evS'$ to $\evS$ such that $\evpr(\evs) \iff
 			\evpr'(\evs')$, and its inverse $f^{-1}$ maps
 			$\evS$ to the powerset of $\evS'$
+		\item furthermore, for all $\evt' \in \evT'$ there is one unique $\evt \in \evT$ such that $f(\evt') = \evt$ ---
+		that is, the restricted function $f$ from $\evT' \to \evT$ is a bijection
 		\item for all $\evs' \in \evS'$, for all $\evt$ in $f(\evs') \evR_a$, there is some unique $\evt' \in
 			f^{-1}(\evt)$ such that $\evs' \evR'_a \evt'$
-    \item for every $\evs$ in $\evS'$, if $a \in A$ and $\evR'_a \evs$ is non-empty then
-    $\evs \evR'_a$ is empty
+    \item for every $\evs$ in $\evS'$, if $a \in A$ and $\evs \evR'_a$ is non-empty then for all $\evt$
+		in $\evR'_a$ we have $\evt$ is not in $\evs \evR'_{a'}$ for all other $a' \in A$
     \item for all $\evs \in \evS'$, if $a \in A$ and $\evp, \evq \in \evs \evR'_a$ then $\evp
     \evR'_a \evq$
 		\item for all $\evs, \evt, \evu \in \evS'$, for $a \in A$ and $\evs \evR_a \evt$ and $\evt
@@ -537,45 +539,55 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   $\evM^n_{\evT^n}$ can be constructed by $\EM(\to, \sqcup, I)$.
 \end{lemma}
 \begin{proof}
-	A proof that this condition holds is amenable to a proof  by induction on the structure of the unwound $n$-model.
-	The induction hypothesis is as follows --- for any point $\evs \in \evS^n$, it is possible to construct the submodel of
-	the unwound $n$-model that is ``below" that point.
-	That is, one can construct the submodel of the unwound $n$-model that contains $\evs$ and every
-	point and relation that is outgoing from $\evs$, and every point and relation that is outgoing
-	from those points, and so on until there are no more points reachable in $\evM^n_{\evs}$.\\
+	Showing that this condition holds is amenable to a proof by induction on the structure of the unwound $n$-model.
+	The induction hypothesis is as follows --- for any point $\evs \in \evS^n$, it is possible to construct the an event model
+	$\evM^{n'}_{\evs'}$ that is bisimilar to the submodel of the unwound $n$-model that is ``below" that point.
+	That is, one can construct the submodel of the unwound $n$-model (up to bisimilarity), $\evM^{n'}_{\evs'} = ((\evS^{n'},\evR^{n'},\evpr^{n'})\{\evs'\})$ defined as follows
+	\begin{itemize}
+		\item if $\evR^n_a \evs$ is nonempty, then $\evR^{n'}_a$ is empty
+		\item $\evM^{n'}_{\evs'}$ is $\evR$-generable
+	\end{itemize}
 	\\
 	Our base case is when $\evs$ has no outgoing relations.
-	Then $\evM^n_{\evs} = ((\{\evs\}, \varnothing, \{(\evs,\evpr(\evs))\}),\{\evs\})$, which is an
+	Then $\evM^{n'}_{\evs} = ((\{\evs\}, \varnothing, \{(\evs,\evpr^n(\evs))\}),\{\evs\})$, which is an
 	insanity model that is used as an atom in this event model construction method.\\
 	\\
-	Now, consider some arbirtrary point $\evs \in \evS^n$, and suppose that one can construct the submodels
+	Now, consider some arbitrary point $\evs \in \evS^n$, and suppose that one can construct the submodels
 	``below" each point $\evt \in \evs \evR^n_a$, for every $a \in A$, except for any $a$ where
 	$\evR^n_a
 	\evs$ is nonempty.
-	Since in the original model $\evM^n$, $\evR^n_a \evt$ being nonempty implied that $\evt evR^n_a$
+	In the original model $\evM^n$, $\evR^n_a \evt$ being nonempty implied that $\evt evR^n_a$
 	is a nonempty set and we can thus say that the submodel $\evM^n_\evt$ is $a$-insane.
 	Let $\evT^s = \evs \evR_a$, and consider the model
 	\[
-		\evM^s_{\evT^s} = \bigsqcup_{\evt \in \evT} \evM^n_\evt
+		\evM^\evs_{\evT^\evs} = \bigsqcup_{\evt \in \evT} \evM^n_\evt
 	\]
-	One can then use $I_a(\evM^s_{\evT^s})$ to construct what is essentially an equivalence relation
+	One can then use $I_a(\evM^\evs_{\evT^\evs})$ to construct what is essentially an equivalence relation
 	over $\evT^s$.
-	Since it has already been argued that $\evM^s_{\evT^s}$ is $a$-insane, the operation $I_a$ is
+	Since it has already been argued that $\evM^\evs_{\evT^\evs}$ is $a$-insane, the operation $I_a$ is
 	valid to execute.\\
 	\\
 	Now, consider
 	\[
-		\aMod{M}_\evs = ((\{\evs\}, \varnothing, \{(\evs,\evpr(\evs))\}),\{\evs\})
+		\aMod{M}_{\evs'} = (\evS' = (\{\evs'\}, \evR' = \varnothing, \evpr' = \{(\evs',\evpr^n(\evs))\}),\{\evs'\})
 	\]
 	This model is also $a$-insane, since it has no outgoing $a$-edges.
-	Furthermore, for event model $I_a(\evM^s_{\evT^s})$, for every $\evt \in \evT^s$, $\evt \evR^s_a =
+	Furthermore, for event model $I_a(\evM^\evs_{\evT^\evs})$, for every $\evt \in \evT^s$, $\evt \evR^\evs_a =
 	\evT^s$.
 	This permits the use of the consider operation, as defined in Definition
 	\ref{defn:k45:considers}, allowing the construction of the model
 	\[
-		\evM^{n'}_{\evT^{n'}} = \aMod{M}_\evs \to_a I_a(\evM^s_{\evT^s})
+		\evM^{n'}_{\evs'} = \aMod{M}_{\evs'} \to_a I_a(\evM^\evs_{\evT^\evs})
 	\]
-	\FIXME show that these models are the same?
+	
+	It remains to be seen that $\evM^{n'}_{\evs'}$ is bisimilar to $\evM^n_\evs$, as in Definition \ref{bisimEvent}.
+	First, it should be noted that $\evpr'(\evs') = \evpr^n(\evs)$ and thus $\evpr'(\evs') \iff \evpr^n(\evs)$,
+	fulfilling {\bf pre}.
+	The remaining properties that need to be shown are {\bf forth-$a$} and {\bf back-$a$}.\\
+	\\
+	Consider {\bf forth-$a$} --- this states that if $\evt' \in \evs' \evR'_a$ then there is some $\evt \in \evs \evR^n_a$
+	such that $\evt' \sim \evt$.
+	
 \end{proof}
 
 Using this result, we can now construct, up to $n$-bisimilarity, an
