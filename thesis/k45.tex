@@ -572,13 +572,22 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 
 \begin{lemma} \label{unwoundNModelGenerated}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model, and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$ be the
-  unwound $n$-model of $\evM_\evT$.
+  event model.
+  Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$
+  be the unwound $n$-model of $\evM_\evT$.
   $\evM'_{\evT'}$ can be constructed by $\EM(\to, \sqcup, I)$, up to bisimilarity.
 \end{lemma}
 \begin{proof}
-	Showing that this condition holds is amenable to a proof by induction.
-	We will show that for any $\evs \in \evS$ we can construct an event model $\evM''_\evs$.
+	We will show that for $k \leq n$, and for any $\evs \in \evS$ we can construct an event model
+  $\evM''_\evs$ such that $\evM''_\evs$ is $k$-bisimilar to $\evM'_\evs$.
+	Showing that this condition holds is amenable to a proof by induction over $k$.\\
+  \\
+  Let $k = 0$, and let $\evs \in \evS$.
+  Consider the insanity event model, $\evM^0_{\evs^0} =
+  ((\evS^0,\evR^0,\evpr^0),\evs)$ where
+  \[
+    
+  \]
 \end{proof}
 
 Using this result, we can now construct, up to $n$-bisimilarity, an
