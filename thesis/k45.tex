@@ -596,12 +596,12 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   that for $a \in A$, $\evt' \evR'_a \evs'$.
   Then $\evM^k_{\evs'}$ is the unwound $k$-model of $\evM_\evs$.
 	It will thus be sufficient to use this representation of a subtree and show that we can construct
-	some event model that is $k$-bisimilar to $\evM'_\evs$.\\
+	some event model that is bisimilar to $\evM'_\evs$.\\
 	\\
 	To show this we will induct over $k$, from 0 to $n$.
 	Our induction hypothesis is as follows.
   For any point $\evs' \in \evS'$ we can construct a model using
-  $\EM(\to,\sqcup,I)$, $\evM^{k'}_{\evs''}$ that is $k$-bisimilar to $\evM^k_{\evs'}$.\\
+  $\EM(\to,\sqcup,I)$, $\evM^{k'}_{\evs''}$ that is bisimilar to $\evM^k_{\evs'}$.\\
 	\\
 	Let $k = 0$.
 	Let $\evM^{0'}_{\evs''} = ((\evS^{0'},\evR^{0'},\evpr^{0'}),\{\evs'\}) \in \insaneClass$ where
@@ -613,7 +613,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 
 	As $\evpr^{0'}(\evs'') = \evpr(\evs) = \evpr'(\evs')$ then $\evpr^{0'}(\evs'') \iff
   \evpr'(\evs')$.
-	Then $\evM^{0'}_{\evs'} \sim_0 \evM^0_{\evs'}$.\\
+	Then $\evM^{0'}_{\evs'} \sim \evM^0_{\evs'}$.\\
 	\\
 	Now, we suppose that the induction hypothesis holds for $k$.
 	We will show it also holds for $k+1$.
@@ -622,7 +622,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   \\
   Let $a' \in A'$, and $\evs' \evR'_{a'} \evt'$.
   We can construct a model $\evM^{k'}_{\evt''}$ using $\EM(\to,\sqcup,I)$ that is
-  $k$-bisimilar to $\evM^k_{\evt'}$.
+  bisimilar to $\evM^k_{\evt'}$.
   Since $\evs' \evR'_{a'} \evt'$ then $\evt'' \evR^{k'}_{a'} = \evR^{k'}_{a'}
   \evt'' = \varnothing$.
   Then $\evM^{k'}_{\evt''}$ is $a'$-insane and this holds for every $\evt' \in
@@ -646,7 +646,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   $\evM^{k'}_{\evT^{a_1}}, \evM^{k'}_{\evT^{a_2}}, \evM^{k'}_{\evT^{a_3}},
   \ldots, \evM^{k'}_{\evT^{a_j}}$ respectively.
   We now consider the model $\evM^{0'}_{\evs'}$, as defined in our base case,
-  which is $0$-bisimilar to $\evM^0_{\evs'}$.
+  which is bisimilar to $\evM^0_{\evs'}$.
   We note that it is trivially $a'$-insane for all $a' \in A'$.\\
   \\
   The two conditions we outlined in the previous paragraph allow us to use the $\to_{a'}$ operation as follows
@@ -658,27 +658,44 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 
   This model is a $\AXKFF$ event model, since the operations used to construct
   it were $\EM(\to,\sqcup,I)$.
-  It remains to be shown that $\evM^{k+1'}_{\evs'} \sim_{k+1} \evM^{k+1}_{\evs'}$.
+  It remains to be shown that $\evM^{k+1'}_{\evs''} \sim \evM^{k+1}_{\evs'}$.\\
+  \\
+  We will construct the following relation $\sim$ over $\evS^{k+1'} \times
+  \evS^{k+1}$ such that $(\evt',\evt) \in \sim \iff \evM^{i'}_{\evt'} \sim
+  \evM^{i}_{\evt}$ for some $0 \leq i \leq k$, or $\evt' = \evs'' \land \evt =
+  \evs'$.
+  We will show that this is a bisimulation.\\
+  \\
+  We note that for any pair $(\evt',\evt)$, $\evpr^{k+1'}(\evt') \iff
+  \evpr^{k+1}(\evt)$ since $\evM^{i'}_{\evt'} \sim \evM^{i}_{\evt}$.
+  It remains to be shown that if $(\evt', \evt) \in \sim$ then both {\bf
+  forth-$a$} and {\bf back-$a$} hold.
+
+%  We want to show that forth-$a$ holds
+%  If we get a point pairing $(\evt', \evt)$, and
+%  lets say that $\evt' \evR^{k+1'}_a \evu'$, then there is a point in $\evu \in
+%  \evt \evR^{k+1}$ such that $(\evu',\evu)$.
+%  If $\evR^{k+1}_a \evt'$ is empty, then $\evM^{i'}_{\evu'} \sim
+%  \evM^i_{\evu}$.
+
 %  \\
-%  We note that from our base case, $\evpr^{k+1'}(\evs') \iff
-%  \evpr^{k+1}(\evs')$, satisfying {\bf pre}.
-%  We simply need to show that for all $a \in A$, $(k+1)$-forth-$a$ and
-%  $(k+1)$-back-$a$ both hold.\\
+%  Let us show that {\bf forth-$a$} holds.
+%  Suppose $(\evt', \evt) \in \sim$ and let $a \in A$.
+%  Consider the point $\evu' \in \evt' \evR^{k+1'}_a$.
+%  We note that $\evt' \evR^{k+1'}_a \evu' \iff \evR^{k+1'}_a \evt' = \varnothing$.
+%  We must show that there is some $\evu \in \evt \evR^{k+1}_a$ such that
+%  $(\evu',\evu) \in \sim$.
 %  \\
-%  We first show {\bf $(k+1)$-forth-$a$}.
-%  If $a \notin A'$ then $\evs' \evR^{k+1'}_a$ is empty.
-%  Therefore, let $a \in A'$, and let us consider $\evs' \evR^{k+1'}_a \evt'$
-%  We need to then show that there is some $\evt \in \evR^{k+1}_a$ such that
-%  $\evM^{k+1'}_{\evt'} \sim_k \evM^{k+1}_{\evt}$.\\
+%  We note that some submodel of $\evM^{k+1}_{\evs'}$, $\evM^i_{\evt}$ is
+%  bisimilar to a submodel of $\evM^{k+1'}_{\evs''}$, which is
+%  $\evM^{i'}_{\evt'}$.
+%  The relations for $\evt' \evR^{i'}_a$ and $\evt \evR^{i}_a$ are both the empty set, which
+%  is different from $\evt' \evR^{k+1'}_a$ and $\evt \evR^{k+1}_a$.
+%  This is the only difference between $\evM^{i}_{\evt}$ and
+%  $\evM^{k+1}_{\evt}$, and $\evM^{i'}_{\evt'}$ and $\evM^{k+1'}_{\evt'}$.\\
 %  \\
-%  We already have, from earlier arguments, that we constructed some model
-%  $\evM^{k'}_{\evt'}$ that is bisimilar to $\evM^k_{\evt}$, where $\evt \in
-%  \evT'$ was some point in $\evM'_{\evT'}$, the unwound model of $\evM_\evT$.
-%  Furthermore we used this model within our construction.
-%  We thus claim that $\evM^{k+1'}_{\evt'} \sim_k \evM^{k+1}_{\evt}$.\\
-%  \\
-%  It is clear that to show this, we need only prove that any point $\evu' \in
-%  \evt' \evR^{k+1'}_{a'}$ is $k-1$-bisimilar to some point $\evu \in \evS'$.
+%  Due to taking the transitive Euclidean closure of relations in the original unwound
+%  model, we have that our construction 
 \end{proof}
 
 %\begin{defn} \label{unwoundNModel}
