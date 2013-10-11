@@ -425,8 +425,8 @@ Let us turn to the second goal we have and suppose that we have an event model, 
 = ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed event model.
 Now, consider $n$ some positive integer.
 Can we construct an event model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
-using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?\\
-\\
+using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?
+
 In order to show this to be possible, we must first conceptualise several
 transformations to our models.
 Firstly, we will define the idea of an unwound model.
@@ -506,7 +506,8 @@ model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
 	let $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the unwound model of $\evM_\evT$.
   Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be an event model such that
   \begin{itemize}
-		\item $\evS' = \evs \evS^{n-1}$ and $\evs \in \evT$
+		\item $\evS' = \evs \evp$, where $\evp \in \evS^\ast$ is a string of length
+    less than $n$ and $\evs \in \evT$
 		\item $\evR'$ is $\evR''$ restricted to $\evS'$
 		\item $\evpr'$ is $\evpr''$ restricted to $\evS'$
 		\item $\evT' = \evT''$
@@ -567,14 +568,14 @@ finite submodel that is $n$-bisimilar.
 It remains to be shown that we can actually construct an unwound $n$-model using
 $\EM(\to,\sqcup,I)$.
 We will now show that we can actually construct any unwound $n$-model using $\EM(\to,
-\sqcup, I)$.
+\sqcup, I)$, up to $n$-bisimilarity.
 
 \begin{lemma} \label{lemma:unwoundModelBisimilarConstruct}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
   event model.
 	Let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be the unwound model of
   $\evM_\evT$ and $n$ be some non-negative integer.
-  There is some construction using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to
+  We can construct an event model using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to
   $\evM'_{\evT'}$.
 \end{lemma}
 \begin{proof}
@@ -586,35 +587,98 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 		\item $\evS^k = \evs' \evp$, where $\evp \in \evS^\ast$ and $\evp$ is a string of length less
 			than $k$
 		\item $\evR^k_a = \evR'$ restricted to $\evS^k$ if $\evR'_a \evs'$ is empty
-		\item $\evR^k_a = \varnothing$ if $\evR'_a \evs$ is nonempty
+		\item $\evR^k_a = \evR' \setminus \{\evs' \evR^k_a = \evR^k_a \evs'\}$,
+    restricted to $\evS^k$ if $\evR'_a \evs$ is nonempty
 		\item $\evpr^k = \evpr'$ restricted to $\evS^k$
 	\end{itemize}
 
-	It is clear that when $\evs' \in \evT'$, then $\evM^k_{\evs'}$ is the unwound $k$-model of
-	$\evM_\evs$ (since $\evR'_a \evs'$ is always empty).
+	It is clear that when $\evs' \in \evT'$, there is no $\evt' \in \evS'$ such
+  that for $a \in A$, $\evt' \evR'_a \evs'$.
+  Then $\evM^k_{\evs'}$ is the unwound $k$-model of $\evM_\evs$.
 	It will thus be sufficient to use this representation of a subtree and show that we can construct
-	something that is $k$-bisimilar to $\evs' \in \evT'$.\\
+	some event model that is $k$-bisimilar to $\evM'_\evs$.\\
 	\\
 	To show this we will induct over $k$, from 0 to $n$.
-	We will consider, for a point $\evs' \in \evS'$, the submodel of $\evM'_{\evT'}$,
-	$\evM^k_{\evs'}$ and show that we can construct a model using $\EM(\to,\sqcup,I)$ that is
-	$k$-bisimilar to this submodel.\\
+	Our induction hypothesis is as follows.
+  For any point $\evs' \in \evS'$ we can construct a model using
+  $\EM(\to,\sqcup,I)$, $\evM^{k'}_{\evs''}$ that is $k$-bisimilar to $\evM^k_{\evs'}$.\\
 	\\
 	Let $k = 0$.
-	Let $\evM^0_{\evs'} = ((\evS^0,\evR^0,\evpr^0),\{\evs'\}) \in \insaneClass$ where
+	Let $\evM^{0'}_{\evs''} = ((\evS^{0'},\evR^{0'},\evpr^{0'}),\{\evs'\}) \in \insaneClass$ where
 	\begin{itemize}
-		\item $\evS^0 = \{\evs'\}$
-		\item $\evR^0 = \varnothing$
-		\item $\evpr^0 = ((\evs',\evpr(\evs)))$
+		\item $\evS^{0'} = \{\evs''\}$
+		\item $\evR^{0'} = \varnothing$
+		\item $\evpr^{0'} = \{(\evs'',\evpr(\evs))\}$
 	\end{itemize}
 
-	As $\evpr^0(\evs') = \evpr(\evs) = \evpr'(\evs')$ then $\evpr^0(\evs') \iff \evpr(\evs)$.
-	Then $\evpr^0(\evs') \sim_0 \evpr'(\evs')$.\\
+	As $\evpr^{0'}(\evs'') = \evpr(\evs) = \evpr'(\evs')$ then $\evpr^{0'}(\evs'') \iff
+  \evpr'(\evs')$.
+	Then $\evM^{0'}_{\evs'} \sim_0 \evM^0_{\evs'}$.\\
 	\\
 	Now, we suppose that the induction hypothesis holds for $k$.
 	We will show it also holds for $k+1$.
 	We need only consider $a \in A$ such that $\evR'_a \evs'$ is empty.
-	We shall call these agents $A' = \{a_1,a_2,\ldots,\a_j\}$.
+	We shall call these agents $A' = \{a_1,a_2,\ldots,a_j\}$.
+  \\
+  Let $a' \in A'$, and $\evs' \evR'_{a'} \evt'$.
+  We can construct a model $\evM^{k'}_{\evt''}$ using $\EM(\to,\sqcup,I)$ that is
+  $k$-bisimilar to $\evM^k_{\evt'}$.
+  Since $\evs' \evR'_{a'} \evt'$ then $\evt'' \evR^{k'}_{a'} = \evR^{k'}_{a'}
+  \evt'' = \varnothing$.
+  Then $\evM^{k'}_{\evt''}$ is $a'$-insane and this holds for every $\evt' \in
+  \evs' \evR'_{a'}$.\\
+  \\
+  Then
+  \[
+    \bigsqcup_{\evt' \in \evs' \evR'_{a'} \land \evM^{k'}_{\evt''} \sim_k
+      \evM^k_\evt} \evM^{k'}_{\evt'}
+  \]
+  is also an $a'$-insane model (although we have not shown this previously, it
+  is quite clear from the definition of $\sqcup$), which allows us to construct the model
+  \[
+    \evM^{k'}_{\evT^{a'}} = I_{a'}(\bigsqcup_{\evt' \in \evs' \evR'_{a'} \land \evM^{k'}_{\evt''} \sim_k
+      \evM^k_\evt} \evM^{k'}_{\evt'}) = ((\evS^{k'},\evR^{k'},\evpr^{k'}),\evT^{a'})
+  \]
+
+  It is clear that for $\evt'' \in \evT'$, $\evt'' \evR^{k'}_{a'} = \evT^{a'}$, by the
+  definition of $I_{a'}$ and the definition of $\evM^{k'}_{\evt'}$.
+  We can form a similar model for each of $a_1,a_2,\ldots,\a_j \in A'$, which is
+  $\evM^{k'}_{\evT^{a_1}}, \evM^{k'}_{\evT^{a_2}}, \evM^{k'}_{\evT^{a_3}},
+  \ldots, \evM^{k'}_{\evT^{a_j}}$ respectively.
+  We now consider the model $\evM^{0'}_{\evs'}$, as defined in our base case,
+  which is $0$-bisimilar to $\evM^0_{\evs'}$.
+  We note that it is trivially $a'$-insane for all $a' \in A'$.\\
+  \\
+  The two conditions we outlined in the previous paragraph allow us to use the $\to_{a'}$ operation as follows
+  \[
+    \evM^{k+1'}_{\evs'} = (\ldots((\evM^0_{\evs'} \to_{a_1}
+            \evM^{k'}_{\evT^{a_1}}) \to_{a_2} \evM^{k'}_{\evT^{a_2}}) \to_{a_3}
+        \ldots ) \to_{a_j} \evM^{k'}$
+  \]
+
+  This model is a $\AXKFF$ event model, since the operations used to construct
+  it were $\EM(\to,\sqcup,I)$.
+  It remains to be shown that $\evM^{k+1'}_{\evs'} \sim_{k+1} \evM^{k+1}_{\evs'}$.
+%  \\
+%  We note that from our base case, $\evpr^{k+1'}(\evs') \iff
+%  \evpr^{k+1}(\evs')$, satisfying {\bf pre}.
+%  We simply need to show that for all $a \in A$, $(k+1)$-forth-$a$ and
+%  $(k+1)$-back-$a$ both hold.\\
+%  \\
+%  We first show {\bf $(k+1)$-forth-$a$}.
+%  If $a \notin A'$ then $\evs' \evR^{k+1'}_a$ is empty.
+%  Therefore, let $a \in A'$, and let us consider $\evs' \evR^{k+1'}_a \evt'$
+%  We need to then show that there is some $\evt \in \evR^{k+1}_a$ such that
+%  $\evM^{k+1'}_{\evt'} \sim_k \evM^{k+1}_{\evt}$.\\
+%  \\
+%  We already have, from earlier arguments, that we constructed some model
+%  $\evM^{k'}_{\evt'}$ that is bisimilar to $\evM^k_{\evt}$, where $\evt \in
+%  \evT'$ was some point in $\evM'_{\evT'}$, the unwound model of $\evM_\evT$.
+%  Furthermore we used this model within our construction.
+%  We thus claim that $\evM^{k+1'}_{\evt'} \sim_k \evM^{k+1}_{\evt}$.\\
+%  \\
+%  It is clear that to show this, we need only prove that any point $\evu' \in
+%  \evt' \evR^{k+1'}_{a'}$ is $k-1$-bisimilar to some point $\evu \in \evS'$.
 \end{proof}
 
 %\begin{defn} \label{unwoundNModel}
