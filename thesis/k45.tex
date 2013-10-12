@@ -163,9 +163,9 @@ these axioms post execution.
 	We say that $F$ is a $\AXKFF$ frame if it fulfills the following conditions:
 	\begin{itemize}
 		\item if $R$ is a transitive relation, then $\axFo$ is valid in any model where $F$ is its
-			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \implies s R u$
+			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \Rightarrow s R u$
 		\item if $R$ is a Euclidean relation, then $\axFi$ is valid in any model where $F$ is its
-			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \implies t R u$
+			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \Rightarrow t R u$
 	\end{itemize}
 \end{lemma}
 
@@ -203,7 +203,7 @@ $\AXKFF$.
 	hypothesis.
 	Similarly, $\evs \evR_a \evt \land \evt \evR_a \evu \Rightarrow \evs \evR_a \evu$ since $\evR_a$
 	is also a transitive relation.
-	From Definition \ref{evModelEx}, $s R_a u \land \evs \evR_a \evu \implies (s,\evs) R'_a (u,\evu)
+	From Definition \ref{evModelEx}, $s R_a u \land \evs \evR_a \evu \Rightarrow (s,\evs) R'_a (u,\evu)
 	\Rightarrow s' R'_a u'$.
 	Then $R'$ is a transitive relation.\\
 	\\
@@ -218,7 +218,7 @@ $\AXKFF$.
 	hypothesis.
 	Similarly, $\evs \evR_a \evt \land \evs \evR_a \evu \Rightarrow \evt \evR_a \evu$ since $\evR_a$
 	is also an Euclidean relation.
-	From Definition \ref{evModelEx}, $t R_a u \land \evt \evR_a \evu \implies (t,\evt) R'_a (u,\evu)
+	From Definition \ref{evModelEx}, $t R_a u \land \evt \evR_a \evu \Rightarrow (t,\evt) R'_a (u,\evu)
 	\Rightarrow t' R'_a u'$.
 	Then $R'$ is an Euclidean relation.\\
 	\\
@@ -872,7 +872,8 @@ Using this result, we can now construct, up to $n$-bisimilarity, an
 approximation of any update using semantically meaningful operations.
 This means that we can approximate any update, with the size of our resulting
 model dependent on the depth of the post-conditions we are interested in.
-We formally submmarise and show this in Theorem 
+We formally summarise and show this in Theorem
+\ref{thm:nBisimAnyK45EventModel}.
 
 \begin{theorem} \label{thm:nBisimAnyK45EventModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
@@ -885,8 +886,34 @@ We formally submmarise and show this in Theorem
 \begin{proof}
   By Lemma \ref{lemma:unwoundModel:bisimilar} we can construct the unwound model
   of $\evM_\evT$, which we call $\evM''_{\evT''} \sim \evM_{\evT}$.
-  By \FIXME we can construct an event model that is $n$-bisiilar to
-  the unwound model \FIXME using $\EM(\to,\sqcup,I)$.
+  By \FIXME we can construct an event model, $\evM'_{\evT'}$ such that
+  $\evM'_{\evT'} \sim_n \evM''_{\evT''}$ \FIXME using $\EM(\to,\sqcup,I)$.
   By Lemma \ref{lemma:onlyk45Models}, $\evM'_{\evT'}$ is a $\AXKFF$ event model.
-  Since we have constructed a model that is $n$-bisimilar to 
+  We have that $\evM'_{\evT'} \sim_n \evM''_{\evT''} \sim \evM_\evT$.
+  Since bisimilarity is an equivalence relation (\FIXME), we can conclude that
+  $\evM'_{\evT'} \sim_n \evM_\evT$.
 \end{proof}
+
+We restate this result in terms of goal achievement in Corrolary
+\ref{corr:k45GoalAchievement}.
+
+\begin{corr} \label{corr:k45GoalAchievement}
+  Suppose $\phi \in \lang$ is some epistemic goal with $\MD(\phi) = n$ for $n$
+  some non-negative integer.
+  Let $\evM_\evT$ be some $\AXKFF$ event model such that for some $B
+  \subseteq A$, $\vdash \sqex{\evM_\evT} \Rightarrow \phi$ and $\vdash
+  \anex{\evM_\evT} \iff \exists_B \phi$.
+  There is some event model $\evM'_{\evT'}$ constructible by $\EM(\t,\sqcup,I)$
+  such that $\vdash \sqex{\evM'_{\evT'}} \Rightarrow \phi$ and $\vdash
+  \anex{\evM'_{\evT'}} \iff \exists_B \phi$.
+\end{corr}
+\begin{proof}
+  From Theorem \ref{thm:nBisimAnyK45EventModel} we are able to construct
+  $\evM'_{\evT'}$ such that $\evM'_{\evT'} \sim_n \evM_\evT$.
+  We have by Lemma \ref{nBisimmilarEventExec} that $\evM'_{\evT'} \sim_n
+  \evM_\evT$ will ensure that a post condition of modal depth $n$ that is true
+  after execution of $\evM_\evT$ will also be true after execution of
+  $\evM'_{\evT'}$.
+\end{proof}
+
+This final result (, in terms of goal achievement, states that if we have an 
