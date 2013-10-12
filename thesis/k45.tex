@@ -1,15 +1,20 @@
-\section{Constructing event models in $\AXKFF$ --- fixed by 7th October 2013}
+\section{Constructing event models in $\AXKFF$ --- fixed by 7th October 2013} \label{chapter:k45}
 
 We have discussed models in the axiom system of $\AXK$.
-In particular, we have focused on approximating arbitrary models.
+In particular, we have focused on approximating arbitrary event models.
 Our approximations can fulfill postconditions and the effects of event model execution, up to modal
-depth $n$.
+depth $n$.\\
+\\
+This result was particularly useful in showing that we could construct an event model, but because
+it does not preserve many of the axioms necessary for discussing and reasoning about knowledge, its
+usefulness is somewhat diminished.
+If we are interested in reasoning about protocols
 We will replicate a similar result of event model approximation in the axiomatic system
 of $\AXKFF$.
 This chapter details our results for our event model approximation in the axiomatic system
 $\AXKFF$.
 
-\subsection{Background --- fixed by 5 September 2013}
+\subsection{Background}
 
 Previously, we constructed models that were tree-like in their nature.
 We defined many concepts used to describe trees, such as a ``root", ``subtrees" and ``forests".
@@ -235,9 +240,8 @@ The resulting model barely resembles an epistemic model.
 The approach in this chapter constructs event models that, after their execution on a model that
 fulfills the conditions of $\AXKFF$, will preserve those conditions.\\
 \\
-An open question, related to our previous chapter --- can we now generate $\AXKFF$ models to
-approximate other $\AXKFF$ models?
-\FIXME this paragraph is unclear.
+We return to our open question --- if we have an $\AXKFF$ event model, can we construct a $\AXKFF$ event
+model that is able to achieve the same epistemic effects, up to some modal depth $n$?
 
 \subsection{Technical Preliminaries --- fixed by 11 September 2013}
 
@@ -916,4 +920,10 @@ We restate this result in terms of goal achievement in Corrolary
   $\evM'_{\evT'}$.
 \end{proof}
 
-This final result (, in terms of goal achievement, states that if we have an 
+This result (Corrolary \ref{corr:k45GoalAchievement}) states
+that if we have an event model that guarantees the realisation of a goal $\phi$, we can build an event
+model that also guarantees the realisation of $\phi$.
+This difference is small, but powerful --- it progresses beyond ``there is some model that realises
+$\phi$".
+We can now say that if we have that model, we can construct it in a meaningful language, and the
+resulting event model is almost a true epistemic event model of knowledge or belief.

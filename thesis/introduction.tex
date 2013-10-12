@@ -1,27 +1,5 @@
 \section{Introduction --- fixed by 14 October 2013}
 
-% Here we motivate the problem from scratch. Usually a concrete
-% example will do this well. The first paragraph sets the scene
-% and states the problem explicitly. It sets up the second paragraph,
-% which will state explicitly your hypothesis for solving it.
-% 
-% Now comes a short, sharp and succinct exposition of your approach.
-% For example, ``It thus seems reasonable to conjecture that a
-% combination of the X algorithm and the Y algorithm would produce
-% superior results to either algorithm on its own. We show that this is
-% indeed the case, and prove that the combined algorithm has complexity,
-% on the average, that is an order of magnitude better than either the X
-% or the Y algorithm.''
-% 
-% Then there is a bit more motivation, linking the problem to other
-% researchers, but not in detail. You also talk in a general way about
-% the methodology you have employed to solve the problem.
-% 
-% The final paragraph should give the conclusions of your
-% paper. Something like ``We conclude that the combined X-Y algorithm is
-% better suited to robot control problems than either the X algorithm or
-% the Y algorithm'' would be appropriate.
-
 Suppose Alice and Bob are two share traders who fervently watch the stock market. They
 are particularly concerned about the fate of company ABC and are waiting for news on whether ABC is
 doing well or poorly. In the middle of their stock market vigil, Alice is given a letter that says
@@ -35,20 +13,59 @@ If we wanted to formally model Alice and Bob's stock situation, we must consider
 	\item the updated facts Alice and Bob know or believe after the letter has been opened
 \end{enumerate}
 
-We are particularly concerned with items two and  three --- the updated facts Alice and Bob know.
-Given that there are facts that we want Alice and Bob to know or believe, we want to construct an
-update that will always achieve this information goal. We specify a series of languages to
-construct models of information change that realise information goals.\\
+Epistemic modal logic is particularly concerned with modelling item one.
+Facts and beliefs that Alice and Bob know prior to an update are well-studied phenomena.
+For example, epistemic models of the situation prior to Alice seeing her letter are that both Alice
+and Bob consider it feasible that company ABC is doing poorly, and they also consider it feasible
+that company ABC is doing well.
+However they cannot tell the difference between either of these possibilities.\\
 \\
-In \cite{hales13synthesis} Hales approaches this and shows that such constructions are possible.
-We extend his work by providing a language that can be used to generate models, allowing
-translation into an automated framework for formal update construction. We show and example
-automation of the construction of these formal updates.\\
+Kripke shows in \FIXME\ how to model epistemic situations, in accordance with axiomatic schemes that
+formally model knowledge.
+The work in this area has been used in financial trading and games to reason about the knowledge
+that agents in these systems have, as well as model checking and automated proving.
+Epistemic modal logic thus finds its uses when logical deductions about knowledge and belief must be
+made, as well as proving that an agent knows or believes exactly some set of propositions at a
+particular timestep.\\
 \\
-A formally described update allows us to verify whether the update takes effect as we expect. We can
-determine the outcome of an update and if it is correct, as well as reason about the event and the
-knowledge situation before and after the update. This level of correctness and security can be
-critical in systems such as communications, as well as economics fields like stock marketing and
-auctioning. They can be used to reason about agents playing games and find their uses in how we can
-update the knowledges of automated agents.
-
+This work is particularly concerned with items two and  three --- the update that Alice receives and Bob
+indirectly infers from Alice's reading, as well as the new knowledge and beliefs that Alice and Bob
+possess after the update.
+Work in this area is relatively new, and dynamic epistemic modal logic is of particular concern
+within this paper.
+We are concerned with modelling changes and the effects of those changes.
+In particular, being able to reason about the effects of changes, and to prove their properties and
+effects is desirable.\\
+\\
+Hales, in \cite{hales13synthesis}, proves the existence of updates that guarantee a
+proposition's realisation.
+This result is powerful, in that it allows us to conclude that some update exists to guarantee
+an after effect (we call this an epistemic goal).
+However, this result does not necessarily specify what the update that achieves our epistemic goal is.
+Furthermore, this result holds only within a modal logic that is far removed from epistemic modal
+logics --- that is, the updates discussed are not entirely useful or meaningful in a knowledge or
+epistemic-based sense.
+We aim to extend this work in a different direction, by examining operations that construct event
+models, and using them to construct an event model that is ``good enough" to achieve our epistemic
+goal.\\
+\\
+This work will document the different languages and the operations used in them to construct
+different epistemic updates.
+We will show a complementary work to Hales' work that constructs updates in the weakest modal logic,
+$\AXK$, which is far removed from epistemic modal logic.
+We then change axiom systems to a modal logic that much more closely resembles epistemic modal
+logic, $\AXKFF$, and show how we can construct updates in that logic.\\
+\\
+The rest of this paper is arranged as follows
+\begin{itemize}
+	\item Chapter \ref{lit_survey} gives an overview of the state of the art of epistemic modal logic
+		and clearly outlines what problems the work in this thesis aims to solve
+	\item Chapter \ref{chapter:prelim} gives the technical definitions, lemmas and theorems
+		established in previous works
+	\item Chapter \ref{chapter:Multiagent} shows results that compliment Hales' work in
+		\cite{hales13synthesis}, particularly in constructing event models for epistemic goal
+		achievement in $\AXK$
+	\item Chapter \ref{chapter:k45} shows our results in constructing event models for epistemic goal
+		achievement in $\AXKFF$, which is an axiom system that more closely resembles epistemic modal
+		logic
+\end{itemize}
