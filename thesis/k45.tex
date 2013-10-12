@@ -354,8 +354,7 @@ same.
 \label{afterOperation}
 \end{subfigure}
 \caption{Subfigures \ref{beforeOperation} and \ref{afterOperation} demonstrate the effect of
-applying our operation $I_B$ onto a model.
-Note the }
+applying our operation $I_B$ onto a model.}
 \label{k45VsKModels}
 \end{figure}
 
@@ -447,8 +446,8 @@ models.
 	Thus, we have shown that $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'}$ is a $\AXKFF$ event
 	model.\\
 	\\
-	We next show that $I_B$ is an $\AXKFF$ event model.
-	Suppose that $\evM_\evT$ is a $B$-insane $\AXKFF$ event model.
+	We next show that $I_B$ is an $\AXKFF$ event model for $B \subseteq A$.
+	Suppose that $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $B$-insane $\AXKFF$ event model.
 	We will show that $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') = I_B(\evM_\evT)$ is an $\AXKFF$ event model, by showing the frame conditions in
 	Lemma \ref{lemma:k45frameconditions}.\\
 	\\
@@ -456,8 +455,53 @@ models.
 	Suppose that $a \in A$ and $\evs', \evt', \evu' \in \evS'$ and $\evs' \evR'_a \evt'$ and $\evt'
 	\evR'_a \evu'$.
 	We must show that $\evs' \evR'_a \evu'$.
-	We note that this condition is already true if $a \notin B$ or $
-
+	We note that this condition is already true if $a \notin B$ or $a \in B$ and
+  $\evs', \evt', \evu' \notin \evT' = \evT$ since $\evM_\evT$ is a $\AXKFF$
+  frame.
+  We need only show that this holds for $\evs', \evt', \evu' \in \evT'$ and $a
+  \in B$.\\
+  \\
+  Supposing that these conditions hold, we note that $\evs' \evR'_a = \evT'$
+  (due to the application of $I_B$ as in Definition \ref{makeEquivalence}) and
+  since $\evu' \in \evT'$ then $\evu' \in \evs' \evR'_a$.
+  Again a similar argument can be made to show that $\evM'_{\evT'}$ is a
+  Euclidean relation.
+  In this way we can show that $\evM'_{\evT'}$ is also a $\AXKFF$ event model.\\
+  \\
+  Our final task is to show that for $B \subseteq A$, $\to_B$ will also
+  construct $\AXKFF$ event models.
+  Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} =
+  ((\evM',\evR',\evpr'),\evT')$ be $\AXKFF$ event models.
+  Furthermore, let $\evM_{\evT}$ be a $B$-insane event model, and let us
+  constrain $\evR'$ such that if $b \in B$ and $\evs' \in \evT'$ then $\evs'
+  \evR'_b = \evT'$.
+  We will show that $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'') = \evM_\evT \to_B
+  \evM'_{\evT'}$ is a $\AXKFF$ event model.\\
+  \\
+  Firstly, we show that for any $a \in A$, $\evR''_a$ is a Euclidean relation.
+  Suppose that $\evs'',\evt'',\evu'' \in \evS''$ such that $\evs'' \evR''_a
+  \evu''$ and $\evs'' \evR''_a \evt''$.
+  We will show that $\evt'' \evR''_a \evu''$.
+  We again note that as in the previous case for $I_B$, this condition is
+  already true if $a \notin B$.
+  We also note that it will hold if $\evs'',\evt'',\evu''$ are not
+  elements of $\evT'$ or elements of $\evT''$.\\
+  \\
+  Let us suppose that $a \in B$ and furthermore, suppose that $\evs''$ is an
+  element of $\evT''$.
+  Then by the definition of $\to_B$ (Definition \ref{defn:k45:considers})
+  $\evs'' \evR''_a = \evT'$.
+  Furthermore, we have from hypothesis that if $\evt'' \in \evT'$, then $\evt''
+  \evR'_a \evu''$ for all $a \in B$ and for all $\evu'' \in \evT'$.
+  Since $\evt'' \evR'_a$ is left unchanged after the application of $\to_B$ we
+  can conclude that $\evt'' \evR'_a \evu'' \Rightarrow \evt'' \evR''_a \evu''$,
+  which shows that the relation $\evR''_a$ is a Euclidean relation.
+  A similar proof will show that $\evR''_a$ is a transitive relation, and thus
+  shows that $\evM''_{\evT''}$ is a $\AXKFF$ event model.\\
+  \\
+  By showing that under each of these operations as well as our original atoms,
+  we construct $\AXKFF$ event models, we have shown that $\EM(\to,\sqcup,I)$
+  constructs $\AXKFF$ event models.
 \end{proof}
 
 We have shown that any event models generated from $\EM(\to,\sqcup, I)$ are
