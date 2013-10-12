@@ -410,7 +410,54 @@ models.
 	Then $\evM_\evT$ is a $\AXKFF$ event model.
 \end{lemma}
 \begin{proof}
-	\FIXME prooooooooooooof
+	We can show this through a case-by-case proof that each of the operations and atoms using in
+	$\EM(\to,\sqcup,I)$ constructs a $\AXKFF$ event model.
+	We first examine the atoms using in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
+	models.\\
+	\\
+	Since the only atomic event models we use in $\EM(\to,\sqcup,I)$ are insanity models, we suppose
+	that $\evM_{\evt} = ((\evS,\evR,\evpr),\{\evt\})$, where $\evS = \{\evt\}$ and $\evR =
+	\varnothing$.
+	This is a $\AXKFF$ frame since $\evR = \varnothing$ ensures that the frame conditions
+	are trivially true.\\
+	\\
+	We now will show that $\sqcup$ constructs $\AXKFF$ event models.
+	Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be
+	$\AXKFF$ event models such that $\evS$ and $\evS'$ are disjoint.
+	Now, let $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'} = ((\evS'',\evR'',\evpr''),\evT'')$.
+	We need to show that the two frame conditions outlined in Lemma \ref{lemma:k45frameconditions}
+	hold.\\
+	\\
+	We will show the first frame condition --- that is, that $\evR''$ is a transitive relation.
+	Suupose that for $a \in A$ and $\evs'', \evt'', \evu'' \in \evS''$ such that $\evs'' \evR''_a
+	\evt''$ and $\evt'' \evR''_a \evu''$, we must show that $\evs'' \evR''_a \evu''$.
+	We have from Definition \ref{disjoint} that $\evR'' = \evR \sqcup \evR'$, $\evS'' = \evS \sqcup
+	\evS'$ and from hypothesis that both $\evS$ and $\evS'$ are disjoint.
+	We observe that from Definition \ref{disjoint}, the operation $\sqcup$ will construct no new
+	relations from any element in $\evS$ to an element in $\evS'$ and vice versa.\\
+	\\
+	Then $\evs'', \evt'', \evu''$ must all originally be elements of either $\evS$ or $\evS'$ ---
+	without loss of generality, we say that they are elements of $\evS$.
+	Furthermore, then relation $\evs'' \evR''_a \evt''$ and $\evt'' \evR''_a \evu''$ also correspond
+	to $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$.
+	Since $\evM_\evT$ is a $\AXKFF$ event model, then $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$
+	yields that $\evs'' \evR_a \evu''$, which implies that $\evs'' \evR''_a \evu''$.
+	This shows that the transitivity frame condition holds.
+	A similar argument can be made to show that $\evR''$ is a Euclidean relation.
+	Thus, we have shown that $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'}$ is a $\AXKFF$ event
+	model.\\
+	\\
+	We next show that $I_B$ is an $\AXKFF$ event model.
+	Suppose that $\evM_\evT$ is a $B$-insane $\AXKFF$ event model.
+	We will show that $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') = I_B(\evM_\evT)$ is an $\AXKFF$ event model, by showing the frame conditions in
+	Lemma \ref{lemma:k45frameconditions}.\\
+	\\
+	Let us show that $\evR'$ is a transitive relation.
+	Suppose that $a \in A$ and $\evs', \evt', \evu' \in \evS'$ and $\evs' \evR'_a \evt'$ and $\evt'
+	\evR'_a \evu'$.
+	We must show that $\evs' \evR'_a \evu'$.
+	We note that this condition is already true if $a \notin B$ or $
+
 \end{proof}
 
 We have shown that any event models generated from $\EM(\to,\sqcup, I)$ are
@@ -669,8 +716,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   We note that for any pair $(\evt',\evt)$, $\evpr^{k+1'}(\evt') \iff
   \evpr^{k+1}(\evt)$ since $\evM^{i'}_{\evt'} \sim \evM^{i}_{\evt}$.
   It remains to be shown that if $(\evt', \evt) \in \sim$ then both {\bf
-  forth-$a$} and {\bf back-$a$} hold.
-
+  forth-$a$} and {\bf back-$a$} hold.  
 %  We want to show that forth-$a$ holds
 %  If we get a point pairing $(\evt', \evt)$, and
 %  lets say that $\evt' \evR^{k+1'}_a \evu'$, then there is a point in $\evu \in
