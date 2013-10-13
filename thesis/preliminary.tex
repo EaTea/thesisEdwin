@@ -108,15 +108,17 @@ Here, we model the update where Alice may have learnt which side up the coin is,
 
     \node[vertex] (1) {$\evp$};
     \node[vertex] (2) [above right of=1] {$\evu$};
-		\node[vertex] (3) [above left of=1] {$\evv$};
+		\node[vertex] (3) [below right of=1] {$\evv$};
     \path[edge]
           (1) edge node {$A,B$} (2)
 							edge node {$A,B$} (3)
               edge [loop left] node {$A,B$} (1)
           (2) edge node {} (1)
               edge [loop right] node {$A,B$} (2)
+              edge [loop right] node {$A,B$} (3)
 					(3) edge node {} (1)
-							edge [loop right] node {$A,B$} (3);
+							edge [loop right] node {$A,B$} (3)
+							edge node {} (2);
 \end{tikzpicture}
 \caption{An example of an event model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
 Here, Alice ($A$) may have learnt whether the coin was heads ($H$) or tails ($T$), or she did not
@@ -171,11 +173,11 @@ This pointed model execution is only sensible if and only if $M_s \models
               edge [loop right] node {$A,B$} (2)
 					(3) edge node {} (1)
 							edge node {} (2)
-							edge node {$A,B$} (4)
-							edge [loop right] node {$A,B$} (3)
+							edge node {} (4)
+							edge [loop left ] node {$A,B$} (3)
 					(4) edge node {} (1)
 							edge node {} (2)
-							edge node {} (3)
+							edge node {$A,B$} (3)
 							edge [loop right] node {$A,B$} (4);
 \end{tikzpicture}
 \caption{After executing $\evM$ (Figure \ref{figure:eventModelExample}) on $M$ (Figure
@@ -201,7 +203,7 @@ We can now discuss some interesting and useful event models that we will employ 
 Let $\aMod{\evMo = (\{ s \}, R, \{ (s, \phi)\}})$ be an event model.
 Let $\aMod{s}$ be a single action point and $\aMod{R_a = \{(s, s)\}}$ for each $a \in A$ and $\phi
 \in \lang$.
-Then $M$ is a public announcement of $\phi$.
+Then $M$ is a {\em public announcement} of $\phi$.
 We say $\publicAnnClass$ is the class of all action models that
 are public announcements of a sentence in $L$.
 \end{defn}
@@ -232,9 +234,9 @@ Let $\aMod{\evMo = (\{ s \}, \varnothing, \{(s, \phi)\})}$ be an action model
 where $\phi \in L$ and $\aMod{s}$ is an action point.
 $\aMod{\evMo}$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
 $\insaneClass = \{\aMod{\evMo} \text{ } | \text{ } \phi \in L\}$ is the class of all such action models.
+We call this class of models {\em insanity models}.
 \end{defn}
 
-We call this class of models ``insanity models".
 This is because after the execution of an insanity model, all agents have renounced every belief
 they hold.
 They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
@@ -271,9 +273,9 @@ different.
 		\item {\bf back-$a$}: for each $s' \in S'$ such that $s \sim s'$, for each $t$ such that
 		$s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \sim t'$
 	\end{itemize}
-	$\sim$ is a bisimulation between $M$ and $M'$ if and only if {\bf atoms} holds and {\bf front-$a$}
+	$\sim$ is a {\em bisimulation} between $M$ and $M'$ if and only if {\bf atoms} holds and {\bf front-$a$}
 	and {\bf back-$a$} hold for each $a \in A$.
-	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
+	We denote $M$ and $M'$ being {\em bisimilar} by $M \sim M'$.
 \end{defn}
 
 Bisimulation allows us to say that externally, two models are exactly the same.
@@ -298,9 +300,9 @@ subset will be true reasonings for another model.
 
 \begin{defn} \label{nBisimKripke}
 Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$.
-We define $n$-bisimilarity inductively as follows.
-We say that $\krMo_s$ is $0$-bisimilar to $\krMo'_{s'}$ if and only if $V(s) = V'(s)$.
-Then for $n > 0$ we say that $\krMo_s$ is $n$-bisimilar to $\krMo'_{s'}$ if and only if for every $a \in A$
+We define {\em $n$-bisimilarity} inductively as follows.
+We say that $\krMo_s$ is {\em $0$-bisimilar} to $\krMo'_{s'}$ if and only if $V(s) = V'(s)$.
+Then for $n > 0$ we say that $\krMo_s$ is {\em $n$-bisimilar} to $\krMo'_{s'}$ if and only if for every $a \in A$
 \begin{itemize}
 	\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
 	\item {\bf $n$-front-$a$}: for each $t \in s R_a$, there is a $t' \in s' R'_a$ such that $M_t$ is
@@ -332,12 +334,12 @@ Put another way, we can say that one Kripke model has more information than anot
 
 \begin{defn} \label{refinement}
 Let $B \subseteq A$ and $\krMo$ and $\krMo'$ be Kripke models. A non-empty relation $\lesssim \subseteq S
-\times S'$ is a $B$-simulation if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
+\times S'$ is a {\em $B$-simulation} if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
 every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
 \end{defn}
 If $(s, s') \in \lesssim$ then we say $\krMo'_{s'}$ is a
 $B$-simulation of $\krMo_s$ and
-$\krMo_s$ a $B$-refinement of $\krMo'_{s'}$.
+$\krMo_s$ a {\em $B$-refinement} of $\krMo'_{s'}$.
 We write $\krMo_{s} \lesssim \krMo'_{s'}$ or equivalently
 $\krMo'_{s'} \gtrsim \krMo_{s}$.\\
 \\
@@ -381,7 +383,7 @@ point in a model.
 
 \begin{defn} \label{propLogic}
 Let $\krMo = (S, R, V) \in \kripkeClass$ for a group of agents $A$.
-The language of propositional logic $\langProp$ is inductively defined by
+The {\em language of propositional logic} $\langProp$ is inductively defined by
 \[
 	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } (\phi \land \phi)
 \]
@@ -407,7 +409,7 @@ In order to discuss epistemics and knowledge, we must define the semantics of mo
 
 \begin{defn} \label{modalLogic}
 Let $\krMo = (S, R, V) \in \kripkeClass$ for a group of agents $A$.
-The language of modal logic $\lang$ is $\langProp$ with the additional inductive case
+The {\em language of modal logic} $\lang$ is $\langProp$ with the additional inductive case
 \[
 	 \Box_a \phi
 \]
@@ -489,7 +491,7 @@ true" has a modal depth of 2.\\
 We formally define modal depth as follows
 
 \begin{defn} \label{modalDepth}
-We define the modal depth of a formula $\phi \in \lang$ ($\mDep(\phi)$) as follows
+We define the {\em modal depth} of a formula $\phi \in \lang$ ($\mDep(\phi)$) as follows
 \begin{itemize}
 	\item $\mDep(p) = 0$ for atomic formula $p$
 	\item $\mDep(\top) = \mDep(\bot)$
@@ -511,7 +513,7 @@ much more a dynamic concept that just as a single event that is being modelled.
 Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model and $\aMod{\evMo
   = (S, R, pre)} \in
 \eventClass$ a multi-pointed event model for a group of agents $A$.
-The interpretation of $\phi \in \langActEx$ is the same as its interpretation in $\lang$
+The interpretation of $\phi \in \langActEx$ --- that is, the {\em language of event model execution} ---  is the same as its interpretation in $\lang$
 (\ref{modalLogic}), but with the additional
 inductive cases
 \begin{itemize}
@@ -541,7 +543,7 @@ We also introduce refinement modal logic, as first introduced by van Ditmarsch a
 
 \begin{defn} \label{refineLogic}
 Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model for a group of agents $A$.
-The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the same as $\lang$
+The interpretation of $\phi \in \langRefine$ ({\em refinement modal logic}) in the logic $K_\forall$ is the same as $\lang$
 (\ref{modalLogic}), but with the additional inductive case
 \[
 	\krMo_s \models \forall_B \phi \text{ iff } \forall \krMo'_{s'} \in
@@ -572,7 +574,7 @@ and we can thus discuss both execution and quantification together as a single l
 This gives us the power to both execute, and to query over an arbitrary number of event models.
 
 \begin{defn} \label{arbActLogic}
-The language of arbitrary action model logic, $\langArbAct$ is first defined in \cite{hales13synthesis}.
+	The {\em language of arbitrary action model logic}, $\langArbAct$ is first defined in \cite{hales13synthesis}.
 We inductively define $\langArbAct$ by
 \[
 	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } \phi \land \phi \text{ } | \text{ } \Box_a \phi \text{ } |
@@ -612,7 +614,7 @@ We will extend this now to also cover bisimulation for event models.
 
 \begin{defn} \label{bisimEvent}
 	Let $\aMod{\evMo, \evMo'} \in \eventClass$ with preconditions defined on $\langArbAct$.
-	A non-empty relation $\sim$ on $\aMod{\evMo} \times \aMod{\evMo'}$ is a bisimulation if and only if for every $a \in A$
+	A non-empty relation $\sim$ on $\aMod{\evMo} \times \aMod{\evMo'}$ is a {\em bisimulation} if and only if for every $a \in A$
 	and $\aMod{(s, s') \in \sim}$, the following three conditions hold:
 	\begin{itemize}
 		\item {\bf pre}: $\aMod{pre(s)} \iff \aMod{pre'(s')}$
@@ -733,8 +735,8 @@ We thus introduce the idea of $n$-bisimilarity for event models.
 
 \begin{defn} \label{nBisimEvent}
 	Let $\aMod{\evMo_s, \evMo'_{s'}} \in \eventClass$ with preconditions defined on $\langArbAct$.
-	We inductively define $n$-bisimilarity for event models.
-	We say $\aMod{\evMo_s}$ is $0$-bisimilar to $\aMod{\evMo'_{s'}}$ if and only if $\aMod{pre(s) \iff
+	We inductively define {\em $n$-bisimilarity} for event models.
+	We say $\aMod{\evMo_s}$ is {\em $0$-bisimilar} to $\aMod{\evMo'_{s'}}$ if and only if $\aMod{pre(s) \iff
 		pre'(s')}$.
 	Then for $n > 0$ $\aMod{\evMo_s}$ is $n$-bisimilar to $\aMod{\evMo'_{s'}}$ if and only if each of the following hold
 	\begin{itemize}
@@ -838,7 +840,7 @@ We finally define cover normal form, which is an important form that is extensiv
 refinement modal logic and arbitrary action model logic.
 
 \begin{defn} \label{coverNormal}
-A formula in cover disjunctive normal form is defined inductively as
+	A formula in {\em cover disjunctive normal form} is defined inductively as
 
 \[
 	\alpha ::= \pi \land \bigwedge_{b \in B} \cover_b \Gamma_b \text{ } | \text{ } \alpha \lor \alpha
