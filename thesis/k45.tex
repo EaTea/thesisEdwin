@@ -2,7 +2,7 @@
 
 We have discussed models in the axiom system of $\AXK$.
 In particular, we have focused on approximating arbitrary event models.
-Our approximations can fulfill postconditions and the effects of event model execution, up to modal
+Our approximations can fulfil post-conditions and the effects of event model execution, up to modal
 depth $n$.\\
 \\
 This result was particularly useful in showing that we could construct an event model, but because
@@ -159,13 +159,13 @@ semantics.
 In order to determine if an event model obeys the axioms of $\AXKFF$, we will formalise the ``model"
 implications we previously discussed into conditions on the structure of the model (that is, the
 frame of the model --- see Definition \ref{frame}).
-These are the frame conditions of $\AXKFF$, and we will show that an event model that fulfills these
+These are the frame conditions of $\AXKFF$, and we will show that an event model that fulfils these
 frame conditions, when executed on a Kripke model that obeys the axioms of $\AXKFF$ will preserve
 these axioms post execution.
 
 \begin{lemma} \label{lemma:k45frameconditions}
 	Let $F = (S,R)$ be a frame.
-	We say that $F$ is a $\AXKFF$ frame if it fulfills the following conditions:
+	We say that $F$ is a $\AXKFF$ frame if it fulfils the following conditions:
 	\begin{itemize}
 		\item if $R$ is a transitive relation, then $\axFo$ is valid in any model where $F$ is its
 			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \Rightarrow s R u$
@@ -238,7 +238,7 @@ We can approximate informative updates using our previous method (detailed in Ch
 axioms $\axFo$ and $\axFi$.
 The resulting model barely resembles an epistemic model.
 The approach in this chapter constructs event models that, after their execution on a model that
-fulfills the conditions of $\AXKFF$, will preserve those conditions.\\
+fulfils the conditions of $\AXKFF$, will preserve those conditions.\\
 \\
 We return to our open question --- if we have an $\AXKFF$ event model, can we construct a $\AXKFF$ event
 model that is able to achieve the same epistemic effects, up to some modal depth $n$?
@@ -255,7 +255,7 @@ It is a necessary condition in order to generate our approximating $\AXKFF$ mode
 \end{defn}
 
 If $B = \{b\}$, we say that the set $\evM_\evT$ is $b$-insane.
-Similarly if $B = A$ we say that $\evM_\evT$ is simply insane, which fulfills
+Similarly if $B = A$ we say that $\evM_\evT$ is simply insane, which fulfils
 our previous definition of insanity models (Definition \ref{insanity}).\\
 \\
 What does it mean for a set of states to be $B$-insane?
@@ -432,7 +432,7 @@ models.
 	hold.\\
 	\\
 	We will show the first frame condition --- that is, that $\evR''$ is a transitive relation.
-	Suupose that for $a \in A$ and $\evs'', \evt'', \evu'' \in \evS''$ such that $\evs'' \evR''_a
+	Suppose that for $a \in A$ and $\evs'', \evt'', \evu'' \in \evS''$ such that $\evs'' \evR''_a
 	\evt''$ and $\evt'' \evR''_a \evu''$, we must show that $\evs'' \evR''_a \evu''$.
 	We have from Definition \ref{disjoint} that $\evR'' = \evR \sqcup \evR'$, $\evS'' = \evS \sqcup
 	\evS'$ and from hypothesis that both $\evS$ and $\evS'$ are disjoint.
@@ -738,7 +738,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 
   It is clear that for $\evt'' \in \evT'$, $\evt'' \evR^{k'}_{a'} = \evT^{a'}$, by the
   definition of $I_{a'}$ and the definition of $\evM^{k'}_{\evt'}$.
-  We can form a similar model for each of $a_1,a_2,\ldots,\a_j \in A'$, which is
+  We can form a similar model for each of $a_1,a_2,\ldots,a_j \in A'$, which is
   $\evM^{k'}_{\evT^{a_1}}, \evM^{k'}_{\evT^{a_2}}, \evM^{k'}_{\evT^{a_3}},
   \ldots, \evM^{k'}_{\evT^{a_j}}$ respectively.
   We now consider the model $\evM^{0'}_{\evs'}$, as defined in our base case,
@@ -749,7 +749,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   \[
     \evM^{k+1'}_{\evs'} = (\ldots((\evM^0_{\evs'} \to_{a_1}
             \evM^{k'}_{\evT^{a_1}}) \to_{a_2} \evM^{k'}_{\evT^{a_2}}) \to_{a_3}
-        \ldots ) \to_{a_j} \evM^{k'}$
+        \ldots ) \to_{a_j} \evM^{k'}
   \]
 
   This model is a $\AXKFF$ event model, since the operations used to construct
@@ -879,14 +879,14 @@ model dependent on the depth of the post-conditions we are interested in.
 We formally summarise and show this in Theorem
 \ref{thm:nBisimAnyK45EventModel}.
 
-\begin{theorem} \label{thm:nBisimAnyK45EventModel}
+\begin{thm} \label{thm:nBisimAnyK45EventModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
   event model.
   Let $n$ be some non-negative integer.
   We can construct a $\AXKFF$ event model, $\evM'_{\evT'} =
   ((\evS',\evR',\evpr'),\evT')$ using
   $\EM(\to,\sqcup,I)$ such that $\evM'_{\evT'} \sim_n \evM_\evT$.
-\end{theorem}
+\end{thm}
 \begin{proof}
   By Lemma \ref{lemma:unwoundModel:bisimilar} we can construct the unwound model
   of $\evM_\evT$, which we call $\evM''_{\evT''} \sim \evM_{\evT}$.
@@ -898,16 +898,16 @@ We formally summarise and show this in Theorem
   $\evM'_{\evT'} \sim_n \evM_\evT$.
 \end{proof}
 
-We restate this result in terms of goal achievement in Corrolary
+We restate this result in terms of goal achievement in Corollary
 \ref{corr:k45GoalAchievement}.
 
 \begin{corr} \label{corr:k45GoalAchievement}
-  Suppose $\phi \in \lang$ is some epistemic goal with $\MD(\phi) = n$ for $n$
+  Suppose $\phi \in \lang$ is some epistemic goal with $\mDep(\phi) = n$ for $n$
   some non-negative integer.
   Let $\evM_\evT$ be some $\AXKFF$ event model such that for some $B
   \subseteq A$, $\vdash \sqex{\evM_\evT} \Rightarrow \phi$ and $\vdash
   \anex{\evM_\evT} \iff \exists_B \phi$.
-  There is some event model $\evM'_{\evT'}$ constructible by $\EM(\t,\sqcup,I)$
+  There is some event model $\evM'_{\evT'}$ constructible by $\EM(\to,\sqcup,I)$
   such that $\vdash \sqex{\evM'_{\evT'}} \Rightarrow \phi$ and $\vdash
   \anex{\evM'_{\evT'}} \iff \exists_B \phi$.
 \end{corr}
@@ -920,7 +920,7 @@ We restate this result in terms of goal achievement in Corrolary
   $\evM'_{\evT'}$.
 \end{proof}
 
-This result (Corrolary \ref{corr:k45GoalAchievement}) states
+This result (Corollary \ref{corr:k45GoalAchievement}) states
 that if we have an event model that guarantees the realisation of a goal $\phi$, we can build an event
 model that also guarantees the realisation of $\phi$.
 This difference is small, but powerful --- it progresses beyond ``there is some model that realises

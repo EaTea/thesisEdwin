@@ -7,13 +7,16 @@ models and the semantics of the logics we are working within.
 \begin{defn} \label{frame}
 	Let $S$ be a set of atoms and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
 	accessibility relations.
-	Then the tuple $(S, R)$ is a frame.
+	Then the tuple $(S, R)$ is a {\em frame}.
 \end{defn}
 
+If $s, t \in S$, $a \in A$ and $(s,t) \in R(a)$, we write this as $s R_a t$.\\
+\\
 A frame represents a mathematical structure, but holds no meaningful information.
 In order to give meaning and be able to draw conclusions from the frame, we can
 construct a valuation function that transforms the frame into a model detailing
 information.
+
 \begin{defn} \label{model}
 	Let $L$ be a logical language.
 	Let $F = (S, R)$ be a frame, and $A$ a set of agents.
@@ -22,17 +25,52 @@ information.
 	well-formed	sentence in $L$ to a subset of $S$.
 	We say $V$ is a valuation function on $F$.\\
 	\\
-	Then $\krMo = (F, V) = (S, R, V)$ is a Kripke
-	model.
+	Then $\krMo = (F, V) = (S, R, V)$ is a {\em Kripke model}.
 \end{defn}
+
 A multi-pointed model is a model $\krMo = (S, R, V)$ with a set of designated states, $T$.
 When $T = \{s\}$ is a single state, we say that the model is a pointed model and write $M_s$.
 We say $\kripkeClass$ is the class of all Kripke models.
 
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\eta$};
+    \node[vertex] (2) [right of=1] {$\tau$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2);
+\end{tikzpicture}
+\caption{An example of a Kripke model, $\krMo = (S,R,V)$, as a graph. Here, we can see that
+$\eta R_A \tau$, $\tau R_A \eta$, $\eta R_A \eta$ and $\tau R_A \tau$. The same relations apply for
+$R_B$.}
+\label{figure:exampleModel}
+\end{figure}
+
+An example of a Kripke model is given in Figure \ref{figure:exampleModel}.
+Here, we have two agents, $A$ and $B$, and two atoms in $S$ ($\eta$ and $\tau$), which we can think
+of as possible worlds.
+We can frame this example in terms of the coin-tossing game that we discussed earlier, by saying
+that $V(\tau) \Rightarrow H$ and $V(\eta) \Rightarrow T$, where $H$ stands for ``the coin is heads"
+and $T$ stands for ``the coin is tails".
+Both $A$ and $B$ are aware that there are two worlds --- one where the coin is heads ($\tau$), and one
+where the coin is tails ($\eta$).
+However, as if the coin is hidden from their view, they cannot distinguish between whether $\tau$ or
+$\eta$ is the actual state of the world.\\
+\\
+Kripke models are useful in describing a static situation, but they are not appropriate descriptions
+of change.
+They cannot describe an informative update that we can formally reason about, which motivates the
+need to specify models of updates, which we call {\em action models} or {\em event models}.
+
 \begin{defn} \label{evModel}
 	Let $L$ be a logical language.
 	Let $F = (S, R)$ be a frame, and $A$ a set of agents.
-	An event model $\aMod{\evMo = (S, R, pre)}$ with preconditions defined on $\mathcal{L}$ consists of
+	An {\em event model} (also known as an {\em action model}) $\aMod{\evMo = (S, R, pre)}$ with preconditions defined on $\mathcal{L}$ consists of
 	\begin{itemize}
 		\item a domain $\aMod{S}$ of possible atomic action points
 		\item an accessibility function, $\aMod{R: A \to \mathcal{P}(S \times
@@ -57,10 +95,45 @@ pre^1, T^1)}$ and $\aMod{\evMo^\alpha =
   (S^\alpha,R^\alpha,pre^\alpha,T^\alpha)}$.
 Furthermore, in literature both of the terms event models and action models are used to describe
 the same concept, and we use them interchangeably throughout this paper to refer to event models.
+We say $\eventClass$ is the class of all event models.\\
+\\
+Figure \ref{figure:eventModel} gives us an example of an event model, in terms of Alice, Bob and
+their coin-tossing game.
+Here, we model the update where Alice may have learnt which side up the coin is, or she might not have.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\evp$};
+    \node[vertex] (2) [above right of=1] {$\evu$};
+		\node[vertex] (3) [above left of=1] {$\evv$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+							edge node {$A,B$} (3)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2)
+					(3) edge node {} (1)
+							edge [loop right] node {$A,B$} (3);
+\end{tikzpicture}
+\caption{An example of an event model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
+Here, Alice ($A$) may have learnt whether the coin was heads ($H$) or tails ($T$), or she did not
+cheat and learnt nothing at all ($\top$).
+We say that $\evpr(\evp) = \top$, $\evpr(\evu) = H$ and $\evpr(\evv) = T$.}
+\label{figure:eventModelExample}
+\end{figure}
+
+Now that we have established a method of modelling updates, we can specify an update in terms of the
+preconditions required to effect an update, and the relations that define the uncertainty between
+which specific update was executed.
+However, we have not defined update execution, and this model is somewhat pointless without some
+idea of how to execute an event model.
 
 \begin{defn} \label{evModelEx}
-Let $\kripkeClass = (S, R, V) \in \kripkeClass$. We define event model
-execution for an event model $\aMod{\evMo = (S,
+	Let $\kripkeClass = (S, R, V) \in \kripkeClass$. We define {\em event model
+	execution} for an event model $\aMod{\evMo = (S,
 		R, pre)} \in
 \eventClass$ as follows.
 The result of executing $\evMo$ on the model $\krMo$ is denoted by $M \otimes N = M' = (S', R', V')$ where
@@ -78,17 +151,81 @@ This pointed model execution is only sensible if and only if $M_s \models
 	\in S'$.
 \end{defn}
 
-We say $\eventClass$ is the class of all event models.
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$s'$};
+    \node[vertex] (2) [right of=1] {$t'$};
+		\node[vertex] (3) [below of=1] {$s$};
+		\node[vertex] (4) [below of=2] {$t$};
+    \path[edge]
+          (1) edge node {$B$} (2)
+							edge node {$B$} (3)
+							edge node {$B$} (4)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+							edge node {$B$} (3)
+							edge node {$B$} (4)
+              edge [loop right] node {$A,B$} (2)
+					(3) edge node {} (1)
+							edge node {} (2)
+							edge node {$A,B$} (4)
+							edge [loop right] node {$A,B$} (3)
+					(4) edge node {} (1)
+							edge node {} (2)
+							edge node {} (3)
+							edge [loop right] node {$A,B$} (4);
+\end{tikzpicture}
+\caption{After executing $\evM$ (Figure \ref{figure:eventModelExample}) on $M$ (Figure
+\ref{figure:exampleModel}), we get a new event model $M' = (S',R',V') = M \otimes \evM$.
+Here $\evs,\evt,\evs',\evt'$ are the new possible worlds, where $V'(s') = V'(s) = H$ and $V'(t') =
+V'(t) = T$.
+However, we note that in this Kripke model $B$ cannot distinguish any of these worlds apart, whilst
+$A$ can distinguish between $s'$ and $t'$ --- this represents $A$ knowing in $s'$ and $t'$ the state
+of the coin.}
+\label{figure:eventModelPostExecution}
+\end{figure}
+
+In Figure \ref{figure:eventModelPostExecution} we use our previous figures to demonstrate event
+model execution.
+We can see that $s$ would have been the result of executing $\evp$ on $\tau$, whilst executing
+$\evu$ on $\tau$ resulted in $s'$.\\
+\\
+Event model execution allows us to discuss how, given an event model and an update, the Kripke model
+(the model of the epistemic situation) changes.
+We can now discuss some interesting and useful event models that we will employ later in this work.
 
 \begin{defn} \label{pub}
 Let $\aMod{\evMo = (\{ s \}, R, \{ (s, \phi)\}})$ be an event model.
-Let $\aMod{s}$ be a single action point and $\aMod{R_a =
-  \{(s, s)\}}$ for each $a \in A$ and $\phi
-\in \mathcal{L}$.
+Let $\aMod{s}$ be a single action point and $\aMod{R_a = \{(s, s)\}}$ for each $a \in A$ and $\phi
+\in \lang$.
 Then $M$ is a public announcement of $\phi$.
 We say $\publicAnnClass$ is the class of all action models that
 are public announcements of a sentence in $L$.
 \end{defn}
+
+Public announcements are a single action point with one reflexive edge, and they all have the form
+as shown in Figure \ref{figure:exampleAnnounce}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\evs$};
+          (1) edge [loop left] node {} (1);
+\end{tikzpicture}
+\caption{The form of every public announcement, where for $\evM^P_\evs =
+((\evS^P,\evR^P,\evpr^p),\evs)$ we have that $\evpr^P(\evs)$ is some sentence in $\lang$.}
+\label{figure:exampleAnnounce}
+\end{figure}
+
+Our next set of event models are particularly useful in constructing event models.
+They are somewhat vacuous, and in terms of knowledge they are somewhat odd by themselves.
+Their flexibility as event models due to having no prior relations is useful in being the atoms to
+use for our constructions.
 
 \begin{defn} \label{insanity}
 Let $\aMod{\evMo = (\{ s \}, \varnothing, \{(s, \phi)\})}$ be an action model
@@ -96,11 +233,26 @@ where $\phi \in L$ and $\aMod{s}$ is an action point.
 $\aMod{\evMo}$ represents the truthful announcement of $\phi$ causing all agents to renounce all their beliefs.
 $\insaneClass = \{\aMod{\evMo} \text{ } | \text{ } \phi \in L\}$ is the class of all such action models.
 \end{defn}
+
 We call this class of models ``insanity models".
 This is because after the execution of an insanity model, all agents have renounced every belief
 they hold.
 They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
 Allowing them to believe such contradictions means that they are effectively insane.
+They have the same form as the event model shown in Figure \ref{figure:exampleInsane}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\evs$};
+\end{tikzpicture}
+\caption{The form of every insanity model, where for $\evM^I_\evs =
+((\evS^I,\varnothing,\evpr^p),\evs)$ we have that $\evpr^I(\evs)$ is some sentence in $\lang$
+Note the lack of a reflexive edge, unlike in Figure \ref{figure:exampleAnnounce}.}
+\label{figure:exampleInsane}
+\end{figure}
 
 \subsection{Bisimilarity, simulation and refinement}
 
@@ -123,6 +275,12 @@ different.
 	and {\bf back-$a$} hold for each $a \in A$.
 	We denote $M$ and $M'$ being bisimilar by $M \sim M'$.
 \end{defn}
+
+Bisimulation allows us to say that externally, two models are exactly the same.
+That is, we can make the same reasonings on one of these models $M$ as we can about the other model
+$M'$.
+This suggests that bisimulation is actually some sort of equivalence, which is given in Lemma
+\ref{bisimEquivalence}.
 
 \begin{lemma} \label{bisimEquivalence}
 	The relation $\sim$ is an equivalence relation.
@@ -184,43 +342,52 @@ We write $\krMo_{s} \lesssim \krMo'_{s'}$ or equivalently
 $\krMo'_{s'} \gtrsim \krMo_{s}$.\\
 \\
 We can say that $\krMo \lesssim \krMo'$ can be represented in natural language as ``$\krMo$ contains
-less uncertainty than $\krMo'$", or that ``$\krMo$ captures more information that $krMo'$".
-Given the operators we are using, the former meaning regarding less uncertainty is preferable.
+less uncertainty than $\krMo'$", or that ``$\krMo$ captures more information that $\krMo'$".
+Given the operators we are using, the former meaning regarding less uncertainty is preferable.\\
+\\
+The concepts of refinements are a necessary step as we discuss language semantics, especially since
+refinements are quite powerful concepts that we can (eventually) use to quantify over event models,
+and is necessary for our work with constructing event models that are complementary to Hales' work
+in \cite{hales13synthesis}.
 
-\begin{lemma} \label{refinementPreorder}
-The relation $\lesssim_B$ is a preorder.
-\end{lemma}
-This is shown by van Ditsmarch and French in \cite{van2009simulation}.
-
-\begin{lemma} \label{bisimilarIsRefinement}
-Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$ and $B \subseteq A$.
-Then $\krMo_s \sim \krMo'_{s'} \Rightarrow \krMo_s \lesssim_B \krMo'_{s'}$.
-\end{lemma}
-
-This follows trivially from Definition \ref{refinement} and Definition \ref{bisimKripke}.
-
-\begin{defn} \label{brestrict}
-Let $B \subseteq A$ and let $\aMod{\evMo} \in \eventClass$. Then $\aMod{\evMo}$ is a $B$-restricted event model if and
-only if for every $\aMod{u \in S}$ and every $\krMo_s \in \kripkeClass$
-such that $\krMo_s \models pre(u)$ we
-have $\krMo_s \otimes \evMo_u \gtrsim_B \krMo_s$.
-We say the class of $B$-restricted action models is $\eventClass_B$.
-\end{defn}
-
-\FIXME: citation here
+%\begin{lemma} \label{refinementPreorder}
+%The relation $\lesssim_B$ is a preorder.
+%\end{lemma}
+%
+%This is shown by van Ditsmarch and French in \cite{van2009simulation}.
+%
+%\begin{lemma} \label{bisimilarIsRefinement}
+%Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$ and $B \subseteq A$.
+%Then $\krMo_s \sim \krMo'_{s'} \Rightarrow \krMo_s \lesssim_B \krMo'_{s'}$.
+%\end{lemma}
+%
+%This follows trivially from Definition \ref{refinement} and Definition \ref{bisimKripke}.
+%
+%\begin{defn} \label{brestrict}
+%Let $B \subseteq A$ and let $\aMod{\evMo} \in \eventClass$. Then $\aMod{\evMo}$ is a $B$-restricted event model if and
+%only if for every $\aMod{u \in S}$ and every $\krMo_s \in \kripkeClass$
+%such that $\krMo_s \models pre(u)$ we
+%have $\krMo_s \otimes \evMo_u \gtrsim_B \krMo_s$.
+%We say the class of $B$-restricted action models is $\eventClass_B$.
+%\end{defn}
+%
+%\FIXME: citation here
 
 \subsection{Language semantics}
 We now discuss the semantics and syntax of several different languages, culminating with language of
 arbitrary action model logic which will rely upon each of the languages we discuss.
+These semantics are powerful constructs that allow us to reason about what is true at a specific
+point in a model.
 
 \begin{defn} \label{propLogic}
-Let $\krMo = (S, R, V) \in \kripkeClass$.
+Let $\krMo = (S, R, V) \in \kripkeClass$ for a group of agents $A$.
 The language of propositional logic $\langProp$ is inductively defined by
 \[
 	\phi ::= p \text{ } | \text{ } \neg \phi \text{ } | \text{ } (\phi \land \phi)
 \]
 
-The interpretation of $\phi \in \langProp$ in the logic $K$ is defined inductively as
+We discuss what formulae and sentences are true at a point in a Kripke model using $\models$.
+The interpretation of $\phi \in \langProp$ in the logic $K$ is thus defined inductively as
 
 \begin{itemize}
 	\item $\krMo_s \models p$ iff $p \in V(s)$
@@ -233,10 +400,13 @@ for $s \in S$.
 
 We will adopt the standard abbreviations for propositional logic, such as $\phi \lor \phi =
 \neg(\neg \phi \land \neg \phi)$.
-These are defined in \cite{blackburn2002modal}.
+These are defined in \cite{blackburn2002modal}.\\
+\\
+Propositional logic gives us now modal power and no way to discuss knowledge in a logical context.
+In order to discuss epistemics and knowledge, we must define the semantics of modal logic.
 
 \begin{defn} \label{modalLogic}
-Let $\krMo = (S, R, V) \in \kripkeClass$.
+Let $\krMo = (S, R, V) \in \kripkeClass$ for a group of agents $A$.
 The language of modal logic $\lang$ is $\langProp$ with the additional inductive case
 \[
 	 \Box_a \phi
@@ -255,7 +425,9 @@ In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/beli
 its dual operator, $\Diamond_a \phi$ means ``$a$ considers $\phi$ possible".
 We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigwedge_{b \in B}
 \Box_b \phi$.
-In the case where $B = A$ we write $\krMo_s \models \Box \phi$.\\
+In the case where $B = A$ we write $\krMo_s \models \Box \phi$.
+For some integer $n$ and $a \in A$, we will take $\Box^n_a \phi$ to be $\Box_a \Box^{n-1}_a \phi$,
+and for $\Box^1_a \phi = \Box_a \phi$.\\
 \\
 We say that a formula $\phi$ is satisfied by a pointed model Kripke model $\krMo_s \in \kripkeClass$ iff
 $\krMo_s \models \phi$.
@@ -264,9 +436,30 @@ We say that $\phi$ is satisfied by a model $\krMo = (S, R, V)$ (denoted by
 for all $s \in S$, $\krMo_s \models \phi$.
 Furthermore, $\phi$ is valid in a class of Kripke models $\kripkeClass$ iff for
 every model $\krMo \in
-\kripkeClass$, $\krMo \models \phi$.\\
-\\
-\FIXME: Add an example
+\kripkeClass$, $\krMo \models \phi$.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$t$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop left] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop right] node {$A,B$} (2);
+\end{tikzpicture}
+\caption{This is the same example as Figure \ref{figure:exampleModel}, but we discuss the reasonings
+that we can make about it.
+$H$ for ``the coin is Heads" is in $V(s)$ and $T$ for ``the coin is Tails" is in $V(t)$.
+We note that here, $M_s \models H$ and $M_t \models T$.
+We also note that $M_s \models \Diamond_A H \lor \Diamond_A T$, and $M_t \models \Diamond_A H \lor
+\Diamond_A T$.}
+\label{figure:exampleReasonings}
+\end{figure}
+
 In addition to $\Box_a$ we introduce the cover operator $\cover_a$, following the definition used in
 \cite{venemaproofsystems}.
 The cover operator forms the basis for the axiomatisations for refinement modal logic, which we use
@@ -288,8 +481,13 @@ $\Box_a \phi \iff \cover_a \phi \lor \cover_a \varnothing$, while $\Diamond_a
 \phi \iff \cover_a \{\phi, \top\}$.
 $\cover$ is the basis for the axiomatisation of refinement modal logic.\\
 \\
-Finally, we discuss modal depth.
-We define modal depth as follows
+If we defined $\Box_a \phi$ as ``$a$ knows that $\phi$ is true" then the modal depth of a formula is, roughly,
+how many times we attached the phrase ``$a$ knows that $\ldots$" to our proposition.
+As an example, $\Box_a \Box_a \phi$, which translates to ``$a$ knows that $a$ knows that $\phi$ is
+true" has a modal depth of 2.\\
+\\
+We formally define modal depth as follows
+
 \begin{defn} \label{modalDepth}
 We define the modal depth of a formula $\phi \in \lang$ ($\mDep(\phi)$) as follows
 \begin{itemize}
@@ -301,16 +499,18 @@ We define the modal depth of a formula $\phi \in \lang$ ($\mDep(\phi)$) as follo
 \end{itemize}
 \end{defn}
 
-\FIXME: modal depth example
-
 Next, we build upon our logics to introduce the concepts updates and refinements as modal logics.
 We begin by introducing action model logic, as first defined by Baltag, Moss and Solecki in
 \cite{baltag1998lpa}.
+These give us the semantics for discussing event models in a language context, and we can now start
+to treat event models within our language, not simply as models of updates.
+This is important, since it now allows us to discuss event models as a language construct, which is
+much more a dynamic concept that just as a single event that is being modelled.
 
 \begin{defn} \label{actModelLogic}
 Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model and $\aMod{\evMo
   = (S, R, pre)} \in
-\eventClass$ a multi-pointed event model.
+\eventClass$ a multi-pointed event model for a group of agents $A$.
 The interpretation of $\phi \in \langActEx$ is the same as its interpretation in $\lang$
 (\ref{modalLogic}), but with the additional
 inductive cases
@@ -340,7 +540,7 @@ We also introduce refinement modal logic, as first introduced by van Ditmarsch a
 \cite{van2009simulation}.
 
 \begin{defn} \label{refineLogic}
-Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model.
+Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model for a group of agents $A$.
 The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the same as $\lang$
 (\ref{modalLogic}), but with the additional inductive case
 \[
@@ -349,13 +549,27 @@ The interpretation of $\phi \in \langRefine$ in the logic $K_\forall$ is the sam
 	\lesssim_B \krMo_s : \krMo'_{s'} \models \phi
 \]
 \end{defn}
+
 We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold".
 Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that $\phi$ will hold".
 As in the previous operations, when $B = A$ we will write $\forall \phi$.
 In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
-Our text interpretation is taken from an interpretation used by Hales, French and Davies in \cite{hales2012refinement}.
+Our interpretation is taken from an interpretation used by Hales, French and Davies in
+\cite{hales2012refinement}.\\
+\\
+It is not immediately clear, but refinements themselves have a strong relationship to event models,
+and the semantics in Definition \ref{refineLogic} are actually applicable beyond refinements to
+quantifying over event models.
+We can use the semantics of refinement modal logic to say
 
-\FIXME: a simple refinement example here
+\begin{itemize}
+	\item is there an event model to accomplish $\phi$?	
+	\item do all event models accomplish $\psi$?
+\end{itemize}
+
+This idea of quantification over event models can be combined with Definition \ref{actModelLogic},
+and we can thus discuss both execution and quantification together as a single language.
+This gives us the power to both execute, and to query over an arbitrary number of event models.
 
 \begin{defn} \label{arbActLogic}
 The language of arbitrary action model logic, $\langArbAct$ is first defined in \cite{hales13synthesis}.
@@ -366,13 +580,35 @@ We inductively define $\langArbAct$ by
 \]
 for $\aMod{\evMo_T} \in \eventClass$ and $B \subseteq A$.
 \end{defn}
+
 $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\sqex{\evMo_\evT}$.
-\\
-\\
-\FIXME: Add in James' alternate definition for $\forall$
 
 \subsubsection{Miscellaneous Semantic Results}
 We provide other results that we will use in the main technical findings of this paper.
+Our first technical result relates to refinements and their relationship to event models.
+We previously noted that the semantics of refinements were useful because they allowed us to
+quantify over refinements.
+In Lemma \ref{eventModelsRefine} we justify why this claim can be made.
+
+\begin{lemma} \label{eventModelsRefine}
+Let $\aMod{\evMo_s} \in \eventClass$ be an event model and let $\krMo_t \in \kripkeClass$ be a Kripke
+model such that $\krMo_t \models \aMod{pre(s)}$.
+Then $\krMo_t \otimes \aMod{\evMo} \lesssim \krMo_t$.
+\end{lemma}
+
+This result, shown by van Ditsmarsch and French in \cite{van2009simulation}, states that executing
+an event model is very similar to a refinement.
+More specifically, the resulting Kripke model after execution is a refinement of the model prior to
+execution.
+This means that every event model corresponds to some refinement, in terms of its effects on the
+Kripke model when executed.
+If we can say that event models are refinements, then we can permit the usage of refinements and the
+semantics of refinement modal logic being applied to event models.
+This allows us to then quantify over all event models.\\
+\\
+We now turn to an alternate set of definitions, that of providing a parallel result about bisimulations regarding event models.
+In Definition \ref{bisimKripke} we discussed bisimulation for Kripke models.
+We will extend this now to also cover bisimulation for event models.
 
 \begin{defn} \label{bisimEvent}
 	Let $\aMod{\evMo, \evMo'} \in \eventClass$ with preconditions defined on $\langArbAct$.
@@ -391,105 +627,109 @@ We provide other results that we will use in the main technical findings of this
 	that there is a bisimulation between $\evMo_s$ and $\evMo'_{s'}$.
 \end{defn}
 
-\begin{lemma} \label{eventModelsRefine}
-Let $\aMod{\evMo_s} \in \eventClass$ be an event model and let $\krMo_t \in \kripkeClass$ be a Kripke
-model such that $\krMo_t \models \aMod{pre(s)}$.
-Then $\krMo_t \otimes \aMod{\evMo} \lesssim \krMo_t$.
-\end{lemma}
-
 \begin{lemma} \label{eventModelEquivalent}
 Let $\aMod{\evMo_s}$, $\aMod{\evMo'_{s'}} \in \eventClass$ be event models such that $\aMod{\evMo_s}
 \sim \aMod{\evMo'_{s'}}$
 and let $\krMo_s \in \kripkeClass$ such that $\krMo_s \models \aMod{pre(s)}$.
-Then $\krMo_s \otimes \aMod{\evMo_s} \sim N_s \otimes \aMod{\evMo'_{s'}}$.
+Then $\krMo_s \otimes \aMod{\evMo_s} \sim \krMo_s \otimes \aMod{\evMo'_{s'}}$.
 \end{lemma}
 
-\begin{lemma} \label{nBisimilarKripkeExec}
-Let $\krMo_s$, $\krMo'_{s'} \in \kripkeClass$ and $\phi \in \lang$ such that the modal depth of $\phi$,
-$\mDep(\phi) \leq n$.
-Suppose that $\krMo_s \sim_{2n} \krMo'_{s'}$ and let $\aMod{\evMo_t} \in
-\eventClass$ such that $\aMod{pre(t)}$ is of modal depth $n$.
-Then $\krMo_s \otimes \aMod{\evMo_t} \models \phi \iff \krMo'_{s'} \otimes \aMod{\evMo_t} \models \phi$.
-\end{lemma}
+Lemma \ref{eventModelEquivalent} allows us to compare two event models and say ``after executing
+these two event models in the same epistemic situation, the resulting models are bisimilar".
+These well-known results are shown by van der Hoek, Kooi and van Ditsmarsch in
+\cite{hoek2008dynamic}.\\
+\\
+As with before, bisimilarity is a strong condition --- it says that the effects of two bisimilar
+event models will be exactly the same.
+This is, perhaps, too strong a condition that we might not need.
+We thus introduce the idea of $n$-bisimilarity for event models.
 
-\begin{proof}
-We use an inductive proof on the complexity of $\phi$.
-We inductively show that $\krMo^1_{(s,\aMod{t}}) = \krMo_s \otimes \aMod{\evMo_t} \models \phi \iff
-\krMo^2_{(s',\aMod{t})} = \krMo'_{s'}
-\otimes \aMod{\evMo_t} \models \phi$.\\
-\\
-For our base case, suppose $\phi = p$, where $p$ is an atomic proposition and let
-$\krMo^1_{(s,\aMod{t})} \models \phi$.
-\begin{align}
-  & \iff p \in V^1_((s,\aMod{t})) \label{baseOne} \\
-  & \iff p \in V(s) \label{baseTwo} \\
-  & \iff p \in V'(s) \label{baseThree} \\
-  & \iff p \in V^2((s',\aMod{t})) \label{baseFour} \\
-  & \iff M^2_{(s',\aMod{t})} \models \phi \label{baseFive}
-\end{align}
-(\ref{baseOne}) follows from the definition of a Kripke model (Definition
-\ref{model}).
-(\ref{baseTwo}) follows from the definition of event model execution
-(Definition \ref{evModelEx}).
-(\ref{baseThree}) follows from hypothesis, as $\krMo_s \sim_{2n} \krMo'_{s'} \Rightarrow \krMo_s \sim_0
-\krMo'_{s'}$
-(Definition \ref{nBisimKripke}).
-(\ref{baseFour}) follows from the definition of event model execution and
-(\ref{baseFive}) follows from the definition of Kripke model (Definition
-\ref{model}).
-Therefore, we have $\krMo^1_{(s,\aMod{t})} \models \phi \Rightarrow \krMo^2_{(s',\aMod{t})}$.
-The converse follows a similar argument.\\
-\\
-We handle each of the inductive cases separately now.
-Let $\phi = \neg \psi$.
-Suppose $M^1_{(s,t)} \models \phi$.
-\begin{align}
-	& \Rightarrow \neg (\krMo^1_{(s,\aMod{t})} \models \psi) \label{nBisKriNeg1} \\
-	& \Rightarrow \neg (\krMo^2_{(s',\aMod{t})} \models \psi) \label{nBisKriNeg2}
-\end{align}
-(\ref{nBisKriNeg1}) follows from the semantics of propositional logic and the inductive case for
-$\neg$ (Lemma \ref{propLogic}).
-(\ref{nBisKriNeg2}) follows from the induction hypothesis.\\
-\\
-Let $\phi = \psi_1 \land \psi_2$.
-Suppose $\krMo^1_{(s,\aMod{t})} \models \phi$.
-\begin{align}
-	& \Rightarrow \krMo^1_{(s,\aMod{t})} \models \psi_1 \label{nBisKriConj1} \\
-	& \iff \krMo^2_{(s',\aMod{t})} \models \psi_1 \label{nBisKriConj2}
-\end{align}
-(\ref{nBisKriConj1}) follows from the semantics of propositional logic and the inductive case for
-$\land$ (Lemma \ref{propLogic}).
-(\ref{nBisKriConj2}) follows from the induction hypothesis.\\
-\\
-We can employ a similar argument to show that $\krMo^2_{(s',\aMod{t})} \models \psi_2$ and together with
-(\ref{nBisKriConj2}) we have $\krMo^2_{(s',\aMod{t})} \models \psi_1 \land \krMo^2_{(s',\aMod{t})} \models \psi_2 \Rightarrow
-\krMo^2_{(s',\aMod{t})} \models \psi_1 \land \psi_2 = \phi$.\\
-\\
-Now, let $\phi = \Diamond_a \psi$ and suppose $\krMo^1_{(s,\aMod{t})} \models \phi$.
-\begin{align}
-	& \Rightarrow \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $(u,\aMod{v}) \in (s,\aMod{t}) R^1_a$} \label{nBisKriMod1} \\
-	& \Rightarrow \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $u \in s R_a$ and $v \in R^N_a$ and $\krMo_s
-		\models pre(t)$ and $\krMo_u \models \aMod{pre(v)}$} \label{nBisKriMod2}
-\end{align}
-(\ref{nBisKriMod1}) follows from the semantics of modal logic and the inductive case for
-$\Diamond_a$ (Lemma \ref{modalLogic}).
-(\ref{nBisKriMod2}) follows from the definition of event model execution (Definition
-		\ref{evModelEx}).\\
-\\
-From our hypothesis, given that $\aMod{pre(t)} \leq m$ we have that $\krMo_s \sim_{2n} \krMo'_{s'}
-\Rightarrow (\krMo_s \models \aMod{pre(t)} \iff \krMo'_{s'} \models
-\aMod{pre(t)})$.
-But by the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}), $\krMo_u$ is
-$2n-1$-bisimilar to some point $\krMo'_{u'}$.
-If $\mDep(\aMod{pre(v)}) \leq n-1$ we have by our induction hypothesis that $\krMo_u \models
-\aMod{pre(v)} \iff \krMo'_{u'}
-\models \aMod{pre(v)}$.\\
-\\
-Then by the induction hypothesis, $\krMo_u \sim_{2n} \krMo'_{u'} \land \mDep(\psi) \leq k \Rightarrow
-\krMo^2_{(u',\aMod{v})}  \models \psi$.
-By the semantics of modal logic (Lemma \ref{modalLogic}) we have that $\krMo^2_{(s',\aMod{t})} \models
-\Diamond_a \psi \Rightarrow \krMo^2_{(s',\aMod{t})} \models \phi$.
-\end{proof}
+%\begin{lemma} \label{nBisimilarKripkeExec}
+%Let $\krMo_s$, $\krMo'_{s'} \in \kripkeClass$ and $\phi \in \lang$ such that the modal depth of $\phi$,
+%$\mDep(\phi) \leq n$.
+%Suppose that $\krMo_s \sim_{2n} \krMo'_{s'}$ and let $\aMod{\evMo_t} \in
+%\eventClass$ such that $\aMod{pre(t)}$ is of modal depth $n$.
+%Then $\krMo_s \otimes \aMod{\evMo_t} \models \phi \iff \krMo'_{s'} \otimes \aMod{\evMo_t} \models \phi$.
+%\end{lemma}
+%
+%\begin{proof}
+%We use an inductive proof on the complexity of $\phi$.
+%We inductively show that $\krMo^1_{(s,\aMod{t}}) = \krMo_s \otimes \aMod{\evMo_t} \models \phi \iff
+%\krMo^2_{(s',\aMod{t})} = \krMo'_{s'}
+%\otimes \aMod{\evMo_t} \models \phi$.\\
+%\\
+%For our base case, suppose $\phi = p$, where $p$ is an atomic proposition and let
+%$\krMo^1_{(s,\aMod{t})} \models \phi$.
+%\begin{align}
+%  & \iff p \in V^1_((s,\aMod{t})) \label{baseOne} \\
+%  & \iff p \in V(s) \label{baseTwo} \\
+%  & \iff p \in V'(s) \label{baseThree} \\
+%  & \iff p \in V^2((s',\aMod{t})) \label{baseFour} \\
+%  & \iff M^2_{(s',\aMod{t})} \models \phi \label{baseFive}
+%\end{align}
+%(\ref{baseOne}) follows from the definition of a Kripke model (Definition
+%\ref{model}).
+%(\ref{baseTwo}) follows from the definition of event model execution
+%(Definition \ref{evModelEx}).
+%(\ref{baseThree}) follows from hypothesis, as $\krMo_s \sim_{2n} \krMo'_{s'} \Rightarrow \krMo_s \sim_0
+%\krMo'_{s'}$
+%(Definition \ref{nBisimKripke}).
+%(\ref{baseFour}) follows from the definition of event model execution and
+%(\ref{baseFive}) follows from the definition of Kripke model (Definition
+%\ref{model}).
+%Therefore, we have $\krMo^1_{(s,\aMod{t})} \models \phi \Rightarrow \krMo^2_{(s',\aMod{t})}$.
+%The converse follows a similar argument.\\
+%\\
+%We handle each of the inductive cases separately now.
+%Let $\phi = \neg \psi$.
+%Suppose $M^1_{(s,t)} \models \phi$.
+%\begin{align}
+%	& \Rightarrow \neg (\krMo^1_{(s,\aMod{t})} \models \psi) \label{nBisKriNeg1} \\
+%	& \Rightarrow \neg (\krMo^2_{(s',\aMod{t})} \models \psi) \label{nBisKriNeg2}
+%\end{align}
+%(\ref{nBisKriNeg1}) follows from the semantics of propositional logic and the inductive case for
+%$\neg$ (Lemma \ref{propLogic}).
+%(\ref{nBisKriNeg2}) follows from the induction hypothesis.\\
+%\\
+%Let $\phi = \psi_1 \land \psi_2$.
+%Suppose $\krMo^1_{(s,\aMod{t})} \models \phi$.
+%\begin{align}
+%	& \Rightarrow \krMo^1_{(s,\aMod{t})} \models \psi_1 \label{nBisKriConj1} \\
+%	& \iff \krMo^2_{(s',\aMod{t})} \models \psi_1 \label{nBisKriConj2}
+%\end{align}
+%(\ref{nBisKriConj1}) follows from the semantics of propositional logic and the inductive case for
+%$\land$ (Lemma \ref{propLogic}).
+%(\ref{nBisKriConj2}) follows from the induction hypothesis.\\
+%\\
+%We can employ a similar argument to show that $\krMo^2_{(s',\aMod{t})} \models \psi_2$ and together with
+%(\ref{nBisKriConj2}) we have $\krMo^2_{(s',\aMod{t})} \models \psi_1 \land \krMo^2_{(s',\aMod{t})} \models \psi_2 \Rightarrow
+%\krMo^2_{(s',\aMod{t})} \models \psi_1 \land \psi_2 = \phi$.\\
+%\\
+%Now, let $\phi = \Diamond_a \psi$ and suppose $\krMo^1_{(s,\aMod{t})} \models \phi$.
+%\begin{align}
+%	& \Rightarrow \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $(u,\aMod{v}) \in (s,\aMod{t}) R^1_a$} \label{nBisKriMod1} \\
+%	& \Rightarrow \krMo^1_{(u,\aMod{v})} \models \psi \text{ for some $u \in s R_a$ and $v \in R^N_a$ and $\krMo_s
+%		\models pre(t)$ and $\krMo_u \models \aMod{pre(v)}$} \label{nBisKriMod2}
+%\end{align}
+%(\ref{nBisKriMod1}) follows from the semantics of modal logic and the inductive case for
+%$\Diamond_a$ (Lemma \ref{modalLogic}).
+%(\ref{nBisKriMod2}) follows from the definition of event model execution (Definition
+%		\ref{evModelEx}).\\
+%\\
+%From our hypothesis, given that $\aMod{pre(t)} \leq m$ we have that $\krMo_s \sim_{2n} \krMo'_{s'}
+%\Rightarrow (\krMo_s \models \aMod{pre(t)} \iff \krMo'_{s'} \models
+%\aMod{pre(t)})$.
+%But by the definition of $n$-bisimilarity (Definition \ref{nBisimKripke}), $\krMo_u$ is
+%$2n-1$-bisimilar to some point $\krMo'_{u'}$.
+%If $\mDep(\aMod{pre(v)}) \leq n-1$ we have by our induction hypothesis that $\krMo_u \models
+%\aMod{pre(v)} \iff \krMo'_{u'}
+%\models \aMod{pre(v)}$.\\
+%\\
+%Then by the induction hypothesis, $\krMo_u \sim_{2n} \krMo'_{u'} \land \mDep(\psi) \leq k \Rightarrow
+%\krMo^2_{(u',\aMod{v})}  \models \psi$.
+%By the semantics of modal logic (Lemma \ref{modalLogic}) we have that $\krMo^2_{(s',\aMod{t})} \models
+%\Diamond_a \psi \Rightarrow \krMo^2_{(s',\aMod{t})} \models \phi$.
+%\end{proof}
 
 \begin{defn} \label{nBisimEvent}
 	Let $\aMod{\evMo_s, \evMo'_{s'}} \in \eventClass$ with preconditions defined on $\langArbAct$.
@@ -590,7 +830,12 @@ From this we have (by the semantics of modal logic, in Definition \ref{modalLogi
 \models \psi \Rightarrow \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
 \end{proof}
 
-\FIXME: WHO?! Please cite.
+This result is very similar to Lemma \ref{eventModelEquivalent}.
+However, instead of having all the same effects, we say that two $n$-bisimilar event models will
+have the same effects, with effects having a modal depth of up to a modal depth of $n$.\\
+\\
+We finally define cover normal form, which is an important form that is extensively utilised in
+refinement modal logic and arbitrary action model logic.
 
 \begin{defn} \label{coverNormal}
 A formula in cover disjunctive normal form is defined inductively as
@@ -612,7 +857,7 @@ Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal 
 
 This is shown by Bozelli et. al in \cite{DBLPjournalscorrabs12023538}.
 
-\subsection{Axiomatisations}
+\section{Axiomatisations}
 We will present axiomatisations derived by Hales for $\langArbAct$.
 To construct this axiomatisation, we first begin by presenting an axiomatisation for $\lang$, an
 axiomatisation for $\langActEx$ and an axiomatisation for $\langRefine$.\\
@@ -639,6 +884,8 @@ and the following rules
 The axiomatisation $\AXK$ is sound and complete with respect to the logic $\lang$.
 \end{lemma}
 
+These are well known results shown by Blackburn, de Rijke and Venema in \cite{blackburn2002modal}.
+
 \begin{defn} \label{axiomAML}
 The axiomatisation $\AXAML$ contains the axioms and rules from $\AXK$, as well as the following axioms
 \begin{alignat*}{2}
@@ -659,6 +906,8 @@ and the rule
 \begin{lemma} \label{axiomAMLSoundComplete}
 The axiomatisation $\AXAML$ is sound and complete with respect to the logic $\langActEx$.
 \end{lemma}
+
+These results are shown by van der Hoek, Kooi and van Ditsmarsch in \cite{hoek2008dynamic}.
 
 \begin{defn} \label{axiomRML}
 The axiomatisation $\AXRML$ contains the axioms and rules from $\AXK$, as well as the following axioms
@@ -682,6 +931,9 @@ and the rule
 The axiomatisation $\AXRML$ is sound and complete with respect to the logic $\langRefine$.
 \end{lemma}
 
+The definitions and soundness and completeness of refinement modal logic are shown by Bozelli et. al
+\cite{DBLPjournalscorrabs12023538}.
+
 \begin{defn} \label{axiomAAML}
 The axiomatisation $\AXAAML$ contains the axioms and rules from $\AXRML$ and $\AXAML$.
 \end{defn}
@@ -690,4 +942,8 @@ The axiomatisation $\AXAAML$ contains the axioms and rules from $\AXRML$ and $\A
 The axiomatisation $\AXAAML$ is sound and complete with respect to the logic $\langArbAct$.
 \end{thm}
 
-\FIXME need a theorem to show equivalence between $\lang$ and $\langArbAct$
+\begin{thm} \label{thm:AAMLExpressivelyEquivalent}
+The logic $\AXAAML$ is expressively equivalent to $\AXK$.
+\end{thm}
+
+These are results that Hales gives in \cite{hales13synthesis}.

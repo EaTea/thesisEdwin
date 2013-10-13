@@ -16,8 +16,10 @@ knowledge state.
 
 \subsection{Technical preliminaries}
 
-The event models that Hales employs resemble finite trees.
-We give a rigourous definition for them as follows
+The event models that Hales employs in \cite{hales13synthesis} resemble finite trees.
+In order to give a good approximation of these models, we must define these tree-like structures and
+give some ideas with regards to what properties they have.
+We thus give a rigorous definition for them as follows
 
 \begin{defn} \label{finTree}
 Let $\evM_\evs = (\evS, \evR, \evpr, \evs)$ be a pointed event model.
@@ -165,55 +167,55 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 \end{itemize}
 \end{proof}
 
-A final miscellaneous result shown by Hales in \cite{hales13synthesis}, which we employ later, is reproduced here.
-
-\begin{lemma} \label{brestrictDisjoint}
-Suppose $\{ \evM^i_{\evT^i} = (\evS^i, \evR^i, \evpr^i, \evT^i) | i \in [1, n] \}$ is a finite set of $n$ event
-models.
-Furthermore, let each $\evM^i_{\evT^i} \in \eventClass_B$.
-Then
-\[
-	\evM_\evT = \bigsqcup_{i = 1}^{n} \evM^i_{\evT^i} \in \eventClass_B
-\]
-\end{lemma}
-
-\begin{proof}
-We will inductively show that for $k$ event models
-\[
-	\bigsqcup_{i = 1}^k \evM^i_{\evT^i} \in \eventClass_B
-\]
-We begin with our base case, where $k = 1$.
-This is trivially so by the definition of $\evM^1_{\evT^1}$.
-\[
-	\bigsqcup_{i = 1}^1 \evM^i_{\evT^i} = \evM^1_{\evT^1} \in \eventClass_B
-\]
-Now, suppose that our induction hypothesis holds for $k$ event models.
-Let $\evM^K_{\evT^K} = \bigsqcup_{i = 1}^k \evM^i_{\evT^i} \in \eventClass_B$.
-Then for $k+1$ event models, let
-\begin{align*}
-	\evM'_{\evT'} = & \bigsqcup_{i = 1}^{k+1} \evM^i_{\evT^i} \\
-	= & \bigsqcup_{i = 1}^k \evM^i_{\evT^i} \sqcup \evM^{k+1}_{\evT^{k+1}} \\
-	= & \evM^K_{\evT^K} \sqcup \evM^{k+1}_{\evT^{k+1}}
-\end{align*}
-We note that since $\evM'_{\evT'}$ is a disjoint union of event models, $\evM'_{\evT^i} \sim \evM^i_{\evT^i}$ is a
-trivial bisimilarity.
-Similarly, $\evM'_{\evT^K} \sim \evM^K_{\evT^K}$ is a trivial bisimilarity.\\
-\\
-Let $\gamma$ be either of $K$ or $k+1$, and suppose $\evs \in \evS^\gamma$.
-Let $\krMo_s \in \kripkeClass$.
-As $\evM^\gamma \in \eventClass_B$, then $\krMo_s \otimes \evM^\gamma_\evs \lesssim_B \krMo_s$.
-We note that due to $\evM'$ being a disjoint union of event models, $\evM'_\evs \sim \evM^\gamma_\evs$.
-Then from Lemma \ref{eventModelEquivalent} we have that $\krMo_s \otimes \evM^\gamma_\evs \sim N_s
-\otimes \evM'_\evs$.
-From Lemma \ref{bisimilarIsRefinement}, we have $\krMo_s \otimes \evM'_\evs \lesssim_B \krMo_s
-\otimes \evMo^\gamma_s$.
-From Lemma \ref{refinementPreorder}, $\lesssim_B$ is a transitive relation.
-Then $\krMo_s \otimes \evM'_\evs \lesssim_B \krMo_s$.
-Thus
-\[
-\evM'_{\evT'} = \bigsqcup_{i = 1}^{k+1} \evM^i_{\evT^i} \in \eventClass_B.
-\]
-\end{proof}
+%A final miscellaneous result shown by Hales in \cite{hales13synthesis}, which we employ later, is reproduced here.
+%
+%\begin{lemma} \label{brestrictDisjoint}
+%Suppose $\{ \evM^i_{\evT^i} = (\evS^i, \evR^i, \evpr^i, \evT^i) | i \in [1, n] \}$ is a finite set of $n$ event
+%models.
+%Furthermore, let each $\evM^i_{\evT^i} \in \eventClass_B$.
+%Then
+%\[
+%	\evM_\evT = \bigsqcup_{i = 1}^{n} \evM^i_{\evT^i} \in \eventClass_B
+%\]
+%\end{lemma}
+%
+%\begin{proof}
+%We will inductively show that for $k$ event models
+%\[
+%	\bigsqcup_{i = 1}^k \evM^i_{\evT^i} \in \eventClass_B
+%\]
+%We begin with our base case, where $k = 1$.
+%This is trivially so by the definition of $\evM^1_{\evT^1}$.
+%\[
+%	\bigsqcup_{i = 1}^1 \evM^i_{\evT^i} = \evM^1_{\evT^1} \in \eventClass_B
+%\]
+%Now, suppose that our induction hypothesis holds for $k$ event models.
+%Let $\evM^K_{\evT^K} = \bigsqcup_{i = 1}^k \evM^i_{\evT^i} \in \eventClass_B$.
+%Then for $k+1$ event models, let
+%\begin{align*}
+%	\evM'_{\evT'} = & \bigsqcup_{i = 1}^{k+1} \evM^i_{\evT^i} \\
+%	= & \bigsqcup_{i = 1}^k \evM^i_{\evT^i} \sqcup \evM^{k+1}_{\evT^{k+1}} \\
+%	= & \evM^K_{\evT^K} \sqcup \evM^{k+1}_{\evT^{k+1}}
+%\end{align*}
+%We note that since $\evM'_{\evT'}$ is a disjoint union of event models, $\evM'_{\evT^i} \sim \evM^i_{\evT^i}$ is a
+%trivial bisimilarity.
+%Similarly, $\evM'_{\evT^K} \sim \evM^K_{\evT^K}$ is a trivial bisimilarity.\\
+%\\
+%Let $\gamma$ be either of $K$ or $k+1$, and suppose $\evs \in \evS^\gamma$.
+%Let $\krMo_s \in \kripkeClass$.
+%As $\evM^\gamma \in \eventClass_B$, then $\krMo_s \otimes \evM^\gamma_\evs \lesssim_B \krMo_s$.
+%We note that due to $\evM'$ being a disjoint union of event models, $\evM'_\evs \sim \evM^\gamma_\evs$.
+%Then from Lemma \ref{eventModelEquivalent} we have that $\krMo_s \otimes \evM^\gamma_\evs \sim N_s
+%\otimes \evM'_\evs$.
+%From Lemma \ref{bisimilarIsRefinement}, we have $\krMo_s \otimes \evM'_\evs \lesssim_B \krMo_s
+%\otimes \evMo^\gamma_s$.
+%From Lemma \ref{refinementPreorder}, $\lesssim_B$ is a transitive relation.
+%Then $\krMo_s \otimes \evM'_\evs \lesssim_B \krMo_s$.
+%Thus
+%\[
+%\evM'_{\evT'} = \bigsqcup_{i = 1}^{k+1} \evM^i_{\evT^i} \in \eventClass_B.
+%\]
+%\end{proof}
 
 We can use the operations $\to$ (considers) and $\sqcup$ (choice) to construct finite tree and
 forest event models, as we show in the next section.
@@ -237,7 +239,7 @@ Thus, we can construct $\evM'$ using insanity event models when $\evM'$ is a lea
 Let $\evM' = (\evS', \evR', \evpr', r')$ be an arbitrary subtree of $\evM$.
 Suppose $\evpr'(r') = \phi$, where $\phi$ is a formula in our logical language.
 Let $\evM^1, \evM^2, \ldots, \evM^n$ be all the disjoint subtrees of $\evM'$.
-Suppose that each of $\evM^1, \evM^2, \ldots, \evM^n$ fulfill the induction hypothesis.
+Suppose that each of $\evM^1, \evM^2, \ldots, \evM^n$ fulfil the induction hypothesis.
 Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $r' \evR_{a_1} r^1$, $r' \evR_{a_2} r^2,
 	\ldots, r' \evR_{a_n} r^n$.\\
 \\
@@ -259,7 +261,7 @@ respectively.\\
 \\
 Thus $\evM'$ and $\evM^K$ are equivalent.
 We can form $\evM'$ using insanity event models and $\to$, and thus any arbitrary subtree of $\evM'$
-fulfills the induction hypothesis.
+fulfils the induction hypothesis.
 \end{proof}
 
 \begin{lemma} \label{forestCon}
@@ -720,7 +722,7 @@ $\vdash \anex{\evM_\evT} \phi \iff \exists_B \phi$ is valid.
 
 \begin{proof}
 Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
-By Lemma \ref{allInCoverNormal} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
+By Lemma \ref{allInCoverNormal} and Lemma \ref{thm:AAMLExpressivelyEquivalent} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
 Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
 From \cite{hales13synthesis}, Hales synthesises an event model $\evM'_{\evT'}$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT}
 \phi \iff \exists_B \phi$.\\
@@ -735,19 +737,19 @@ formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\e
 
 So far, we have been particularly interested in constructing event models.
 We have shown that we can approximate event models according to what
-postconditions are true.
+post-conditions are true.
 This was through the construction of a particular event model that fulfilled
-the postconditions that we aimed to fulfill.\\
+the post-conditions that we aimed to fulfil.\\
 \\
 This approach is powerful in the sense that we are guaranteed to construct an event model
-that, given any Kripke model, will either ensure that a postcondition
+that, given any Kripke model, will either ensure that a post-condition
 is realised or destroy the Kripke model as a result of its execution.
-It allows us to ensure the realisation of a postcondition, without giving
+It allows us to ensure the realisation of a post-condition, without giving
 regard to the preceding Kripke model.\\
 \\
-A weakness of this approach is that we tie our realisation of a postcondition to a specific model.
+A weakness of this approach is that we tie our realisation of a post-condition to a specific model.
 Whether our model is the smallest model, or the model of minimal change is another matter entirely.
-Thus, we can guarantee that a postcondition is realised after our model
+Thus, we can guarantee that a post-condition is realised after our model
 execution but we cannot say much about the size or after-effects of the
 execution of our model.\\
 \\
@@ -796,7 +798,7 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 	\caption{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheLongChain}) and $\evM^2_\evs$
 		(Subfigure \ref{TheShortAnnounce}). Although $\evM^1_{\evs_0}$ and
 		$\evM^2_\evs$
-		fulfill the postcondition of $\phi$ after their execution, $\evM^2_\evs$ is much smaller than
+		fulfil the post-condition of $\phi$ after their execution, $\evM^2_\evs$ is much smaller than
 		$\evM^1_\evs$.}
 	\label{comparePublicAnnounces}
 \end{figure}
@@ -885,7 +887,7 @@ such that $\krMo_s \models \phi$ and $\krMo''_{s''} \models \phi''$, and every $
 \sim \krMo''_{s''}$ it holds that $\evMo'_{\evs'} \models \phi'$.
 \end{defn}
 
-In particular, the inference relation $\models^2$ describes a set of event models that fulfill its
+In particular, the inference relation $\models^2$ describes a set of event models that fulfil its
 properties.
 We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of event models such that, for a $\phi,
 	 \phi'' \in \lang$, if
@@ -898,7 +900,7 @@ Next, we define the idea of the ``minimal change".
 
 \begin{defn}
 Let $\evM_\evt \in \eventClass$, and suppose that the execution of $\evM_\evt$ always results in the
-postcondition $\phi \in \lang$.
+post-condition $\phi \in \lang$.
 We say that $\evM_\evt$ is the minimal change of $\phi$ if for any other $\evM'_{\evt'}$ such that
 executing $\evM'_{\evt'}$ results in $\phi$ being true, there is some $\psi \in \lang$ such that $\psi \Rightarrow
 \phi$ and $\psi \neq \phi$ where executing $\evM'_{\evt'}$ always results in $\psi$ being true.
@@ -915,7 +917,7 @@ update's execution.\\
 \\
 We now pose two open questions which we leave as extensions involving the synthesis of this work
 into Aucher's framework.
-They extend the minimal description that Aucher defines (which describe which models will fulfill an
+They extend the minimal description that Aucher defines (which describe which models will fulfil an
 update) by asking ``how" to build these models, and hopefully unify the approach we discuss and
 Aucher's sequence calculus.
 These questions relate to achieving an epistemic goal $\phi \in \lang$.
