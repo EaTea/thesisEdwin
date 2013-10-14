@@ -1,4 +1,4 @@
-\section{Technical preliminaries --- mot text added 7 September 2013} \label{chapter:prelim}
+\section{Technical preliminaries} \label{chapter:prelim}
 In order to discuss event model synthesis, we first define essential concepts regarding event
 models and the semantics of the logics we are working within.
 
@@ -834,8 +834,26 @@ From this we have (by the semantics of modal logic, in Definition \ref{modalLogi
 
 This result is very similar to Lemma \ref{eventModelEquivalent}.
 However, instead of having all the same effects, we say that two $n$-bisimilar event models will
-have the same effects, with effects having a modal depth of up to a modal depth of $n$.\\
-\\
+have the same effects, for all effects with a modal depth of up to a modal depth of $n$.
+We provide a final result that relies upon Lemma \ref{nBisimilarEventExec} which we will use later
+in this paper.
+
+\begin{lemma} \ref{transitiveNBisimilar}
+	Suppose $\evM_\evt$, $\evM'_{\evt'}$ and $\evM''_{\evt''}$ are event models, and let $\krMo_s$ be
+	a Kripke model.
+	Let $\evM_\evt \sim \evM'_{\evt'}$, and for some $n$ a non-negative integer $\evM'_{\evt'} \sim_n
+	\evM''_{\evt''}$.
+	If $\phi$ is a formula with modal depth $k \leq n$ such that $\krMo_s \otimes \evM_\evt \models
+	\phi$, then $\krMo_s \otimes \evM''_{\evt''} \models \phi$.
+\end{lemma}
+\begin{proof}
+	From Lemma \ref{eventModelEquivalent}, we can say that $\evMo_\evt \sim \evMo'_{\evt'}$ and $\krMo_s \otimes \evMo_\evt \models \phi
+	\Rightarrow \krMo_s \otimes \evMo'_{\evt'} \models \phi$.
+	From Lemma \ref{nBisimilarEventExec}, since $\mDep(\phi) = k \leq n$ and $\evM'_{\evt'} \sim_n
+	\evM''_{\evt''}$ and $\krMo_s \otimes \evM'_{\evt'} \models \phi \Rightarrow \krMo_s \otimes
+	\evM''_{\evt''} \models \phi$.
+\end{proof}
+
 We finally define cover normal form, which is an important form that is extensively utilised in
 refinement modal logic and arbitrary action model logic.
 
