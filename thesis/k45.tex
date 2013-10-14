@@ -671,7 +671,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   event model.
 	Let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be the unwound model of
   $\evM_\evT$ and $n$ be some non-negative integer.
-  We can construct an event model using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to
+	We can construct an event model $\evM^{n'}_{\evT^{n'}}$ using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to
   $\evM'_{\evT'}$.
 \end{lemma}
 \begin{proof}
@@ -757,120 +757,103 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   It remains to be shown that $\evM^{k+1'}_{\evs''} \sim \evM^{k+1}_{\evs'}$.\\
   \\
   We will construct the following relation $\sim$ over $\evS^{k+1'} \times
-  \evS^{k+1}$ such that $(\evt',\evt) \in \sim \iff \evM^{i'}_{\evt'} \sim
-  \evM^{i}_{\evt}$ for some $0 \leq i \leq k$, or $\evt' = \evs'' \land \evt =
+  \evS^{k+1}$ such that $(\evt',\evt) \in \sim \iff \evM^{i'}_{\evt'}$ is bisimilar to
+	$\evM^{i}_{\evt}$ for some $0 \leq i \leq k$, or $\evt' = \evs'' \land \evt =
   \evs'$.
   We will show that this is a bisimulation.\\
   \\
   We note that for any pair $(\evt',\evt)$, $\evpr^{k+1'}(\evt') \iff
-  \evpr^{k+1}(\evt)$ since $\evM^{i'}_{\evt'} \sim \evM^{i}_{\evt}$.
+  \evpr^{k+1}(\evt)$ since $\evM^{i'}_{\evt'}$ is bisimilar to $\evM^{i}_{\evt}$.
   It remains to be shown that if $(\evt', \evt) \in \sim$ then both {\bf
-  forth-$a$} and {\bf back-$a$} hold.  
-%  We want to show that forth-$a$ holds
-%  If we get a point pairing $(\evt', \evt)$, and
-%  lets say that $\evt' \evR^{k+1'}_a \evu'$, then there is a point in $\evu \in
-%  \evt \evR^{k+1}$ such that $(\evu',\evu)$.
-%  If $\evR^{k+1}_a \evt'$ is empty, then $\evM^{i'}_{\evu'} \sim
-%  \evM^i_{\evu}$.
-
-%  \\
-%  Let us show that {\bf forth-$a$} holds.
-%  Suppose $(\evt', \evt) \in \sim$ and let $a \in A$.
-%  Consider the point $\evu' \in \evt' \evR^{k+1'}_a$.
-%  We note that $\evt' \evR^{k+1'}_a \evu' \iff \evR^{k+1'}_a \evt' = \varnothing$.
-%  We must show that there is some $\evu \in \evt \evR^{k+1}_a$ such that
-%  $(\evu',\evu) \in \sim$.
-%  \\
-%  We note that some submodel of $\evM^{k+1}_{\evs'}$, $\evM^i_{\evt}$ is
-%  bisimilar to a submodel of $\evM^{k+1'}_{\evs''}$, which is
-%  $\evM^{i'}_{\evt'}$.
-%  The relations for $\evt' \evR^{i'}_a$ and $\evt \evR^{i}_a$ are both the empty set, which
-%  is different from $\evt' \evR^{k+1'}_a$ and $\evt \evR^{k+1}_a$.
-%  This is the only difference between $\evM^{i}_{\evt}$ and
-%  $\evM^{k+1}_{\evt}$, and $\evM^{i'}_{\evt'}$ and $\evM^{k+1'}_{\evt'}$.\\
-%  \\
-%  Due to taking the transitive Euclidean closure of relations in the original unwound
-%  model, we have that our construction 
+  forth-$a$} and {\bf back-$a$} hold.\\
+	\\
+	Let us show that {\bf forth-$a$} holds.
+	Suppose $(\evu',\evu) \in \sim$ and $\evu' \evR^{k+1'}_a \evv'$.
+	We must show that there is some $\evv \in \evS^{k+1}$ such that $\evv \in \evu \evR^{k+1}_a$ and
+	$(\evv',\evv) \in \sim$.\\
+	\\
+	Firstly, we note that we need only show this for $\evu' = \evs'$ or $\evu' = \evt' \in \evs'
+	\evR^{k+1'}_a$, since by
+	the induction hypothesis, every other point in $\evM^{k+1'}$ is already bisimilar to a point in
+	$\evM^{k+1}$.
+	Thus, let us suppose that $\evu' = \evs'$.
+	Then $\evv' \in \evu' \evR^{k+1'}_a \Rightarrow \evv' \in \evs' \evR^{k+1'}_a$.
+	When constructing $\evM^{k+1'}_{\evs'}$, we used the $\to$ operator to construct an accessibility
+	from $\evs' = \evu'$ to $\evv'$.
+	We only constructed such an accessibility because in the original $\evM^{k+1}_\evs$, $\evs
+	\evR^{k+1}_a \evv$.
+	We can thus conclude that $\evM^{k'}_{\evv'}$ is bisimilar to $\evM^k_\evv$ (and thus from the
+	definition of $\sim$ that $(\evv',\evv) \in \sim$) and that $\evu = \evs \evR^{k+1}_a \evv$.
+	Then for this case {\bf forth-$a$} is satisfied.\\
+	\\
+	We now consider $\evu' = \evt' \in \evs' \evR^{k+1'}_a$.
+	From the induction hypothesis and $\sim$, $\evM^{k'}_{\evt'}$ is bisimilar to $\evM^{k}_{\evt}$.
+	We will thus not consider any action points that we can say are bisimilar by our induction
+	hypothesis --- that is, any relations in $\evR^{k'}$.
+	Instead, we look at the new relations that were added when we executed $I_a$.\\
+	\\
+	Suppose $\evu' \evR^{k+1'}_a \evv'$.
+	Then $\evv'$ was a point in a pointed event model $\evM^{k'}_{\evv'}$ such that $\evM^{k'}_{\evv}$
+	is bisimilar to $\evM^{k}_{\evv}$ for $\evv \in \evS'$.
+	Then $(\evv',\evv) \in \sim$ from the definition of $\sim$.
+	It is clear that $\evM^k_\evv$ is a submodel of $\evM^{k+1}_{\evt}$.
+	Furthermore, as $\evM^{k+1}_\evs$ is an $\AXKFF$ event model and $\evu' = \evt'$ then $\evs
+	\evR^{k+1}_a \evu$ ensures that $\evu \evR^{k+1}_a = \evs \evR^{k+1}_a$ (by the frame conditions
+	outlined in Lemma \ref{lemma:k45frameconditions}).
+	Then $\evv \in \evu \evR^{k+1}_a$.
+	Then we have that $(\evv',\evv) \in \sim$ and $\evv \in \evu \evR^{k+1}_a$.
+	Then {\bf forth-$a$} holds for these cases.
+	We can conclude that {\bf forth-$a$} holds everywhere.\\
+	\\
+	We will now show that {\bf back-$a$} holds.
+	Suppose $(\evu',\evu) \in \sim$ and $\evu \evR^{k+1}_a \evv$.
+	We must show that there is some $\evv' \in \evS^{k+1'}$ such that $\evu' \in \evR^{k+1'}_a \evv$ and
+	$(\evv',\evv) \in \sim$.\\
+	\\
+	We will only consider for $\evu = \evs$ or $\evu \in \evs \evR^{k+1}_a$.
+	The reasoning we use is similar to that used when we showed {\bf forth-$a$}.\\
+	\\
+	Let $\evu = \evs$.
+	We can say that $\evM^{k}_\evv$ is a submodel of the event model $\evM^{k+1}_\evs$.
+	Then there was some event model $\evM^{k'}_{\evv'}$ that we constructed within building
+	$\evM^{k+1'}_{\evs'}$ such that $\evM^{k'}_{\evv'}$ is bisimilar to $\evM^k_\evv$.
+	Then there is some $\evv' \in \evS^{k+1'}$ such that $(\evv',\evv) \in \sim$.
+	Furthermore, since $\evu = \evs \evR^{k+1} \evv$ then whilst constructing $\evM^{k+1'}_{\evs'}$ we would
+	have used $\to_a$ to construct an	accessibility to $\evM^{k'}_{\evv'}$.
+	Then $\evs' \evR^{k+1'}_a \evv'$.
+	Then {\bf back-$a$} holds in this case.\\
+	\\
+	Now, let $\evu \in \evs \evR^{k+1}_a$.
+	We can say that $\evM^{k}_\evu$ is a submodel of the event model $\evM^{k+1}_\evs$.
+	Due to this, we need not show that {\bf back-$a$} for this submodel, and it suffices for us to
+	show that {\bf back-$a$} holds when $\evv \in \evu \evR^{k+1}_a$ and $\evR^{k+1'}_a \evu'$ is
+	nonempty.\\
+	\\
+	We know that $\evv \in \evu \evR^{k+1}_a$, and that $\evM^{k}_\evv$ is a submodel of
+	the event model $\evM^{k+1}_\evs$.
+	Then there is some $\evv' \in \evs' \evR^{k+1'}_a$ such that $\evM^{k'}_{\evv'}$ is bisimilar to
+	$\evM^{k}_\evv$.
+	Furthermore, since both $\evM^{k'}_{\evu'}$ and $\evM^{k'}_{\evv'}$ were in the disjoint union of event models
+	that we applied $I_a$ to, we can be guaranteed that $\evu' \evR^{k+1'} \evv$.
+	We have that ($\evv'$,$\evv$) and that $\evv' \in \evu' \evR^{k+1'}_a$.
+	Then {\bf forth-$a$} holds.\\
+	\\
+	We have that {\bf pre}, {\bf forth-$a$} and {\bf back-$a$} all hold.
+	Then we can say that our construction, $\evM^{k+1'}_{\evs'}$, is bisimilar to $\evM^{k+1}_\evs$.
+	Furthermore, as we stated earlier if $\evs \in \evT$, then $\evM^{k+1}_\evs$ is the unwound
+	$n$-model of $\evM_\evs$.
+	If $\evs \in \evT$ then $\evM_\evs \sim_n \evM^{n}_\evs$, and we can construct an event model
+	$\evM^{n'}_{\evs'}$ such that $\evM^{n'}_{\evs'} \sim \evM^{n}_\evs$.
+	It is clear that we can then claim $\evM_s \sim_n \evM^{n'}_{\evs'}$.\\
+	\\
+	If we consider the final event model we construct, which is a disjoint union of all
+	$\evM^{n'}_{\evs'}$ for $\evs' \in \evT'$.
+	It is easy to see that
+	\[
+		\evM^{n'}_{\evT^{n'}} = \bigsqcup_{\evt' \in \evT'} \evM^{n'}_{\evt'}
+	\]
+	is $n$-bisimilar to $\evM'_{\evT'}$, based on our earlier arguments.
 \end{proof}
-
-%\begin{defn} \label{unwoundNModel}
-%  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed event model, and
-%	let $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the unwound model of $\evM_\evT$.
-%  Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be an event model such that
-%  \begin{itemize}
-%		\item $\evS' = \evs \evS^{n-1}$ and $\evs \in \evT$
-%		\item $\evR'$ is $\evR''$ restricted to $\evS'$
-%		\item $\evpr'$ is $\evpr''$ restricted to $\evS'$
-%		\item $\evT' = \evT''$
-%  \end{itemize}
-%  We say that $\evM'_{\evT'}$ is the {\em unwound $n$-model} of $\evM_\evT$.
-%\end{defn}
-%
-%\begin{lemma} \label{lemma:unwoundNModelNBisimilar}
-%  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-%  event model.
-%  Let $n$ be some positive integer and $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the
-%	unwound $n$-model of $\evM_\evT$.
-%  Then $\evM_\evT \sim_n \evM''_{\evT''}$.
-%\end{lemma}
-%\begin{proof}
-%	We will induct over $n$ to show that this holds.
-%	We hypothesise that for every action point $\evt \in \evT''$, $\evM''_\evt \sim_k \evM'_{\evt}$
-%	for some $0 \leq k \leq n$.\\
-%	\\
-%	We begin with our base case of $k = 0$.
-%	Since $\evT' = \evT''$ then $\evt \in \evT'' \Rightarrow \evt \in \evT'$.
-%	It is clear that $\evt$ is $0$-bisimilar to itself, and therefore we conclude that $\evM''_\evt
-%	\sim_0 \evM'_\evt$.\\
-%	\\
-%	Now, suppose that for $k = m$, our hypothesis holds.\\
-%	\\
-%	We will show that it now holds for $k = m+1$.
-%	We have already shown that $\evM''_\evt \sim_{k-1} \evM'_\evt$, through the inductive step.
-%	We must now show both of {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} as in Definition
-%	\ref{nBisimEvent}.\\
-%	\\
-%	Let us show {\bf $k$-forth-$a$}.
-%	Let $a \in A$, and suppose that $\evs \in \evt \evR''_a$.
-%	We want to show there is some $\evs' \in \evt \evR'_a$ such that $\evs' \sim_{k-1} \evs$.
-%	To show that this is so, we would require that $\evs' \sim_{k-2} \evs$, and that {\bf
-%	$k-1$-forth-$a$} and {\bf $k-1$-back-$a$} both hold at $\evs$.\\
-%	\\
-%	We can continue this argument until we reach some new point $\evs \in \evS''$ that we require to be
-%	$0$-bisimilar to some other point $\evs' \in \evS'$.
-%	It is clear that these new points are 0-bisimilar, that is $\evs \sim_0 \evs'$, which allows us to
-%	claim that {\bf $k$-forth-$a$} is originally satisfied at $\evt$.\\
-%	\\
-%	We can make a similar argument for {\bf $k$-back-$a$} and through this we can satisfy the
-%	conditions of Definition \ref{nBisimEvent}, allowing us to claim that for all $\evM''_\evt \sim_k
-%	\evM'_{\evt}$.
-%\end{proof}
-%
-%This submodel of the unwound model is $n$-bisimilar to our original $\evM_\evT$
-%and is finite, which are both desirable properties.
-%Using our previous example, we show in Figure \ref{genSubtreeExample} the
-%finite submodel that is $n$-bisimilar.
-%
-%\begin{figure}
-%\centering
-%\caption{\FIXME Show finite version of figure \ref{generatedTreeExample}} \label{genSubtreeExample}
-%\end{figure}
-%
-%It remains to be shown that we can actually construct an unwound $n$-model using
-%$\EM(\to,\sqcup,I)$.
-%We will now show that we can actually construct any unwound $n$-model using $\EM(\to,
-%\sqcup, I)$.
-%
-%\begin{lemma} \label{unwoundNModelGenerated}
-%  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-%  event model.
-%  Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS', \evR', \evpr'),\evT')$
-%  be the unwound $n$-model of $\evM_\evT$.
-%  $\evM'_{\evT'}$ can be constructed by $\EM(\to, \sqcup, I)$, up to $n$-bisimilarity.
-%\end{lemma}
-%\begin{proof}
-%  We will show this holds using a proof by induction over $n$.
-%\end{proof}
 
 Using this result, we can now construct, up to $n$-bisimilarity, an
 approximation of any update using semantically meaningful operations.
@@ -890,11 +873,11 @@ We formally summarise and show this in Theorem
 \begin{proof}
   By Lemma \ref{lemma:unwoundModel:bisimilar} we can construct the unwound model
   of $\evM_\evT$, which we call $\evM''_{\evT''} \sim \evM_{\evT}$.
-  By \FIXME we can construct an event model, $\evM'_{\evT'}$ such that
-  $\evM'_{\evT'} \sim_n \evM''_{\evT''}$ \FIXME using $\EM(\to,\sqcup,I)$.
+	By Lemma \ref{lemma:unwoundModelBisimilarConstruct} we can construct an event model, $\evM'_{\evT'}$ such that
+  $\evM'_{\evT'} \sim_n \evM''_{\evT''}$ using $\EM(\to,\sqcup,I)$.
   By Lemma \ref{lemma:onlyk45Models}, $\evM'_{\evT'}$ is a $\AXKFF$ event model.
   We have that $\evM'_{\evT'} \sim_n \evM''_{\evT''} \sim \evM_\evT$.
-  Since bisimilarity is an equivalence relation (\FIXME), we can conclude that
+	Since bisimilarity is an equivalence relation (Lemma \ref{bisimEquivalence}), we can conclude that
   $\evM'_{\evT'} \sim_n \evM_\evT$.
 \end{proof}
 
