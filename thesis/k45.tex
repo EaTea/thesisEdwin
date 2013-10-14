@@ -1,4 +1,4 @@
-\section{Constructing event models in $\AXKFF$ --- fixed by 7th October 2013} \label{chapter:k45}
+\section{Constructing event models in $\AXKFF$} \label{chapter:k45}
 
 We have discussed models in the axiom system of $\AXK$.
 In particular, we have focused on approximating arbitrary event models.
@@ -8,13 +8,27 @@ depth $n$.\\
 This result was particularly useful in showing that we could construct an event model, but because
 it does not preserve many of the axioms necessary for discussing and reasoning about knowledge, its
 usefulness is somewhat diminished.
-If we are interested in reasoning about protocols
+If we are interested in reasoning about protocols or representing our updates in a manner far more
+amenable to ``classical" knowledge, bases, we need to use an axiomatisation that is more
+appropriate.
+We thus will work in the axiomatisation of $\AXKFF$, allowing us to move far closer to constructing
+sensible epistemic updates.
 We will replicate a similar result of event model approximation in the axiomatic system
 of $\AXKFF$.
 This chapter details our results for our event model approximation in the axiomatic system
-$\AXKFF$.
+$\AXKFF$.\\
+\\
+This chapter is arranged as follows:
+\begin{itemize}
+	\item section \ref{subsec:k45:background} discusses the background of $\AXKFF$ and motivates the
+		need to use $\AXKFF$ for our event models
+	\item section \ref{subsec:k45:techPrelims} presents our language for constructing event models in
+		$\AXKFF$
+	\item section \ref{subsec:k45:goalAchievement} presents our main results with regards to event
+		model construction, approximation and goal achievement in $\AXKFF$
+\end{itemize}
 
-\subsection{Background}
+\subsection{Background} \label{subsec:k45:background}
 
 Previously, we constructed models that were tree-like in their nature.
 We defined many concepts used to describe trees, such as a ``root", ``subtrees" and ``forests".
@@ -67,8 +81,8 @@ The axiomatisation $\AXKFF$ is sound and complete with respect to the logic
 $\lang$.
 \end{lemma}
 
-$\AXKFF$ was first constructed by \FIXME and proved to be a sound and complete axiomatic
-system by Grossi in \cite{grossi2007designing}.\\
+This is indirectly shown by Blackburn, de Rijke and Venema \cite{blackburn2002modal} through Sahlqvist formulae, the Sahlqvist
+completeness theorem and Kracht's theorem \cite{2594394}, which we do not replicate in full for brevity.\\
 \\
 The impact these axioms have on our models is not immediately obvious.
 We observe the following effects of the axioms
@@ -243,7 +257,7 @@ fulfils the conditions of $\AXKFF$, will preserve those conditions.\\
 We return to our open question --- if we have an $\AXKFF$ event model, can we construct a $\AXKFF$ event
 model that is able to achieve the same epistemic effects, up to some modal depth $n$?
 
-\subsection{Technical Preliminaries --- fixed by 11 September 2013}
+\subsection{Technical Preliminaries} \label{subsec:k45:techPrelims}
 
 We first define what a $B$-insane set is.
 It is a necessary condition in order to generate our approximating $\AXKFF$ models.
@@ -264,7 +278,6 @@ action points, but only knows the preconditions of each action point.
 They do not actually have any knowledge about what they know or any
 introspection at each action point.
 This is demonstrated in Figure \ref{bInsaneExample}.
-\FIXME might need a pagebreak here.
 
 \begin{figure}
 \centering
@@ -395,7 +408,8 @@ We will refer to our language as $\EM(\to,\sqcup,I)$. \\
 We will now show that this language always constructs models that preserve $\AXKFF$, and that any
 event model that preserves the axioms of $\AXKFF$ can be constructed by our language.
 
-\subsection{Some Interesting Technical Results}
+\subsection{Event model construction and goal achievement in $\AXKFF$}
+\ref{subsec:k45:goalAchievement}
 
 To show that we can construct event models that preserve $\AXKFF$, there are two propositions that
 must hold
@@ -910,3 +924,5 @@ This difference is small, but powerful --- it progresses beyond ``there is some 
 $\phi$".
 We can now say that if we have that model, we can construct it in a meaningful language, and the
 resulting event model is almost a true epistemic event model of knowledge or belief.
+Our result is a novel step towards constructing updates that provably realise an epistemic goal and
+that we can reason about in a formal manner.
