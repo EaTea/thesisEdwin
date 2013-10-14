@@ -409,7 +409,7 @@ We will now show that this language always constructs models that preserve $\AXK
 event model that preserves the axioms of $\AXKFF$ can be constructed by our language.
 
 \subsection{Event model construction and goal achievement in $\AXKFF$}
-\lemma{subsec:k45:goalAchievement}
+\label{subsec:k45:goalAchievement}
 
 To show that we can construct event models that preserve $\AXKFF$, there are two propositions that
 must hold
@@ -889,7 +889,7 @@ We formally summarise and show this in Theorem
   of $\evM_\evT$, which we call $\evM''_{\evT''} \sim \evM_{\evT}$.
 	By Lemma \ref{lemma:unwoundModelBisimilarConstruct} we can construct an event model, $\evM'_{\evT'}$ such that
   $\evM'_{\evT'} \sim_n \evM''_{\evT''}$ using $\EM(\to,\sqcup,I)$.
-  By Lemma \ref{lemma:onlyk45Models}, $\evM'_{\evT'}$ is a $\AXKFF$ event model.
+  By Lemma \ref{lemma:onlyK45Models}, $\evM'_{\evT'}$ is a $\AXKFF$ event model.
   We have that $\evM'_{\evT'} \sim_n \evM''_{\evT''} \sim \evM_\evT$.
 	Since bisimilarity is an equivalence relation (Lemma \ref{bisimEquivalence}), we can conclude that
   $\evM'_{\evT'} \sim_n \evM_\evT$.
@@ -911,7 +911,7 @@ We restate this result in terms of goal achievement in Corollary
 \begin{proof}
   From Theorem \ref{thm:nBisimAnyK45EventModel} we are able to construct
   $\evM'_{\evT'}$ such that $\evM'_{\evT'} \sim_n \evM_\evT$.
-  We have by Lemma \ref{nBisimmilarEventExec} that $\evM'_{\evT'} \sim_n
+  We have by Lemma \ref{nBisimilarEventExec} that $\evM'_{\evT'} \sim_n
   \evM_\evT$ will ensure that a post condition of modal depth $n$ that is true
   after execution of $\evM_\evT$ will also be true after execution of
   $\evM'_{\evT'}$.
