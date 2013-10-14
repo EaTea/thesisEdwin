@@ -2,7 +2,7 @@
 In order to discuss event model synthesis, we first define essential concepts regarding event
 models and the semantics of the logics we are working within.
 
-\subsection{Models}
+\subsection{Models} \label{subsec:prelim:models}
 
 \begin{defn} \label{frame}
 	Let $S$ be a set of atoms and $R: A \to \mathcal{P}(S \times S)$, a function from agents to
@@ -97,7 +97,7 @@ Furthermore, in literature both of the terms event models and action models are 
 the same concept, and we use them interchangeably throughout this paper to refer to event models.
 We say $\eventClass$ is the class of all event models.\\
 \\
-Figure \ref{figure:eventModel} gives us an example of an event model, in terms of Alice, Bob and
+Figure \ref{figure:eventModelExample} gives us an example of an event model, in terms of Alice, Bob and
 their coin-tossing game.
 Here, we model the update where Alice may have learnt which side up the coin is, or she might not have.
 
@@ -256,7 +256,7 @@ Note the lack of a reflexive edge, unlike in Figure \ref{figure:exampleAnnounce}
 \label{figure:exampleInsane}
 \end{figure}
 
-\subsection{Bisimilarity, simulation and refinement}
+\subsection{Bisimilarity, simulation and refinement} \label{subsec:prelim:bisimulation}
 
 In order to reason about models, we would like to say whether two models are ``equivalent".
 This equivalence should come in the form that presents models as being externally the same.
@@ -375,7 +375,7 @@ in \cite{hales13synthesis}.
 %
 %\FIXME: citation here
 
-\subsection{Language semantics}
+\subsection{Language semantics} \label{subsec:prelim:semantics}
 We now discuss the semantics and syntax of several different languages, culminating with language of
 arbitrary action model logic which will rely upon each of the languages we discuss.
 These semantics are powerful constructs that allow us to reason about what is true at a specific
@@ -838,7 +838,7 @@ have the same effects, for all effects with a modal depth of up to a modal depth
 We provide a final result that relies upon Lemma \ref{nBisimilarEventExec} which we will use later
 in this paper.
 
-\begin{lemma} \ref{transitiveNBisimilar}
+\begin{lemma} \label{transitiveNBisimilar}
 	Suppose $\evM_\evt$, $\evM'_{\evt'}$ and $\evM''_{\evt''}$ are event models, and let $\krMo_s$ be
 	a Kripke model.
 	Let $\evM_\evt \sim \evM'_{\evt'}$, and for some $n$ a non-negative integer $\evM'_{\evt'} \sim_n
