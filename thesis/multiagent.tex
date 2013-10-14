@@ -1,5 +1,4 @@
-\section{Multi-agent epistemic goal achievement in $\langArbAct$ --- filler text added 7 September
-2013} \label{chapter:Multiagent}
+\section{Multi-agent epistemic goal achievement in $\langArbAct$} \label{chapter:Multiagent}
 
 In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
@@ -12,9 +11,29 @@ that goal.
 We will focus on defining a framework that constructs these event models in a
 recursive manner.
 This facilitates an automated method for updating knowledge models to reflect a
-knowledge state.
+knowledge state.\\
+\\
+Our framework complements Hales' work by providing meaningful, constructive operations
+that can be used to create event models.
+Furthermore, we specify methods for constructing actual event models using these languages, rather
+than simply proving their existence.
+Our work is thus a step forward in constructing updates that we can reason about and prove to
+accomplish the same effects as any theoretical model that we can specify.\\
+\\
+This chapter is arranged as follows:
 
-\subsection{Technical preliminaries}
+\begin{itemize}
+	\item Section \ref{subsec:Multi:techPrelim} presents the technical preliminaries and definitions
+		of the language for event model construction in $\AXK$
+	\item Section \ref{subsec:multi:completeness} proves that the language constructs tree-like event
+		models, which is the desired form for our constructions
+	\item Section \ref{subsec:multi:achievingGoals} presents our main results regarding constructing
+		event models for the purposes of epistemic goal achievement
+	\item Section \ref{subsec:multi:sequentCalc} compares our work to established work in the field,
+		especially that achieved by Aucher
+\end{itemize}
+
+\subsection{Technical preliminaries} \label{subsec:Multi:techPrelim}
 
 The event models that Hales employs in \cite{hales13synthesis} resemble finite trees.
 In order to give a good approximation of these models, we must define these tree-like structures and
@@ -23,7 +42,7 @@ We thus give a rigorous definition for them as follows
 
 \begin{defn} \label{finTree}
 Let $\evM_\evs = (\evS, \evR, \evpr, \evs)$ be a pointed event model.
-$\evM_\evs$ is a finite tree event model if
+$\evM_\evs$ is a {\em finite tree event model} if
 \begin{itemize}
 	\item $\evS$, the set of action points is finite
 	\item $\evs$ is the root of the tree and is not accessible from any other action point
@@ -36,19 +55,30 @@ $\evM_\evs$ is a finite tree event model if
 \end{itemize}
 \end{defn}
 
+We say that the class of finite tree event models is $\treeClass$ (an example is shown in Figure
+\ref{figure:exampleTree}), and we make an important note that insanity models are the most basic kind of tree-like event models.
+
 \begin{lemma} \label{insaneIsTree}
 The event model class $\insaneClass$ is contained within the event model class
 $\treeClass$, that is $\insaneClass \subseteq \treeClass$.
 \end{lemma}
 
-It is clear that by our earlier definitions, an insanity event model is also a finite forest event
-model.
+\begin{figure}
+\centering
+\FIXME
+\caption{Example tree}
+\label{figure:exampleTree}
+\end{figure}
 
-We say that the class of finite tree event models is $\treeClass$.
+It is clear that by our earlier definitions, an insanity event model is also a finite tree event
+model.\\
+\\
+Having established tree-like structures, it seems somewhat natural to also rigourously define a
+forest event model.
 
 \begin{defn} \label{forest}
 Let $\evM_\evT = (\evS, \evR, \evpr, \evT)$ be a multi-pointed event model.
-$\evM_\evT$ is a finite forest event model if
+$\evM_\evT$ is a {\em finite forest event model} if
 \begin{itemize}
 	\item each point $\evt$ in $\evT$ is the root of a finite tree event model $\evM^\evt =
 	(\evS^\evt, \evR^\evt,
@@ -68,11 +98,17 @@ $\forestClass$, that is $\treeClass \subseteq \forestClass$.
 \end{lemma}
 
 Again, it is clear that by our earlier definitions, a finite tree event model is also a finite forest event
-model.
+model.\\
+\\
+Having defined a class of event models that are ``larger" than trees, it is also useful to be able
+to refer to specific trees that are parts of larger models.
+For example, since forest event models consist of tree event models, being able to refer to specific
+tree event models is a useful ability which we specify in Definition \ref{subtree}, and show as an
+example in Figure \ref{figure:subtreeExample}.
 
 \begin{defn} \label{subtree}
 Let $\evM_\evr = (\evS, \evR, \evpr, \evT)$ be a finite forest event model.
-We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a subtree of $\evM$ if
+We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a {\em subtree} of $\evM$ if
 \begin{itemize}
 	\item $\evS' \subseteq \evS$
 	\item $\forall a \in A \Rightarrow \evR_a' \subseteq \evR_a$
@@ -82,12 +118,30 @@ We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a subt
 \end{itemize}
 \end{defn}
 
+\begin{figure}
+	\centering
+	\FIXME
+	\caption{Example of subtrees, probably subfigures}
+	\label{figure:subtreeExample}
+\end{figure}
+
+We also might need to refer to the ``bottom" elements of a tree --- its leaves.
+This is clearly useful in an area where we intend to construct an event model, and more so if our
+construction begins in a ``bottom-up" fashion.
+
 \begin{defn} \label{leaf}
 Let $\evM_\evr = (\evS, \evR, \evpr, \evr)$ be a finite tree event model.
 Let $\evM' = (\evS', \evR', \evpr', \evr')$ be a subtree of $\evM$.
-$\evM'$ is a leaf node of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
+$\evM'$ is a {\em leaf node} of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
 \evr'\}$.
 \end{defn}
+
+\begin{figure}
+	\centering
+	\FIXME
+	\caption{Example of leaves}
+	\label{figure:exampleLeaves}
+\end{figure}
 
 In order to generate these models, we must construct an algebra that can construct event models.
 However, we are unaware of any operations that are appropriate for building tree models.
@@ -110,7 +164,7 @@ We define $\evM = \evM^1 \to_B \evM^2$ as
   \item $\evpr = \evpr^1 \cup \evpr^2$
   \item $\evT = \evT^1$
 \end{itemize}
-The $\to$ operator will be referred to as ``considers".
+The $\to$ operator will be referred to as {\em ``considers"}.
 \end{defn}
 
 $\evM^1 \to_B \evM^2$ indicates that if $\evM^1$ was executed, an agent in $B$ considers $\evM^2$ as another
@@ -129,10 +183,16 @@ We define $\evM = \evM^1 \sqcup \evM^2$ as
 	\item $\evpr = \evpr^1 \cup \evpr^2$
 	\item $\evT = \evT^1 \cup \evT^2$
 \end{itemize}
+The $\sqcup$ operator will be referred to as {\em ``chooses"}.
 \end{defn}
+
 This is the disjoint union of the two event models, which we can refer to as the agents in $A$
 knowing that one of the two models has occurred.
-Baltag and Moss call this a non-deterministic choice \cite{baltag2005programs}.
+Baltag and Moss call this a non-deterministic choice \cite{baltag2005programs}.\\
+\\
+We now will show some miscellaneous results that we rely upon later in this chapter.
+The first pertains to showing that applying the choice operator to two forests results in having one
+larger forest.
 
 \begin{lemma} \label{disjForestIsForest}
 Let $\evM^1_{\evT^1}, \evM^2_{\evT^2} \in \forestClass$ be two disjoint forest event models.
@@ -166,6 +226,13 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 	the lemma
 \end{itemize}
 \end{proof}
+
+\begin{figure}
+	\centering
+	\FIXME
+	\caption{Example of two forests to become one}
+	\label{figure:example2Forest}
+\end{figure}
 
 %A final miscellaneous result shown by Hales in \cite{hales13synthesis}, which we employ later, is reproduced here.
 %
@@ -217,10 +284,15 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 %\]
 %\end{proof}
 
-We can use the operations $\to$ (considers) and $\sqcup$ (choice) to construct finite tree and
+We can use the operations for choice and considers to construct finite tree and
 forest event models, as we show in the next section.
 
-\subsection{Completeness}
+\subsection{Completeness} \label{subsec:multi:completeness}
+
+Within this section, we will show that the operations we have selected, along with insanity event
+models, will only construct finite tree event models.
+This is necessary to show that our operations will only construct trees, and we will also show that
+using a tree any kind of event model can be constructed, up to $n$-bisimilarity.
 
 \begin{lemma} \label{finTreeConstruct}
 Suppose $\evM = (\evS, \evR, \evpr, r)$ is a finite tree event model.
@@ -264,6 +336,12 @@ We can form $\evM'$ using insanity event models and $\to$, and thus any arbitrar
 fulfils the induction hypothesis.
 \end{proof}
 
+We have shown that we can construct trees using the considers operator.
+This is still not strong enough for our later results, since we need to also be able to construct
+forests.
+This is a strong motivation for the inclusion of both operations, and it is rather easy to show that
+the addition of choice allows us to construct forests, as we see in Lemma \ref{forestCon}.
+
 \begin{lemma} \label{forestCon}
 Let $\evM = (\evS, \evR, \evpr, \evT)$ be a finite forest event model.
 Then $\evM$ can be constructed using $\to$, $\sqcup$ and insanity event models.
@@ -279,13 +357,17 @@ Then by a recursive and finite number of applications of Lemma
 forest event model.
 \end{proof}
 
+A corollary to Lemma \ref{forestCon} is shown in Corollary \ref{forestConCorr}.
+We claim that if we have a forest, then the disjoint union of all its subtrees is enough to
+reconstruct it.
+
 \begin{corr} \label{forestConCorr}
-Let $\evM = (\evS, \evR, \evpr, \evT)$ be a finite forest event model, and for each $\evt \in \evT$ let $\evM^\evt \in
+Let $\evM_\evT = (\evS, \evR, \evpr, \evT)$ be a finite forest event model, and for each $\evt \in \evT$ let $\evM^\evt \in
 \treeClass$ be the subtree of $\evM$ corresponding to $\evt$.
 Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 \end{corr}
 
-\subsection{Achieving information goals}
+\subsection{Achieving information goals} \label{subsec:multi:achievingGoals}
 
 %\FIXME: Needs to cite James
 
@@ -579,8 +661,13 @@ Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
 %that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
 %\end{proof}
 
+We now present our main result --- that the language we have specified is able to, up to
+$n$-bisimilarity, construct any event model in $\AXK$.
+With this, we show that our constructive operations are able to be used to build useful event models
+and achieve the same effects as any other event model, up to a some specified modal depth.
+
 \begin{thm} \label{approximatingEventModel}
-Let $\evM_\evT \in \eventClass$.
+Let $\evM_\evT \in \eventClass$ and $n$ be some non-negative integer.
 Then there is some $\evM'_{\evT'} \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
 \end{thm}
 
@@ -714,6 +801,11 @@ to $\evM_\evT$.
 Thus we have $\evM_\evT \sim_k \evM'_{\evT'}$ and our induction hypothesis holds for $n = k$.
 \end{proof}
 
+We have shown that any event model can be constructed by our language, up to $n$-bisimilarity.
+If we focus on specific event models which can realise epistemic goals, as Hales
+\cite{hales13synthesis} shows, then we can complement that work by constructing event models
+specifically for the purpose of epistemic goal-achievement.
+
 \begin{corr} \label{approximatingBRestricted}
 Let $\phi \in \langArbAct$ and $B \subseteq A$.
 Then there is some $\evM_\evT \in \forestClass$ such that $\vdash \sqex{\evM_\evT} \phi$ and
@@ -733,7 +825,12 @@ formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\e
 \iff \exists_B \phi$.
 \end{proof}
 
-\subsection{Comparison to sequent calculi for epistemic planning --- fixed by 3 September 2013}
+Within this chapter, our work has shown that we can, up to $n$-bisimilarity, construct any event
+model.
+This ensures that we can realise the effects of any event model, and that we need only worry about
+the modal depth of the model to describe the event model.
+
+\subsection{Comparison to sequent calculi for epistemic planning} \label{subsec:multi:sequentCalc}
 
 So far, we have been particularly interested in constructing event models.
 We have shown that we can approximate event models according to what
