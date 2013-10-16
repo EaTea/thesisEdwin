@@ -45,7 +45,7 @@ We say $\kripkeClass$ is the class of all Kripke models.
           (2) edge node {} (1)
               edge [loop right] node {$A,B$} (2);
 \end{tikzpicture}
-\caption{An example of a Kripke model, $\krMo = (S,R,V)$, as a graph. Here, we can see that
+\caption[Kripke model example of coin-game]{An example of a Kripke model, $\krMo = (S,R,V)$, as a graph. Here, we can see that
 $\eta R_A \tau$, $\tau R_A \eta$, $\eta R_A \eta$ and $\tau R_A \tau$. The same relations apply for
 $R_B$.}
 \label{figure:exampleModel}
@@ -120,7 +120,7 @@ Here, we model the update where Angeline may have cheated and learnt which side 
 							edge [loop right] node {$A,B$} (3)
 							edge node {} (2);
 \end{tikzpicture}
-\caption{An example of an event model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
+\caption[Event model example of coin-game update]{An example of an event model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
 Here, Angeline ($A$) may have learnt whether the coin was heads ($H$) or tails ($T$), or she did not
 cheat and learnt nothing at all ($\top$).
 We say that $\evpr(\evp) = \top$, $\evpr(\evu) = H$ and $\evpr(\evv) = T$.}
@@ -183,7 +183,7 @@ Thus pointed model execution is only sensible if and only if $M_s \models
 							edge node {$A,B$} (3)
 							edge [loop right] node {$A,B$} (4);
 \end{tikzpicture}
-\caption{After executing $\evM$ (Figure \ref{figure:eventModelExample}) on $M$ (Figure
+\caption[Kripke model after action model execution]{After executing $\evM$ (Figure \ref{figure:eventModelExample}) on $M$ (Figure
 \ref{figure:exampleModel}), we get a new event model $M' = (S',R',V') = M \otimes \evM$.
 Here $\evs,\evt,\evs',\evt'$ are the new possible worlds, where $V'(s') = V'(s) = H$ and $V'(t') =
 V'(t) = T$.
@@ -223,7 +223,7 @@ as shown in Figure \ref{figure:exampleAnnounce}.
     \path[edge]
           (1) edge [loop left] node {} (1);
 \end{tikzpicture}
-\caption{The form of every public announcement, where for $\evM^P_\evs =
+\caption[Public announcement form]{The form of every public announcement, where for $\evM^P_\evs =
 ((\evS^P,\evR^P,\evpr^P),\evs)$ we have that $\evpr^P(\evs)$ is some sentence in $\lang$.}
 \label{figure:exampleAnnounce}
 \end{figure}
@@ -255,7 +255,7 @@ They have the same form as the event model shown in Figure \ref{figure:exampleIn
 
     \node[vertex] (1) {$\evs$};
 \end{tikzpicture}
-\caption{The form of every insanity model, where for $\evM^I_\evs =
+\caption[Insanity event model form]{The form of every insanity model, where for $\evM^I_\evs =
 ((\evS^I,\varnothing,\evpr^I),\evs)$ we have that $\evpr^I(\evs)$ is some sentence in $\lang$
 Note the lack of a reflexive edge, unlike in Figure \ref{figure:exampleAnnounce}.}
 \label{figure:exampleInsane}
@@ -465,7 +465,7 @@ Figure \ref{figure:exampleReasonings}.
           (2) edge node {} (1)
               edge [loop right] node {$A,B$} (2);
 \end{tikzpicture}
-\caption{This is the same example as Figure \ref{figure:exampleModel}, but we discuss the reasonings
+\caption[Example reasonings at each Kripke point]{This is the same example as Figure \ref{figure:exampleModel}, but we discuss the reasonings
 that we can make about it.
 $H$ for ``the coin is Heads" is in $V(s)$ and $T$ for ``the coin is Tails" is in $V(t)$.
 We note that here, $M_s \models H$ and $M_t \models T$.

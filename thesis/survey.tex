@@ -85,7 +85,7 @@ graph.
           (2) edge node {} (1)
               edge [loop right] node {$A,B$} (2);
 \end{tikzpicture}
-\caption{A graph representation of our game of heads and tails.}\label{htkripkefigure}
+\caption[Possible worlds game of heads and tails.]{A graph representation of our game of heads and tails.}\label{htkripkefigure}
 \end{figure}
 
 The possible worlds models form a semantics allowing us to construct meaningful
@@ -183,6 +183,7 @@ In the context of our card game, let us consider if our external trusted party
 $C$ publicly announces to $A$ and $B$ that $H$ is true.
 We will demonstrate the execution of that update upon our model in Figure
 \ref{pakripkefigure}.
+
 \begin{figure}[ht!]
 \centering
 \begin{subfigure}[b]{.45\textwidth}
@@ -214,11 +215,11 @@ We will demonstrate the execution of that update upon our model in Figure
 \caption{Our model after $H$ is announced to be true.}
 \label{afterfigure}
 \end{subfigure}
-\caption{The differences before and after the public announcements of $H$ to $A$ and
+\caption[Public announcement: before and after]{The differences before and after the public announcements of $H$ to $A$ and
 	$B$.}
 \label{pakripkefigure}
 \end{figure}
-\\
+
 Public announcements capture changes in information, such as $C$ saying to
 $A$ and $B$ that the coin is $H$.
 Another possible update is $A$ being allowed to see the coin's state, and
@@ -389,7 +390,7 @@ $\tau$ and $\eta$ are worlds where $A$ has not cheated while $\tau'$ and $\eta'$
 are worlds where $A$ has cheated and looked at the coin.}
 \label{amafterfigure}
 \end{subfigure}
-\caption{The differences before and after $B$'s temporary departure.}
+\caption[Kripke model changes after an informative update]{The differences before and after $B$'s temporary departure.}
 \label{amkripkefigure}
 \end{figure}
 
@@ -435,7 +436,7 @@ Baltag, Moss and Solecki define an operation to execute the model in Figure
 							edge node {} (1)
 							edge node {} (2);
 \end{tikzpicture}
-\caption{An example of an action model; in this example, the update models $B$
+\caption[Example action model]{An example of an action model; in this example, the update models $B$
 becoming suspicious of $A$ having learnt whether $H$ or $T$ is true, but not
 knowing whether the $A$ actually has not learnt anything and the world remains
 as it was before (signified {\bf tr}).}
