@@ -65,8 +65,23 @@ We say that the class of finite tree action models is $\treeClass$ (an example i
 
 \begin{figure}
 \centering
-\FIXME
-\caption[Example tree]{Example tree}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\evs$};
+    \node[vertex] (2) [below left of=1] {$\evt_1$};
+    \node[vertex] (3) [below of=1] {$\evt_2$};
+    \node[vertex] (4) [below right of=1] {$\evt_3$};
+    \node[vertex] (5) [below left of=3] {$\evu_1$};
+    \node[vertex] (6) [below right of=3] {$\evu_2$};
+    \path[edge]
+          (1) edge node {} (2)
+							edge node {} (3)
+							edge node {} (4)
+          (3) edge node {} (5)
+							edge node {} (6);
+\end{tikzpicture}
+\caption[Example tree]{An example finite tree action model $\evM$, which has a root at $\evs$.}
 \label{figure:exampleTree}
 \end{figure}
 
@@ -120,8 +135,25 @@ We say the pointed action model $\evM' = (\evS', \evR', \evpr', \evr')$ is a {\e
 
 \begin{figure}
 	\centering
-	\FIXME
-	\caption[Example subtrees]{Example of subtrees, probably subfigures}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex,dashed] (1) {$\evs$};
+    \node[vertex,dashed] (2) [below left of=1] {$\evt_1$};
+    \node[vertex] (3) [below of=1] {$\evt_2$};
+    \node[vertex,dashed] (4) [below right of=1] {$\evt_3$};
+    \node[vertex] (5) [below left of=3] {$\evu_1$};
+    \node[vertex] (6) [below right of=3] {$\evu_2$};
+    \path[edge,dashed]
+          (1) edge node {} (2)
+							edge node {} (3)
+							edge node {} (4);
+		\path[edge]
+          (3) edge node {} (5)
+							edge node {} (6);
+\end{tikzpicture}
+	\caption[Example subtrees]{Here, the original finite tree action model is in dashed lines, whilst
+	the thick lines are the subtree $\evM^{\evt_2}$.}
 	\label{figure:subtreeExample}
 \end{figure}
 
@@ -140,9 +172,25 @@ We outline the leaves of a finite tree action model in Figure \ref{figure:exampl
 
 \begin{figure}
 	\centering
-	\FIXME
-	\caption{Example of leaves}
-	\label[Example leaves]{figure:exampleLeaves}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex,dashed] (1) {$\evs$};
+    \node[vertex] (2) [below left of=1] {$\evt_1$};
+    \node[vertex,dashed] (3) [below of=1] {$\evt_2$};
+    \node[vertex] (4) [below right of=1] {$\evt_3$};
+    \node[vertex] (5) [below left of=3] {$\evu_1$};
+    \node[vertex] (6) [below right of=3] {$\evu_2$};
+    \path[edge,dashed]
+          (1) edge node {} (2)
+							edge node {} (3)
+							edge node {} (4)
+          (3) edge node {} (5)
+							edge node {} (6);
+\end{tikzpicture}
+	\caption[Example leaves]{In this finite tree action model, action points $\evt_1$, $\evt_3$, $\evu_1$ and
+	$\evu_2$ are leaves.}
+	\label{figure:exampleLeaves}
 \end{figure}
 
 In order to generate these models, we must construct an algebra that can construct action models.
