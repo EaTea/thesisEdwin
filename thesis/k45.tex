@@ -600,8 +600,54 @@ We show an example of this in Figure \ref{generatedTreeExample}
 
 \begin{figure}
 \centering
-\caption[Example of unwound tree]{\FIXME Left subfigure should be original, right subfigure should be the
-unwound model.} \label{generatedTreeExample}
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+    \node[vertex] (1) {$\evs$};
+    \node[vertex] (2) [below right of=1] {$\evt$};
+		\node[vertex] (3) [below left of=1] {$\evu$};
+    \path[edge]
+          (1) edge node {$B$} (2)
+						  edge node {$B$} (3)
+							edge [loop above] node {$C$} (1)
+					(2) edge [<->] node {$B$} (3)
+							edge [loop right] node {$B$} (2)
+					(3)	edge [loop left] node {$B$} (3)
+							edge [bend left] node {$C$} (1);
+\end{tikzpicture}
+\caption{Our original $\AXKFF$ action model $\evMo$.
+It is somewhat more complex than our previous event models, but it is an $\AXKFF$ event model and
+fulfills all the axioms.}
+\label{originalActionModel}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+      thick]
+    \node[vertex, ultra thin] (1) {$\evs$};
+    \node[vertex,very thick, ellipse] (2) [below left of=1] {$\evs \evt \evS^\ast$};
+		\node[vertex,very thick, ellipse] (3) [below of=1] {$\evs \evu \evS^\ast$};
+		\node[vertex,very thick, ellipse] (4) [below right of=1] {$\evs \evs \evS^\ast$};
+    \path[edge]
+					(1) edge [ultra thick] node {$B$} (2)
+							edge [ultra thick] node {$B$} (3)
+							edge [ultra thick] node {$C$} (4)
+					(2) edge [ultra thick, loop left] node {$B$} (2)
+							edge [ultra thick, <->] node {$B$} (3)
+					(3)	edge [ultra thick, loop right] node {$B$} (3)
+					(4)	edge [ultra thick, loop right] node {$C$} (4);
+\end{tikzpicture}
+\caption{The unwound model of $\evMo$ which we call $\evM'$. Note that ellipse points which
+have thicker lines are actually many event points that are all in the same equivalence class.
+$\evs \evt \evS^\ast$ is all event points that can be reached from a path that starts at $\evs$ and
+goes through $\evt$ using only $B$-relations.}
+\label{unwoundActionModel}
+\end{subfigure}
+\caption[Example of unwound tree]{An example unwound tree. Here, the original $\AXKFF$ action model
+$\evMo$ in Subfigure \ref{originalActionModel} is shown alongside its unwound model $\evM'$
+(Subfigure \ref{unwoundActionModel}). } \label{generatedTreeExample}
 \end{figure}
 
 The unwound model is bisimilar to the original $\AXKFF$ action model.
