@@ -1,21 +1,21 @@
 \chapter{Multi-agent epistemic goal achievement in $\langArbAct$} \label{chapter:Multiagent}
 
-In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
+In this chapter, we examine an algebra for constructing action models that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
 We examine this goal achievement for a subset of agents $B \subseteq A$.\\
 \\
 In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine whether a
 finite epistemic goal can be achieved.
-Furthermore, if it is achievable Hales specifies event models that will realise
+Furthermore, if it is achievable Hales specifies action models that will realise
 that goal.
-We will focus on defining a framework that goes beyond specification by constructing similar event models in a
+We will focus on defining a framework that goes beyond specification by constructing similar action models in a
 recursive manner.
 This facilitates an automated method for updating knowledge models to reflect a
 knowledge state.\\
 \\
 Our framework complements Hales' work by providing meaningful, constructive operations
-that can be used to create event models.
-Furthermore, we specify methods for constructing actual event models using these languages, rather
+that can be used to create action models.
+Furthermore, we specify methods for constructing actual action models using these languages, rather
 than simply proving their existence.
 Our work is thus a step forward in constructing updates that we can reason about and prove to
 accomplish the same effects as any theoretical model that we can specify.\\
@@ -24,25 +24,25 @@ This chapter is arranged as follows:
 
 \begin{itemize}
 	\item Section \ref{subsec:Multi:techPrelim} presents the technical preliminaries and definitions
-		of the language for event model construction in $\AXK$
+		of the language for action model construction in $\AXK$
 	\item Section \ref{subsec:multi:completeness} proves that the language constructs tree-like event
 		models, which is the desired form for our constructions
 	\item Section \ref{subsec:multi:achievingGoals} presents our main results regarding constructing
-		event models for the purposes of epistemic goal achievement
+		action models for the purposes of epistemic goal achievement
 	\item Section \ref{subsec:multi:sequentCalc} compares our work to established work in the field,
 		especially that achieved by Aucher
 \end{itemize}
 
 \section{Technical preliminaries} \label{subsec:Multi:techPrelim}
 
-The event models that Hales employs in \cite{hales13synthesis} resemble finite trees.
+The action models that Hales employs in \cite{hales13synthesis} resemble finite trees.
 In order to give a good approximation of these models, we must define these tree-like structures and
 give some ideas with regards to what properties they have.
 We thus give a rigorous definition for them as follows
 
 \begin{defn} \label{finTree}
-Let $\evM_\evs = (\evS, \evR, \evpr, \evs)$ be a pointed event model.
-$\evM_\evs$ is a {\em finite tree event model} if
+Let $\evM_\evs = (\evS, \evR, \evpr, \evs)$ be a pointed action model.
+$\evM_\evs$ is a {\em finite tree action model} if
 \begin{itemize}
 	\item $\evS$, the set of action points is finite
 	\item $\evs$ is the root of the tree and is not accessible from any other action point
@@ -55,11 +55,11 @@ $\evM_\evs$ is a {\em finite tree event model} if
 \end{itemize}
 \end{defn}
 
-We say that the class of finite tree event models is $\treeClass$ (an example is shown in Figure
-\ref{figure:exampleTree}), and we make an important note that insanity models are the most basic kind of tree-like event models.
+We say that the class of finite tree action models is $\treeClass$ (an example is shown in Figure
+\ref{figure:exampleTree}), and we make an important note that insanity models are the most basic kind of tree-like action models.
 
 \begin{lemma} \label{insaneIsTree}
-	Any insanity event model (Definition \ref{insanity}) is also a tree event model.
+	Any insanity action model (Definition \ref{insanity}) is also a tree action model.
 	That is, $\insaneClass$ is contained within $\treeClass$.
 \end{lemma}
 
@@ -70,17 +70,17 @@ We say that the class of finite tree event models is $\treeClass$ (an example is
 \label{figure:exampleTree}
 \end{figure}
 
-It is clear that by our earlier definitions, an insanity event model is also a finite tree event
+It is clear that by our earlier definitions, an insanity action model is also a finite tree event
 model.\\
 \\
 Having established tree-like structures, it seems somewhat natural to also rigourously define a
-forest event model.
+forest action model.
 
 \begin{defn} \label{forest}
-Let $\evM_\evT = (\evS, \evR, \evpr, \evT)$ be a multi-pointed event model.
-$\evM_\evT$ is a {\em finite forest event model} if
+Let $\evM_\evT = (\evS, \evR, \evpr, \evT)$ be a multi-pointed action model.
+$\evM_\evT$ is a {\em finite forest action model} if
 \begin{itemize}
-	\item each point $\evt$ in $\evT$ is the root of a finite tree event model $\evM^\evt =
+	\item each point $\evt$ in $\evT$ is the root of a finite tree action model $\evM^\evt =
 	(\evS^\evt, \evR^\evt,
 	\evpr^\evt, \evt)$
   \item $\evS = \bigcup_{\evt \in \evT} \evS^\evt$
@@ -90,31 +90,31 @@ $\evM_\evT$ is a {\em finite forest event model} if
 \end{itemize}
 \end{defn}
 
-We say that the class of finite forest event models is $\forestClass$.
+We say that the class of finite forest action models is $\forestClass$.
 
 \begin{lemma} \label{treeIsForest}
-	Any finite tree event model is also a finite forest event model.
+	Any finite tree action model is also a finite forest action model.
 	That is, $\treeClass$ is contained within $\forestClass$.
 \end{lemma}
 
-Again, it is clear that by our earlier definitions, a finite tree event model is also a finite forest event
+Again, it is clear that by our earlier definitions, a finite tree action model is also a finite forest event
 model.\\
 \\
-Having defined a class of event models that are ``larger" than trees, it is also useful to be able
+Having defined a class of action models that are ``larger" than trees, it is also useful to be able
 to refer to specific trees that are parts of larger models.
-For example, since forest event models consist of tree event models, being able to refer to specific
-tree event models is a useful ability which we specify in Definition \ref{subtree}, and show as an
+For example, since forest action models consist of tree action models, being able to refer to specific
+tree action models is a useful ability which we specify in Definition \ref{subtree}, and show as an
 example in Figure \ref{figure:subtreeExample}.
 
 \begin{defn} \label{subtree}
-Let $\evM_\evr = (\evS, \evR, \evpr, \evT)$ be a finite forest event model.
-We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a {\em subtree} of $\evM$ if
+Let $\evM_\evr = (\evS, \evR, \evpr, \evT)$ be a finite forest action model.
+We say the pointed action model $\evM' = (\evS', \evR', \evpr', \evr')$ is a {\em subtree} of $\evM$ if
 \begin{itemize}
 	\item $\evS' \subseteq \evS$
 	\item $\forall a \in A \Rightarrow \evR_a' \subseteq \evR_a$
 	\item $\forall \evs \in \evS' \Rightarrow \evpr(\evs) = \evpr'(\evs) $
 	\item $\evM'$ is $\evR$-generable
-	\item $\evM'$ is a finite tree event model
+	\item $\evM'$ is a finite tree action model
 \end{itemize}
 \end{defn}
 
@@ -126,17 +126,17 @@ We say the pointed event model $\evM' = (\evS', \evR', \evpr', \evr')$ is a {\em
 \end{figure}
 
 We also might need to refer to the ``bottom" elements of a tree --- its leaves.
-This is clearly useful in an area where we intend to construct an event model, and more so if our
+This is clearly useful in an area where we intend to construct an action model, and more so if our
 construction begins in a ``bottom-up" fashion.
 
 \begin{defn} \label{leaf}
-Let $\evM_\evr = (\evS, \evR, \evpr, \evr)$ be a finite tree event model.
+Let $\evM_\evr = (\evS, \evR, \evpr, \evr)$ be a finite tree action model.
 Let $\evM' = (\evS', \evR', \evpr', \evr')$ be a subtree of $\evM$.
 $\evM'$ is a {\em leaf node} of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
 \evr'\}$.
 \end{defn}
 
-We outline the leaves of a finite tree event model in Figure \ref{figure:exampleLeaves}.
+We outline the leaves of a finite tree action model in Figure \ref{figure:exampleLeaves}.
 
 \begin{figure}
 	\centering
@@ -145,13 +145,13 @@ We outline the leaves of a finite tree event model in Figure \ref{figure:example
 	\label[Example leaves]{figure:exampleLeaves}
 \end{figure}
 
-In order to generate these models, we must construct an algebra that can construct event models.
+In order to generate these models, we must construct an algebra that can construct action models.
 However, we are unaware of any operations that are appropriate for building tree models.
 We define an operation to describe a group of agents' belief with regards to the possible execution
-of one event model instead of another.
+of one action model instead of another.
 
 \begin{defn} \label{considers}
-Let $\evM^1$ and $\evM^2$ be multi-pointed event models, and without loss of
+Let $\evM^1$ and $\evM^2$ be multi-pointed action models, and without loss of
 generality let $\evM^1$ and $\evM^2$ be disjoint.
 Let $B$ be a subset of agents participating in $\evM^1$ and $\evM^2$.
 We define $\evM = \evM^1 \to_B \evM^2$ as 
@@ -176,7 +176,7 @@ we will write $\to_a$.
 We also present the disjoint union operator defined by Baltag and Moss in \cite{baltag2005programs}.
 
 \begin{defn} \label{disjoint}
-Let $\evM^1$ and $\evM^2$ be multi-pointed event models, and without loss of generality let $\evM^1$ and
+Let $\evM^1$ and $\evM^2$ be multi-pointed action models, and without loss of generality let $\evM^1$ and
 $\evM^2$ be disjoint.
 We define $\evM = \evM^1 \sqcup \evM^2$ as
 \begin{itemize}
@@ -188,7 +188,7 @@ We define $\evM = \evM^1 \sqcup \evM^2$ as
 The $\sqcup$ operator will be referred to as {\em ``chooses"}.
 \end{defn}
 
-This is the disjoint union of the two event models, which we can refer to as the agents in $A$
+This is the disjoint union of the two action models, which we can refer to as the agents in $A$
 knowing that one of the two models has occurred.
 Baltag and Moss call this a non-deterministic choice \cite{baltag2005programs}.\\
 \\
@@ -197,14 +197,14 @@ The first pertains to showing that applying the choice operator to two forests r
 larger forest.
 
 \begin{lemma} \label{disjForestIsForest}
-Let $\evM^1_{\evT^1}, \evM^2_{\evT^2} \in \forestClass$ be two disjoint forest event models.
+Let $\evM^1_{\evT^1}, \evM^2_{\evT^2} \in \forestClass$ be two disjoint forest action models.
 Then $\evM_\evT = \evM^1_{\evT^1} \sqcup \evM^2_{\evT^2} \in \forestClass$.
 \end{lemma}
 
 \begin{proof}
 We must show each of the following
 \begin{enumerate}
-	\item each $\evt \in \evT$ corresponds to a finite tree event model $\evM^\evt \in \treeClass$ \label{treeCorrespondence}
+	\item each $\evt \in \evT$ corresponds to a finite tree action model $\evM^\evt \in \treeClass$ \label{treeCorrespondence}
 	\item for each $\evM^\evt$, $\evS^\evt \subseteq \evS$ \label{forestStateSubsets}
 	\item for each $\evM^\evt$, $\evR^\evt \subseteq \evR$ \label{forestEdgeSubsets}
 	\item for each $\evM^\evt$, for each $\evs \in \evS^\evt$, $\evpr^t(s) = \evpr(s)$ \label{preconMatch}
@@ -213,8 +213,8 @@ We must show each of the following
 
 We note that $\evT = \evT^1 \sqcup \evT^2$.
 Thus $\evt \in \evT \Rightarrow (\evt \in \evT^1 \lor \evt \in \evT^2)$.
-Since $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$ are both finite forest event models then there must be some
-subtree event model $\evM^\evt \in \treeClass$ that corresponds to $\evt$.
+Since $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$ are both finite forest action models then there must be some
+subtree action model $\evM^\evt \in \treeClass$ that corresponds to $\evt$.
 Without loss of generality, let $\evt \in \evT^1$.\\
 \\
 Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $\evM^\evt$, $\evS^\evt \subseteq \evS^1 \subseteq \evS$.
@@ -242,7 +242,7 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 %\end{lemma}
 %
 %\begin{proof}
-%We will inductively show that for $k$ event models
+%We will inductively show that for $k$ action models
 %\[
 %	\bigsqcup_{i = 1}^k \evM^i_{\evT^i} \in \eventClass_B
 %\]
@@ -251,22 +251,22 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 %\[
 %	\bigsqcup_{i = 1}^1 \evM^i_{\evT^i} = \evM^1_{\evT^1} \in \eventClass_B
 %\]
-%Now, suppose that our induction hypothesis holds for $k$ event models.
+%Now, suppose that our induction hypothesis holds for $k$ action models.
 %Let $\evM^K_{\evT^K} = \bigsqcup_{i = 1}^k \evM^i_{\evT^i} \in \eventClass_B$.
-%Then for $k+1$ event models, let
+%Then for $k+1$ action models, let
 %\begin{align*}
 %	\evM'_{\evT'} = & \bigsqcup_{i = 1}^{k+1} \evM^i_{\evT^i} \\
 %	= & \bigsqcup_{i = 1}^k \evM^i_{\evT^i} \sqcup \evM^{k+1}_{\evT^{k+1}} \\
 %	= & \evM^K_{\evT^K} \sqcup \evM^{k+1}_{\evT^{k+1}}
 %\end{align*}
-%We note that since $\evM'_{\evT'}$ is a disjoint union of event models, $\evM'_{\evT^i} \sim \evM^i_{\evT^i}$ is a
+%We note that since $\evM'_{\evT'}$ is a disjoint union of action models, $\evM'_{\evT^i} \sim \evM^i_{\evT^i}$ is a
 %trivial bisimilarity.
 %Similarly, $\evM'_{\evT^K} \sim \evM^K_{\evT^K}$ is a trivial bisimilarity.\\
 %\\
 %Let $\gamma$ be either of $K$ or $k+1$, and suppose $\evs \in \evS^\gamma$.
 %Let $\krMo_s \in \kripkeClass$.
 %As $\evM^\gamma \in \eventClass_B$, then $\krMo_s \otimes \evM^\gamma_\evs \lesssim_B \krMo_s$.
-%We note that due to $\evM'$ being a disjoint union of event models, $\evM'_\evs \sim \evM^\gamma_\evs$.
+%We note that due to $\evM'$ being a disjoint union of action models, $\evM'_\evs \sim \evM^\gamma_\evs$.
 %Then from Lemma \ref{eventModelEquivalent} we have that $\krMo_s \otimes \evM^\gamma_\evs \sim N_s
 %\otimes \evM'_\evs$.
 %From Lemma \ref{bisimilarIsRefinement}, we have $\krMo_s \otimes \evM'_\evs \lesssim_B \krMo_s
@@ -280,29 +280,29 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 %\end{proof}
 
 We can use the operations for choice and considers to construct finite tree and
-forest event models, as we show in the next section.
+forest action models, as we show in the next section.
 
 \section{Completeness} \label{subsec:multi:completeness}
 
 Within this section, we will show that the operations we have selected, along with insanity event
-models, will be able to generate all possible finite tree event models.
+models, will be able to generate all possible finite tree action models.
 This allows us to say that the language is complete.
 This is necessary to show that our operations will construct all possible trees, and we will also show that
-using a tree any kind of event model can be constructed, up to $n$-bisimilarity.
+using a tree any kind of action model can be constructed, up to $n$-bisimilarity.
 
 \begin{lemma} \label{finTreeConstruct}
-Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree event model.
-$\evM$ can be constructed using insanity event models and $\to$.
+Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree action model.
+$\evM$ can be constructed using insanity action models and $\to$.
 \end{lemma}
 \begin{proof}
 Let $\evM'_{\evr'} = ((\evS', \evR', \evpr'), \evr')$ be a subtree of $\evM$.
-We will show by induction that for any $\evM'$ we can use insanity event models and $\to$ to
+We will show by induction that for any $\evM'$ we can use insanity action models and $\to$ to
 construct $\evM'$.\\
 \\
 Suppose that $\evM'_{\evr'} = ((\evS', \evR', \evpr'), \evr')$ is a leaf node.
 Let $\evpr'(\evr') = \phi$, a formula in our logical language.
-$\evM'$ is an insanity event model by definition.
-Thus, we can construct $\evM'$ using insanity event models when $\evM'$ is a leaf node of $\evM$.\\
+$\evM'$ is an insanity action model by definition.
+Thus, we can construct $\evM'$ using insanity action models when $\evM'$ is a leaf node of $\evM$.\\
 \\
 Let $\evM' = ((\evS', \evR', \evpr'), \evr')$ be an arbitrary subtree of $\evM$.
 Suppose $\evpr'(\evr') = \phi$, where $\phi$ is a formula in our logical language.
@@ -313,12 +313,12 @@ Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $\evr' \evR_{
 \\
 Consider the $\evM^\evt = (\{ \evt \}, \evR^\evt, \evpr^\evt, \evt) \in \insaneClass$.
 Let $\evpr^\evt(\evt) = \phi$.
-Consider the event model 
+Consider the action model 
 \[
 \evM^K = (\ldots((\evM^\evt \to_{a_1} \evM ^ 1) \to_{a_2} \evM_2) \to_{a_3} \ldots
 \to_{a_{n-1}} \evM^{n-1} ) \to_{a_n} \evM ^ n
 \]
-We will show that $\evM^K$ and $\evM'$ are equivalent event models.\\
+We will show that $\evM^K$ and $\evM'$ are equivalent action models.\\
 \\
 Each of $\evM^1, \evM^2, \ldots, \evM^n$ are subtrees of $\evM'$.
 The action points, accessibilities and preconditions in each of $\evM^1, \evM^2, \ldots, \evM^n$ are
@@ -328,7 +328,7 @@ Furthermore, both $r'$ and $\evt$ can access each of $\evM^1, \evM^2, \ldots \ev
 respectively.\\
 \\
 Thus $\evM'$ and $\evM^K$ are equivalent.
-We can form $\evM'$ using insanity event models and $\to$, and thus any arbitrary subtree of $\evM'$
+We can form $\evM'$ using insanity action models and $\to$, and thus any arbitrary subtree of $\evM'$
 fulfils the induction hypothesis.
 \end{proof}
 
@@ -339,8 +339,8 @@ This is a strong motivation for the inclusion of both operations, and it is rath
 the addition of choice allows us to construct forests, as we see in Lemma \ref{forestCon}.
 
 \begin{lemma} \label{forestCon}
-Let $\evM = (\evS, \evR, \evpr, \evT)$ be a finite forest event model.
-Then $\evM$ can be constructed using $\to$, $\sqcup$ and insanity event models.
+Let $\evM = (\evS, \evR, \evpr, \evT)$ be a finite forest action model.
+Then $\evM$ can be constructed using $\to$, $\sqcup$ and insanity action models.
 \end{lemma}
 
 \begin{proof}
@@ -350,7 +350,7 @@ By Lemma \ref{finTreeConstruct} we can generate from $\insaneClass$ and $\to$.
 By Lemma \ref{treeIsForest} $\evM^\evt \in \forestClass$.
 Then by a recursive and finite number of applications of Lemma
 \ref{disjForestIsForest} we have that $\bigsqcup_{\evt \in \evT} \evM^\evt$ is a finite
-forest event model.
+forest action model.
 \end{proof}
 
 A corollary to Lemma \ref{forestCon} is shown in Corollary \ref{forestConCorr}.
@@ -358,7 +358,7 @@ We claim that if we have a forest, then the disjoint union of all its subtrees i
 reconstruct it.
 
 \begin{corr} \label{forestConCorr}
-Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a finite forest event model, and for each $\evt \in \evT$ let $\evM^\evt \in
+Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a finite forest action model, and for each $\evt \in \evT$ let $\evM^\evt \in
 \treeClass$ be the subtree of $\evM$ corresponding to $\evt$.
 Then
 \[
@@ -376,11 +376,11 @@ Then
 %\phi = \pi \land \bigwedge_{c \in C} \cover_c \Gamma_c \in \langArbAct
 %\]
 %where $\Gamma$ is a finite set.
-%Suppose that for each $c \in C$, and for each $\gamma \in \Gamma_c$ there is an event model
+%Suppose that for each $c \in C$, and for each $\gamma \in \Gamma_c$ there is an action model
 %$M^\gamma_T \in \forestClass$ and $M^\gamma_T \in \eventClass_B$  such that
 %$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$ and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff
 %\exists_B \gamma$.
-%Then there exists a finite forest event model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
+%Then there exists a finite forest action model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
 %such that $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 %\end{lemma}
 %
@@ -412,7 +412,7 @@ Then
 %Thirdly, we show $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 %Lastly, we show that $M_T \in \eventClass_B$.\\
 %\\
-%According to Definition \ref{finTree} $M_T = (S, R, \evpr, T)$ is a finite tree event model if
+%According to Definition \ref{finTree} $M_T = (S, R, \evpr, T)$ is a finite tree action model if
 %and only if the following four conditions must hold:
 %\begin{enumerate}
 %	\item $S$ is finite \label{treeConFinite}
@@ -572,25 +572,25 @@ Then
 %
 %\begin{lemma} \label{disjunctionFormulaAchievementK}
 %Let $\phi = \alpha \lor \beta \in \langArbAct$ and $B \subseteq A$.
-%Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest event model
+%Suppose that for $\gamma \in \{\alpha, \beta\}$ there is a finite forest action model
 %$M^\gamma_{T^\gamma} \in \forestClass$ and $M^\gamma_{T^\gamma} \in \eventClass_B$ such that
 %$\vdash \sqex{M^\gamma_{T^\gamma}} \gamma$
 %and $\vdash \anex{ M^\gamma_{T^\gamma} } \gamma \iff \exists \gamma$.
-%Then there exists a finite forest event model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
+%Then there exists a finite forest action model $M_T \in \forestClass$ and $M_T \in \eventClass_B$
 %such that $\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists_B \phi$.
 %\end{lemma}
 %
 %\begin{proof}
 %Let $M_T = M^\alpha_{T^\alpha} \sqcup M^\beta_{T\beta}$.
 %We will show three things.
-%Firstly, that $M_T$ is a finite forest event model.
+%Firstly, that $M_T$ is a finite forest action model.
 %Secondly, that $\vdash \sqex{M_T}\phi$.
 %Lastly, we show $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 %We assume, without loss of generality, that $S^\alpha$ and $S^\beta$ are disjoint.\\
 %\\
-%To show that $M_T$ is a finite forest event model, we observe that $M_T$ is a disjoint union of two
-%finite forest event models who are both disjoint.
-%Then by Lemma \ref{disjForestIsForest} $M_T$ is a finite forest event model.
+%To show that $M_T$ is a finite forest action model, we observe that $M_T$ is a disjoint union of two
+%finite forest action models who are both disjoint.
+%Then by Lemma \ref{disjForestIsForest} $M_T$ is a finite forest action model.
 %Note that each action point in $M_T$ is bisimilar to a corresponding point in $M^\alpha_{T^\alpha}$ or
 %$M^\beta_{T^\beta}$.\\
 %\\
@@ -606,7 +606,7 @@ Then
 %(\ref{djfa_c1_3}) is a simple introduction of disjunctions and (\ref{djfa_c1_4}) follows from \axAU, as
 %$T = T^\alpha \cup T^\beta$.\\
 %\\
-%Now we show that $M_T$ is a $B$-restricted event model.
+%Now we show that $M_T$ is a $B$-restricted action model.
 %Since $M^\alpha, M^\beta \in \eventClass_B$, by Lemma \ref{brestrictDisjoint} $M_T \in
 %\eventClass_B$.\\
 %\\
@@ -632,7 +632,7 @@ Then
 %
 %\begin{thm} \label{goalAchievementK}
 %Let $\phi \in \langArbAct$ be a finite formula.
-%Then there exists a finite forest event model $M_T \in \eventClass$ such that
+%Then there exists a finite forest action model $M_T \in \eventClass$ such that
 %$\vdash \sqex{M_T}\phi$ and $\vdash \anex{ M_T } \phi \iff \exists \phi$.
 %\end{thm}
 %
@@ -646,24 +646,24 @@ Then
 %From the induction hypothesis, for every $\gamma \in \Gamma$ there exists a finite forest event
 %model $N^\gamma_{T^\gamma} \in \eventClass$ such that $\vdash \sqex{N^\gamma_{T^\gamma}} \gamma$ and
 %$\vdash \anex{N^\gamma_{T^\gamma}} \gamma \iff \exists \gamma$.
-%Then from Lemma \ref{coverFormulaAchievementK} there exists a finite forest event model $M_T$ such
+%Then from Lemma \ref{coverFormulaAchievementK} there exists a finite forest action model $M_T$ such
 %that $\vdash \sqex{M_T} \phi$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
 %We note that the base case for the induction occurs when $\Gamma = \varnothing$ and thus $\phi =
 %\pi$.\\
 %\\
 %Suppose that $\phi = \alpha \lor \beta$.
-%Then from the induction hypothesis there exists finite forest event models $N^\alpha_{T^\alpha}$ and
+%Then from the induction hypothesis there exists finite forest action models $N^\alpha_{T^\alpha}$ and
 %$N^\beta_{T^\beta} \in \eventClass$ such that for $\gamma \in \{\alpha, \beta\}:
 %\vdash \sqex{N^\gamma_{T^\gamma}} \gamma \land \vdash \anex{N^\gamma_{T^\gamma}} \iff \exists
 %\gamma$.
-%Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite forest event model $M_T$ such
+%Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite forest action model $M_T$ such
 %that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
 %\end{proof}
 
 We now present our main result --- that the language we have specified is able to, up to
-$n$-bisimilarity, construct any event model in $\AXK$.
-With this, we show that our constructive operations are able to be used to build useful event models
-and achieve the same effects as any other event model, up to a some specified modal depth.
+$n$-bisimilarity, construct any action model in $\AXK$.
+With this, we show that our constructive operations are able to be used to build useful action models
+and achieve the same effects as any other action model, up to a some specified modal depth.
 
 \begin{thm} \label{approximatingEventModel}
 Let $\evM_\evT \in \eventClass$ and $n$ be some non-negative integer.
@@ -678,7 +678,7 @@ That is there is no sequence of $n$ action points $\evt = \evs_1, \evs_2, \ldots
     \ldots, \evs_{n-1} \evR_{a_{n-1}} \evs_n$.
 We will show inductively that for any $n$, the following two conditions hold
 \begin{itemize}
-\item there is a forest event model $\evM'_{\evT'} \in \forestClass$ such that $\evM'_{\evT'} \sim_n \evM_\evT$
+\item there is a forest action model $\evM'_{\evT'} \in \forestClass$ such that $\evM'_{\evT'} \sim_n \evM_\evT$
 \item for each $\evt \in \evT$, there is a $\evt' \in \evT'$ and subtree of $\evM'_{\evT'}$, $\evM^{\evt'}_{\evt'}$ such that
 $\evM'_{\evt'} \sim_n \evM_\evt$
 \end{itemize}
@@ -696,7 +696,7 @@ Now, let
 By Lemma \ref{disjForestIsForest}, $\evM'_{\evT'} \in \forestClass$.
 Furthermore, it is clear that each point $\evt \in \evT$ corresponds to some $\evt' \in \evT'$ such that $\evM_\evt
 \sim_0 \evM'_{\evt'}$.
-Lastly, since $\evM'_{\evT'}$ is the disjoint union of multiple finite tree event models, for $\evt, \evt' \in
+Lastly, since $\evM'_{\evT'}$ is the disjoint union of multiple finite tree action models, for $\evt, \evt' \in
 \evT'$ we have that $\evS_\evt$ and $\evS_{\evt'}$ are disjoint.
 Thus our induction hypothesis holds for $n = 0$.\\
 \\
@@ -721,7 +721,7 @@ Lastly we show that $\evM'_{\evT'} \sim_k \evM_\evT$.\\
 \\
 To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions must hold
 \begin{enumerate}
-	\item each point $\evt \in \evT'$ is the root of a finite tree event model $\evM^\evt_\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt)$ \label{forestConOne}
+	\item each point $\evt \in \evT'$ is the root of a finite tree action model $\evM^\evt_\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt)$ \label{forestConOne}
   \item $\evS' = \bigcup_{\evt \in \evT'} \evS^\evt$ \label{forestConTwo}
   \item for each $a \in A \Rightarrow \evR'_a = \bigcup_{\evt \in \evT'} \evR^\evt_a$ \label{forestConFive}
 	\item for each $\evs \in \evS^\evt$, $\evpr'(\evs) = \evpr^\evt(\evs)$ \label{forestConThree}
@@ -732,7 +732,7 @@ To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions mus
 To show that \ref{forestConOne} holds, suppose $\evt \in \evT'$.
 We must show that $\evM'_\evt \in \treeClass$.
 We observe that $\evS'$, the set of action points is finite, since it is the finite union of a set
-of finite forest event models which in turn have finite sets of points. This follows from the
+of finite forest action models which in turn have finite sets of points. This follows from the
 definition of $\evM'_{\evT'}$.\\
 \\
 Next, $\evt$ is the root of the tree and is not accessible from any other action point, which follows
@@ -748,7 +748,7 @@ Suppose $\evs = \evs'$.
 Then the $\evR'_a \evs = \{ \evt \}$, and for any other $a'$, $\evR'_{a'} \evs = \varnothing$.\\
 \\
 Suppose $\evs \neq \evs'$.
-Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree event model (Definition \ref{finTree}) we have that there is some
+Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition \ref{finTree}) we have that there is some
 $p \in \evS^{\evs'}$ and $a' \in A$ such that $p \evR'_{a'} \evs$.\\
 \\
 Finally let $\evs \in \evS'_\evt$.
@@ -760,7 +760,7 @@ Suppose $\evs \neq \evt$.
 If so then there is some agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs \in \evS^{\evs'}_{\evs'}$, the set
 of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at $\evs'$.\\
 \\
-Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree event model (Definition
+Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition
 \ref{finTree}) we have that there is some sequence of action points $\evs' = \evs_0, \evs_1, \evs_2, \ldots, \evs_n =
 \evs \in \evS^{\evs'}_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR'_{a_1} \evs_1, \ldots,
 \evs_{n-1} \evR'_{a_n} \evs_n$.
@@ -800,9 +800,9 @@ to $\evM_\evT$.
 Thus we have $\evM_\evT \sim_k \evM'_{\evT'}$ and our induction hypothesis holds for $n = k$.
 \end{proof}
 
-We have shown that any event model can be constructed by our language, up to $n$-bisimilarity.
-If we focus on specific event models which can realise epistemic goals, as Hales
-\cite{hales13synthesis} shows, then we can complement that work by constructing event models
+We have shown that any action model can be constructed by our language, up to $n$-bisimilarity.
+If we focus on specific action models which can realise epistemic goals, as Hales
+\cite{hales13synthesis} shows, then we can complement that work by constructing action models
 specifically for the purpose of epistemic goal-achievement.
 
 \begin{corr} \label{approximatingBRestricted}
@@ -815,7 +815,7 @@ $\vdash \anex{\evM_\evT} \phi \iff \exists_B \phi$ is valid.
 Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
 By Lemma \ref{allInCoverNormal} and Lemma \ref{thm:AAMLExpressivelyEquivalent} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
 Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
-From \cite{hales13synthesis}, Hales synthesises an event model $\evM'_{\evT'}$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT}
+From \cite{hales13synthesis}, Hales synthesises an action model $\evM'_{\evT'}$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT}
 \phi \iff \exists_B \phi$.\\
 \\
 We construct $\evM_\evT \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
@@ -826,18 +826,18 @@ formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\e
 
 Within this chapter, our work has shown that we can, up to $n$-bisimilarity, construct any event
 model.
-This ensures that we can realise the effects of any event model, and that we need only worry about
-the modal depth of the model to describe the event model.
+This ensures that we can realise the effects of any action model, and that we need only worry about
+the modal depth of the model to describe the action model.
 
 \section{Comparison to sequent calculi for epistemic planning} \label{subsec:multi:sequentCalc}
 
-So far, we have been particularly interested in constructing event models.
-We have shown that we can approximate event models according to what
+So far, we have been particularly interested in constructing action models.
+We have shown that we can approximate action models according to what
 post-conditions are true.
-This was through the construction of a particular event model that fulfilled
+This was through the construction of a particular action model that fulfilled
 the post-conditions that we aimed to fulfil.\\
 \\
-This approach is powerful in the sense that we are guaranteed to construct an event model
+This approach is powerful in the sense that we are guaranteed to construct an action model
 that, given any Kripke model, will either ensure that a post-condition
 is realised or destroy the Kripke model as a result of its execution.
 It allows us to ensure the realisation of a post-condition, without giving
@@ -902,7 +902,7 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 It is clear that $M^1$ contains more states and relations that $M^2$, but that they both achieve our
 epistemic goal $\phi$.
 This is illustrative of the weakness with regards to tersity of the models we build.
-We have shown methods to build event models, but only concentrated on one singular event model to
+We have shown methods to build action models, but only concentrated on one singular action model to
 build with the express purpose of goal achievement.\\
 \\
 A second example we could use is to let our goal state, $\phi = \Box(\alpha \lor \beta)$ in a single
@@ -948,7 +948,7 @@ in order to realise $\phi$.
 		announcement of $p$ where $\evpr(\evs) = \alpha$ and $\evpr(\evt) = \beta$.}
 	\label{TheDualAnnounce}
 	\end{subfigure}
-	\caption[Comparing minimal changes against generated event models]{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheStupidTree}) and $\evM^2_\evT$
+	\caption[Comparing minimal changes against generated action models]{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheStupidTree}) and $\evM^2_\evT$
 		(Subfigure \ref{TheDualAnnounce}). It is clear that after executing
 		$\evM^2_{\evT}$ a smaller change to our knowledge and inference base has occurred.}
 	\label{comparePublicAnnounces}
@@ -983,9 +983,9 @@ such that $\krMo_s \models \phi$ and $\krMo''_{s''} \models \phi''$, and every $
 \sim \krMo''_{s''}$ it holds that $\evMo'_{\evs'} \models \phi'$.
 \end{defn}
 
-In particular, the inference relation $\models^2$ describes a set of event models that fulfil its
+In particular, the inference relation $\models^2$ describes a set of action models that fulfil its
 properties.
-We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of event models such that, for a $\phi,
+We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of action models such that, for a $\phi,
 	 \phi'' \in \lang$, if
 \[
 	 \evM_\evs \in \mathcal{M}2(\phi,\phi'') \iff (\forall \phi' \in \langActEx
@@ -1007,7 +1007,7 @@ the public announcement of $\phi$ (Figure \ref{TheShortAnnounce}).
 Similarly, for $\psi = \Box(\alpha \lor \beta)$, the disjoint union of the public announcement of
 $\alpha$ and the public announcement of $\beta$ is a minimal change (Figure \ref{TheDualAnnounce}).\\
 \\
-We can now reason about our updates in their event model form.
+We can now reason about our updates in their action model form.
 It allows us to reason about their structure, about necessary preconditions and consequences of an
 update's execution.\\
 \\
@@ -1018,10 +1018,10 @@ update) by asking ``how" to build these models, and hopefully unify the approach
 Aucher's sequence calculus.
 These questions relate to achieving an epistemic goal $\phi \in \lang$.
 \begin{enumerate}
-	\item How can we build the smallest event model in terms of size that achieves $\phi$?
+	\item How can we build the smallest action model in terms of size that achieves $\phi$?
 		It is worth noting that ``size" is at this rudimentary stage unclear, and we are implicitly discussing the
 		number of event points.
 		However, ``size" might instead be number of relations, or some other measure.
-	\item How can we build the event model that minimally changes the epistemic situation and achieves
+	\item How can we build the action model that minimally changes the epistemic situation and achieves
 		$\phi$?
 \end{enumerate}

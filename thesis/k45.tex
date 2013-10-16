@@ -1,11 +1,11 @@
-\chapter{Constructing event models in $\AXKFF$} \label{chapter:k45}
+\chapter{Constructing action models in $\AXKFF$} \label{chapter:k45}
 
 We have discussed models in the axiom system of $\AXK$.
-In particular, we have focused on approximating arbitrary event models.
-Our approximations can fulfil post-conditions and the effects of event model execution, up to modal
+In particular, we have focused on approximating arbitrary action models.
+Our approximations can fulfil post-conditions and the effects of action model execution, up to modal
 depth $n$.\\
 \\
-This result was particularly useful in showing that we could construct an event model, but because
+This result was particularly useful in showing that we could construct an action model, but because
 it does not preserve many of the axioms necessary for discussing and reasoning about knowledge, its
 usefulness is somewhat diminished.
 If we are interested in reasoning about protocols or representing our updates in a manner far more
@@ -13,16 +13,16 @@ amenable to ``classical" knowledge, bases, we need to use an axiomatisation that
 appropriate.
 We thus will work in the axiomatisation of $\AXKFF$, allowing us to move far closer to constructing
 sensible epistemic updates.
-We will replicate a similar result of event model approximation in the axiomatic system
+We will replicate a similar result of action model approximation in the axiomatic system
 of $\AXKFF$.
-This chapter details our results for our event model approximation in the axiomatic system
+This chapter details our results for our action model approximation in the axiomatic system
 $\AXKFF$.\\
 \\
 This chapter is arranged as follows:
 \begin{itemize}
 	\item section \ref{subsec:k45:background} discusses the background of $\AXKFF$ and motivates the
-		need to use $\AXKFF$ for our event models
-	\item section \ref{subsec:k45:techPrelims} presents our language for constructing event models in
+		need to use $\AXKFF$ for our action models
+	\item section \ref{subsec:k45:techPrelims} presents our language for constructing action models in
 		$\AXKFF$
 	\item section \ref{subsec:k45:goalAchievement} presents our main results with regards to event
 		model construction, approximation and goal achievement in $\AXKFF$
@@ -53,10 +53,10 @@ We can immediately see the concept of a ``root" node and ``leaf" nodes.}
 \end{figure}
 
 However, the models we previously generated are not so sensible under an epistemic interpretation.
-Indeed, although we can approximate an epistemic event model and the informative update that it
+Indeed, although we can approximate an epistemic action model and the informative update that it
 encodes, our resultant model is not so easily interpreted within the original logical systems we
 used.
-At present, we can thus approximate any event model, whether it is interpretable under epistemic
+At present, we can thus approximate any action model, whether it is interpretable under epistemic
 logics or not.\\
 \\
 In order to discuss epistemic logic, we need to first impose more restrictions on what axioms our
@@ -118,7 +118,7 @@ our models to obey these axioms.
   $\krMo_\delta \models q \land p$.
 We can say that $\krMo_\alpha \models \Box q$, but we cannot say that $\krMo_\alpha
 \models \Box \Box q$.
-Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ event model.}
+Then $\axFo$ is disobeyed and thus $\krMo$ is not a $\AXKFF$ action model.}
 \label{kmodel}
 \end{subfigure}
 ~
@@ -168,12 +168,12 @@ This causes points $\beta, \gamma$ and $\delta$ to become a completely connected
 with an edge running to each one of them, as well as reflexive edges for each point.\\
 \\
 Our previous definitions give a well-defined idea for whether a Kripke model obeys the axioms of $\AXKFF$.
-Unfortunately, this does not translate well to event models due to the differences in their
+Unfortunately, this does not translate well to action models due to the differences in their
 semantics.
-In order to determine if an event model obeys the axioms of $\AXKFF$, we will formalise the ``model"
+In order to determine if an action model obeys the axioms of $\AXKFF$, we will formalise the ``model"
 implications we previously discussed into conditions on the structure of the model (that is, the
 frame of the model --- see Definition \ref{frame}).
-These are the {\em frame conditions} of $\AXKFF$, and we will show that an event model that fulfils these
+These are the {\em frame conditions} of $\AXKFF$, and we will show that an action model that fulfils these
 frame conditions, when executed on a Kripke model that obeys the axioms of $\AXKFF$ will preserve
 these axioms post execution.
 
@@ -189,22 +189,22 @@ these axioms post execution.
 \end{defn}
 
 This is given by Fagin et. al in \cite{fagin1995reasoning}.
-We can use the concept of an $\AXKFF$ frame to define a $\AXKFF$ event model.
+We can use the concept of an $\AXKFF$ frame to define a $\AXKFF$ action model.
 
 \begin{defn} \label{defn:k45eventModel}
-	Suppose $\evM = (\evS, \evR, \evpr)$ is an event model.
-	We say that $\evM$ is a {\em $\AXKFF$ event model} if $F = (\evS, \evR)$ is a $\AXKFF$ frame.
+	Suppose $\evM = (\evS, \evR, \evpr)$ is an action model.
+	We say that $\evM$ is a {\em $\AXKFF$ action model} if $F = (\evS, \evR)$ is a $\AXKFF$ frame.
 \end{defn}
 
-The usefulness of a $\AXKFF$ event model is twofold.
+The usefulness of a $\AXKFF$ action model is twofold.
 Firstly, it is a structure which has some correspondence to the axioms of $\AXKFF$.
 This means it has some epistemic meaning and can be interpreted in a setting that resembles
 reasonings about knowledge and belief.
-Secondly, we can show that if $\evM_\evT$ is a $\AXKFF$ event model then it preserves the axioms of
+Secondly, we can show that if $\evM_\evT$ is a $\AXKFF$ action model then it preserves the axioms of
 $\AXKFF$.
 
 \begin{lemma} \label{lemma:k45preserved}
-	Let $\krMo_T = ((S,R,V),T)$ is a $\AXKFF$ Kripke model and $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ event model, then
+	Let $\krMo_T = ((S,R,V),T)$ is a $\AXKFF$ Kripke model and $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ action model, then
 	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ Kripke model.
 \end{lemma}
 \begin{proof}
@@ -243,28 +243,28 @@ $\AXKFF$.
 	Since the frame conditions on $(S',R')$ hold $\krMo'_{T'}$ is a $\AXKFF$ Kripke model.
 \end{proof}
 
-This shows us that what we consider a $\AXKFF$ event model behaves as we expect --- if we execute
+This shows us that what we consider a $\AXKFF$ action model behaves as we expect --- if we execute
 its update on a $\AXKFF$ Kripke model, the resulting Kripke model is also a $\AXKFF$ Kripke model.\\
 \\
 We can approximate informative updates using our previous method (detailed in Chapter
 \ref{chapter:Multiagent}, but these updates do not preserve
 axioms $\axFo$ and $\axFi$.
 The resulting model after execution barely resembles an epistemic model.
-The approach in this chapter constructs event models that, after their execution on a model that
+The approach in this chapter constructs action models that, after their execution on a model that
 fulfils the conditions of $\AXKFF$, will preserve those conditions.\\
 \\
-We return to our open question --- if we have an $\AXKFF$ event model, can we construct a $\AXKFF$ event
+We return to our open question --- if we have an $\AXKFF$ action model, can we construct a $\AXKFF$ event
 model that is able to achieve the same epistemic effects, up to some modal depth $n$?
 
 \section{A $\AXKFF$ construction framework} \label{subsec:k45:techPrelims}
 
-Here, we define the ``building blocks" for our construction framework of $\AXKFF$ event models.\\
+Here, we define the ``building blocks" for our construction framework of $\AXKFF$ action models.\\
 \\
 We first define what a $B$-insane set is.
-It is a necessary type of event models that we require in order to generate our approximating $\AXKFF$ models.
+It is a necessary type of action models that we require in order to generate our approximating $\AXKFF$ models.
 
 \begin{defn} \label{binsane}
-	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed event model and $B \subseteq A$.
+	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed action model and $B \subseteq A$.
 	We say that $\evM_\evT$ is {\em $B$-insane} if and only if for all $\evs \in \evT$,
 	for all $b \in B$ we have that $\evs \evR_b = \evR_b \evs = \varnothing$.
 \end{defn}
@@ -294,7 +294,7 @@ This is demonstrated in Figure \ref{bInsaneExample}.
           (3) edge node {$C$} (4)
           (4) edge [loop below] node {$B$} (4);
 \end{tikzpicture}
-\caption[$B$-insane event models]{Consider our event model $\evM$. Let $B$ and $C$ be mutually exclusive
+\caption[$B$-insane action models]{Consider our action model $\evM$. Let $B$ and $C$ be mutually exclusive
   subsets of $A$. Here, $\evM_\gamma$
   is $B$-insane, since there are no outgoing or incoming $B$-edges from these event points.
 This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge, $\evM_\beta$, which
@@ -302,13 +302,13 @@ has an incoming $B$-edge, and $\evM_\delta$ which has a reflexive $B$-edge.}
 \label{bInsaneExample}
 \end{figure}
 
-We now define the main operation to construct event models in $\AXKFF$ for the
+We now define the main operation to construct action models in $\AXKFF$ for the
 purposes of realising a post condition.
 
 \begin{defn} \label{makeEquivalence}
-	Let $B \subseteq A$ and $\evM_\evT$ be a multi-pointed $B$-insane event model.
-  For each $\evt \in \evT$ let $\evM_\evt$ be a tree event model in $\AXKFF$.
-  Then the operation $I_B(\evM_\evT)$ constructs the event model $\evM'_{\evT'} =
+	Let $B \subseteq A$ and $\evM_\evT$ be a multi-pointed $B$-insane action model.
+  For each $\evt \in \evT$ let $\evM_\evt$ be a tree action model in $\AXKFF$.
+  Then the operation $I_B(\evM_\evT)$ constructs the action model $\evM'_{\evT'} =
   ((\evS',\evR',\evpr'),\evT')$ such that
   \begin{itemize}
     \item $\evS' = \evS$
@@ -321,11 +321,11 @@ purposes of realising a post condition.
 \end{defn}
 
 We will say that $I_B$ is an operation that makes all the action
-points in a ``distinguished" set of a multi-pointed event model ``equivalent" to a
+points in a ``distinguished" set of a multi-pointed action model ``equivalent" to a
 group of agents $B$.
 That is, any agent in $B$ considers each action point $\evs \in \evT$ to be the
 same.
-We show an example of applying $I_B$ to an event model in Figure \ref{beforeAfterI}.
+We show an example of applying $I_B$ to an action model in Figure \ref{beforeAfterI}.
 
 \begin{figure}
 \centering
@@ -380,15 +380,15 @@ applying our operation $I_B$ onto a model.}
 In order for us to use our previous operations in $\AXKFF$ we need to force further constraints on
 some of our operators.
 It is clear that the choice operator ($\sqcup$, Definition \ref{disjoint}) will preserve the frame
-conditions of $\AXKFF$, but the operation where $B$ considers another event model update possible
+conditions of $\AXKFF$, but the operation where $B$ considers another action model update possible
 ($\to_B$, Definition \ref{considers}) does not.
-We will redefine $\to_B$ to ensure that within our language it cannot create event models that are
-are not $\AXKFF$ event models.
+We will redefine $\to_B$ to ensure that within our language it cannot create action models that are
+are not $\AXKFF$ action models.
 
 \begin{defn} \label{defn:k45:considers}
 	Suppose $B \subseteq A$ is a subset of agents.
-	Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be $\AXKFF$ event models.
-	Furthermore, $\evM_\evT$ is a $B$-insane event model, and $\evM'_{\evT'}$ is defined such that for
+	Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be $\AXKFF$ action models.
+	Furthermore, $\evM_\evT$ is a $B$-insane action model, and $\evM'_{\evT'}$ is defined such that for
 	all $b$ in $B$, for all $\evt \in \evT'$, $\evt \evR'_b subseteq \evT'$.
 	$\evM_\evT \to_B \evM'_{\evT'}$ is defined as in Definition \ref{considers}.
 \end{defn}
@@ -399,25 +399,25 @@ These are necessary in order to preserve the frame conditions in Lemma
 \\
 \newcommand{\EM}{\ensuremath{\eventClass}}
 The addition of our new operator results in us having the following language for
-event model construction in $\AXKFF$.
+action model construction in $\AXKFF$.
 \[
 	\evM_\evT ::= \aMod{M_s} \text{ } | \text{ }\evM_\evT \to_B \evM'_{\evT'} \text{ }|
   \text{ } \evM_\evT \sqcup \evM'_{\evT'} \text{ } | \text{ } I_B(\evM_\evT)
 \]
-where $\aMod{M_s} \in \insaneClass, \evM_\evT, \evM'_{\evT'}$ are multi-pointed event models and $B \subseteq
+where $\aMod{M_s} \in \insaneClass, \evM_\evT, \evM'_{\evT'}$ are multi-pointed action models and $B \subseteq
 A$ is a subset of agents.
 We will refer to our language as $\EM(\to,\sqcup,I)$. \\
 \\
 We will now show that this language always constructs models that preserve $\AXKFF$, and that any
-event model that preserves the axioms of $\AXKFF$ can be constructed by our language.
+action model that preserves the axioms of $\AXKFF$ can be constructed by our language.
 
-\section{Event model construction and goal achievement in $\AXKFF$} \label{subsec:k45:goalAchievement}
+\section{Action model construction and goal achievement in $\AXKFF$} \label{subsec:k45:goalAchievement}
 
-To show that we can construct event models that preserve $\AXKFF$, there are two propositions that
+To show that we can construct action models that preserve $\AXKFF$, there are two propositions that
 must hold
 \begin{enumerate}
-	\item we can use our language to construct event models that will preserve $\AXKFF$
-	\item an event model that preserves $\AXKFF$ can be constructed (up to $n$-bisimilarity) by our
+	\item we can use our language to construct action models that will preserve $\AXKFF$
+	\item an action model that preserves $\AXKFF$ can be constructed (up to $n$-bisimilarity) by our
 		language
 \end{enumerate}
 
@@ -425,25 +425,25 @@ Let us show that the first proposition --- that $\EM(\to,\sqcup,I)$ will constru
 models.
 
 \begin{lemma} \label{lemma:onlyK45Models}
-	Let $\evM_\evT$ be a pointed event model constructed from the language $\EM(\to,\sqcup,I)$.
-	Then $\evM_\evT$ is a $\AXKFF$ event model.
+	Let $\evM_\evT$ be a pointed action model constructed from the language $\EM(\to,\sqcup,I)$.
+	Then $\evM_\evT$ is a $\AXKFF$ action model.
 \end{lemma}
 \begin{proof}
 	We can show this through a case-by-case proof that each of the operations and atoms using in
-	$\EM(\to,\sqcup,I)$ constructs a $\AXKFF$ event model.
+	$\EM(\to,\sqcup,I)$ constructs a $\AXKFF$ action model.
 	We provide a sketch of the case-by-case proof below.
 	\begin{itemize}
 		\item We first examine the atoms using in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
 	models.\\
 	\\
-	Since the only atomic event models we use in $\EM(\to,\sqcup,I)$ are insanity models, we suppose
+	Since the only atomic action models we use in $\EM(\to,\sqcup,I)$ are insanity models, we suppose
 	that $\evM_{\evt} = ((\evS,\evR,\evpr),\{\evt\})$, where $\evS = \{\evt\}$ and $\evR =
 	\varnothing$.
 	This is a $\AXKFF$ frame since $\evR = \varnothing$ ensures that the frame conditions
 	are trivially true.
-		\item We now will show that $\sqcup$ constructs $\AXKFF$ event models.
+		\item We now will show that $\sqcup$ constructs $\AXKFF$ action models.
 	Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be
-	$\AXKFF$ event models such that $\evS$ and $\evS'$ are disjoint.
+	$\AXKFF$ action models such that $\evS$ and $\evS'$ are disjoint.
 	Now, let $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'} = ((\evS'',\evR'',\evpr''),\evT'')$.
 	We need to show that the two frame conditions outlined in Definition \ref{lemma:k45frameconditions}
 	hold.\\
@@ -460,15 +460,15 @@ models.
 	without loss of generality, we say that they are elements of $\evS$.
 	Furthermore, then relation $\evs'' \evR''_a \evt''$ and $\evt'' \evR''_a \evu''$ also correspond
 	to $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$.
-	Since $\evM_\evT$ is a $\AXKFF$ event model, then $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$
+	Since $\evM_\evT$ is a $\AXKFF$ action model, then $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$
 	yields that $\evs'' \evR_a \evu''$, which implies that $\evs'' \evR''_a \evu''$.
 	This shows that the transitivity frame condition holds.
 	A similar argument can be made to show that $\evR''$ is a Euclidean relation.
 	Thus, we have shown that $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'}$ is a $\AXKFF$ event
 	model.
-		\item We next show that $I_B$ is an $\AXKFF$ event model for $B \subseteq A$.
-	Suppose that $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $B$-insane $\AXKFF$ event model.
-	We will show that $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') = I_B(\evM_\evT)$ is an $\AXKFF$ event model, by showing the frame conditions in
+		\item We next show that $I_B$ is an $\AXKFF$ action model for $B \subseteq A$.
+	Suppose that $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $B$-insane $\AXKFF$ action model.
+	We will show that $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') = I_B(\evM_\evT)$ is an $\AXKFF$ action model, by showing the frame conditions in
 	Definition \ref{lemma:k45frameconditions}.\\
 	\\
 	Let us show that $\evR'$ is a transitive relation.
@@ -486,16 +486,16 @@ models.
   since $\evu' \in \evT'$ then $\evu' \in \evs' \evR'_a$.
   Again a similar argument can be made to show that $\evM'_{\evT'}$ is a
   Euclidean relation.
-  In this way we can show that $\evM'_{\evT'}$ is also a $\AXKFF$ event model.
+  In this way we can show that $\evM'_{\evT'}$ is also a $\AXKFF$ action model.
 		\item Our final task is to show that for $B \subseteq A$, $\to_B$ will also
-  construct $\AXKFF$ event models.
+  construct $\AXKFF$ action models.
   Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} =
-  ((\evM',\evR',\evpr'),\evT')$ be $\AXKFF$ event models.
-  Furthermore, let $\evM_{\evT}$ be a $B$-insane event model, and let us
+  ((\evM',\evR',\evpr'),\evT')$ be $\AXKFF$ action models.
+  Furthermore, let $\evM_{\evT}$ be a $B$-insane action model, and let us
   constrain $\evR'$ such that if $b \in B$ and $\evs' \in \evT'$ then $\evs'
   \evR'_b = \evT'$.
   We will show that $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'') = \evM_\evT \to_B
-  \evM'_{\evT'}$ is a $\AXKFF$ event model.\\
+  \evM'_{\evT'}$ is a $\AXKFF$ action model.\\
   \\
   Firstly, we show that for any $a \in A$, $\evR''_a$ is a Euclidean relation.
   Suppose that $\evs'',\evt'',\evu'' \in \evS''$ such that $\evs'' \evR''_a
@@ -516,26 +516,26 @@ models.
   can conclude that $\evt'' \evR'_a \evu'' \Rightarrow \evt'' \evR''_a \evu''$,
   which shows that the relation $\evR''_a$ is a Euclidean relation.
   A similar proof will show that $\evR''_a$ is a transitive relation, and thus
-  shows that $\evM''_{\evT''}$ is a $\AXKFF$ event model.
+  shows that $\evM''_{\evT''}$ is a $\AXKFF$ action model.
 	\end{itemize}
   By showing that under each of these operations as well as our original atoms,
-  we construct $\AXKFF$ event models, we have shown that $\EM(\to,\sqcup,I)$
-  constructs $\AXKFF$ event models.
+  we construct $\AXKFF$ action models, we have shown that $\EM(\to,\sqcup,I)$
+  constructs $\AXKFF$ action models.
 \end{proof}
 
-We have shown that any event models generated from $\EM(\to,\sqcup, I)$ are
-$\AXKFF$ event models.
+We have shown that any action models generated from $\EM(\to,\sqcup, I)$ are
+$\AXKFF$ action models.
 Thus, we can guarantee that if $\evM_\evT$ is a model generated by
 $\EM(\to,\sqcup,I)$ and $\krMo_T$ is a $\AXKFF$ Kripke model, $\krMo_T
 \otimes \evM_\evT$ is also a $\AXKFF$ Kripke model (this is a result of Lemma
   \ref{lemma:k45preserved}).
 This shows that the constructions we use --- $\EM(\to, \sqcup, I)$ are
-sound, and only generate $\AXKFF$ event models.\\
+sound, and only generate $\AXKFF$ action models.\\
 \\
-Let us turn to the second goal we have and suppose that we have an event model, $\evM_\evT
-= ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed event model.
+Let us turn to the second goal we have and suppose that we have an action model, $\evM_\evT
+= ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed action model.
 Now, consider $n$ some positive integer.
-Can we construct an event model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
+Can we construct an action model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
 using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?\\
 \\
 In order to show this to be possible, we must first conceptualise several
@@ -544,8 +544,8 @@ Firstly, we will define the idea of an unwound model.
 
 \begin{defn}\label{def:unwoundModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model.
-  There is an event model, $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ such that
+  action model.
+  There is an action model, $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ such that
   \begin{itemize}
 		\item $\evS'$ is the set of words $\evs \evS^\ast$, where $\evs \in \evT'$
 			\footnote{We can consider each action point $\evs$ in the model to be labelled with the string of
@@ -562,9 +562,9 @@ Firstly, we will define the idea of an unwound model.
 
 \begin{lemma} \label{lemma:unwoundModel:bisimilar}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model.
+  action model.
 	Let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be the unwound model of $\evM_\evT$.
-	Then $\evM'_{\evT'}$ is a $\AXKFF$ event model and $\evM'_{\evT'} \sim \evM_\evT$.
+	Then $\evM'_{\evT'}$ is a $\AXKFF$ action model and $\evM'_{\evT'} \sim \evM_\evT$.
 \end{lemma}
 \begin{proof}
 	By the definition of an unwound model, we can see that the frame conditions in Lemma 
@@ -592,8 +592,8 @@ Firstly, we will define the idea of an unwound model.
 	Since both of these hold, we can say that $\evM'_{\evT'} \sim \evM_\evT$.
 \end{proof}
 
-The unwound model may be an infinite $\AXKFF$ event model.
-The model somewhat resembles our original forest event models,
+The unwound model may be an infinite $\AXKFF$ action model.
+The model somewhat resembles our original forest action models,
 but with interior relations between the action points, and without the
 restriction of finiteness.
 We show an example of this in Figure \ref{generatedTreeExample}
@@ -604,18 +604,18 @@ We show an example of this in Figure \ref{generatedTreeExample}
 unwound model.} \label{generatedTreeExample}
 \end{figure}
 
-The unwound model is bisimilar to the original $\AXKFF$ event model.
-However, as it may be an infinite event model (in terms of the number of action
+The unwound model is bisimilar to the original $\AXKFF$ action model.
+However, as it may be an infinite action model (in terms of the number of action
 points), it is undesirable to try and construct this model.
 Furthermore, most of the time, we might only be interested in the
-post-conditions of a event model that are up to some modal depth.
+post-conditions of a action model that are up to some modal depth.
 If we instead consider a finite submodel of the unwound model
 model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
 
 \begin{defn} \label{unwoundNModel}
-  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed event model, and
+  Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed action model, and
 	let $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the unwound model of $\evM_\evT$.
-  Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be an event model such that
+  Let $n$ be some positive integer and let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be an action model such that
   \begin{itemize}
 		\item $\evS' = \evs \evp$, where $\evp \in \evS^\ast$ is a string of length
     less than $n$ and $\evs \in \evT$
@@ -628,7 +628,7 @@ model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
 
 \begin{lemma} \label{lemma:unwoundNModelNBisimilar}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model.
+  action model.
   Let $n$ be some positive integer and $\evM''_{\evT''} = ((\evS'',\evR'',\evpr''),\evT'')$ be the
 	unwound $n$-model of $\evM_\evT$.
   Then $\evM_\evT \sim_n \evM''_{\evT''}$.
@@ -683,10 +683,10 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 
 \begin{lemma} \label{lemma:unwoundModelBisimilarConstruct}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model.
+  action model.
 	Let $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be the unwound model of
   $\evM_\evT$ and $n$ be some non-negative integer.
-	We can construct an event model $\evM^{n'}_{\evT^{n'}}$ using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to
+	We can construct an action model $\evM^{n'}_{\evT^{n'}}$ using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to
   $\evM'_{\evT'}$.
 \end{lemma}
 \begin{proof}
@@ -707,7 +707,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
   that for $a \in A$, $\evt' \evR'_a \evs'$.
   Then $\evM^k_{\evs'}$ is the unwound $k$-model of $\evM_\evs$.
 	It will thus be sufficient to use this representation of a subtree and show that we can construct
-	some event model that is bisimilar to $\evM'_\evs$.\\
+	some action model that is bisimilar to $\evM'_\evs$.\\
 	\\
 	To show this we will induct over $k$, from 0 to $n$.
 	Our induction hypothesis is as follows.
@@ -767,7 +767,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
         \ldots ) \to_{a_j} \evM^{k'}
   \]
 
-  This model is a $\AXKFF$ event model, since the operations used to construct
+  This model is a $\AXKFF$ action model, since the operations used to construct
   it were $\EM(\to,\sqcup,I)$.
   It remains to be shown that $\evM^{k+1'}_{\evs''} \sim \evM^{k+1}_{\evs'}$.\\
   \\
@@ -808,11 +808,11 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 	Instead, we look at the new relations that were added when we executed $I_a$.\\
 	\\
 	Suppose $\evu' \evR^{k+1'}_a \evv'$.
-	Then $\evv'$ was a point in a pointed event model $\evM^{k'}_{\evv'}$ such that $\evM^{k'}_{\evv}$
+	Then $\evv'$ was a point in a pointed action model $\evM^{k'}_{\evv'}$ such that $\evM^{k'}_{\evv}$
 	is bisimilar to $\evM^{k}_{\evv}$ for $\evv \in \evS'$.
 	Then $(\evv',\evv) \in \sim$ from the definition of $\sim$.
 	It is clear that $\evM^k_\evv$ is a submodel of $\evM^{k+1}_{\evt}$.
-	Furthermore, as $\evM^{k+1}_\evs$ is an $\AXKFF$ event model and $\evu' = \evt'$ then $\evs
+	Furthermore, as $\evM^{k+1}_\evs$ is an $\AXKFF$ action model and $\evu' = \evt'$ then $\evs
 	\evR^{k+1}_a \evu$ ensures that $\evu \evR^{k+1}_a = \evs \evR^{k+1}_a$ (by the frame conditions
 	outlined in Definition \ref{lemma:k45frameconditions}).
 	Then $\evv \in \evu \evR^{k+1}_a$.
@@ -829,8 +829,8 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 	The reasoning we use is similar to that used when we showed {\bf forth-$a$}.\\
 	\\
 	Let $\evu = \evs$.
-	We can say that $\evM^{k}_\evv$ is a submodel of the event model $\evM^{k+1}_\evs$.
-	Then there was some event model $\evM^{k'}_{\evv'}$ that we constructed within building
+	We can say that $\evM^{k}_\evv$ is a submodel of the action model $\evM^{k+1}_\evs$.
+	Then there was some action model $\evM^{k'}_{\evv'}$ that we constructed within building
 	$\evM^{k+1'}_{\evs'}$ such that $\evM^{k'}_{\evv'}$ is bisimilar to $\evM^k_\evv$.
 	Then there is some $\evv' \in \evS^{k+1'}$ such that $(\evv',\evv) \in \sim$.
 	Furthermore, since $\evu = \evs \evR^{k+1} \evv$ then whilst constructing $\evM^{k+1'}_{\evs'}$ we would
@@ -839,16 +839,16 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 	Then {\bf back-$a$} holds in this case.\\
 	\\
 	Now, let $\evu \in \evs \evR^{k+1}_a$.
-	We can say that $\evM^{k}_\evu$ is a submodel of the event model $\evM^{k+1}_\evs$.
+	We can say that $\evM^{k}_\evu$ is a submodel of the action model $\evM^{k+1}_\evs$.
 	Due to this, we need not show that {\bf back-$a$} for this submodel, and it suffices for us to
 	show that {\bf back-$a$} holds when $\evv \in \evu \evR^{k+1}_a$ and $\evR^{k+1'}_a \evu'$ is
 	nonempty.\\
 	\\
 	We know that $\evv \in \evu \evR^{k+1}_a$, and that $\evM^{k}_\evv$ is a submodel of
-	the event model $\evM^{k+1}_\evs$.
+	the action model $\evM^{k+1}_\evs$.
 	Then there is some $\evv' \in \evs' \evR^{k+1'}_a$ such that $\evM^{k'}_{\evv'}$ is bisimilar to
 	$\evM^{k}_\evv$.
-	Furthermore, since both $\evM^{k'}_{\evu'}$ and $\evM^{k'}_{\evv'}$ were in the disjoint union of event models
+	Furthermore, since both $\evM^{k'}_{\evu'}$ and $\evM^{k'}_{\evv'}$ were in the disjoint union of action models
 	that we applied $I_a$ to, we can be guaranteed that $\evu' \evR^{k+1'} \evv$.
 	We have that ($\evv'$,$\evv$) and that $\evv' \in \evu' \evR^{k+1'}_a$.
 	Then {\bf forth-$a$} holds.\\
@@ -857,11 +857,11 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 	Then we can say that our construction, $\evM^{k+1'}_{\evs'}$, is bisimilar to $\evM^{k+1}_\evs$.
 	Furthermore, as we stated earlier if $\evs \in \evT$, then $\evM^{k+1}_\evs$ is the unwound
 	$n$-model of $\evM_\evs$.
-	If $\evs \in \evT$ then $\evM_\evs \sim_n \evM^{n}_\evs$, and we can construct an event model
+	If $\evs \in \evT$ then $\evM_\evs \sim_n \evM^{n}_\evs$, and we can construct an action model
 	$\evM^{n'}_{\evs'}$ such that $\evM^{n'}_{\evs'} \sim \evM^{n}_\evs$.
 	It is clear that we can then claim $\evM_s \sim_n \evM^{n'}_{\evs'}$.\\
 	\\
-	If we consider the final event model we construct, which is a disjoint union of all
+	If we consider the final action model we construct, which is a disjoint union of all
 	$\evM^{n'}_{\evs'}$ for $\evs' \in \evT'$.
 	It is easy to see that
 	\[
@@ -879,18 +879,18 @@ We formally summarise and show this in Theorem
 
 \begin{thm} \label{thm:nBisimAnyK45EventModel}
   Suppose $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ multi-pointed
-  event model.
+  action model.
   Let $n$ be some non-negative integer.
-  We can construct a $\AXKFF$ event model, $\evM'_{\evT'} =
+  We can construct a $\AXKFF$ action model, $\evM'_{\evT'} =
   ((\evS',\evR',\evpr'),\evT')$ using
   $\EM(\to,\sqcup,I)$ such that $\evM'_{\evT'} \sim_n \evM_\evT$.
 \end{thm}
 \begin{proof}
   By Lemma \ref{lemma:unwoundModel:bisimilar} we can construct the unwound model
   of $\evM_\evT$, which we call $\evM''_{\evT''} \sim \evM_{\evT}$.
-	By Lemma \ref{lemma:unwoundModelBisimilarConstruct} we can construct an event model, $\evM'_{\evT'}$ such that
+	By Lemma \ref{lemma:unwoundModelBisimilarConstruct} we can construct an action model, $\evM'_{\evT'}$ such that
   $\evM'_{\evT'} \sim_n \evM''_{\evT''}$ using $\EM(\to,\sqcup,I)$.
-  By Lemma \ref{lemma:onlyK45Models}, $\evM'_{\evT'}$ is a $\AXKFF$ event model.
+  By Lemma \ref{lemma:onlyK45Models}, $\evM'_{\evT'}$ is a $\AXKFF$ action model.
   We have that $\evM'_{\evT'} \sim_n \evM''_{\evT''} \sim \evM_\evT$.
 	Since bisimilarity is an equivalence relation (Lemma \ref{bisimEquivalence}), we can conclude that
   $\evM'_{\evT'} \sim_n \evM_\evT$.
@@ -902,10 +902,10 @@ We restate this result in terms of goal achievement in Corollary
 \begin{corr} \label{corr:k45GoalAchievement}
   Suppose $\phi \in \lang$ is some epistemic goal with $\mDep(\phi) = n$ for $n$
   some non-negative integer.
-  Let $\evM_\evT$ be some $\AXKFF$ event model such that for some $B
+  Let $\evM_\evT$ be some $\AXKFF$ action model such that for some $B
   \subseteq A$, $\vdash \sqex{\evM_\evT} \Rightarrow \phi$ and $\vdash
   \anex{\evM_\evT} \iff \exists_B \phi$.
-  There is some event model $\evM'_{\evT'}$ constructible by $\EM(\to,\sqcup,I)$
+  There is some action model $\evM'_{\evT'}$ constructible by $\EM(\to,\sqcup,I)$
   such that $\vdash \sqex{\evM'_{\evT'}} \Rightarrow \phi$ and $\vdash
   \anex{\evM'_{\evT'}} \iff \exists_B \phi$.
 \end{corr}
@@ -919,11 +919,11 @@ We restate this result in terms of goal achievement in Corollary
 \end{proof}
 
 This result (Corollary \ref{corr:k45GoalAchievement}) states
-that if we have an event model that guarantees the realisation of a goal $\phi$, we can build an event
+that if we have an action model that guarantees the realisation of a goal $\phi$, we can build an event
 model that also guarantees the realisation of $\phi$.
 This difference is small, but powerful --- it progresses beyond ``there is some model that realises
 $\phi$".
 We can now say that if we have that model, we can construct it in a meaningful language, and the
-resulting event model is almost a true epistemic event model of knowledge or belief.
+resulting action model is almost a true epistemic action model of knowledge or belief.
 Our result is a novel step towards constructing updates that provably realise an epistemic goal and
 that we can reason about in a formal manner.

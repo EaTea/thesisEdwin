@@ -1,5 +1,5 @@
 \chapter{Technical preliminaries} \label{chapter:prelim}
-In order to discuss event model synthesis, we first define essential concepts regarding event
+In order to discuss action model synthesis, we first define essential concepts regarding event
 models and the semantics of the logics we are working within.
 
 \section{Models} \label{subsec:prelim:models}
@@ -65,12 +65,12 @@ $\eta$ is the actual state of the world.\\
 Kripke models are useful in describing a static situation, but they are not appropriate descriptions
 of change.
 They cannot describe an informative update that we can formally reason about, which motivates the
-need to specify models of updates, which we call {\em action models} or {\em event models}.
+need to specify models of updates, which we call {\em action models} or {\em action models}.
 
 \begin{defn} \label{evModel}
 	Let $L$ be a logical language.
 	Let $F = (S, R)$ be a frame, and $A$ a set of agents.
-	An {\em event model} (also known as an {\em action model}) $\aMod{\evMo = (S, R, pre)}$ with preconditions defined on $\mathcal{L}$ consists of
+	An {\em action model} (also known as an {\em action model}) $\aMod{\evMo = (S, R, pre)}$ with preconditions defined on $\mathcal{L}$ consists of
 	\begin{itemize}
 		\item a domain $\aMod{S}$ of possible atomic action points
 		\item an accessibility function, $\aMod{R: A \to \mathcal{P}(S \times
@@ -87,17 +87,17 @@ need to specify models of updates, which we call {\em action models} or {\em eve
 	\end{itemize}
 \end{defn}
 
-We adopt the convention that an event model is written using sans-serif fonts.
-Pointed and multi-pointed event models are similarly defined to pointed and multi-pointed Kripke
+We adopt the convention that an action model is written using sans-serif fonts.
+Pointed and multi-pointed action models are similarly defined to pointed and multi-pointed Kripke
 models.
-We adopt the convention for pointed event models that $\aMod{\evMo^1 = (S^1, R^1,
+We adopt the convention for pointed action models that $\aMod{\evMo^1 = (S^1, R^1,
 pre^1, T^1)}$ and $\aMod{\evMo^\alpha =
   (S^\alpha,R^\alpha,pre^\alpha,T^\alpha)}$.
-Furthermore, in literature both of the terms event models and action models are used to describe
-the same concept, and we use them interchangeably throughout this paper to refer to event models.
-We say $\eventClass$ is the class of all event models.\\
+Furthermore, in literature both of the terms action models and action models are used to describe
+the same concept, and we use them interchangeably throughout this paper to refer to action models.
+We say $\eventClass$ is the class of all action models.\\
 \\
-Figure \ref{figure:eventModelExample} gives us an example of an event model, in terms of Angeline, Ben and
+Figure \ref{figure:eventModelExample} gives us an example of an action model, in terms of Angeline, Ben and
 their coin-tossing game.
 Here, we model the update where Angeline may have cheated and learnt which side up the coin is, or she might not have.
 
@@ -120,7 +120,7 @@ Here, we model the update where Angeline may have cheated and learnt which side 
 							edge [loop right] node {$A,B$} (3)
 							edge node {} (2);
 \end{tikzpicture}
-\caption[Event model example of coin-game update]{An example of an event model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
+\caption[Action model example of coin-game update]{An example of an action model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
 Here, Angeline ($A$) may have learnt whether the coin was heads ($H$) or tails ($T$), or she did not
 cheat and learnt nothing at all ($\top$).
 We say that $\evpr(\evp) = \top$, $\evpr(\evu) = H$ and $\evpr(\evv) = T$.}
@@ -131,11 +131,11 @@ Now that we have established a method of modelling updates, we can specify an up
 preconditions required to effect an update, and the relations that define the uncertainty between
 which specific update was executed.
 However, we have not defined update execution, and this model is somewhat pointless without some
-idea of how to execute an event model.
+idea of how to execute an action model.
 
 \begin{defn} \label{evModelEx}
-	Let $\kripkeClass = (S, R, V) \in \kripkeClass$. We define {\em event model
-	execution} for an event model $\aMod{\evMo = (S,
+	Let $\kripkeClass = (S, R, V) \in \kripkeClass$. We define {\em action model
+	execution} for an action model $\aMod{\evMo = (S,
 		R, pre)} \in
 \eventClass$ as follows.
 The result of executing $\evMo$ on the model $\krMo$ is denoted by $M \otimes N = M' = (S', R', V')$ where
@@ -145,7 +145,7 @@ The result of executing $\evMo$ on the model $\krMo$ is denoted by $M \otimes N 
 	\item $(s, \aMod{u}) R_a' (t, \aMod{v}) \iff s R_a t \text{ and } \aMod{u R_a v}$
 	\item $V'((s,\aMod{u})) = V(s)$
 \end{itemize}
-We define pointed event model execution as $\krMo_s \otimes
+We define pointed action model execution as $\krMo_s \otimes
 \aMod{\evMo_u}
 = (\krMo \otimes \aMod{\evMo})_{(s, \aMod{u})}$.
 \end{defn}
@@ -184,7 +184,7 @@ Thus pointed model execution is only sensible if and only if $M_s \models
 							edge [loop right] node {$A,B$} (4);
 \end{tikzpicture}
 \caption[Kripke model after action model execution]{After executing $\evM$ (Figure \ref{figure:eventModelExample}) on $M$ (Figure
-\ref{figure:exampleModel}), we get a new event model $M' = (S',R',V') = M \otimes \evM$.
+\ref{figure:exampleModel}), we get a new action model $M' = (S',R',V') = M \otimes \evM$.
 Here $\evs,\evt,\evs',\evt'$ are the new possible worlds, where $V'(s') = V'(s) = H$ and $V'(t') =
 V'(t) = T$.
 However, we note that in this Kripke model $B$ cannot distinguish any of these worlds apart, whilst
@@ -198,12 +198,12 @@ model execution.
 We can see that $s$ would have been the result of executing $\evp$ on $\tau$, whilst executing
 $\evu$ on $\tau$ resulted in $s'$.\\
 \\
-Event model execution allows us to discuss how, given an event model and an update, the Kripke model
+Action model execution allows us to discuss how, given an action model and an update, the Kripke model
 (the model of the epistemic situation) changes.
-We can now discuss some interesting and useful classes of event models that we will employ later in this work.
+We can now discuss some interesting and useful classes of action models that we will employ later in this work.
 
 \begin{defn} \label{pub}
-Let $\aMod{\evMo = (\{ s \}, R, \{ (s, \phi)\}})$ be an event model.
+Let $\aMod{\evMo = (\{ s \}, R, \{ (s, \phi)\}})$ be an action model.
 Let $\aMod{s}$ be a single action point and $\aMod{R_a = \{(s, s)\}}$ for each $a \in A$ and $\phi
 \in \lang$.
 Then $M$ is a {\em public announcement} of $\phi$.
@@ -228,9 +228,9 @@ as shown in Figure \ref{figure:exampleAnnounce}.
 \label{figure:exampleAnnounce}
 \end{figure}
 
-Our next set of event models are particularly useful in constructing event models.
+Our next set of action models are particularly useful in constructing action models.
 They are somewhat vacuous, and in terms of knowledge they are somewhat odd by themselves.
-Their flexibility as event models due to having no prior relations is useful in being the atoms to
+Their flexibility as action models due to having no prior relations is useful in being the atoms to
 use for our constructions.
 
 \begin{defn} \label{insanity}
@@ -246,7 +246,7 @@ they hold.
 They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
 Allowing them to believe such contradictions means that they have no consistent beliefs, and we
 loosely associate this condition with ``insanity" for ease of referencing.
-They have the same form as the event model shown in Figure \ref{figure:exampleInsane}.
+They have the same form as the action model shown in Figure \ref{figure:exampleInsane}.
 
 \begin{figure}
 \centering
@@ -255,7 +255,7 @@ They have the same form as the event model shown in Figure \ref{figure:exampleIn
 
     \node[vertex] (1) {$\evs$};
 \end{tikzpicture}
-\caption[Insanity event model form]{The form of every insanity model, where for $\evM^I_\evs =
+\caption[Insanity action model form]{The form of every insanity model, where for $\evM^I_\evs =
 ((\evS^I,\varnothing,\evpr^I),\evs)$ we have that $\evpr^I(\evs)$ is some sentence in $\lang$
 Note the lack of a reflexive edge, unlike in Figure \ref{figure:exampleAnnounce}.}
 \label{figure:exampleInsane}
@@ -343,23 +343,23 @@ $\krMo'_{s'} \gtrsim \krMo_{s}$.
 
 This definition is given by Blackburn, de Rijke and Venema in \cite{blackburn2002modal}.\\
 \\
-Simulations and refinements are powerful because they have a mapping to event models --- that is,
-event models and their execution can be characterised by refinements, as shown in Lemma
+Simulations and refinements are powerful because they have a mapping to action models --- that is,
+action models and their execution can be characterised by refinements, as shown in Lemma
 \ref{eventModelsRefine}.
 
 \begin{lemma} \label{eventModelsRefine}
-Let $\aMod{\evMo_s} \in \eventClass$ be an event model and let $\krMo_t \in \kripkeClass$ be a Kripke
+Let $\aMod{\evMo_s} \in \eventClass$ be an action model and let $\krMo_t \in \kripkeClass$ be a Kripke
 model such that $\krMo_t \models \aMod{pre(s)}$.
 Then $\krMo_t \otimes \aMod{\evMo} \lesssim \krMo_t$.
 \end{lemma}
 
 This result, shown by van Ditsmarsch and French in \cite{van2009simulation}, states that executing
-an event model is very similar to a refinement.
+an action model is very similar to a refinement.
 More specifically, the resulting Kripke model after execution is a refinement of the model prior to
-execution, and we can thus consider an event model to be a refinement.
+execution, and we can thus consider an action model to be a refinement.
 The concepts of refinements are a necessary step as we discuss language semantics, especially since
-refinements are quite powerful concepts that we can (eventually) use to quantify over event models,
-and is necessary for our work with constructing event models that are complementary to Hales' work
+refinements are quite powerful concepts that we can (eventually) use to quantify over action models,
+and is necessary for our work with constructing action models that are complementary to Hales' work
 in \cite{hales13synthesis}.
 
 %\begin{lemma} \label{refinementPreorder}
@@ -376,7 +376,7 @@ in \cite{hales13synthesis}.
 %This follows trivially from Definition \ref{refinement} and Definition \ref{bisimKripke}.
 %
 %\begin{defn} \label{brestrict}
-%Let $B \subseteq A$ and let $\aMod{\evMo} \in \eventClass$. Then $\aMod{\evMo}$ is a $B$-restricted event model if and
+%Let $B \subseteq A$ and let $\aMod{\evMo} \in \eventClass$. Then $\aMod{\evMo}$ is a $B$-restricted action model if and
 %only if for every $\aMod{u \in S}$ and every $\krMo_s \in \kripkeClass$
 %such that $\krMo_s \models pre(u)$ we
 %have $\krMo_s \otimes \evMo_u \gtrsim_B \krMo_s$.
@@ -524,16 +524,16 @@ Within the context of our coin game involving Angline and Ben, modal depth can b
 Next, we build upon our logics to introduce the concepts updates and refinements as modal logics.
 We begin by introducing action model logic, as first defined by Baltag, Moss and Solecki in
 \cite{baltag1998lpa}.
-These give us the semantics for discussing event models in a language context, and we can now start
-to treat event models within our language, not simply as models of updates.
-This is important, since it now allows us to discuss event models as a language construct, which is
+These give us the semantics for discussing action models in a language context, and we can now start
+to treat action models within our language, not simply as models of updates.
+This is important, since it now allows us to discuss action models as a language construct, which is
 much more a dynamic concept that just as a single event that is being modelled.
 
 \begin{defn} \label{actModelLogic}
 Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model and $\aMod{\evMo
   = (S, R, pre)} \in
-\eventClass$ a multi-pointed event model for a group of agents $A$.
-The interpretation of $\phi \in \langActEx$ --- that is, the {\em language of event model execution} ---  is the same as its interpretation in $\lang$
+\eventClass$ a multi-pointed action model for a group of agents $A$.
+The interpretation of $\phi \in \langActEx$ --- that is, the {\em language of action model execution} ---  is the same as its interpretation in $\lang$
 (\ref{modalLogic}), but with the additional
 inductive cases
 \begin{itemize}
@@ -561,7 +561,7 @@ update modelled by $\aMod{\evMo_T}$ may result in $\phi$ being true".\\
 We also introduce refinement modal logic, as first introduced by van Ditmarsch and French in
 \cite{van2009simulation}.
 Refinement modal logic allows for the quantification over refinements, which in turn (due to Lemma
-\ref{eventModelsRefine}) allows us to quantify over all event models.
+\ref{eventModelsRefine}) allows us to quantify over all action models.
 
 \begin{defn} \label{refineLogic}
 Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model for a group of agents $A$.
@@ -581,22 +581,22 @@ In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
 Our interpretation is taken from an interpretation used by Hales, French and Davies in
 \cite{hales2012refinement}.\\
 \\
-From Lemma \ref{eventModelsRefine}, refinements have a strong relationship to event models,
+From Lemma \ref{eventModelsRefine}, refinements have a strong relationship to action models,
 and the semantics in Definition \ref{refineLogic} are thus applicable to
-quantifying over event models.
-If we can say that event models are refinements, then we can permit the usage of refinements and the
-semantics of refinement modal logic being applied to event models.
-This allows us to then quantify over all event models.\\
+quantifying over action models.
+If we can say that action models are refinements, then we can permit the usage of refinements and the
+semantics of refinement modal logic being applied to action models.
+This allows us to then quantify over all action models.\\
 We can use the semantics of refinement modal logic to say
 
 \begin{itemize}
-	\item is there an event model to accomplish $\phi$?	
-	\item do all event models accomplish $\psi$?
+	\item is there an action model to accomplish $\phi$?	
+	\item do all action models accomplish $\psi$?
 \end{itemize}
 
-This idea of quantification over event models can be combined with Definition \ref{actModelLogic},
+This idea of quantification over action models can be combined with Definition \ref{actModelLogic},
 and we can thus discuss both execution and quantification together as a single language.
-This gives us the power to both execute, and to query over an arbitrary number of event models.
+This gives us the power to both execute, and to query over an arbitrary number of action models.
 
 \begin{defn} \label{arbActLogic}
 	The {\em language of arbitrary action model logic}, $\langArbAct$ is first defined in \cite{hales13synthesis}.
@@ -612,9 +612,9 @@ $\langArbAct$ is $\langActEx$ with $\forall_B$ and is also $\langRefine$ with $\
 
 \subsection{Miscellaneous Semantic Results}
 We provide other results that we will use in the main technical findings of this paper.
-We first turn to an alternate set of definitions, that of providing a parallel result about bisimulations regarding event models.
+We first turn to an alternate set of definitions, that of providing a parallel result about bisimulations regarding action models.
 In Definition \ref{bisimKripke} we discussed bisimulation for Kripke models.
-We will extend this now to also cover bisimulation for event models.
+We will extend this now to also cover bisimulation for action models.
 
 \begin{defn} \label{bisimEvent}
 	Let $\aMod{\evMo, \evMo'} \in \eventClass$ with preconditions defined on $\langArbAct$.
@@ -634,21 +634,21 @@ We will extend this now to also cover bisimulation for event models.
 \end{defn}
 
 \begin{lemma} \label{eventModelEquivalent}
-Let $\aMod{\evMo_s}$, $\aMod{\evMo'_{s'}} \in \eventClass$ be event models such that $\aMod{\evMo_s}
+Let $\aMod{\evMo_s}$, $\aMod{\evMo'_{s'}} \in \eventClass$ be action models such that $\aMod{\evMo_s}
 \sim \aMod{\evMo'_{s'}}$
 and let $\krMo_s \in \kripkeClass$ such that $\krMo_s \models \aMod{pre(s)}$.
 Then $\krMo_s \otimes \aMod{\evMo_s} \sim \krMo_s \otimes \aMod{\evMo'_{s'}}$.
 \end{lemma}
 
-Lemma \ref{eventModelEquivalent} allows us to compare two event models and say ``after executing
-these two event models in the same epistemic situation, the resulting models are bisimilar".
+Lemma \ref{eventModelEquivalent} allows us to compare two action models and say ``after executing
+these two action models in the same epistemic situation, the resulting models are bisimilar".
 These well-known definitions and results are shown by van der Hoek, Kooi and van Ditsmarsch in
 \cite{hoek2008dynamic}.\\
 \\
 As with before, bisimilarity is a strong condition --- it says that the effects of two bisimilar
-event models will be exactly the same.
+action models will be exactly the same.
 This is, perhaps, too strong a condition that we might not need.
-We thus introduce the idea of $n$-bisimilarity for event models.
+We thus introduce the idea of $n$-bisimilarity for action models.
 
 %\begin{lemma} \label{nBisimilarKripkeExec}
 %Let $\krMo_s$, $\krMo'_{s'} \in \kripkeClass$ and $\phi \in \lang$ such that the modal depth of $\phi$,
@@ -675,12 +675,12 @@ We thus introduce the idea of $n$-bisimilarity for event models.
 %\end{align}
 %(\ref{baseOne}) follows from the definition of a Kripke model (Definition
 %\ref{model}).
-%(\ref{baseTwo}) follows from the definition of event model execution
+%(\ref{baseTwo}) follows from the definition of action model execution
 %(Definition \ref{evModelEx}).
 %(\ref{baseThree}) follows from hypothesis, as $\krMo_s \sim_{2n} \krMo'_{s'} \Rightarrow \krMo_s \sim_0
 %\krMo'_{s'}$
 %(Definition \ref{nBisimKripke}).
-%(\ref{baseFour}) follows from the definition of event model execution and
+%(\ref{baseFour}) follows from the definition of action model execution and
 %(\ref{baseFive}) follows from the definition of Kripke model (Definition
 %\ref{model}).
 %Therefore, we have $\krMo^1_{(s,\aMod{t})} \models \phi \Rightarrow \krMo^2_{(s',\aMod{t})}$.
@@ -719,7 +719,7 @@ We thus introduce the idea of $n$-bisimilarity for event models.
 %\end{align}
 %(\ref{nBisKriMod1}) follows from the semantics of modal logic and the inductive case for
 %$\Diamond_a$ (Lemma \ref{modalLogic}).
-%(\ref{nBisKriMod2}) follows from the definition of event model execution (Definition
+%(\ref{nBisKriMod2}) follows from the definition of action model execution (Definition
 %		\ref{evModelEx}).\\
 %\\
 %From our hypothesis, given that $\aMod{pre(t)} \leq m$ we have that $\krMo_s \sim_{2n} \krMo'_{s'}
@@ -739,7 +739,7 @@ We thus introduce the idea of $n$-bisimilarity for event models.
 
 \begin{defn} \label{nBisimEvent}
 	Let $\aMod{\evMo_s, \evMo'_{s'}} \in \eventClass$ with preconditions defined on $\langArbAct$.
-	We inductively define {\em $n$-bisimilarity} for event models.
+	We inductively define {\em $n$-bisimilarity} for action models.
 	We say $\aMod{\evMo_s}$ is {\em $0$-bisimilar} to $\aMod{\evMo'_{s'}}$ if and only if $\aMod{pre(s) \iff
 		pre'(s')}$.
 	Then for $n > 0$ $\aMod{\evMo_s}$ is $n$-bisimilar to $\aMod{\evMo'_{s'}}$ if and only if each of the following hold
@@ -756,7 +756,7 @@ We thus introduce the idea of $n$-bisimilarity for event models.
 	$\evMo'_{\evs'}$.
 \end{defn}
 
-For a multi-pointed event model $\aMod{\evMo_T}$ and $\aMod{\evMo'_{T'}}$, we have that $\evMo_\evT \sim_n
+For a multi-pointed action model $\aMod{\evMo_T}$ and $\aMod{\evMo'_{T'}}$, we have that $\evMo_\evT \sim_n
 \evMo'_{\evT'}$ if and only if for each point $\evt \in \evT$ there is a point $\evt' \in \evT'$
 such that $\evMo_\evt \sim_n \evMo'_{\evt'}$ and vice versa.
 
@@ -784,11 +784,11 @@ Then
 	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
 \end{align}
 (\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
-(\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of event model execution (Definition
+(\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of action model execution (Definition
 \ref{evModelEx}).
 (\ref{nBisEvbase5}) follows from hypothesis and the definition of $n$-bisimilarity (Definition
 \ref{nBisimEvent}).
-(\ref{nBisEvbase6}) follows from the definition of event model execution (Definition
+(\ref{nBisEvbase6}) follows from the definition of action model execution (Definition
 \ref{evModelEx}).
 Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Definition
 \ref{propLogic}).\\
@@ -837,14 +837,14 @@ From this we have (by the semantics of modal logic, in Definition \ref{modalLogi
 \end{proof}
 
 This result is very similar to Lemma \ref{eventModelEquivalent}.
-However, instead of having all the same effects, we say that two $n$-bisimilar event models will
+However, instead of having all the same effects, we say that two $n$-bisimilar action models will
 have the same effects, for all effects with a modal depth of up to a modal depth of $n$.\\
 \\
 %We provide a final result that relies upon Lemma \ref{nBisimilarEventExec} which we will use later
 %in this paper.
 %
 %\begin{lemma} \label{transitiveNBisimilar}
-%	Suppose $\evM_\evt$, $\evM'_{\evt'}$ and $\evM''_{\evt''}$ are event models, and let $\krMo_s$ be
+%	Suppose $\evM_\evt$, $\evM'_{\evt'}$ and $\evM''_{\evt''}$ are action models, and let $\krMo_s$ be
 %	a Kripke model.
 %	Let $\evM_\evt \sim \evM'_{\evt'}$, and for some $n$ a non-negative integer $\evM'_{\evt'} \sim_n
 %	\evM''_{\evt''}$.
