@@ -1,14 +1,14 @@
-\section{Multi-agent epistemic goal achievement in $\langArbAct$} \label{chapter:Multiagent}
+\chapter{Multi-agent epistemic goal achievement in $\langArbAct$} \label{chapter:Multiagent}
 
 In this chapter, we examine an algebra for constructing event models that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
 We examine this goal achievement for a subset of agents $B \subseteq A$.\\
 \\
-In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine whether an
+In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine whether a
 finite epistemic goal can be achieved.
-Furthermore, if it is achievable Hales constructs event models that will realise
+Furthermore, if it is achievable Hales specifies event models that will realise
 that goal.
-We will focus on defining a framework that constructs these event models in a
+We will focus on defining a framework that goes beyond specification by constructing similar event models in a
 recursive manner.
 This facilitates an automated method for updating knowledge models to reflect a
 knowledge state.\\
@@ -33,7 +33,7 @@ This chapter is arranged as follows:
 		especially that achieved by Aucher
 \end{itemize}
 
-\subsection{Technical preliminaries} \label{subsec:Multi:techPrelim}
+\section{Technical preliminaries} \label{subsec:Multi:techPrelim}
 
 The event models that Hales employs in \cite{hales13synthesis} resemble finite trees.
 In order to give a good approximation of these models, we must define these tree-like structures and
@@ -59,8 +59,8 @@ We say that the class of finite tree event models is $\treeClass$ (an example is
 \ref{figure:exampleTree}), and we make an important note that insanity models are the most basic kind of tree-like event models.
 
 \begin{lemma} \label{insaneIsTree}
-The event model class $\insaneClass$ is contained within the event model class
-$\treeClass$, that is $\insaneClass \subseteq \treeClass$.
+	Any insanity event model (Definition \ref{insanity}) is also a tree event model.
+	That is, $\insaneClass$ is contained within $\treeClass$.
 \end{lemma}
 
 \begin{figure}
@@ -93,8 +93,8 @@ $\evM_\evT$ is a {\em finite forest event model} if
 We say that the class of finite forest event models is $\forestClass$.
 
 \begin{lemma} \label{treeIsForest}
-The event model class $\treeClass$ is contained within the event model class
-$\forestClass$, that is $\treeClass \subseteq \forestClass$.
+	Any finite tree event model is also a finite forest event model.
+	That is, $\treeClass$ is contained within $\forestClass$.
 \end{lemma}
 
 Again, it is clear that by our earlier definitions, a finite tree event model is also a finite forest event
@@ -135,6 +135,8 @@ Let $\evM' = (\evS', \evR', \evpr', \evr')$ be a subtree of $\evM$.
 $\evM'$ is a {\em leaf node} of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
 \evr'\}$.
 \end{defn}
+
+We outline the leaves of a finite tree event model in Figure \ref{figure:exampleLeaves}.
 
 \begin{figure}
 	\centering
@@ -227,13 +229,6 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 \end{itemize}
 \end{proof}
 
-\begin{figure}
-	\centering
-	\FIXME
-	\caption{Example of two forests to become one}
-	\label{figure:example2Forest}
-\end{figure}
-
 %A final miscellaneous result shown by Hales in \cite{hales13synthesis}, which we employ later, is reproduced here.
 %
 %\begin{lemma} \label{brestrictDisjoint}
@@ -287,33 +282,34 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 We can use the operations for choice and considers to construct finite tree and
 forest event models, as we show in the next section.
 
-\subsection{Completeness} \label{subsec:multi:completeness}
+\section{Completeness} \label{subsec:multi:completeness}
 
 Within this section, we will show that the operations we have selected, along with insanity event
-models, will only construct finite tree event models.
-This is necessary to show that our operations will only construct trees, and we will also show that
+models, will be able to generate all possible finite tree event models.
+This allows us to say that the language is complete.
+This is necessary to show that our operations will construct all possible trees, and we will also show that
 using a tree any kind of event model can be constructed, up to $n$-bisimilarity.
 
 \begin{lemma} \label{finTreeConstruct}
-Suppose $\evM = (\evS, \evR, \evpr, r)$ is a finite tree event model.
+Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree event model.
 $\evM$ can be constructed using insanity event models and $\to$.
 \end{lemma}
 \begin{proof}
-Let $\evM' = (\evS', \evR', \evpr', r')$ be a subtree of $\evM$.
+Let $\evM'_{\evr'} = ((\evS', \evR', \evpr'), \evr')$ be a subtree of $\evM$.
 We will show by induction that for any $\evM'$ we can use insanity event models and $\to$ to
 construct $\evM'$.\\
 \\
-Suppose that $\evM' = (\evS', \evR', \evpr', r')$ is a leaf node.
-Let $\evpr'(r') = \phi$, a formula in our logical language.
+Suppose that $\evM'_{\evr'} = ((\evS', \evR', \evpr'), \evr')$ is a leaf node.
+Let $\evpr'(\evr') = \phi$, a formula in our logical language.
 $\evM'$ is an insanity event model by definition.
 Thus, we can construct $\evM'$ using insanity event models when $\evM'$ is a leaf node of $\evM$.\\
 \\
-Let $\evM' = (\evS', \evR', \evpr', r')$ be an arbitrary subtree of $\evM$.
-Suppose $\evpr'(r') = \phi$, where $\phi$ is a formula in our logical language.
+Let $\evM' = ((\evS', \evR', \evpr'), \evr')$ be an arbitrary subtree of $\evM$.
+Suppose $\evpr'(\evr') = \phi$, where $\phi$ is a formula in our logical language.
 Let $\evM^1, \evM^2, \ldots, \evM^n$ be all the disjoint subtrees of $\evM'$.
 Suppose that each of $\evM^1, \evM^2, \ldots, \evM^n$ fulfil the induction hypothesis.
-Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $r' \evR_{a_1} r^1$, $r' \evR_{a_2} r^2,
-	\ldots, r' \evR_{a_n} r^n$.\\
+Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $\evr' \evR_{a_1} \evr^1$, $\evr'
+\evR_{a_2} \evr^2, \ldots, \evr' \evR_{a_n} \evr^n$.\\
 \\
 Consider the $\evM^\evt = (\{ \evt \}, \evR^\evt, \evpr^\evt, \evt) \in \insaneClass$.
 Let $\evpr^\evt(\evt) = \phi$.
@@ -362,12 +358,15 @@ We claim that if we have a forest, then the disjoint union of all its subtrees i
 reconstruct it.
 
 \begin{corr} \label{forestConCorr}
-Let $\evM_\evT = (\evS, \evR, \evpr, \evT)$ be a finite forest event model, and for each $\evt \in \evT$ let $\evM^\evt \in
+Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a finite forest event model, and for each $\evt \in \evT$ let $\evM^\evt \in
 \treeClass$ be the subtree of $\evM$ corresponding to $\evt$.
-Then $\evM = \bigsqcup_{\evt \in \evT} \evM^\evt$.
+Then
+\[
+	\evM = \bigsqcup_{\evt \in \evT} \evM^\evt.
+\]
 \end{corr}
 
-\subsection{Achieving information goals} \label{subsec:multi:achievingGoals}
+\section{Achieving information goals} \label{subsec:multi:achievingGoals}
 
 %\FIXME: Needs to cite James
 
@@ -692,7 +691,7 @@ By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\e
 \sim_0 \evM_\evt$.
 Now, let
 \[
-  \evM'_{\evT'} = \bigsqcup_{\evt' \in \evT} \evM'_{\evt} \in \forestClass
+  \evM'_{\evT'} = \bigsqcup_{\evt' \in \evT} \evM'_{\evt}
 \]
 By Lemma \ref{disjForestIsForest}, $\evM'_{\evT'} \in \forestClass$.
 Furthermore, it is clear that each point $\evt \in \evT$ corresponds to some $\evt' \in \evT'$ such that $\evM_\evt
@@ -830,7 +829,7 @@ model.
 This ensures that we can realise the effects of any event model, and that we need only worry about
 the modal depth of the model to describe the event model.
 
-\subsection{Comparison to sequent calculi for epistemic planning} \label{subsec:multi:sequentCalc}
+\section{Comparison to sequent calculi for epistemic planning} \label{subsec:multi:sequentCalc}
 
 So far, we have been particularly interested in constructing event models.
 We have shown that we can approximate event models according to what

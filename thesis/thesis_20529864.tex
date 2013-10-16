@@ -1,6 +1,6 @@
 %-----------------------------------------------------------------------------%
 %Packages%
-\documentclass[12pt, a4paper, titlepage]{article}
+\documentclass{cshonours}
 \usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
 \usepackage{mathtools}
 \usepackage[usenames, dvipsnames]{color} %Color naming packages
@@ -24,14 +24,15 @@
 
 % Predefined things such as commands, etc.
 
-\newtheorem{defn}{Definition}[subsection]
-\newtheorem{thm}{Theorem}[subsection]
-\newtheorem{lemma}{Lemma}[subsection]
-\newtheorem{corr}{Corrollary}[subsection]
+\newtheorem{defn}{Definition}[chapter]
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corr}{Corollary}[chapter]
+\newtheorem{propn}{Proposition}[chapter]
 \newtheorem*{remrk}{Remark}
 \newcommand{\note}[1]{\textsc{\textbf{#1}}}
 
-\numberwithin{equation}{section}
+\numberwithin{equation}{chapter}
 
 \newcommand{\cover}{\bigtriangledown}
 \newcommand{\sqex}[1]{[{#1}]}
@@ -113,12 +114,15 @@ email: taye03@student.uwa.edu.au }
 
 \date{\today}
 
+\keywords{Dynamic epistemic logic, event model synthesis, epistemic logic}
+
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
 
+TARARARARARARA LOL
 % A paper should begin with an insightful abstract, written in plain
 % English and containing no references. It should state clearly the
 % problem under consideration, the motivation for that problem, what you
@@ -126,12 +130,16 @@ email: taye03@student.uwa.edu.au }
 % in one paragraph too!
 
 \end{abstract}
-
-{\bf Keywords:} List, some, keywords, here.
+\begin{acknowledgements}
+I would like to acknowledge Tim French and James Hales for their valued assistance during this final
+year engineering project.
+\end{acknowledgements}
 
 \pagebreak
 
 \tableofcontents
+
+\listoffigures
 
 \include{./introduction}
 \include{./survey}
@@ -139,14 +147,13 @@ email: taye03@student.uwa.edu.au }
 \include{./multiagent}
 \include{./k45}
 \include{./conclusion}
-\section*{Acknowledgements}
-
-I would like to acknowledge Tim French and James Hales for their valued assistance during this final
-year engineering project.
-
 % appendices
 
-\bibliographystyle{ieeetr}
+\appendix
+
+\include{./axioms}
+
+\bibliographystyle{acm}
 \bibliography{thesis}
 
 \end{document}

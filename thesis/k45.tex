@@ -1,4 +1,4 @@
-\section{Constructing event models in $\AXKFF$} \label{chapter:k45}
+\chapter{Constructing event models in $\AXKFF$} \label{chapter:k45}
 
 We have discussed models in the axiom system of $\AXK$.
 In particular, we have focused on approximating arbitrary event models.
@@ -28,12 +28,12 @@ This chapter is arranged as follows:
 		model construction, approximation and goal achievement in $\AXKFF$
 \end{itemize}
 
-\subsection{Background} \label{subsec:k45:background}
+\section{Background} \label{subsec:k45:background}
 
 Previously, we constructed models that were tree-like in their nature.
 We defined many concepts used to describe trees, such as a ``root", ``subtrees" and ``forests".
 This allowed us to approximate arbitrary models in $\AXK$, to model any post-condition we
-were interested in.
+were interested in, as seen in Figure \ref{exampleModelConstruct}.
 
 \begin{figure}
 \centering
@@ -49,7 +49,7 @@ were interested in.
 \end{tikzpicture}
 \caption{A very simple model that we our previous methodology constructed.
 We can immediately see the concept of a ``root" node and ``leaf" nodes.}
-\label{exampleModel}
+\label{exampleModelConstruct}
 \end{figure}
 
 However, the models we previously generated are not so sensible under an epistemic interpretation.
@@ -67,14 +67,14 @@ We will move closer to the mainstream axiomatic systems used in epistemic logic 
 axiomatic system $\AXKFF$.
 We define the axiomatic system of $\AXKFF$ as follows
 
-\begin{lemma} \label{axiomK45}
+\begin{defn} \label{axiomK45}
 The axiomatisation $\AXKFF$ contains the axioms and rules from $\AXK$ (Definition
     \ref{axiomK}), as well as the following axioms
 \begin{alignat*}{2}
   & \axFo && \quad \Box \phi \Rightarrow \Box \Box \phi \\
   & \axFi && \quad \Diamond \phi \Rightarrow \Box \Diamond \phi
 \end{alignat*}
-\end{lemma}
+\end{defn}
 
 \begin{lemma} \label{axiomK45SoundComplete}
 The axiomatisation $\AXKFF$ is sound and complete with respect to the logic
@@ -87,11 +87,11 @@ completeness theorem and Kracht's theorem \cite{2594394}, which we do not replic
 The impact these axioms have on our models is not immediately obvious.
 We observe the following effects of the axioms
 \begin{itemize}
-	\item $\axFo$ causes every relation to be transitive
-	\item $\axFi$ has more subtle consequences.
-    Suppose $A$ is related to $B$.
-    Then if $C$ is related to $A$, $C$ must also be related to $B$.
-    A further consequence is that $B$ must also be related to $C$.
+	\item $\axFo$ causes every relation to be transitive --- that is, $A$ related to $B$ and $B$
+		related to $C$ ensures $A$ is related to $C$
+	\item $\axFi$ has more subtle consequences, but causes every relation to be Euclidean. This means
+		that if $A$ is related to $B$.
+    and $A$ is related to $C$, $B$ must also be related to $C$.
 \end{itemize}
 
 We demonstrate this in Figure \ref{k45VsKModels} by comparing models in $\AXK$ and $\AXKFF$ and how we need to change
@@ -167,17 +167,17 @@ By $\axFi$ for any formula $k \in \lang$ such that $\krMo'_\alpha \models
 This causes points $\beta, \gamma$ and $\delta$ to become a completely connected component,
 with an edge running to each one of them, as well as reflexive edges for each point.\\
 \\
-Up to now, what we have shown is an already well-defined idea for whether a Kripke model obeys the axioms of $\AXKFF$.
+Our previous definitions give a well-defined idea for whether a Kripke model obeys the axioms of $\AXKFF$.
 Unfortunately, this does not translate well to event models due to the differences in their
 semantics.
 In order to determine if an event model obeys the axioms of $\AXKFF$, we will formalise the ``model"
 implications we previously discussed into conditions on the structure of the model (that is, the
 frame of the model --- see Definition \ref{frame}).
-These are the frame conditions of $\AXKFF$, and we will show that an event model that fulfils these
+These are the {\em frame conditions} of $\AXKFF$, and we will show that an event model that fulfils these
 frame conditions, when executed on a Kripke model that obeys the axioms of $\AXKFF$ will preserve
 these axioms post execution.
 
-\begin{lemma} \label{lemma:k45frameconditions}
+\begin{defn} \label{lemma:k45frameconditions}
 	Let $F = (S,R)$ be a frame.
 	We say that $F$ is a $\AXKFF$ frame if it fulfils the following conditions:
 	\begin{itemize}
@@ -186,10 +186,9 @@ these axioms post execution.
 		\item if $R$ is a Euclidean relation, then $\axFi$ is valid in any model where $F$ is its
 			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \Rightarrow t R u$
 	\end{itemize}
-\end{lemma}
+\end{defn}
 
-This is given as an exercise in \cite{fagin1995reasoning}, and we leave it as an exercise to the
-reader to show that this holds.
+This is given by Fagin et. al in \cite{fagin1995reasoning}.
 We can use the concept of an $\AXKFF$ frame to define a $\AXKFF$ event model.
 
 \begin{defn} \label{defn:k45eventModel}
@@ -197,7 +196,7 @@ We can use the concept of an $\AXKFF$ frame to define a $\AXKFF$ event model.
 	We say that $\evM$ is a {\em $\AXKFF$ event model} if $F = (\evS, \evR)$ is a $\AXKFF$ frame.
 \end{defn}
 
-The usefulness of a {\em $\AXKFF$ event model} is twofold.
+The usefulness of a $\AXKFF$ event model is twofold.
 Firstly, it is a structure which has some correspondence to the axioms of $\AXKFF$.
 This means it has some epistemic meaning and can be interpreted in a setting that resembles
 reasonings about knowledge and belief.
@@ -250,17 +249,19 @@ its update on a $\AXKFF$ Kripke model, the resulting Kripke model is also a $\AX
 We can approximate informative updates using our previous method (detailed in Chapter
 \ref{chapter:Multiagent}, but these updates do not preserve
 axioms $\axFo$ and $\axFi$.
-The resulting model barely resembles an epistemic model.
+The resulting model after execution barely resembles an epistemic model.
 The approach in this chapter constructs event models that, after their execution on a model that
 fulfils the conditions of $\AXKFF$, will preserve those conditions.\\
 \\
 We return to our open question --- if we have an $\AXKFF$ event model, can we construct a $\AXKFF$ event
 model that is able to achieve the same epistemic effects, up to some modal depth $n$?
 
-\subsection{Technical Preliminaries} \label{subsec:k45:techPrelims}
+\section{A $\AXKFF$ construction framework} \label{subsec:k45:techPrelims}
 
+Here, we define the ``building blocks" for our construction framework of $\AXKFF$ event models.\\
+\\
 We first define what a $B$-insane set is.
-It is a necessary condition in order to generate our approximating $\AXKFF$ models.
+It is a necessary type of event models that we require in order to generate our approximating $\AXKFF$ models.
 
 \begin{defn} \label{binsane}
 	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed event model and $B \subseteq A$.
@@ -324,6 +325,7 @@ points in a ``distinguished" set of a multi-pointed event model ``equivalent" to
 group of agents $B$.
 That is, any agent in $B$ considers each action point $\evs \in \evT$ to be the
 same.
+We show an example of applying $I_B$ to an event model in Figure \ref{beforeAfterI}.
 
 \begin{figure}
 \centering
@@ -372,12 +374,14 @@ same.
 \end{subfigure}
 \caption{Subfigures \ref{beforeOperation} and \ref{afterOperation} demonstrate the effect of
 applying our operation $I_B$ onto a model.}
-\label{k45VsKModels}
+\label{beforeAfterI}
 \end{figure}
 
 In order for us to use our previous operations in $\AXKFF$ we need to force further constraints on
 some of our operators.
-It is clear that $\sqcup$ will preserve the frame conditions of $\AXKFF$, but $\to_B$ does not.
+It is clear that the choice operator ($\sqcup$, Definition \ref{disjoint}) will preserve the frame
+conditions of $\AXKFF$, but the operation where $B$ considers another event model update possible
+($\to_B$, Definition \ref{considers}) does not.
 We will redefine $\to_B$ to ensure that within our language it cannot create event models that are
 are not $\AXKFF$ event models.
 
@@ -391,10 +395,9 @@ are not $\AXKFF$ event models.
 
 Note the constraints we place on $\evM_\evT$ and $\evM'_{\evT'}$ being $B$-insane models.
 These are necessary in order to preserve the frame conditions in Lemma
-\ref{lemma:k45frameconditions}.
-
+\ref{lemma:k45frameconditions}.\\
+\\
 \newcommand{\EM}{\ensuremath{\eventClass}}
-
 The addition of our new operator results in us having the following language for
 event model construction in $\AXKFF$.
 \[
@@ -408,8 +411,7 @@ We will refer to our language as $\EM(\to,\sqcup,I)$. \\
 We will now show that this language always constructs models that preserve $\AXKFF$, and that any
 event model that preserves the axioms of $\AXKFF$ can be constructed by our language.
 
-\subsection{Event model construction and goal achievement in $\AXKFF$}
-\label{subsec:k45:goalAchievement}
+\section{Event model construction and goal achievement in $\AXKFF$} \label{subsec:k45:goalAchievement}
 
 To show that we can construct event models that preserve $\AXKFF$, there are two propositions that
 must hold
@@ -429,20 +431,21 @@ models.
 \begin{proof}
 	We can show this through a case-by-case proof that each of the operations and atoms using in
 	$\EM(\to,\sqcup,I)$ constructs a $\AXKFF$ event model.
-	We first examine the atoms using in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
+	We provide a sketch of the case-by-case proof below.
+	\begin{itemize}
+		\item We first examine the atoms using in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
 	models.\\
 	\\
 	Since the only atomic event models we use in $\EM(\to,\sqcup,I)$ are insanity models, we suppose
 	that $\evM_{\evt} = ((\evS,\evR,\evpr),\{\evt\})$, where $\evS = \{\evt\}$ and $\evR =
 	\varnothing$.
 	This is a $\AXKFF$ frame since $\evR = \varnothing$ ensures that the frame conditions
-	are trivially true.\\
-	\\
-	We now will show that $\sqcup$ constructs $\AXKFF$ event models.
+	are trivially true.
+		\item We now will show that $\sqcup$ constructs $\AXKFF$ event models.
 	Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be
 	$\AXKFF$ event models such that $\evS$ and $\evS'$ are disjoint.
 	Now, let $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'} = ((\evS'',\evR'',\evpr''),\evT'')$.
-	We need to show that the two frame conditions outlined in Lemma \ref{lemma:k45frameconditions}
+	We need to show that the two frame conditions outlined in Definition \ref{lemma:k45frameconditions}
 	hold.\\
 	\\
 	We will show the first frame condition --- that is, that $\evR''$ is a transitive relation.
@@ -462,12 +465,11 @@ models.
 	This shows that the transitivity frame condition holds.
 	A similar argument can be made to show that $\evR''$ is a Euclidean relation.
 	Thus, we have shown that $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'}$ is a $\AXKFF$ event
-	model.\\
-	\\
-	We next show that $I_B$ is an $\AXKFF$ event model for $B \subseteq A$.
+	model.
+		\item We next show that $I_B$ is an $\AXKFF$ event model for $B \subseteq A$.
 	Suppose that $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $B$-insane $\AXKFF$ event model.
 	We will show that $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') = I_B(\evM_\evT)$ is an $\AXKFF$ event model, by showing the frame conditions in
-	Lemma \ref{lemma:k45frameconditions}.\\
+	Definition \ref{lemma:k45frameconditions}.\\
 	\\
 	Let us show that $\evR'$ is a transitive relation.
 	Suppose that $a \in A$ and $\evs', \evt', \evu' \in \evS'$ and $\evs' \evR'_a \evt'$ and $\evt'
@@ -484,9 +486,8 @@ models.
   since $\evu' \in \evT'$ then $\evu' \in \evs' \evR'_a$.
   Again a similar argument can be made to show that $\evM'_{\evT'}$ is a
   Euclidean relation.
-  In this way we can show that $\evM'_{\evT'}$ is also a $\AXKFF$ event model.\\
-  \\
-  Our final task is to show that for $B \subseteq A$, $\to_B$ will also
+  In this way we can show that $\evM'_{\evT'}$ is also a $\AXKFF$ event model.
+		\item Our final task is to show that for $B \subseteq A$, $\to_B$ will also
   construct $\AXKFF$ event models.
   Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} =
   ((\evM',\evR',\evpr'),\evT')$ be $\AXKFF$ event models.
@@ -515,8 +516,8 @@ models.
   can conclude that $\evt'' \evR'_a \evu'' \Rightarrow \evt'' \evR''_a \evu''$,
   which shows that the relation $\evR''_a$ is a Euclidean relation.
   A similar proof will show that $\evR''_a$ is a transitive relation, and thus
-  shows that $\evM''_{\evT''}$ is a $\AXKFF$ event model.\\
-  \\
+  shows that $\evM''_{\evT''}$ is a $\AXKFF$ event model.
+	\end{itemize}
   By showing that under each of these operations as well as our original atoms,
   we construct $\AXKFF$ event models, we have shown that $\EM(\to,\sqcup,I)$
   constructs $\AXKFF$ event models.
@@ -535,8 +536,8 @@ Let us turn to the second goal we have and suppose that we have an event model, 
 = ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed event model.
 Now, consider $n$ some positive integer.
 Can we construct an event model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
-using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?
-
+using $\EM(\to,\sqcup,I)$ that is $n$-bisimilar to $\evM_\evT$?\\
+\\
 In order to show this to be possible, we must first conceptualise several
 transformations to our models.
 Firstly, we will define the idea of an unwound model.
@@ -591,8 +592,8 @@ Firstly, we will define the idea of an unwound model.
 	Since both of these hold, we can say that $\evM'_{\evT'} \sim \evM_\evT$.
 \end{proof}
 
-The unwound model is an infinite pseudo-forest event model.
-This means that the model somewhat resembles our original forest event models,
+The unwound model may be an infinite $\AXKFF$ event model.
+The model somewhat resembles our original forest event models,
 but with interior relations between the action points, and without the
 restriction of finiteness.
 We show an example of this in Figure \ref{generatedTreeExample}
@@ -813,7 +814,7 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 	It is clear that $\evM^k_\evv$ is a submodel of $\evM^{k+1}_{\evt}$.
 	Furthermore, as $\evM^{k+1}_\evs$ is an $\AXKFF$ event model and $\evu' = \evt'$ then $\evs
 	\evR^{k+1}_a \evu$ ensures that $\evu \evR^{k+1}_a = \evs \evR^{k+1}_a$ (by the frame conditions
-	outlined in Lemma \ref{lemma:k45frameconditions}).
+	outlined in Definition \ref{lemma:k45frameconditions}).
 	Then $\evv \in \evu \evR^{k+1}_a$.
 	Then we have that $(\evv',\evv) \in \sim$ and $\evv \in \evu \evR^{k+1}_a$.
 	Then {\bf forth-$a$} holds for these cases.
