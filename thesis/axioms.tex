@@ -1,0 +1,94 @@
+\chapter{Axiomatisations}
+We will present axiomatisations derived by Hales for $\langArbAct$.
+To construct this axiomatisation, we first begin by presenting an axiomatisation for $\lang$, an
+axiomatisation for $\langActEx$ and an axiomatisation for $\langRefine$.\\
+\\
+We say that a formula $\phi$ is provable under an axiomatisation if and only if it can be derived by
+some finite sequence of axioms and rules within that axiomatisation.
+We denote that $\phi$ is provable by $\vdash \phi$.
+When discussing provability, it should be contextually clear which axiomatisation we are using.
+
+\begin{defn} \label{axiomK}
+The axiomatisation $\AXK$ consists of the following axioms
+\begin{alignat*}{2}
+	& \axP && \quad \text{All propositional tautologies} \\
+	& \axK && \quad \Box_a(\phi \Rightarrow \psi) \Rightarrow (\Box_a \phi \Rightarrow \Box_a \psi)
+\end{alignat*}
+and the following rules
+\begin{alignat*}{2}
+	& \axMP && \quad \text{From $\vdash \phi \Rightarrow \psi$ and $\vdash \phi$, infer $\vdash \psi$} \\
+	& \axNecK && \quad \text{From $\vdash \phi$, infer $\vdash \Box_a \phi$}
+\end{alignat*}
+\end{defn}
+
+\begin{lemma} \label{axiomKSoundComplete}
+The axiomatisation $\AXK$ is sound and complete with respect to the logic $\lang$.
+\end{lemma}
+
+These are well known results shown by Blackburn, de Rijke and Venema in \cite{blackburn2002modal}.
+
+\begin{defn} \label{axiomAML}
+The axiomatisation $\AXAML$ contains the axioms and rules from $\AXK$ (Definition \ref{axiomK}), as well as the following axioms
+\begin{alignat*}{2}
+	& \axAP && \quad \sqex{\evMo_\evs}\pi \iff (\evpr(s) \Rightarrow \pi) \text{ for $\pi \in \langProp$}\\
+	& \axAN && \quad \sqex{\evMo_\evs} \neg \phi \iff (\evpr(s) \Rightarrow \neg \sqex{\evM_\evs} \phi)\\
+	& \axAC && \quad \sqex{\evMo_\evs}(\phi \land \psi) \iff (\sqex{\evM_\evs}\phi \land
+			\sqex{\evM_\evs}\psi\\
+	& \axAK && \quad \sqex{\evMo_\evs}\Box_a\phi \iff (\evpr(s) \Rightarrow \bigwedge_{v \in s R_a}
+		\Box_a \sqex{\evMo_\evv} \phi) \\
+	& \axAU && \quad \sqex{\evMo_\evT} \phi \iff \bigwedge_{\evu \in \evT} \sqex{\evM_\evu} \phi
+\end{alignat*}
+and the rule
+\[
+	\axNecA \quad \text{From $\vdash \phi$ infer $\vdash \sqex{\evM_\evs} \phi$}
+\]
+\end{defn}
+
+\begin{lemma} \label{axiomAMLSoundComplete}
+The axiomatisation $\AXAML$ is sound and complete with respect to the logic $\langActEx$.
+\end{lemma}
+
+These results are shown by van der Hoek, Kooi and van Ditsmarsch in \cite{hoek2008dynamic}.
+
+\begin{defn} \label{axiomRML}
+The axiomatisation $\AXRML$ contains the axioms and rules from $\AXK$ (Definiton \ref{axiomK}), as well as the following axioms
+\begin{alignat*}{2}
+	& \axR && \quad \forall_B (\phi \Rightarrow \psi) \Rightarrow (\forall_B \phi \Rightarrow \forall_B \psi) \\
+	& \axRP && \quad \forall_B \pi \iff \pi \text{ where } \pi \in \langProp \\
+	& \axRK && \quad\exists_B \cover_a \Gamma_a \iff \bigwedge_{\gamma \in \Gamma} \Diamond_a \exists_B
+	\gamma \text{ where } a \in B \\
+	& \axRComm && \quad \exists_B \cover_a \Gamma_a \iff \cover_a \{ \exists_B \gamma | \gamma \in
+	\Gamma_a\} \text{ where } a \notin B\\
+	& \axRDist && \quad \exists_B \bigwedge_{c \in C} \cover_c \Gamma_c \iff \bigwedge_{c \in C}
+	\exists_B \cover_c \Gamma_c \text{ where } C \subseteq A
+\end{alignat*}
+and the rule
+\[
+	\axNecR \quad \text{From $\vdash \phi$, infer $\vdash \forall_B \phi$}
+\]
+\end{defn}
+
+\begin{lemma} \label{axiomRMLSoundComplete}
+The axiomatisation $\AXRML$ is sound and complete with respect to the logic $\langRefine$.
+\end{lemma}
+
+The definitions and soundness and completeness of refinement modal logic are shown by Bozelli et. al
+\cite{DBLPjournalscorrabs12023538}.
+
+\begin{defn} \label{axiomAAML}
+The axiomatisation $\AXAAML$ contains the axioms and rules from $\AXRML$ (Definition \ref{axiomRML})
+and $\AXAML$ (Definition \ref{axiomAML}).
+\end{defn}
+
+\begin{thm} \label{axiomAAMLSoundComplete}
+The axiomatisation $\AXAAML$ is sound and complete with respect to the logic $\langArbAct$.
+\end{thm}
+
+\begin{thm} \label{thm:AAMLExpressivelyEquivalent}
+The logic $\AXAAML$ is expressively equivalent to $\AXK$.
+\end{thm}
+
+These are results that Hales gives in \cite{hales13synthesis}.
+This translation is significant, in that anything that can be written as a sentence in $\AXAAML$ can
+also be expressed in $\AXK$, but with a non-elementary complexity involved in the translation, as
+demonstrated by \FIXME.
