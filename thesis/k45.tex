@@ -372,7 +372,7 @@ We show an example of applying $I_B$ to an action model in Figure \ref{beforeAft
 \ref{beforeOperation}.}
 \label{afterOperation}
 \end{subfigure}
-\caption[Applying $I_B$]{Subfigures \ref{beforeOperation} and \ref{afterOperation} demonstrate the effect of
+\caption[Result of applying $I_B$]{Subfigures \ref{beforeOperation} and \ref{afterOperation} demonstrate the effect of
 applying our operation $I_B$ onto a model.}
 \label{beforeAfterI}
 \end{figure}
@@ -640,8 +640,8 @@ fulfills all the axioms.}
 					(4)	edge [ultra thick, loop right] node {$C$} (4);
 \end{tikzpicture}
 \caption{The unwound model of $\evMo$ which we call $\evM'$. Note that ellipse points which
-have thicker lines are actually many event points that are all in the same equivalence class.
-$\evs \evt \evS^\ast$ is all event points that can be reached from a path that starts at $\evs$ and
+have thicker lines are actually an infinite event points that are all in the same equivalence class.
+We say that $\evs \evt \evS^\ast$ is all event points that can be reached from a path that starts at $\evs$ and
 goes through $\evt$ using only $B$-relations.}
 \label{unwoundActionModel}
 \end{subfigure}
@@ -719,7 +719,32 @@ finite submodel that is $n$-bisimilar.
 
 \begin{figure}
 \centering
-\caption[Example of unwound $n$-model]{\FIXME Show finite version of figure \ref{generatedTreeExample}} \label{genSubtreeExample}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,thick]
+    \node[vertex] (1) {$\evs$};
+    \node[vertex] (2) [below left of=1] {$\evs \evt$};
+		\node[vertex] (3) [below of=1] {$\evs \evu$};
+		\node[vertex] (4) [below right of=1] {$\evs \evs$};
+    \node[vertex] (5) [below of=2] {$\evs \evt \evs$};
+    \node[vertex] (6) [below left of=4] {$\evs \evs \evt$};
+    \node[vertex] (7) [below right of=4] {$\evs \evs \evu$};
+    \path[edge]
+					(1) edge [] node {$B$} (2)
+							edge [] node {$B$} (3)
+							edge [] node {$C$} (4)
+					(2) edge [loop left] node {$B$} (2)
+							edge [<->] node {$B$} (3)
+              edge node {$C$} (5)
+					(3)	edge [loop right] node {$B$} (3)
+					(4)	edge [loop right] node {$C$} (4)
+              edge node {$B$} (6)
+              edge node {$B$} (7)
+          (5) edge [loop left] node {$C$} (5)
+          (6) edge [<->] node {$B$} (7)
+              edge [loop left] node {$B$} (6)
+          (7) edge [loop right] node {$B$} (7);
+\end{tikzpicture}
+\caption[Example of unwound $n$-model]{The unwound $2$-model of $\evM$ as
+  it was defined in Subfigure \ref{originalActionModel}.} \label{genSubtreeExample}
 \end{figure}
 
 It remains to be shown that we can actually construct an unwound $n$-model using
