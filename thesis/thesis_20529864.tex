@@ -15,6 +15,8 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 \usetikzlibrary{arrows,shapes}
 
@@ -37,11 +39,17 @@
 \newcommand{\cover}{\bigtriangledown}
 \newcommand{\sqex}[1]{[{#1}]}
 \newcommand{\anex}[1]{\langle {#1} \rangle}
-\newcommand{\lang}{\mathcal{L}}
+\newcommand{\lang}{\mathbb{K}}
 \newcommand{\langRefine}{\lang_{\forall}}
 \newcommand{\langActEx}{\lang_{\otimes}}
 \newcommand{\langArbAct}{\lang_{\otimes\forall}}
 \newcommand{\langProp}{\lang_0}
+
+\newcommand{\langKFF}{\mathbb{K45}}
+\newcommand{\lKFFRefine}{\langKFF_{\forall}}
+\newcommand{\lKFFActEx}{\langKFF_{\otimes}}
+\newcommand{\lKFFArbAct}{\langKFF_{\otimes\forall}}
+\newcommand{\lKFFProp}{\langKFF_0}
 
 \newcommand{\AXK}{\ensuremath{\bf K}}
 \newcommand{\AXKFF}{\ensuremath{\bf K45}}
