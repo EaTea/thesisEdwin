@@ -1,0 +1,119 @@
+\chapter{Proofs} \label{chapter:proofs}
+
+This chapter gives some well-known proofs that we have reproduced for completeness of this paper.
+
+\begin{lemma} \label{proof:nBisimilarEventExec}
+	Let $\evMo_\evs, \evMo'_{\evs'} \in \eventClass$ such that $\evMo_\evs \sim_n \evM'_{\evs'}$ and
+	$\krMo_t \in \kripkeClass$.
+	For any $\phi \in \lang$ with modal depth $MD(\phi) \leq n$ then $\krMo_t \otimes \evMo_\evs \models \phi
+	\iff \krMo_t \otimes \evMo'_{\evs'} \models \phi$.
+\end{lemma}
+
+\begin{proof}
+We use an inductive proof on the complexity of $\phi$.
+We inductively show that $\evMo^1_{(t,\evs}) = \krMo_t \otimes \evMo_\evs \models \phi \iff \evMo^2_{(t,\evs')} = \krMo_t \otimes
+\evMo'_{\evs'} \models \phi$.\\
+\\
+We begin with a base case of $\phi = p$, a single atomic proposition.
+Suppose $\evMo^1_{(t,\evs)} \models \phi$.
+Then
+\begin{align}
+	& \Rightarrow p \in V^1_{(t,\evs)} \label{nBisEvbase1} \\
+	& \Rightarrow p \in V(t) \label{nBisEvbase2} \\
+	& \Rightarrow \krMo_t \models \evpr(\evs) \label{nBisEvbase4} \\
+	& \Rightarrow \krMo_t \models \evpr'(\evs') \label{nBisEvbase5} \\
+	& \Rightarrow p \in V^2_{(t,\evs')} \label{nBisEvbase6}\\
+	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
+\end{align}
+(\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
+(\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of action model execution (Definition
+\ref{evModelEx}).
+(\ref{nBisEvbase5}) follows from hypothesis and the definition of $n$-bisimilarity (Definition
+\ref{nBisimEvent}).
+(\ref{nBisEvbase6}) follows from the definition of action model execution (Definition
+\ref{evModelEx}).
+Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Definition
+\ref{propLogic}).\\
+\\
+We go through each of the inductive cases.
+Let $\phi = \neg \psi$, and suppose $\evMo^1_{(t,\evs)} \models \phi$.
+Then
+\begin{align}
+	& \Rightarrow \neg (\evMo^1_{(t,\evs)} \models \psi) \label{nBisEvNeg1} \\
+	& \Rightarrow \neg (\evMo^2_{(t,\evs')} \models \psi) \label{nBisEvNeg2} \\
+	& \Rightarrow \evMo^2_{(t,\evs')} \models \neg \psi \label{nBisEvNeg3} \\
+	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvNeg4}
+\end{align}
+(\ref{nBisEvNeg1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
+(\ref{nBisEvNeg2}) follows from the induction hypothesis.
+(\ref{nBisEvNeg3}) again follows from the semantics of propositional logic (Definition
+		\ref{propLogic}) and (\ref{nBisEvNeg4}) is obvious.\\
+\\
+Let $\phi = \psi_1 \land \psi_2$ and suppose $\evMo^1_{(t,\evs)} \models \phi$.
+Then
+\begin{align}
+	& \Rightarrow \evMo^1_{(t,\evs}) \models \psi_1 \label{nBisEvCon1} \\
+	& \Rightarrow \evMo^2_{(t,\evs'}) \models \psi_1 \label{nBisEvCon2}
+\end{align}
+(\ref{nBisEvCon1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
+(\ref{nBisEvCon2}) follows from the induction hypothesis.
+Employing a similar process allows us to show that $\evMo^2_{(t,\evs'}) \models \psi_2$ and together they 
+show that $\evMo^2_{(t,\evs')} \models \phi$.\\
+\\
+Our final inductive case is to let $a \in A$ and $\phi = \Diamond_a \psi$.
+Suppose that $\evMo^1_{(t,\evs)} \models \phi$.
+\begin{align}
+	& \iff \evMo^1_{(t,\evs)} \models \Diamond_a \psi \label{nBisEvMod1} \\
+	& \iff \evMo^1_{(v,\evu)} \models \psi \text{ for some $(v,\evu) \in (t,\evs) R^1_a$} \label{nBisEvMod2} \\
+	& \iff \evMo^1_{(v,\evu)} \models \psi \text{ for $v \in t R^\krMo_a$ and $\evu \in \evs R_a$ and $\krMo_t \models
+		\evpr(\evs)$ and $\krMo_v \models \evpr(\evu)$} \label{nBisEvMod3}
+\end{align}
+
+As $\evMo_\evs \sim_n \evMo'_{\evs'}$, then there is some $\evu' \in \evs R'_a$ such that $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}$.
+Then we have that $\krMo_v \models \evpr(\evu) \iff \krMo_v \models \evpr'(\evu)$, since $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}
+\Rightarrow \evMo_\evu \sim_0 \evMo'_{\evu'}$.
+Then by our induction hypothesis we have that $\evMo^1_{(v,\evu)} \models \psi \iff \evMo^2_{(v, \evu')} \models
+\psi$.
+From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $\evMo^2_{(v,\evu')}
+\models \psi \Rightarrow \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
+\end{proof}
+
+\begin{lemma}
+	Let $\krMo_T = ((S,R,V),T)$ is a $\AXKFF$ Kripke model and $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ action model, then
+	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ Kripke model.
+\end{lemma}
+\begin{proof} \label{proof:lemma:k45preserved}
+	Let $\krMo'_{T'} = \krMo_T \otimes \evM_\evT = ((S',R',V'),T')$.\\
+	\\
+	The first property that will be shown to hold is that $R'$ is a transitive relation.
+	Suppose that $s',t',u' \in S'$ such that $s' R'_a t'$ and $t' R'_a u'$.
+	From Definition \ref{evModelEx}, $s' = (s,\evs), t' = (t,\evt)$ and $u' = (u,\evu)$ for $s,t,u \in
+	S$ and $\evs,\evt,\evu \in \evS$, such that $V(s) \Rightarrow \evpr(\evs)$, $V(t) \Rightarrow
+	\evpr(\evt)$ and $V(u) \Rightarrow \evpr(\evu)$.
+	Furthermore, $s' R'_a t' \Rightarrow s R_a t \land \evs \evR_a \evt$, and $t' R'_a u' \Rightarrow
+	t R_a u \land \evt \evR_a \evu$.
+	From $s R_a t \land t R_a u$ we have $s R_a u$, since $R_a$ is a transitive relation by the
+	hypothesis.
+	Similarly, $\evs \evR_a \evt \land \evt \evR_a \evu \Rightarrow \evs \evR_a \evu$ since $\evR_a$
+	is also a transitive relation.
+	From Definition \ref{evModelEx}, $s R_a u \land \evs \evR_a \evu \Rightarrow (s,\evs) R'_a (u,\evu)
+	\Rightarrow s' R'_a u'$.
+	Then $R'$ is a transitive relation.\\
+	\\
+	Similarly we can show that $R'$ is an Euclidean relation.
+	Suppose that $s',t',u' \in S'$ such that $s' R'_a t'$ and $s' R'_a u'$.
+	From Definition \ref{evModelEx}, $s' = (s,\evs), t' = (t,\evt)$ and $u' = (u,\evu)$ for $s,t,u \in
+	S$ and $\evs,\evt,\evu \in \evS$, such that $V(s) \Rightarrow \evpr(\evs)$, $V(t) \Rightarrow
+	\evpr(\evt)$ and $V(u) \Rightarrow \evpr(\evu)$.
+	Furthermore, $s' R'_a t' \Rightarrow s R_a t \land \evs \evR_a \evt$, and $s' R'_a u' \Rightarrow
+	s R_a u \land \evs \evR_a \evu$.
+	From $s R_a t \land s R_a u$ we have $t R_a u$, since $R_a$ is an Euclidean relation by the
+	hypothesis.
+	Similarly, $\evs \evR_a \evt \land \evs \evR_a \evu \Rightarrow \evt \evR_a \evu$ since $\evR_a$
+	is also an Euclidean relation.
+	From Definition \ref{evModelEx}, $t R_a u \land \evt \evR_a \evu \Rightarrow (t,\evt) R'_a (u,\evu)
+	\Rightarrow t' R'_a u'$.
+	Then $R'$ is an Euclidean relation.\\
+	\\
+	Since the frame conditions on $(S',R')$ hold $\krMo'_{T'}$ is a $\AXKFF$ Kripke model.
+\end{proof}
