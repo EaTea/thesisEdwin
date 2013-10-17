@@ -20,8 +20,8 @@ and Bob consider it feasible that company ABC is doing poorly, and they also con
 that company ABC is doing well.
 However they cannot tell the difference between either of these possibilities.\\
 \\
-Kripke shows in \FIXME\ how to model epistemic situations, in accordance with axiomatic schemes that
-formally model knowledge.
+Modellling epistemic situations, in accordance with axiomatic schemes that
+formally model knowledge, are a well-studied field.
 The work in this area has been used in financial trading and games to reason about the knowledge
 that agents in these systems have, as well as model checking and automated proving.
 Epistemic modal logic thus finds its uses when logical deductions about knowledge and belief must be
@@ -37,17 +37,24 @@ We are concerned with modelling changes and the effects of those changes.
 In particular, being able to reason about the effects of changes, and to prove their properties and
 effects is desirable.\\
 \\
-Hales, in \cite{hales13synthesis}, proves the existence of updates that guarantee a
-proposition's realisation.
-This result is powerful, in that it allows us to conclude that some update exists to guarantee
-an after effect (we call this an epistemic goal).
-However, this result does not necessarily specify what the update that achieves our epistemic goal is.
-Furthermore, this result holds only within a modal logic that is far removed from epistemic modal
-logic --- that is, the updates discussed are not entirely useful or meaningful in a knowledge or
-epistemic-based sense.
-We aim to extend this work in a different direction, by examining operations that construct event
-models, and using them to construct an action model that is ``good enough" to achieve our epistemic
-goal.\\
+Updates can be represented using a relatively new concept --- action models, as
+introduced by Baltag, Moss and Solecki \cite{baltag1998lpa}.
+Most of the work has been centred on specifying action models and reasoning
+about their properties.
+However, very little has been done in constructing action models.
+The difference between specification and construction is subtle, but has great
+implications.
+It is the difference between saying ``an update exists that reaches an epistemic
+state" and ``this
+is how we construct the update that fulfills our epistemic state".\\
+\\
+Being able to construct action models ffers us the ability to construct provable 
+updates in automated systems.
+Model checking and game theory systems would be much improved by formal methods
+to construct updates that are provably correct.
+These additional features for automated systems are useful in maintaining the
+correctness and consistency of systems that deal with facts, knowledge and
+beliefs.\\
 \\
 This work will document the different languages and the operations used in them to construct
 different epistemic updates.
