@@ -604,6 +604,8 @@ rudimentary analysis of his procedure.\\
 The state of the art in action models and this section of dynamic epistemic
 logic is thus focused on improving descriptions of information updates, or how
 we can use them to achieve a given epistemic state.
+These works focus on action model specification and existence, with very little regard given to
+realising their construction in an algorithmic sense.
 
 \section{Belief revision}
 
@@ -619,13 +621,16 @@ The moment that the beliefs and knowledge of an agent must be reconciled with
 the world, agents cannot update their knowledge appropriately.
 They stop being able to continue the state of the world.\\
 \\
-We will round out our literature survey by briefly addressing the field of
-dynamic epistemic logic that allows us to revise the epistemic state of the
+We will briefly address the field of dynamic epistemic logic that allows us to revise the epistemic state of the
 world.
 This field is ``belief revision", where what agents believe to be true can be
 revised to match the new state of the world.
-Belief revision was first properly introduced in \cite{theLogicOfTheoryChange} and also
-expanded on in \cite{gairdenfors1988knowledge}.
+Belief revision was first properly introduced by Alchourr{\'o}n in \cite{theLogicOfTheoryChange} and also
+expanded on by G{\"a}rdenfors \cite{gairdenfors1988knowledge}.
+They discussed the AGM approach, named after Alchourr{\'o}n, G{\"a}rdenfors and Makinson.
+AGM captures three concepts --- the ability to {\em expand} the beliefs of agents, to {\em contract}
+or reject some subset of their beliefs, or to {\em revise} their beliefs using the smallest, minimal
+change to their set of beliefs.
 These papers built upon initial frameworks, such as the one Harper discusses in
 \cite{harper1976rational}, or the truth maintenance systems for database
 consistency which Doyle introduces in \cite{Doyle1979231}.\\
@@ -641,9 +646,14 @@ know and what we have observed.
 
 \section{Refinement quantified modal logics} \label{section:refineModalLogics}
 
-A final, tangential approach to dynamic epistemic logic is to consider the concept of refinements.
-Refinements are an alternate treatment of updates.
-They are another way of viewing updates; van Ditmarsch and French show in \cite{van2009simulation}
+A final, seemingly tangential approach to dynamic epistemic logic is to consider the concept of refinements.
+Refinements are a relation between two epistemic Kripke models where the amount of knowledge about
+the facts captured in a situation are constant.
+Instead, refinements vary the negative knowledge --- the things that agents are uncertain about ---
+between the two epistemic situations.
+They are a way of describing a partial ordering of the uncertainty in a set of epistemic models.\\
+\\
+Refinements can be construed as another way of viewing updates; van Ditmarsch and French \cite{van2009simulation} show
 that refinements and informative updates are equivalent.
 What is most interesting about refinements is the ability to quantify over them.
 This means that we can actually quantify over the set of informative updates, and to thus make
@@ -651,11 +661,14 @@ reasonings about all updates, or possible updates.\\
 \\
 van Ditmarsch and French also propose methods to augment existing logics with their quantification
 in \cite{van2009simulation}.
-van Ditmarsch, French and Pinchinat also combine their work to construct a modal logic augmented
-with this quantification, the future event logic \cite{van2010future}.
-These steps were the beginning to being able to quantify across informative updates and models.\\
+van Ditmarsch, French and Pinchinat \cite{van2010future} also combine their work to construct a modal logic augmented
+with this quantification, the future event logic.
+These steps were the beginning to being able to quantify across informative updates and models.
+The intuition behind these results is that queries such as ``does an informative update exist?" or
+``all informative updates will fulfill some condition" are decidable.
+However, Bozzelli et. al \cite{refineModalComplexity} show that the lower bound on executing such a query is exponential. \\
 \\
-Hales unifies the work propose in \cite{van2009simulation}, by proposing an arbitrary action model
+Hales unifies the work proposed in \cite{van2009simulation}, by proposing an arbitrary action model
 logic in \cite{hales13synthesis}.
 Hales also completes the semantics for this new logic, by showing that quantification over
 refinements is the same as quantifying over updates.\\
@@ -664,3 +677,16 @@ These ideas are not directly related to update construction, but later they play
 models effectively.
 We will employ the power of refinement quantification and the semantics given by Hales to
 effectively construct action models \cite{hales13synthesis}.
+
+\section{Open questions} \label{section:literatureReview:openQuestions}
+
+We have explored informative updates and different ways of specifying changes, as represented by action models, and examined the state of the
+art in informative updates.
+Much work has been done on specifying action models and proving their existence and properties.
+However, very little work has been done on the construction of action models.
+This has limited their usefulness in automated multi-agent systems, and there is little research
+with regards to constructing provably correct updates.\\
+\\
+The question of ``can we construct provably correct updates?" has thus been well-studied.
+However, there is still the open question of ``how do we construct provably correct updates?"
+The results of this paper are a step towards an answer in this area.
