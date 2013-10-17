@@ -14,16 +14,18 @@ It is important to note that action models, their synthesis, and their practical
 developing protocols have not been well examined.
 Our work has specified operations that are meaningful in their axiomatic systems, and we have proven
 that for some action model $\evM_\evT$ we can use our operations to form action models that will
-achieve the same post-conditions as $\evM_\evT$ after execution.
+achieve the same post-conditions as $\evM_\evT$ after execution.\\
+\\
 This is a first step in employing action models as updates in knowledge base systems, especially
 games, model checking and financial systems.
-This is due to our operations provide a high-level, theoretical way to construct updates which we know are correct.
+This is due to our operations provide a high-level, theoretical way to construct updates which are
+provably correct.
 Furthermore, we know that the updates we can construct are complete --- that is, they can achieve
 all the same epistemic goals as other updates.\\
 \\
 We have yet to further explore how succinct our updates are.
 Can we make the smallest update?
-Can we make update that changes the knowledge base in the ``smallest way"?
+Can we make update that represents a minimal change to the knowledge base?
 Furthermore, even if we can construct so many different kinds of updates, what updates are the most
 useful?
 Which action models or updates might we be most interested in constructing, and if so are there
@@ -31,8 +33,8 @@ better methods of constructing them?\\
 \\
 The work in this paper outlines an approach to action model construction that is rudimentary, but is,
 to the author's knowledge, one of the first steps in an unexplored area.
-Action models, as updates for which properties can be both proven and reasoned about, are powerful
-constructs.
+These constructions yield action models with provable properties that can be reasoned about in a
+well-understood manner.
 By having action model construction tools, we have the first steps towards employing action models and
 the updates they represent in dynamic automated multi-agent systems.
 
