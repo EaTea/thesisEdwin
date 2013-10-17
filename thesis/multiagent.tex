@@ -877,34 +877,68 @@ model.
 This ensures that we can realise the effects of any action model, and that we need only worry about
 the modal depth of the model to describe the action model.
 
-\section{Comparison to sequent calculi for epistemic planning} \label{subsec:multi:sequentCalc}
+\section{Analysis and open questions} \label{subsec:multi:sequentCalc}
 
-So far, we have been particularly interested in constructing action models.
 We have shown that we can approximate action models according to what
-post-conditions are true.
-This was through the construction of a particular action model that fulfilled
-the post-conditions that we aimed to fulfil.\\
+post-conditions are realised by an action models execution.
+This is achieved through the construction of a particular action model that fulfils
+our desired post-conditions.\\
 \\
-This approach is powerful in the sense that we are guaranteed to construct an action model
-that, given any Kripke model, will either ensure that a post-condition
-is realised or destroy the Kripke model as a result of its execution.
-It allows us to ensure the realisation of a post-condition, without giving
-regard to the preceding Kripke model.\\
+This approach is powerful in guaranteeing the construction of an action model
+that will always sure an epistemic goal state is fulfilled or that the Kripke
+model is destroyed as a result of the execution.
+We do not need to give any regard to the Kripke model that we are executing our
+action model on.\\
 \\
-A weakness of this approach is that we tie our realisation of a post-condition to a specific model.
-Whether our model is the smallest model, or the model of minimal change is another matter entirely.
-Thus, we can guarantee that a post-condition is realised after our model
-execution but we cannot say much about the size or after-effects of the
-execution of our model.\\
+We can summarise this approach as an algorithm, shown in Algorithm \ref{algo:myAlgo}.
+
+\begin{algorithm}
+\begin{algorithmic}
+  \REQUIRE{$\evM_\evT$ is an action model and $n \geq 0$}
+    \STATE{$\evMM_\evU$ is the empty model}
+    \FORALL {$\evt \in \evT$}
+    \STATE{
+      $\evM'_{\evt'} \in \insaneClass$ such that $\evpr'(\evt') = \evpr(\evt)$
+      \IF{$n > 0$}
+        \FORALL{$a \in A$}
+          \STATE{$\evM'_{\evt'} \gets \evM'_{\evt'} \to_a$ createEquivalent($\evM_{\evt \evR_a}$, $n-1$)}
+        \ENDFOR
+      \ENDIF
+      \STATE{$\evMM_\evU \gets \evMM_\evU \sqcup \evM'_{\evt'}$}}
+    \ENDFOR
+    \RETURN $\evMM_\evU$
+\end{algorithmic}
+\caption{The action model approximation algorithm that summarises our approach
+to constructing an action model $\evMM_\evU$ that is $n$-bisimilar to
+$\evM_\evT$.}
+\label{algo:myAlgo}
+\end{algorithm}
+
+This algorithm ``unwinds" the action model into an $n$-bisimilar tree form of the
+original action model into its finite forest action model.
+To build a finite forest action model up to $n$-bisimilarity, where there are
+$k$ agents involved in the action model and there are $m$ accessibilities from
+each action point, the resulting action model would have an approximate size of
+$O((mk)^n)$ action points.\\
 \\
-For example, suppose $\phi$ is a formula that we want to achieve for a group of agents $B \subseteq
-A$.
-Let $p \in \langProp$ and let $\phi = p \land \Box p \land \Box^2 p \land \ldots \Box^n p$.
-Applying Corollary \ref{approximatingBRestricted}, we obtain model $\evM^1_{\evs_0}$, such that
-$\sqex{\evM^1_{\evs_0}}\phi$
-and $\anex{\evM^1_{\evs_0}}\phi \iff \exists_B \phi$.
-Let $\evM^2_\evs \in \publicAnnClass$ be the public announcement of $p$.
-We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \exists_B \phi$.
+These action models thus have an exponential cost to construct.
+Since each action point must be inspected once during construction we can conclude that in
+terms of size and time, this algorithm's has an $O((mk)^n)$ complexity.
+This is an expensive update to construct.\\
+\\
+In terms of epistemic goal achievement, this tree-like construction is shown to
+have further weaknesses.
+By combining Hales' \cite{hales13synthesis} work with our own we can achieve any
+epistemic goal.
+However, as we tie our realisation of an epistemic state to a specific action
+model, we cannot make comments on whether our model is the smallest update to
+guarantee an epistemic state, or whether the update we construct is a minimal
+change with the weakest pre-condition.\\
+\\
+We show examples of achieving an epistemic goal with a smaller size update in Figure
+\ref{figure:compareAnnounceSize}, where we have a two agent system comprising of
+$B$ and $C$, and we want to construct an update such that $\Box_B \Box_C \Box_B
+p \land \Box_C \Box_B \Box_C p$.
 
 \begin{figure}
 	\centering
@@ -912,159 +946,76 @@ We also have that $\sqex{\evM^2_\evs} \phi$ and $\anex{\evM^2_\evs} \phi \iff \e
 	\centering
 	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
 				thick]
-
-			\node[vertex] (1) {$\evs_0$};
-			\node[vertex] (2) [right of=1] {$\evs_1$};
-			\node[vertex] (3) [right of=2] {$\evs_{n-2}$};
-			\node[vertex] (4) [right of=3] {$\evs_{n-1}$};
-			\path[edge]
-						(1) edge node {$A$} (2)
-						(3) edge node {$A$} (4);
-      \draw[loosely dotted] (2) -- (3);
+    \node[vertex] (1) {$\evs$};
+    \node[vertex] (2) [below left of=1] {$\evt_1$};
+    \node[vertex] (3) [below right of=1] {$\evt_2$};
+    \node[vertex] (4) [below left of=2] {$\evu_1$};
+    \node[vertex] (5) [below right of=3] {$\evu_2$};
+    \node[vertex] (6) [right of=4] {$\evv_1$};
+    \node[vertex] (7) [left of=5] {$\evv_2$};
+    \path[edge]
+      (1) edge node {$B$} (2)
+          edge node {$C$} (3)
+      (2) edge node {$C$} (4)
+          edge node {$B$} (6)
+      (3) edge node {$B$} (5)
+          edge node {$C$} (7);
 	\end{tikzpicture}
-	\caption{$\evM^1_{\evs_0}$, the model we would have generated using Corollary
-    \ref{approximatingBRestricted}. Here, $\evpr^1(\evs_k) = \exists \Box^{n-k-1}p$ for every $k < n$.}
-	\label{TheLongChain}
+  \caption{An example action model that we generate to fulfill the condition
+  $(\Box_C \Box_B \Box_C p \Box_B \Box_C \Box_B p$, for $p$ some propositional
+  atom and $C, B$ are agents in $A$.
+  Here, $\evM_\evs$ is a finite tree action model, with $\evpr(\evs) = \exists
+  (\Box_C \Box_B \Box_C p \Box_B \Box_C \Box_B p$.}
+  \label{subfigure:ourGenerated}
 	\end{subfigure}
 	~
 	\begin{subfigure}[b]{.45\textwidth}
 	\centering
 	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
 				thick]
-
-			\node[vertex] (1) {$\evs$};
-			\path[edge]
-						(1) edge [loop left] node {$A$} (1);
+    \node[vertex] (1) {$\evs'$};
+    \path[edge]
+      (1) edge [loop right] node {} (1);
 	\end{tikzpicture}
-	\caption{$\evM^2_\evs$, the public announcement of $p$ where $\evpr(\evs) = p$.}
-	\label{TheShortAnnounce}
+  \caption{The public announcement of $p$, $\evM'_{\evs'}$ such that
+  $\evpr'(\evs')$. It will also achieve our epistemic
+  goal but is much shorter to construct.}
 	\end{subfigure}
-	\caption[Comparing announcements against the models we generate]{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheLongChain}) and $\evM^2_\evs$
-		(Subfigure \ref{TheShortAnnounce}). Although $\evM^1_{\evs_0}$ and
-		$\evM^2_\evs$
-		fulfil the post-condition of $\phi$ after their execution, $\evM^2_\evs$ is much smaller than
-		$\evM^1_\evs$.}
-	\label{comparePublicAnnounces}
+	\caption[Comparing announcements against the models we generate]{Here, we can
+  see that the succinctness and shortness of our constructed action models are
+  somewhat lacking, since the same epistemic goals are being achieved by a much
+  smaller action model.}
+	\label{figure:compareAnnounceSize}
 \end{figure}
 
-It is clear that $M^1$ contains more states and relations that $M^2$, but that they both achieve our
-epistemic goal $\phi$.
-This is illustrative of the weakness with regards to tersity of the models we build.
-We have shown methods to build action models, but only concentrated on one singular action model to
-build with the express purpose of goal achievement.\\
+In addition to action model size, the change wrought by our tree-like action
+models is rather destructive.
+Kripke model points that are acted upon by the leaves of the action model update
+lose all their accessibilities, and become effectively ``insane" models.
+This is undesirable, since it becomes hard to interpret these models with
+regards to knowledge and belief.
+Much could be done to construct action models that were had weaker
+preconditions, thus being more general and effecting a smaller change in the
+resulting Kripke models.\\
 \\
-A second example we could use is to let our goal state, $\phi = \Box(\alpha \lor \beta)$ in a single
-agent system.
-Let $\evM^1$ be the model we obtain from Corollary \ref{approximatingBRestricted}.
-Then, let $\evM^2$ be the choice of the public announcements of $\alpha$ or $\beta$.
-This time, we note that $\evM^2$ is a change that is less destructive after its execution.
-That is, it is minimal in the sense that it was the smallest change to our knowledge and inferences
-in order to realise $\phi$.
-
-\begin{figure}
-	\centering
-	\begin{subfigure}[b]{.45\textwidth}
-	\centering
-	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
-				thick]
-
-			\node[vertex] (1) {$\evs_0$};
-			\node[vertex] (2) [below left of=1] {$\evs_1$};
-			\node[vertex] (3) [right of=2] {$\evs_2$};
-			\path[edge]
-						(1) edge node {} (2)
-						(1) edge node {} (3);
-	\end{tikzpicture}
-	\caption{$\evM^1_{\evs_0}$, the model we would have generated using Corollary
-    \ref{approximatingBRestricted}. We have that $\evpre(\evs_0) = \exists \phi$, $\evpr(\evs_1) =
-			\exists \alpha$ and $\evpre(\evs_2) = \exists \beta$.}
-	\label{TheStupidTree}
-	\end{subfigure}
-	~
-	\begin{subfigure}[b]{.45\textwidth}
-	\centering
-	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-				thick]
-
-			\node[vertex] (1) {$\evs$};
-			\node[vertex] (2) [right of=1] {$\evt$};
-			\path[edge]
-						(1) edge [loop left] node {} (1)
-						(2) edge [loop right] node {} (2);
-	\end{tikzpicture}
-	\caption{$\evM^2_\evT$, where $\evT = \{\evs,\evt\}$. This is the disjoint union of the public
-		announcement of $p$ where $\evpr(\evs) = \alpha$ and $\evpr(\evt) = \beta$.}
-	\label{TheDualAnnounce}
-	\end{subfigure}
-	\caption[Comparing minimal changes against generated action models]{We compare models $\evM^1_{\evs_0}$ (Subfigure \ref{TheStupidTree}) and $\evM^2_\evT$
-		(Subfigure \ref{TheDualAnnounce}). It is clear that after executing
-		$\evM^2_{\evT}$ a smaller change to our knowledge and inference base has occurred.}
-	\label{comparePublicAnnounces}
-\end{figure}
-
-Let us examine a parallel approach to the problem.
-Suppose that we can describe an epistemic situation $\phi$ is true in our current epistemic state of
-information.
-Furthermore, let us aim to achieve an epistemic state $\phi''$.
-Let $\krMo_s, \krMo''_{s''} \in \kripkeClass$ and $\krMo_s \models \phi$ and $\krMo''_{s''}
-\models \phi$, and suppose $\evM'_{\evs'} \in \eventClass$ such that $\evM_\evs \otimes
-\evM'_{\evs'} \sim \evM''_{\evs''}$.
-We are interested in reasoning about all $\phi'$ such that $\evM'_{\evs'}
-\models \phi'$.\\
+One approach to this problem is given by Aucher \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703}
+who constructs a language for reasoning about action model properties.
+His approach is to specify a descriptive approach to the action models, by
+reasoning about an action model and its properties.
+It is different to Hales' work and the approach we show here, in that it
+specifies the characteristics of any action model that would achieve an
+epistemic goal.\\
 \\
-Aucher, in \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703},
-discusses a solution to this problem by introducing a sequent calculus for dynamic 
-epistemic logics.
-This sequent calculus allows us to reason about informative updates from
-a pre-update epistemic situation to a post-update epistemic situation.
-This in turn allows us to build the most general description of an action model whose informative
-update achieves our epistemic goal.\\
+Specifying certain properties such as ``the weakest possible pre-condition",
+``the smallest number of action points" or ``the most robust update" allows for
+the construction of updates that would be more useful than our
+current action model representations.
+It allows us to find updates that would still have the same epistemic goal
+achievement properties as our current approach, but with the additional benefit
+of succinctness and ``minimal change".\\
 \\
-We reproduce formally Aucher's sequent calculus from
-\cite{doi:10.1080/11663081.2012.736703}.
-
-\begin{defn}
-	Let $\phi, \phi'' \in \lang$ and $\phi' \in \langActEx$ (Definition \ref{actModelLogic}), we say that
-$\phi, \phi'' \models^2 \phi' \iff$ for each $\krMo_s, \krMo''_{s''} \in \kripkeClass$
-such that $\krMo_s \models \phi$ and $\krMo''_{s''} \models \phi''$, and every $\evM'_{\evs'}
-\in \eventClass$ such that $\evM_\evs \models \evpr'(s)$ and $\krMo_s \otimes \evM'_{\evs'}
-\sim \krMo''_{s''}$ it holds that $\evMo'_{\evs'} \models \phi'$.
-\end{defn}
-
-In particular, the inference relation $\models^2$ describes a set of action models that fulfil its
-properties.
-We will informally say that $\mathcal{M}2(\phi,\phi'')$ is the group of action models such that, for a $\phi,
-	 \phi'' \in \lang$, if
-\[
-	 \evM_\evs \in \mathcal{M}2(\phi,\phi'') \iff (\forall \phi' \in \langActEx
-	 \text{ such that } \phi,\phi'' \models^2 \phi' \Rightarrow \evM_\evs \models \phi').
-\]
-\\
-Next, we define the idea of the ``minimal change".
-
-\begin{defn}
-Let $\evM_\evt \in \eventClass$, and suppose that the execution of $\evM_\evt$ always results in the
-post-condition $\phi \in \lang$.
-We say that $\evM_\evt$ is the minimal change of $\phi$ if for any other $\evM'_{\evt'}$ such that
-executing $\evM'_{\evt'}$ results in $\phi$ being true, there is some $\psi \in \lang$ such that $\psi \Rightarrow
-\phi$ and $\psi \neq \phi$ where executing $\evM'_{\evt'}$ always results in $\psi$ being true.
-\end{defn}
-
-We have given two examples of minimal change above --- for $\phi = \Box^n p$ the minimal change is
-the public announcement of $\phi$ (Figure \ref{TheShortAnnounce}).
-Similarly, for $\psi = \Box(\alpha \lor \beta)$, the disjoint union of the public announcement of
-$\alpha$ and the public announcement of $\beta$ is a minimal change (Figure \ref{TheDualAnnounce}).\\
-\\
-We can now reason about our updates in their action model form.
-It allows us to reason about their structure, about necessary preconditions and consequences of an
-update's execution.\\
-\\
-We now pose two open questions which we leave as extensions involving the synthesis of this work
-into Aucher's framework.
-They extend the minimal description that Aucher defines (which describe which models will fulfil an
-update) by asking ``how" to build these models, and hopefully unify the approach we discuss and
-Aucher's sequence calculus.
-These questions relate to achieving an epistemic goal $\phi \in \lang$.
+Two open questions that we believe have been elicited from our construction
+framework are
 \begin{enumerate}
 	\item How can we build the smallest action model in terms of size that achieves $\phi$?
 		It is worth noting that ``size" is at this rudimentary stage unclear, and we are implicitly discussing the
