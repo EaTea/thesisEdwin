@@ -96,8 +96,8 @@ We can define an operator to formally represent the modality of ``knowing"
 a proposition or formula to be true.
 
 \begin{defn}
-	The operator $\Box_A H$ stands for ``$A$ knows $H$ is true".
-	$\Box_A \phi$ is true at a possible world $w$ if for all accessibility relations $(w,
+	The operator $\Box_a H$ stands for ``Agent $a$ knows $H$ is true".
+	$\Box_a \phi$ is true at a possible world $w$ if for all accessibility relations $(w,
 	w')$, $\phi$ is true.
 \end{defn}
 
@@ -105,20 +105,20 @@ We also define the dual operator of knowing, which is to consider something
 possible.
 
 \begin{defn}
-	The operator $\Diamond_B T$ stands for ``$B$ considers $T$ to be possible".
-	$\Diamond_B \phi$ is true at a possible world $w$ if there is one
+	The operator $\Diamond_a T$ stands for ``Agent $a$ considers $T$ to be possible".
+	$\Diamond_a \phi$ is true at a possible world $w$ if there is one
 	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.
 \end{defn}
 
-Notice that we can define $\Diamond$ in terms of $\Box$, where $\Diamond
-\phi \iff \neg \Box \neg \phi$.\\
+Notice that we can define $\Diamond$ in terms of $\Box$, where $\Diamond_a
+\phi \iff \neg \Box_a \neg \phi$.\\
 \\
-The definitions for $\Box$ and $\Diamond$ are given a more formal treatment in
+The definitions for $\Box_a$ and $\Diamond_a$ are given a more formal treatment in
 Fagan et. al in \cite{fagin1995reasoning} and van der Hoek, Kooi and Ditsmarsch in
 \cite{hoek2008dynamic}.
 Both definitions are formally re-defined in Definition \ref{modalLogic}.\\
 \\
-We will omit the name of the agent for operators $\Box$ and $\Diamond$ when we
+We will omit the name of the agent for operators $\Box_a$ and $\Diamond_a$ when we
 discuss a single-agent case, as follows.
 We now show, without proof, four axioms that must hold for our modality of
 knowledge.
@@ -190,7 +190,6 @@ We will demonstrate the execution of that update upon our model in Figure
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
-
     \node[vertex] (1) {$\eta$};
     \node[vertex] (2) [right of=1] {$\tau$};
     \path[edge]
