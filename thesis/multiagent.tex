@@ -41,7 +41,7 @@ give some ideas with regards to what properties they have.
 We thus give a rigorous definition for them as follows
 
 \begin{defn} \label{finTree}
-Let $\evM_\evs = (\evS, \evR, \evpr, \evs)$ be a pointed action model.
+Let $\evM_\evs = ((\evS, \evR, \evpr), \{\evs\})$ be a pointed action model.
 $\evM_\evs$ is a {\em finite tree action model} if
 \begin{itemize}
 	\item $\evS$, the set of action points is finite
@@ -56,7 +56,10 @@ $\evM_\evs$ is a {\em finite tree action model} if
 \end{defn}
 
 We say that the class of finite tree action models is $\treeClass$ (an example is shown in Figure
-\ref{figure:exampleTree}), and we make an important note that insanity models are the most basic kind of tree-like action models.
+\ref{figure:exampleTree}).
+It is worthwhile noting that a similar definition (point generated models) is given for Kripke models in Blackburn, de Rijke
+and Venema \cite{blackburn2002modal}, but our definition specifically pertains to action models.
+We make an important note that insanity models are the most basic kind of tree-like action models.
 
 \begin{lemma} \label{insaneIsTree}
 	Any insanity action model (Definition \ref{insanity}) is also a tree action model.
@@ -92,7 +95,7 @@ Having established tree-like structures, it seems somewhat natural to also rigou
 forest action model.
 
 \begin{defn} \label{forest}
-Let $\evM_\evT = (\evS, \evR, \evpr, \evT)$ be a multi-pointed action model.
+Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a multi-pointed action model.
 $\evM_\evT$ is a {\em finite forest action model} if
 \begin{itemize}
 	\item each point $\evt$ in $\evT$ is the root of a finite tree action model $\evM^\evt =
@@ -122,14 +125,15 @@ tree action models is a useful ability which we specify in Definition \ref{subtr
 example in Figure \ref{figure:subtreeExample}.
 
 \begin{defn} \label{subtree}
-Let $\evM_\evr = (\evS, \evR, \evpr, \evT)$ be a finite forest action model.
-We say the pointed action model $\evM' = (\evS', \evR', \evpr', \evr')$ is a {\em subtree} of $\evM$ if
+Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a finite forest action model.
+We say the pointed action model $\evM^{\evr} = ((\evS^{\evr}, \evR^{\evr}, \evpr^{\evr}), \evr)$ is a {\em subtree} of $\evM$ if
 \begin{itemize}
-	\item $\evS' \subseteq \evS$
-	\item $\forall a \in A \Rightarrow \evR_a' \subseteq \evR_a$
-	\item $\forall \evs \in \evS' \Rightarrow \evpr(\evs) = \evpr'(\evs) $
-	\item $\evM'$ is $\evR$-generable
-	\item $\evM'$ is a finite tree action model
+	\item $\evr \in \evS$
+	\item $\evr \in \evS^\evr$
+	\item $\evS^\evr \subseteq \evS$
+	\item $\forall a \in A \Rightarrow \evR_a^\evr \subseteq \evR_a$
+	\item $\forall \evs \in \evS^\evr \Rightarrow \evpr(\evs) = \evpr^\evr(\evs) $
+	\item $\evM^\evr$ is a finite tree action model
 \end{itemize}
 \end{defn}
 
@@ -415,6 +419,324 @@ Then
 \end{corr}
 
 \section{Achieving information goals} \label{subsec:multi:achievingGoals}
+
+We now present our main result --- that the language we have specified is able to, up to
+$n$-bisimilarity, construct any action model in $\AXK$.
+With this, we show that our constructive operations are able to be used to build useful action models
+and achieve the same effects as any other action model, up to a some specified modal depth.
+
+\begin{thm} \label{approximatingEventModel}
+Let $\evM_\evT \in \eventClass$ and $n$ be some non-negative integer.
+Then there is some $\evM'_{\evT'} \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
+\end{thm}
+
+\begin{proof}
+Without loss of generality, for each pair $\evt, \evt' \in \evT$, we say that they are
+$n$-disjoint.
+That is there is no sequence of $n$ action points $\evt = \evs_1, \evs_2, \ldots,
+\evs_n = \evt'$ and agents $a_1, a_2, \ldots, a_{n-1}$ such that $\evs_1 \evR_{a_1} \evs_2,
+    \ldots, \evs_{n-1} \evR_{a_{n-1}} \evs_n$.
+We will show inductively that for any $n$, the following two conditions hold
+\begin{itemize}
+\item there is a forest action model $\evM'_{\evT'} \in \forestClass$ such that $\evM'_{\evT'} \sim_n \evM_\evT$
+\item for each $\evt \in \evT$, there is a $\evt' \in \evT'$ and subtree of $\evM'_{\evT'}$, $\evM^{\evt'}_{\evt'}$ such that
+$\evM'_{\evt'} \sim_n \evM_\evt$
+\end{itemize}
+Suppose $n = 0$ as our base case.
+Let $\evt \in \evT$, and consider the insanity model $\evM'_{\evt} \in \insaneClass$ such that $\evpr'(\evt) \iff
+\evpr(\evt)$.
+By Lemma \ref{insaneIsTree} $\evM'_{\evt} \in \treeClass$ and therefore by Lemma \ref{treeIsForest}
+$\evM'_{\evt} \in \forestClass$ also holds.
+By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\evt}
+\sim_0 \evM_\evt$.
+Now, let
+\[
+  \evM'_{\evT'} = \bigsqcup_{\evt' \in \evT} \evM'_{\evt}
+\]
+By Lemma \ref{disjForestIsForest}, $\evM'_{\evT'} \in \forestClass$.
+Furthermore, it is clear that each point $\evt \in \evT$ corresponds to some $\evt' \in \evT'$ such that $\evM_\evt
+\sim_0 \evM'_{\evt'}$.
+Lastly, since $\evM'_{\evT'}$ is the disjoint union of multiple finite tree action models, for $\evt, \evt' \in
+\evT'$ we have that $\evS_\evt$ and $\evS_{\evt'}$ are disjoint.
+Thus our induction hypothesis holds for $n = 0$.\\
+\\
+Now, suppose that the induction hypothesis holds for $n = k-1$ and let $n = k$.
+Let $\evs \in \evT$ and $a \in A$.
+By the induction hypothesis, for each $\evt \in \evs \evR_a$, we can construct $\evM^\evt_\evt \in \treeClass$ such that
+$\evM^\evt_\evt \sim_{k-1} \evM_\evt$.
+Consider $\evM^\evs_\evs \in \insaneClass \subseteq \forestClass$ such that $\evpr'(\evs) \iff
+\evpr(\evs)$.
+By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\evs}
+\sim_0 \evM_\evs$.\\
+\\
+Then, let
+\[
+  \evM'_{\evT'} = \bigsqcup_{\evs \in \evT} \evM^\evs_\evs \to_a (\bigsqcup_{\evt \in \evs \evR_a} \evM^\evt_{\evt})
+\]
+Our proof is decomposed into three parts.
+First we show that $\evM'_{\evT'} \in \forestClass$.
+Secondly, we show that for $\evt \in \evT$ there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}_{\evt'}$ of
+$\evM'_{\evT'}$ such that $\evM^{\evt'}_{\evt'} \sim_n \evM_\evt$.
+Lastly we show that $\evM'_{\evT'} \sim_k \evM_\evT$.\\
+\\
+To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions must hold
+\begin{enumerate}
+	\item each point $\evt \in \evT'$ is the root of a finite tree action model $\evM^\evt_\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt)$ \label{forestConOne}
+  \item $\evS' = \bigcup_{\evt \in \evT'} \evS^\evt$ \label{forestConTwo}
+  \item for each $a \in A \Rightarrow \evR'_a = \bigcup_{\evt \in \evT'} \evR^\evt_a$ \label{forestConFive}
+	\item for each $\evs \in \evS^\evt$, $\evpr'(\evs) = \evpr^\evt(\evs)$ \label{forestConThree}
+	\item if $\evs, \evt \in \evT'$ such that $\evs \neq \evt$, then $\evS^\evs$ and $\evS^\evt$ are disjoint
+	\label{forestConFour}
+\end{enumerate}
+
+To show that \ref{forestConOne} holds, suppose $\evt \in \evT'$.
+We must show that $\evM'_\evt \in \treeClass$.
+We observe that $\evS'$, the set of action points is finite, since it is the finite union of a set
+of finite forest action models which in turn have finite sets of points. This follows from the
+definition of $\evM'_{\evT'}$.\\
+\\
+Next, $\evt$ is the root of the tree and is not accessible from any other action point, which follows
+from the definition of $\evM'_{\evT'}$ being a disjoint union of multiple models, and relations only
+being added to $\evt \evR_a$ and none added to $\evR_a \evt$ for any $a \in A$.\\
+\\
+Suppose $\evs \in \evS' \setminus \{ \evt \}$.
+Then there is an agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs$ is an action point in
+$\evS^{\evs'}_{\evs'}$, the set of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at
+$\evs'$.\\
+\\
+Suppose $\evs = \evs'$.
+Then the $\evR'_a \evs = \{ \evt \}$, and for any other $a'$, $\evR'_{a'} \evs = \varnothing$.\\
+\\
+Suppose $\evs \neq \evs'$.
+Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition \ref{finTree}) we have that there is some
+$p \in \evS^{\evs'}$ and $a' \in A$ such that $p \evR'_{a'} \evs$.\\
+\\
+Finally let $\evs \in \evS'_\evt$.
+We must show that there is a finite sequence of action points $\evt = \evs_0, \evs_1, \evs_2, \ldots, \evs_n = \evs
+\in \evS'_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR_{a_1} \evs_1, \ldots, \evs_{n-1}
+\evR_{a_n} \evs_n$.
+If $\evs = \evt$ then there is a sequence of length 0 of such points.
+Suppose $\evs \neq \evt$.
+If so then there is some agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs \in \evS^{\evs'}_{\evs'}$, the set
+of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at $\evs'$.\\
+\\
+Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition
+\ref{finTree}) we have that there is some sequence of action points $\evs' = \evs_0, \evs_1, \evs_2, \ldots, \evs_n =
+\evs \in \evS^{\evs'}_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR'_{a_1} \evs_1, \ldots,
+\evs_{n-1} \evR'_{a_n} \evs_n$.
+We already have shown that $\evR'_a \evs' = \{ \evt \}$.
+Then there is a sequence $\evt \evR'_a \evs', \evs_0 \evR'_{a_1} \evs_1, \ldots, \evs_{n-1} \evR'_{a_n} \evs_n$.
+Thus $\evM'_\evt \in \treeClass$ from Definition \ref{finTree} and as a result \ref{forestConOne} holds.\\
+\\
+Conditions \ref{forestConTwo}, \ref{forestConFive} and \ref{forestConThree} hold from the definition
+of $\to$ (Definition \ref{considers}).
+What remains is to show that \ref{forestConFour} holds.
+Suppose that $\evs, \evt \in \evT'$ and $\evs \neq \evt$.
+From hypothesis $\evS^\evs_\evs$ and $\evS^\evt_\evt$ are disjoint trees.
+From the definition of $\to$ (Definition \ref{considers}) each of $\evS^\evs_\evs$ and $\evS^\evt_\evt$
+remain disjoint.\\
+\\
+Next, we show that if $\evt \in \evT$ there is some $\evs \in \evT'$ and some subtree of $\evM'_{\evT'}$, $\evM^{\evs}_{\evs}$
+such that $\evM^\evs_\evs \sim_k \evM_\evt$.
+From the definition of $\evM'_{\evT'}$, there is a subtree of $\evM^\evs_\evs$, where $\evM^\evs_\evs \sim_0 \evM_\evt$.
+Furthermore, by our induction hypothesis for each $a \in A$ and $\evt' \in \evt \evR_a$, there is an $a' \in
+A$ and $\evs' \in \evs \evR_{a'}$ such that the subtree $\evM^{\evs'}_{\evs'}$ of $\evM^\evs_\evs$ is $k-1$-bisimilar to
+$\evM_{\evt'}$.
+This allows us to satisfy {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} for every $a \in A$.
+We now only need show that $\evM^\evs_\evs \sim_{k-1} \evM'_\evs$.
+It is clear from a simple inductive argument that this holds, by virtue of each $\evM^{\evs'}_{\evs'}$ being
+$k-2$-bisimilar to $\evM_{\evt'}$ (Definition \ref{nBisimEvent}).
+Then $\evM^\evs_\evs \sim_k \evM_\evt$, where $\evs \in \evT'$ and $\evM^\evs_\evs$ a subtree of $\evM_{\evT'}$.\\
+\\
+Lastly, we show that $\evM'_{\evT'} \sim_k \evM_\evT$.
+We have shown that for each $\evt \in \evT$, there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}_{\evt'}
+\sim_k \evM_\evt$.
+We observe from the definition of $\evM'_{\evT'}$ that it is the disjoint union of models subtrees that
+are $k$-bisimilar to a model in $\evT$.
+That is, any $\evt' \in \evT'$ is the root of a subtree $\evM^{\evt'}_{\evt'}$ of $\evM'_{\evT'}$ that is $k$-bisimilar
+to $\evM_\evt$, for $\evt \in \evT$.
+It is clear that as the finite disjoint union of $k$-bisimilar models, $\evM'_{\evT'}$ is itself $k$-bisimilar
+to $\evM_\evT$.
+Thus we have $\evM_\evT \sim_k \evM'_{\evT'}$ and our induction hypothesis holds for $n = k$.
+\end{proof}
+
+We have shown that any action model can be constructed by our language, up to $n$-bisimilarity.
+If we focus on specific action models which can realise epistemic goals, as Hales
+\cite{hales13synthesis} shows, then we can complement that work by constructing action models
+specifically for the purpose of epistemic goal-achievement.
+
+\begin{corr} \label{approximatingBRestricted}
+Let $\phi \in \langArbAct$ and $B \subseteq A$.
+Then there is some $\evM_\evT \in \forestClass$ such that $\vdash \sqex{\evM_\evT} \phi$ and
+$\vdash \anex{\evM_\evT} \phi \iff \exists_B \phi$ is valid.
+\end{corr}
+
+\begin{proof}
+Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
+By Lemma \ref{allInCoverNormal} and Lemma \ref{thm:AAMLExpressivelyEquivalent} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
+Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
+From \cite{hales13synthesis}, Hales synthesises an action model $\evM'_{\evT'}$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT}
+\phi \iff \exists_B \phi$.\\
+\\
+We construct $\evM_\evT \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
+Since $MD(\phi) \leq n$ and $\evM_\evT \sim_n \evM'_{\evT'}$ we have by \ref{nBisimilarEventExec} that any
+formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT} \phi
+\iff \exists_B \phi$.
+\end{proof}
+
+Within this chapter, our work has shown that we can, up to $n$-bisimilarity, construct any event
+model.
+This ensures that we can realise the effects of any action model, and that we need only worry about
+the modal depth of the model to describe the action model.
+
+\section{Analysis and open questions} \label{subsec:multi:sequentCalc}
+
+We have shown that we can approximate action models according to what
+post-conditions are realised by an action models execution.
+This is achieved through the construction of a particular action model that fulfils
+our desired post-conditions.\\
+\\
+This approach is powerful in guaranteeing the construction of an action model
+that will always sure an epistemic goal state is fulfilled or that the Kripke
+model is destroyed as a result of the execution.
+We do not need to give any regard to the Kripke model that we are executing our
+action model on.\\
+\\
+We can summarise this approach as an algorithm, shown in Algorithm \ref{algo:myAlgo}.
+
+\begin{algorithm}
+\begin{algorithmic}
+  \REQUIRE{$\evM_\evT$ is an action model and $n \geq 0$}
+    \STATE{$\evMM_\evU$ is the empty model}
+    \FORALL {$\evt \in \evT$}
+    \STATE{
+      $\evM'_{\evt'} \in \insaneClass$ such that $\evpr'(\evt') = \evpr(\evt)$
+      \IF{$n > 0$}
+        \FORALL{$a \in A$}
+          \STATE{$\evM'_{\evt'} \gets \evM'_{\evt'} \to_a$ createEquivalent($\evM_{\evt \evR_a}$, $n-1$)}
+        \ENDFOR
+      \ENDIF
+      \STATE{$\evMM_\evU \gets \evMM_\evU \sqcup \evM'_{\evt'}$}}
+    \ENDFOR
+    \RETURN $\evMM_\evU$
+\end{algorithmic}
+\caption{The action model approximation algorithm that summarises our approach
+to constructing an action model $\evMM_\evU$ that is $n$-bisimilar to
+$\evM_\evT$.}
+\label{algo:myAlgo}
+\end{algorithm}
+
+This algorithm ``unwinds" the action model into an $n$-bisimilar tree form of the
+original action model into its finite forest action model.
+To build a finite forest action model up to $n$-bisimilarity, where there are
+$k$ agents involved in the action model and there are $m$ accessibilities from
+each action point, the resulting action model would have an approximate size of
+$O((mk)^n)$ action points.\\
+\\
+These action models thus have an exponential cost to construct.
+Since each action point must be inspected once during construction we can conclude that in
+terms of size and time, this algorithm's has an $O((mk)^n)$ complexity.
+This is an expensive update to construct.\\
+\\
+In terms of epistemic goal achievement, this tree-like construction is shown to
+have further weaknesses.
+By combining Hales' \cite{hales13synthesis} work with our own we can achieve any
+epistemic goal.
+However, as we tie our realisation of an epistemic state to a specific action
+model, we cannot make comments on whether our model is the smallest update to
+guarantee an epistemic state, or whether the update we construct is a minimal
+change with the weakest pre-condition.\\
+\\
+We show examples of achieving an epistemic goal with a smaller size update in Figure
+\ref{figure:compareAnnounceSize}, where we have a two agent system comprising of
+$B$ and $C$, and we want to construct an update such that $\Box_B \Box_C \Box_B
+p \land \Box_C \Box_B \Box_C p$.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{.45\textwidth}
+	\centering
+	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
+				thick]
+    \node[vertex] (1) {$\evs$};
+    \node[vertex] (2) [below left of=1] {$\evt_1$};
+    \node[vertex] (3) [below right of=1] {$\evt_2$};
+    \node[vertex] (4) [below left of=2] {$\evu_1$};
+    \node[vertex] (5) [below right of=3] {$\evu_2$};
+    \node[vertex] (6) [right of=4] {$\evv_1$};
+    \node[vertex] (7) [left of=5] {$\evv_2$};
+    \path[edge]
+      (1) edge node {$B$} (2)
+          edge node {$C$} (3)
+      (2) edge node {$C$} (4)
+          edge node {$B$} (6)
+      (3) edge node {$B$} (5)
+          edge node {$C$} (7);
+	\end{tikzpicture}
+  \caption{An example action model that we generate to fulfill the condition
+  $\Box_C \Box_B \Box_C p \land \Box_B \Box_C \Box_B p$, for $p$ some propositional
+  atom and $C, B$ are agents in $A$.
+  Here, $\evM_\evs$ is a finite tree action model, with $\evpr(\evs) = \exists
+  (\Box_C \Box_B \Box_C p \land \Box_B \Box_C \Box_B p)$.}
+  \label{subfigure:ourGenerated}
+	\end{subfigure}
+	~
+	\begin{subfigure}[b]{.45\textwidth}
+	\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+				thick]
+    \node[vertex] (1) {$\evs'$};
+    \path[edge]
+      (1) edge [loop right] node {} (1);
+	\end{tikzpicture}
+  \caption{The public announcement of $p$, $\evM'_{\evs'}$ such that
+  $\evpr'(\evs')$. It will also achieve our epistemic
+  goal but is much shorter to construct.}
+	\end{subfigure}
+	\caption[Comparing announcements against the models we generate]{Here, we can
+  see that the succinctness of our constructed action models is
+  somewhat lacking; our epistemic goal of $\Box_C \Box_B \Box_C p \land \Box_B \Box_C \Box_B p$
+  is achieved by the smaller action model of a public announcement.}
+	\label{figure:compareAnnounceSize}
+\end{figure}
+
+In addition to action model size, the change wrought by our tree-like action
+models is rather destructive.
+Kripke model points that are acted upon by the leaves of the action model update
+lose all their accessibilities, and become effectively ``insane" models.
+This is undesirable, since it becomes hard to interpret these models with
+regards to knowledge and belief.
+Much could be done to construct action models that were had weaker
+preconditions, thus being more general and effecting a smaller change in the
+resulting Kripke models.\\
+\\
+One approach to this problem is given by Aucher \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703}
+who constructs a language for reasoning about action model properties.
+His approach is to specify a descriptive approach to the action models, by
+reasoning about an action model and its properties.
+It is different to Hales' work and the approach we show here, in that it
+specifies the characteristics of any action model that would achieve an
+epistemic goal.\\
+\\
+Specifying certain properties such as ``the weakest possible pre-condition",
+``the smallest number of action points" or ``the most robust update" allows for
+the construction of updates that would be more useful than our
+current action model representations.
+It allows us to find updates that would still have the same epistemic goal
+achievement properties as our current approach, but with the additional benefit
+of succinctness and ``minimal change".\\
+\\
+Unifying these approaches would result in a more general and powerful method of constructing action
+models and fulfilling goals.
+Two open questions related to unifying Aucher and our own constructive approach are
+\begin{enumerate}
+	\item How can we build the smallest action model in terms of size that achieves $\phi$?
+		It is worth noting that ``size" is at this rudimentary stage unclear, and we are implicitly discussing the
+		number of event points.
+		However, ``size" might instead be number of relations, or some other measure.
+	\item How can we build the action model that minimally changes the epistemic situation and achieves
+		$\phi$?
+\end{enumerate}
 
 %\FIXME: Needs to cite James
 
@@ -707,320 +1029,3 @@ Then
 %Then from Lemma \ref{disjunctionFormulaAchievementK} there exists a finite forest action model $M_T$ such
 %that $\vdash \sqex{M_T}$ and $\vdash \anex{M_T} \phi \iff \exists \phi$.
 %\end{proof}
-
-We now present our main result --- that the language we have specified is able to, up to
-$n$-bisimilarity, construct any action model in $\AXK$.
-With this, we show that our constructive operations are able to be used to build useful action models
-and achieve the same effects as any other action model, up to a some specified modal depth.
-
-\begin{thm} \label{approximatingEventModel}
-Let $\evM_\evT \in \eventClass$ and $n$ be some non-negative integer.
-Then there is some $\evM'_{\evT'} \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
-\end{thm}
-
-\begin{proof}
-Without loss of generality, for each pair $\evt, \evt' \in \evT$, we say that they are
-$n$-disjoint.
-That is there is no sequence of $n$ action points $\evt = \evs_1, \evs_2, \ldots,
-\evs_n = \evt'$ and agents $a_1, a_2, \ldots, a_{n-1}$ such that $\evs_1 \evR_{a_1} \evs_2,
-    \ldots, \evs_{n-1} \evR_{a_{n-1}} \evs_n$.
-We will show inductively that for any $n$, the following two conditions hold
-\begin{itemize}
-\item there is a forest action model $\evM'_{\evT'} \in \forestClass$ such that $\evM'_{\evT'} \sim_n \evM_\evT$
-\item for each $\evt \in \evT$, there is a $\evt' \in \evT'$ and subtree of $\evM'_{\evT'}$, $\evM^{\evt'}_{\evt'}$ such that
-$\evM'_{\evt'} \sim_n \evM_\evt$
-\end{itemize}
-Suppose $n = 0$ as our base case.
-Let $\evt \in \evT$, and consider the insanity model $\evM'_{\evt} \in \insaneClass$ such that $\evpr'(\evt) \iff
-\evpr(\evt)$.
-By Lemma \ref{insaneIsTree} $\evM'_{\evt} \in \treeClass$ and therefore by Lemma \ref{treeIsForest}
-$\evM'_{\evt} \in \forestClass$ also holds.
-By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\evt}
-\sim_0 \evM_\evt$.
-Now, let
-\[
-  \evM'_{\evT'} = \bigsqcup_{\evt' \in \evT} \evM'_{\evt}
-\]
-By Lemma \ref{disjForestIsForest}, $\evM'_{\evT'} \in \forestClass$.
-Furthermore, it is clear that each point $\evt \in \evT$ corresponds to some $\evt' \in \evT'$ such that $\evM_\evt
-\sim_0 \evM'_{\evt'}$.
-Lastly, since $\evM'_{\evT'}$ is the disjoint union of multiple finite tree action models, for $\evt, \evt' \in
-\evT'$ we have that $\evS_\evt$ and $\evS_{\evt'}$ are disjoint.
-Thus our induction hypothesis holds for $n = 0$.\\
-\\
-Now, suppose that the induction hypothesis holds for $n = k-1$ and let $n = k$.
-Let $\evs \in \evT$ and $a \in A$.
-By the induction hypothesis, for each $\evt \in \evs \evR_a$, we can construct $\evM^\evt_\evt \in \treeClass$ such that
-$\evM^\evt_\evt \sim_{k-1} \evM_\evt$.
-Consider $\evM^\evs_\evs \in \insaneClass \subseteq \forestClass$ such that $\evpr'(\evs) \iff
-\evpr(\evs)$.
-By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\evs}
-\sim_0 \evM_\evs$.\\
-\\
-Then, let
-\[
-  \evM'_{\evT'} = \bigsqcup_{\evs \in \evT} \evM^\evs_\evs \to_a (\bigsqcup_{\evt \in \evs \evR_a} \evM^\evt_{\evt})
-\]
-Our proof is decomposed into three parts.
-First we show that $\evM'_{\evT'} \in \forestClass$.
-Secondly, we show that for $\evt \in \evT$ there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}_{\evt'}$ of
-$\evM'_{\evT'}$ such that $\evM^{\evt'}_{\evt'} \sim_n \evM_\evt$.
-Lastly we show that $\evM'_{\evT'} \sim_k \evM_\evT$.\\
-\\
-To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions must hold
-\begin{enumerate}
-	\item each point $\evt \in \evT'$ is the root of a finite tree action model $\evM^\evt_\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt)$ \label{forestConOne}
-  \item $\evS' = \bigcup_{\evt \in \evT'} \evS^\evt$ \label{forestConTwo}
-  \item for each $a \in A \Rightarrow \evR'_a = \bigcup_{\evt \in \evT'} \evR^\evt_a$ \label{forestConFive}
-	\item for each $\evs \in \evS^\evt$, $\evpr'(\evs) = \evpr^\evt(\evs)$ \label{forestConThree}
-	\item if $\evs, \evt \in \evT'$ such that $\evs \neq \evt$, then $\evS^\evs$ and $\evS^\evt$ are disjoint
-	\label{forestConFour}
-\end{enumerate}
-
-To show that \ref{forestConOne} holds, suppose $\evt \in \evT'$.
-We must show that $\evM'_\evt \in \treeClass$.
-We observe that $\evS'$, the set of action points is finite, since it is the finite union of a set
-of finite forest action models which in turn have finite sets of points. This follows from the
-definition of $\evM'_{\evT'}$.\\
-\\
-Next, $\evt$ is the root of the tree and is not accessible from any other action point, which follows
-from the definition of $\evM'_{\evT'}$ being a disjoint union of multiple models, and relations only
-being added to $\evt \evR_a$ and none added to $\evR_a \evt$ for any $a \in A$.\\
-\\
-Suppose $\evs \in \evS' \setminus \{ \evt \}$.
-Then there is an agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs$ is an action point in
-$\evS^{\evs'}_{\evs'}$, the set of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at
-$\evs'$.\\
-\\
-Suppose $\evs = \evs'$.
-Then the $\evR'_a \evs = \{ \evt \}$, and for any other $a'$, $\evR'_{a'} \evs = \varnothing$.\\
-\\
-Suppose $\evs \neq \evs'$.
-Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition \ref{finTree}) we have that there is some
-$p \in \evS^{\evs'}$ and $a' \in A$ such that $p \evR'_{a'} \evs$.\\
-\\
-Finally let $\evs \in \evS'_\evt$.
-We must show that there is a finite sequence of action points $\evt = \evs_0, \evs_1, \evs_2, \ldots, \evs_n = \evs
-\in \evS'_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR_{a_1} \evs_1, \ldots, \evs_{n-1}
-\evR_{a_n} \evs_n$.
-If $\evs = \evt$ then there is a sequence of length 0 of such points.
-Suppose $\evs \neq \evt$.
-If so then there is some agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs \in \evS^{\evs'}_{\evs'}$, the set
-of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at $\evs'$.\\
-\\
-Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition
-\ref{finTree}) we have that there is some sequence of action points $\evs' = \evs_0, \evs_1, \evs_2, \ldots, \evs_n =
-\evs \in \evS^{\evs'}_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR'_{a_1} \evs_1, \ldots,
-\evs_{n-1} \evR'_{a_n} \evs_n$.
-We already have shown that $\evR'_a \evs' = \{ \evt \}$.
-Then there is a sequence $\evt \evR'_a \evs', \evs_0 \evR'_{a_1} \evs_1, \ldots, \evs_{n-1} \evR'_{a_n} \evs_n$.
-Thus $\evM'_\evt \in \treeClass$ from Definition \ref{finTree} and as a result \ref{forestConOne} holds.\\
-\\
-Conditions \ref{forestConTwo}, \ref{forestConFive} and \ref{forestConThree} hold from the definition
-of $\to$ (Definition \ref{considers}).
-What remains is to show that \ref{forestConFour} holds.
-Suppose that $\evs, \evt \in \evT'$ and $\evs \neq \evt$.
-From hypothesis $\evS^\evs_\evs$ and $\evS^\evt_\evt$ are disjoint trees.
-From the definition of $\to$ (Definition \ref{considers}) each of $\evS^\evs_\evs$ and $\evS^\evt_\evt$
-remain disjoint.\\
-\\
-Next, we show that if $\evt \in \evT$ there is some $\evs \in \evT'$ and some subtree of $\evM'_{\evT'}$, $\evM^{\evs}_{\evs}$
-such that $\evM^\evs_\evs \sim_k \evM_\evt$.
-From the definition of $\evM'_{\evT'}$, there is a subtree of $\evM^\evs_\evs$, where $\evM^\evs_\evs \sim_0 \evM_\evt$.
-Furthermore, by our induction hypothesis for each $a \in A$ and $\evt' \in \evt \evR_a$, there is an $a' \in
-A$ and $\evs' \in \evs \evR_{a'}$ such that the subtree $\evM^{\evs'}_{\evs'}$ of $\evM^\evs_\evs$ is $k-1$-bisimilar to
-$\evM_{\evt'}$.
-This allows us to satisfy {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} for every $a \in A$.
-We now only need show that $\evM^\evs_\evs \sim_{k-1} \evM'_\evs$.
-It is clear from a simple inductive argument that this holds, by virtue of each $\evM^{\evs'}_{\evs'}$ being
-$k-2$-bisimilar to $\evM_{\evt'}$ (Definition \ref{nBisimEvent}).
-Then $\evM^\evs_\evs \sim_k \evM_\evt$, where $\evs \in \evT'$ and $\evM^\evs_\evs$ a subtree of $\evM_{\evT'}$.\\
-\\
-Lastly, we show that $\evM'_{\evT'} \sim_k \evM_\evT$.
-We have shown that for each $\evt \in \evT$, there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}_{\evt'}
-\sim_k \evM_\evt$.
-We observe from the definition of $\evM'_{\evT'}$ that it is the disjoint union of models subtrees that
-are $k$-bisimilar to a model in $\evT$.
-That is, any $\evt' \in \evT'$ is the root of a subtree $\evM^{\evt'}_{\evt'}$ of $\evM'_{\evT'}$ that is $k$-bisimilar
-to $\evM_\evt$, for $\evt \in \evT$.
-It is clear that as the finite disjoint union of $k$-bisimilar models, $\evM'_{\evT'}$ is itself $k$-bisimilar
-to $\evM_\evT$.
-Thus we have $\evM_\evT \sim_k \evM'_{\evT'}$ and our induction hypothesis holds for $n = k$.
-\end{proof}
-
-We have shown that any action model can be constructed by our language, up to $n$-bisimilarity.
-If we focus on specific action models which can realise epistemic goals, as Hales
-\cite{hales13synthesis} shows, then we can complement that work by constructing action models
-specifically for the purpose of epistemic goal-achievement.
-
-\begin{corr} \label{approximatingBRestricted}
-Let $\phi \in \langArbAct$ and $B \subseteq A$.
-Then there is some $\evM_\evT \in \forestClass$ such that $\vdash \sqex{\evM_\evT} \phi$ and
-$\vdash \anex{\evM_\evT} \phi \iff \exists_B \phi$ is valid.
-\end{corr}
-
-\begin{proof}
-Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
-By Lemma \ref{allInCoverNormal} and Lemma \ref{thm:AAMLExpressivelyEquivalent} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
-Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
-From \cite{hales13synthesis}, Hales synthesises an action model $\evM'_{\evT'}$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT}
-\phi \iff \exists_B \phi$.\\
-\\
-We construct $\evM_\evT \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
-Since $MD(\phi) \leq n$ and $\evM_\evT \sim_n \evM'_{\evT'}$ we have by \ref{nBisimilarEventExec} that any
-formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT} \phi
-\iff \exists_B \phi$.
-\end{proof}
-
-Within this chapter, our work has shown that we can, up to $n$-bisimilarity, construct any event
-model.
-This ensures that we can realise the effects of any action model, and that we need only worry about
-the modal depth of the model to describe the action model.
-
-\section{Analysis and open questions} \label{subsec:multi:sequentCalc}
-
-We have shown that we can approximate action models according to what
-post-conditions are realised by an action models execution.
-This is achieved through the construction of a particular action model that fulfils
-our desired post-conditions.\\
-\\
-This approach is powerful in guaranteeing the construction of an action model
-that will always sure an epistemic goal state is fulfilled or that the Kripke
-model is destroyed as a result of the execution.
-We do not need to give any regard to the Kripke model that we are executing our
-action model on.\\
-\\
-We can summarise this approach as an algorithm, shown in Algorithm \ref{algo:myAlgo}.
-
-\begin{algorithm}
-\begin{algorithmic}
-  \REQUIRE{$\evM_\evT$ is an action model and $n \geq 0$}
-    \STATE{$\evMM_\evU$ is the empty model}
-    \FORALL {$\evt \in \evT$}
-    \STATE{
-      $\evM'_{\evt'} \in \insaneClass$ such that $\evpr'(\evt') = \evpr(\evt)$
-      \IF{$n > 0$}
-        \FORALL{$a \in A$}
-          \STATE{$\evM'_{\evt'} \gets \evM'_{\evt'} \to_a$ createEquivalent($\evM_{\evt \evR_a}$, $n-1$)}
-        \ENDFOR
-      \ENDIF
-      \STATE{$\evMM_\evU \gets \evMM_\evU \sqcup \evM'_{\evt'}$}}
-    \ENDFOR
-    \RETURN $\evMM_\evU$
-\end{algorithmic}
-\caption{The action model approximation algorithm that summarises our approach
-to constructing an action model $\evMM_\evU$ that is $n$-bisimilar to
-$\evM_\evT$.}
-\label{algo:myAlgo}
-\end{algorithm}
-
-This algorithm ``unwinds" the action model into an $n$-bisimilar tree form of the
-original action model into its finite forest action model.
-To build a finite forest action model up to $n$-bisimilarity, where there are
-$k$ agents involved in the action model and there are $m$ accessibilities from
-each action point, the resulting action model would have an approximate size of
-$O((mk)^n)$ action points.\\
-\\
-These action models thus have an exponential cost to construct.
-Since each action point must be inspected once during construction we can conclude that in
-terms of size and time, this algorithm's has an $O((mk)^n)$ complexity.
-This is an expensive update to construct.\\
-\\
-In terms of epistemic goal achievement, this tree-like construction is shown to
-have further weaknesses.
-By combining Hales' \cite{hales13synthesis} work with our own we can achieve any
-epistemic goal.
-However, as we tie our realisation of an epistemic state to a specific action
-model, we cannot make comments on whether our model is the smallest update to
-guarantee an epistemic state, or whether the update we construct is a minimal
-change with the weakest pre-condition.\\
-\\
-We show examples of achieving an epistemic goal with a smaller size update in Figure
-\ref{figure:compareAnnounceSize}, where we have a two agent system comprising of
-$B$ and $C$, and we want to construct an update such that $\Box_B \Box_C \Box_B
-p \land \Box_C \Box_B \Box_C p$.
-
-\begin{figure}
-	\centering
-	\begin{subfigure}[b]{.45\textwidth}
-	\centering
-	\begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=2cm,
-				thick]
-    \node[vertex] (1) {$\evs$};
-    \node[vertex] (2) [below left of=1] {$\evt_1$};
-    \node[vertex] (3) [below right of=1] {$\evt_2$};
-    \node[vertex] (4) [below left of=2] {$\evu_1$};
-    \node[vertex] (5) [below right of=3] {$\evu_2$};
-    \node[vertex] (6) [right of=4] {$\evv_1$};
-    \node[vertex] (7) [left of=5] {$\evv_2$};
-    \path[edge]
-      (1) edge node {$B$} (2)
-          edge node {$C$} (3)
-      (2) edge node {$C$} (4)
-          edge node {$B$} (6)
-      (3) edge node {$B$} (5)
-          edge node {$C$} (7);
-	\end{tikzpicture}
-  \caption{An example action model that we generate to fulfill the condition
-  $\Box_C \Box_B \Box_C p \Box_B \Box_C \Box_B p$, for $p$ some propositional
-  atom and $C, B$ are agents in $A$.
-  Here, $\evM_\evs$ is a finite tree action model, with $\evpr(\evs) = \exists
-  (\Box_C \Box_B \Box_C p \Box_B \Box_C \Box_B p)$.}
-  \label{subfigure:ourGenerated}
-	\end{subfigure}
-	~
-	\begin{subfigure}[b]{.45\textwidth}
-	\centering
-	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-				thick]
-    \node[vertex] (1) {$\evs'$};
-    \path[edge]
-      (1) edge [loop right] node {} (1);
-	\end{tikzpicture}
-  \caption{The public announcement of $p$, $\evM'_{\evs'}$ such that
-  $\evpr'(\evs')$. It will also achieve our epistemic
-  goal but is much shorter to construct.}
-	\end{subfigure}
-	\caption[Comparing announcements against the models we generate]{Here, we can
-  see that the succinctness and shortness of our constructed action models are
-  somewhat lacking, since the same epistemic goals are being achieved by a much
-  smaller action model.}
-	\label{figure:compareAnnounceSize}
-\end{figure}
-
-In addition to action model size, the change wrought by our tree-like action
-models is rather destructive.
-Kripke model points that are acted upon by the leaves of the action model update
-lose all their accessibilities, and become effectively ``insane" models.
-This is undesirable, since it becomes hard to interpret these models with
-regards to knowledge and belief.
-Much could be done to construct action models that were had weaker
-preconditions, thus being more general and effecting a smaller change in the
-resulting Kripke models.\\
-\\
-One approach to this problem is given by Aucher \cite{doi:10.3166/jancl.21.289-321,doi:10.1080/11663081.2012.736703}
-who constructs a language for reasoning about action model properties.
-His approach is to specify a descriptive approach to the action models, by
-reasoning about an action model and its properties.
-It is different to Hales' work and the approach we show here, in that it
-specifies the characteristics of any action model that would achieve an
-epistemic goal.\\
-\\
-Specifying certain properties such as ``the weakest possible pre-condition",
-``the smallest number of action points" or ``the most robust update" allows for
-the construction of updates that would be more useful than our
-current action model representations.
-It allows us to find updates that would still have the same epistemic goal
-achievement properties as our current approach, but with the additional benefit
-of succinctness and ``minimal change".\\
-\\
-Two open questions that we believe have been elicited from our construction
-framework are
-\begin{enumerate}
-	\item How can we build the smallest action model in terms of size that achieves $\phi$?
-		It is worth noting that ``size" is at this rudimentary stage unclear, and we are implicitly discussing the
-		number of event points.
-		However, ``size" might instead be number of relations, or some other measure.
-	\item How can we build the action model that minimally changes the epistemic situation and achieves
-		$\phi$?
-\end{enumerate}
