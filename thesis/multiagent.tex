@@ -29,11 +29,11 @@ This chapter is arranged as follows:
 		models, which is the desired form for our constructions
 	\item Section \ref{subsec:multi:achievingGoals} presents our main results regarding constructing
 		action models for the purposes of epistemic goal achievement
-	\item Section \ref{subsec:multi:sequentCalc} compares our work to established work in the field,
-		especially that achieved by Aucher
+	\item Section \ref{subsec:multi:sequentCalc} discusses our work in the context of goal
+		achievement, some alternative approaches and open questions that this work raises
 \end{itemize}
 
-\section{Technical preliminaries} \label{subsec:Multi:techPrelim}
+\section{Construction framework and definitions} \label{subsec:Multi:techPrelim}
 
 The action models that Hales employs in \cite{hales13synthesis} resemble finite trees.
 In order to give a good approximation of these models, we must define these tree-like structures and
@@ -166,9 +166,9 @@ This is clearly useful in an area where we intend to construct an action model, 
 construction begins in a ``bottom-up" fashion.
 
 \begin{defn} \label{leaf}
-Let $\evM_\evr = (\evS, \evR, \evpr, \evr)$ be a finite tree action model.
-Let $\evM' = (\evS', \evR', \evpr', \evr')$ be a subtree of $\evM$.
-$\evM'$ is a {\em leaf node} of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
+Let $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ be a finite tree action model.
+Let $\evM^{\evr'} = ((\evS', \evR', \evpr'), \evr')$ be a subtree of $\evM$.
+$\evM^{\evr'}$ is a {\em leaf node} of $\evM$ if $\forall a \in A \Rightarrow \evR'_a = \varnothing$ and $\evS' = \{
 \evr'\}$.
 \end{defn}
 
@@ -249,8 +249,8 @@ The first pertains to showing that applying the choice operator to two forests r
 larger forest.
 
 \begin{lemma} \label{disjForestIsForest}
-Let $\evM^1_{\evT^1}, \evM^2_{\evT^2} \in \forestClass$ be two disjoint forest action models.
-Then $\evM_\evT = \evM^1_{\evT^1} \sqcup \evM^2_{\evT^2} \in \forestClass$.
+Let $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$ be two disjoint forest action models.
+Then $\evM_\evT = \evM^1_{\evT^1} \sqcup \evM^2_{\evT^2}$ is a forest action model.
 \end{lemma}
 
 \begin{proof}
@@ -267,6 +267,9 @@ We note that $\evT = \evT^1 \sqcup \evT^2$.
 Thus $\evt \in \evT \Rightarrow (\evt \in \evT^1 \lor \evt \in \evT^2)$.
 Since $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$ are both finite forest action models then there must be some
 subtree action model $\evM^\evt \in \treeClass$ that corresponds to $\evt$.
+Then condition \ref{treeCorrespondence} will hold.
+Similar arguments can be made to show that conditions \ref{forestStateSubsets}, \ref{forestEdgeSubsets}
+and \ref{preconMatch} hold.
 Without loss of generality, let $\evt \in \evT^1$.\\
 \\
 Furthermore, by the definition of $\sqcup$ (Definition \ref{disjoint}), for any $\evM^\evt$, $\evS^\evt \subseteq \evS^1 \subseteq \evS$.
@@ -339,8 +342,8 @@ forest action models, as we show in the next section.
 Within this section, we will show that the operations we have selected, along with insanity event
 models, will be able to generate all possible finite tree action models.
 This allows us to say that the language is complete.
-This is necessary to show that our operations will construct all possible trees, and we will also show that
-using a tree any kind of action model can be constructed, up to $n$-bisimilarity.
+This is necessary to show that our operations will construct all possible trees.
+We will also show that using a tree, any kind of action model can be constructed, up to $n$-bisimilarity.
 
 \begin{lemma} \label{finTreeConstruct}
 Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree action model.
@@ -356,10 +359,10 @@ Let $\evpr'(\evr') = \phi$, a formula in our logical language.
 $\evM'$ is an insanity action model by definition.
 Thus, we can construct $\evM'$ using insanity action models when $\evM'$ is a leaf node of $\evM$.\\
 \\
-Let $\evM' = ((\evS', \evR', \evpr'), \evr')$ be an arbitrary subtree of $\evM$.
+Let $\evM^{\evr'} = ((\evS^{\evr'}, \evR^{\evr'}, \evpr^{\evr'}), \evr')$ be an arbitrary subtree of $\evM$.
 Suppose $\evpr'(\evr') = \phi$, where $\phi$ is a formula in our logical language.
-Let $\evM^1, \evM^2, \ldots, \evM^n$ be all the disjoint subtrees of $\evM'$.
-Suppose that each of $\evM^1, \evM^2, \ldots, \evM^n$ fulfil the induction hypothesis.
+Let $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ be all the disjoint subtrees of $\evM'$.
+Suppose that each of $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ fulfil the induction hypothesis.
 Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $\evr' \evR_{a_1} \evr^1$, $\evr'
 \evR_{a_2} \evr^2, \ldots, \evr' \evR_{a_n} \evr^n$.\\
 \\
@@ -367,20 +370,22 @@ Consider the $\evM^\evt = (\{ \evt \}, \evR^\evt, \evpr^\evt, \evt) \in \insaneC
 Let $\evpr^\evt(\evt) = \phi$.
 Consider the action model 
 \[
-\evM^K = (\ldots((\evM^\evt \to_{a_1} \evM ^ 1) \to_{a_2} \evM_2) \to_{a_3} \ldots
-\to_{a_{n-1}} \evM^{n-1} ) \to_{a_n} \evM ^ n
+	\evM^\evt = (\ldots((\evM^\evt \to_{a_1} \evM^{\evr_1}) \to_{a_2} \evM^{\evr_2}) \to_{a_3} \ldots
+	\to_{a_{n-1}} \evM^{\evr_{n-1}} ) \to_{a_n} \evM^{\evr_n}
 \]
-We will show that $\evM^K$ and $\evM'$ are equivalent action models.\\
+We will show that $\evM^\evt$ and $\evM^{\evr'}$ are equivalent action models.\\
 \\
-Each of $\evM^1, \evM^2, \ldots, \evM^n$ are subtrees of $\evM'$.
+Each of $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ are subtrees of $\evM'$.
 The action points, accessibilities and preconditions in each of $\evM^1, \evM^2, \ldots, \evM^n$ are
 equivalent to the action points and the accessibilities and preconditions of those points in $\evM'$.
 We can see that by its definition the ``root" of $\evM^K$, $\evt$ has the same precondition as $r'$.
-Furthermore, both $r'$ and $\evt$ can access each of $\evM^1, \evM^2, \ldots \evM^n$ by an $a_1, a_2, \ldots, a_n$ edge
+Furthermore, both $r'$ and $\evt$ can access each of $\evM^{\evr_1}, \evM^{\evr_2}, \ldots
+\evM^{\evr_n}$ by an $a_1, a_2, \ldots, a_n$ edge
 respectively.\\
 \\
-Thus $\evM'$ and $\evM^K$ are equivalent.
-We can form $\evM'$ using insanity action models and $\to$, and thus any arbitrary subtree of $\evM'$
+Thus $\evM^{\evr'}$ and $\evM^\evt$ are equivalent.
+We can form $\evM^{\evr'}$ using insanity action models and $\to$, and thus any arbitrary subtree of
+$\evM^{\evr'}$
 fulfils the induction hypothesis.
 \end{proof}
 
@@ -396,7 +401,7 @@ Then $\evM$ can be constructed using $\to$, $\sqcup$ and insanity action models.
 \end{lemma}
 
 \begin{proof}
-Let $\evM^\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt) \in \treeClass$ be the
+	Let $\evM^\evt = ((\evS^\evt, \evR^\evt, \evpr^\evt), \evt) \in \treeClass$ be the
 subtree of $\evM$ that corresponds to point $\evt \in \evT$ (Definition \ref{forest}).
 By Lemma \ref{finTreeConstruct} we can generate from $\insaneClass$ and $\to$.
 By Lemma \ref{treeIsForest} $\evM^\evt \in \forestClass$.
@@ -462,26 +467,28 @@ Thus our induction hypothesis holds for $n = 0$.\\
 \\
 Now, suppose that the induction hypothesis holds for $n = k-1$ and let $n = k$.
 Let $\evs \in \evT$ and $a \in A$.
-By the induction hypothesis, for each $\evt \in \evs \evR_a$, we can construct $\evM^\evt_\evt \in \treeClass$ such that
-$\evM^\evt_\evt \sim_{k-1} \evM_\evt$.
-Consider $\evM^\evs_\evs \in \insaneClass \subseteq \forestClass$ such that $\evpr'(\evs) \iff
+By the induction hypothesis, for each $\evt \in \evs \evR_a$, we can construct $\evM^\evt \in \treeClass$ such that
+$\evM^\evt \sim_{k-1} \evM_\evt$.
+Consider $\evM^\evs \in \insaneClass \subseteq \forestClass$ such that $\evpr'(\evs) \iff
 \evpr(\evs)$.
 By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\evs}
 \sim_0 \evM_\evs$.\\
 \\
 Then, let
 \[
-  \evM'_{\evT'} = \bigsqcup_{\evs \in \evT} \evM^\evs_\evs \to_a (\bigsqcup_{\evt \in \evs \evR_a} \evM^\evt_{\evt})
+	\evM'_{\evT'} = \bigsqcup_{\evs \in \evT} (\evM^\evs \to_a (\bigsqcup_{\evt \in \evs \evR_a}
+	\evM^\evt))
 \]
 Our proof is decomposed into three parts.
 First we show that $\evM'_{\evT'} \in \forestClass$.
-Secondly, we show that for $\evt \in \evT$ there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}_{\evt'}$ of
-$\evM'_{\evT'}$ such that $\evM^{\evt'}_{\evt'} \sim_n \evM_\evt$.
+Secondly, we show that for $\evt \in \evT$ there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}$ of
+$\evM'_{\evT'}$ such that $\evM^{\evt'} \sim_n \evM_\evt$.
 Lastly we show that $\evM'_{\evT'} \sim_k \evM_\evT$.\\
 \\
 To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions must hold
 \begin{enumerate}
-	\item each point $\evt \in \evT'$ is the root of a finite tree action model $\evM^\evt_\evt = (\evS^\evt, \evR^\evt, \evpr^\evt, \evt)$ \label{forestConOne}
+	\item each point $\evt \in \evT'$ is the root of a finite tree action model $\evM^\evt =
+		((\evS^\evt, \evR^\evt, \evpr^\evt), \evt)$ \label{forestConOne}
   \item $\evS' = \bigcup_{\evt \in \evT'} \evS^\evt$ \label{forestConTwo}
   \item for each $a \in A \Rightarrow \evR'_a = \bigcup_{\evt \in \evT'} \evR^\evt_a$ \label{forestConFive}
 	\item for each $\evs \in \evS^\evt$, $\evpr'(\evs) = \evpr^\evt(\evs)$ \label{forestConThree}
@@ -490,7 +497,7 @@ To show that $\evM'_{\evT'} \in \forestClass$, the following four conditions mus
 \end{enumerate}
 
 To show that \ref{forestConOne} holds, suppose $\evt \in \evT'$.
-We must show that $\evM'_\evt \in \treeClass$.
+We must show that $\evM^\evt \in \treeClass$.
 We observe that $\evS'$, the set of action points is finite, since it is the finite union of a set
 of finite forest action models which in turn have finite sets of points. This follows from the
 definition of $\evM'_{\evT'}$.\\
@@ -501,28 +508,28 @@ being added to $\evt \evR_a$ and none added to $\evR_a \evt$ for any $a \in A$.\
 \\
 Suppose $\evs \in \evS' \setminus \{ \evt \}$.
 Then there is an agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs$ is an action point in
-$\evS^{\evs'}_{\evs'}$, the set of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at
+$\evS^{\evs'}$, the set of action points for the subtree $\evM^{\evs'}$ of $\evM^\evt$ with its root at
 $\evs'$.\\
 \\
 Suppose $\evs = \evs'$.
 Then the $\evR'_a \evs = \{ \evt \}$, and for any other $a'$, $\evR'_{a'} \evs = \varnothing$.\\
 \\
 Suppose $\evs \neq \evs'$.
-Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition \ref{finTree}) we have that there is some
-$p \in \evS^{\evs'}$ and $a' \in A$ such that $p \evR'_{a'} \evs$.\\
+Since $\evM^{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition \ref{finTree}) we have that there is some
+$\evp \in \evS^{\evs'}$ and $a' \in A$ such that $\evp \evR'_{a'} \evs$.\\
 \\
-Finally let $\evs \in \evS'_\evt$.
+Finally let $\evs \in \evS^\evt$.
 We must show that there is a finite sequence of action points $\evt = \evs_0, \evs_1, \evs_2, \ldots, \evs_n = \evs
-\in \evS'_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR_{a_1} \evs_1, \ldots, \evs_{n-1}
+\in \evS^\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR_{a_1} \evs_1, \ldots, \evs_{n-1}
 \evR_{a_n} \evs_n$.
 If $\evs = \evt$ then there is a sequence of length 0 of such points.
 Suppose $\evs \neq \evt$.
-If so then there is some agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs \in \evS^{\evs'}_{\evs'}$, the set
-of action points for the subtree $\evM^{\evs'}_{\evs'}$ of $\evM'_\evt$ with its root at $\evs'$.\\
+If so then there is some agent $a \in A$ and $\evs' \in \evt \evR'_a$ such that $\evs \in \evS^{\evs'}$, the set
+of action points for the subtree $\evM^{\evs'}$ of $\evM^\evt$ with its root at $\evs'$.\\
 \\
-Since $\evM^{\evs'}_{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition
+Since $\evM^{\evs'} \in \treeClass$ by the definition of a finite tree action model (Definition
 \ref{finTree}) we have that there is some sequence of action points $\evs' = \evs_0, \evs_1, \evs_2, \ldots, \evs_n =
-\evs \in \evS^{\evs'}_\evt$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR'_{a_1} \evs_1, \ldots,
+\evs \in \evS^{\evs'}$ and agents $a_1, a_2, \ldots, a_n \in A$ such that $\evs_0 \evR'_{a_1} \evs_1, \ldots,
 \evs_{n-1} \evR'_{a_n} \evs_n$.
 We already have shown that $\evR'_a \evs' = \{ \evt \}$.
 Then there is a sequence $\evt \evR'_a \evs', \evs_0 \evR'_{a_1} \evs_1, \ldots, \evs_{n-1} \evR'_{a_n} \evs_n$.
@@ -532,28 +539,28 @@ Conditions \ref{forestConTwo}, \ref{forestConFive} and \ref{forestConThree} hold
 of $\to$ (Definition \ref{considers}).
 What remains is to show that \ref{forestConFour} holds.
 Suppose that $\evs, \evt \in \evT'$ and $\evs \neq \evt$.
-From hypothesis $\evS^\evs_\evs$ and $\evS^\evt_\evt$ are disjoint trees.
-From the definition of $\to$ (Definition \ref{considers}) each of $\evS^\evs_\evs$ and $\evS^\evt_\evt$
+From hypothesis $\evS^\evs$ and $\evS^\evt$ are disjoint trees.
+From the definition of $\to$ (Definition \ref{considers}) each of $\evS^\evs$ and $\evS^\evt$
 remain disjoint.\\
 \\
-Next, we show that if $\evt \in \evT$ there is some $\evs \in \evT'$ and some subtree of $\evM'_{\evT'}$, $\evM^{\evs}_{\evs}$
-such that $\evM^\evs_\evs \sim_k \evM_\evt$.
-From the definition of $\evM'_{\evT'}$, there is a subtree of $\evM^\evs_\evs$, where $\evM^\evs_\evs \sim_0 \evM_\evt$.
+Next, we show that if $\evt \in \evT$ there is some $\evs \in \evT'$ and some subtree of $\evM'_{\evT'}$, $\evM^{\evs}$
+such that $\evM^\evs \sim_k \evM_\evt$.
+From the definition of $\evM'_{\evT'}$, there is a subtree of $\evM^\evs$, where $\evM^\evs \sim_0 \evM_\evt$.
 Furthermore, by our induction hypothesis for each $a \in A$ and $\evt' \in \evt \evR_a$, there is an $a' \in
-A$ and $\evs' \in \evs \evR_{a'}$ such that the subtree $\evM^{\evs'}_{\evs'}$ of $\evM^\evs_\evs$ is $k-1$-bisimilar to
+A$ and $\evs' \in \evs \evR_{a'}$ such that the subtree $\evM^{\evs'}$ of $\evM^\evs$ is $k-1$-bisimilar to
 $\evM_{\evt'}$.
 This allows us to satisfy {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} for every $a \in A$.
-We now only need show that $\evM^\evs_\evs \sim_{k-1} \evM'_\evs$.
-It is clear from a simple inductive argument that this holds, by virtue of each $\evM^{\evs'}_{\evs'}$ being
+We now only need show that $\evM^\evs \sim_{k-1} \evM'_\evs$.
+It is clear from a simple inductive argument that this holds, by virtue of each $\evM^{\evs'}$ being
 $k-2$-bisimilar to $\evM_{\evt'}$ (Definition \ref{nBisimEvent}).
-Then $\evM^\evs_\evs \sim_k \evM_\evt$, where $\evs \in \evT'$ and $\evM^\evs_\evs$ a subtree of $\evM_{\evT'}$.\\
+Then $\evM^\evs \sim_k \evM_\evt$, where $\evs \in \evT'$ and $\evM^\evs$ a subtree of $\evM_{\evT'}$.\\
 \\
 Lastly, we show that $\evM'_{\evT'} \sim_k \evM_\evT$.
-We have shown that for each $\evt \in \evT$, there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}_{\evt'}
+We have shown that for each $\evt \in \evT$, there is a $\evt' \in \evT'$ such that the subtree $\evM^{\evt'}
 \sim_k \evM_\evt$.
 We observe from the definition of $\evM'_{\evT'}$ that it is the disjoint union of models subtrees that
 are $k$-bisimilar to a model in $\evT$.
-That is, any $\evt' \in \evT'$ is the root of a subtree $\evM^{\evt'}_{\evt'}$ of $\evM'_{\evT'}$ that is $k$-bisimilar
+That is, any $\evt' \in \evT'$ is the root of a subtree $\evM^{\evt'}$ of $\evM'_{\evT'}$ that is $k$-bisimilar
 to $\evM_\evt$, for $\evt \in \evT$.
 It is clear that as the finite disjoint union of $k$-bisimilar models, $\evM'_{\evT'}$ is itself $k$-bisimilar
 to $\evM_\evT$.
