@@ -340,8 +340,71 @@ We write $\krMo_{s} \lesssim \krMo'_{s'}$ or equivalently
 $\krMo'_{s'} \gtrsim \krMo_{s}$.
 \end{defn}
 
-This definition is given by Blackburn, de Rijke and Venema in \cite{blackburn2002modal}.\\
-\\
+This definition is given by Blackburn, de Rijke and Venema in \cite{blackburn2002modal}.
+We show examples of Figure \ref{figure:refinementExamples}.
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[b]{.30\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$t$};
+    \path[edge]
+          (1) edge node {$A,B$} (2)
+              edge [loop above] node {$A,B$} (1)
+          (2) edge node {} (1)
+              edge [loop above] node {$A,B$} (2);
+\end{tikzpicture}
+\caption{A Kripke model $M^1$.}
+\label{refinementOne}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.30\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$s$};
+		\node[vertex] (2) [right of=1] {$t$};
+		\node[vertex] (3) [below of=1] {$s'$};
+		\node[vertex] (4) [right of=3] {$t'$};
+    \path[edge]
+          (1) edge [loop above] node {$A,B$} (1)
+							edge [<->] node {$A,B$} (2)
+							edge [<->] node {$B$} (3)
+							edge [<->] node {$B$} (4)
+					(2) edge [loop above] node {$A,B$} (2)
+							edge [<->] node {$B$} (3)
+							edge [<->] node {$B$} (4)
+					(3) edge [loop below] node {$A,B$} (3)
+							edge [<->] node {$B$} (4)
+					(4) edge [loop below] node {$A,B$} (4);
+\end{tikzpicture}
+\caption{A Kripke model $M^2$.}
+\label{refinementTwo}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.30\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$s$};
+    \path[edge]
+          (1) edge [loop left] node {$A,B$} (1);
+\end{tikzpicture}
+\caption{A Kripke model $M^3$.}
+\label{afterfigure}
+\end{subfigure}
+\caption[Examples of refinements]{In this figure, there are three Kripke models --- each of these
+are refinements of each other.
+In this case, $M^1 \lesssim M^2$, $M^2 \lesssim M^3$ and $M^1 \lesssim M^3$.}
+\label{figure:refinementExamples}
+\end{figure}
+
 Simulations and refinements are powerful because they have a mapping to action models --- that is,
 action models and their execution can be characterised by refinements, as shown in Lemma
 \ref{eventModelsRefine}.
@@ -516,8 +579,10 @@ Within the context of our coin game involving Angline and Ben, modal depth can b
 \begin{itemize}
 	\item $\mDep(H) = 0$; that is, the modal depth of the propositional atom ``the coin is heads" is 0
 	\item $\mDep(\Box_A H) = 1$, or that the modal depth of ``$A$ knows the coin is heads" is 1
-	\item $\mDep(\Box_A (H \lor T)) = \mDep(\Box_A(\neg(\neg H \land \neg T))) = 1$
-	\item $\mDep(\Diamond_A \Box_A (H)) = \mDep(\neg \Box_A (\neg Box_A (H))) = 2$
+	\item $\mDep(\Box_A (H \lor T)) = \mDep(\Box_A(\neg(\neg H \land \neg T))) = 1 + \mDep(\neg(\neg H
+		\land \neg T)) = 1 + \mDep(\neg H \land \neg T) = 1 + \max(\mDep(H),\mDep(T)) = 1 + \max(0,0) = 1$
+	\item $\mDep(\Diamond_A \Box_A (H)) = \mDep(\neg \Box_A (\neg \Box_A (H))) = 1 + \mDep(\neg(\Box_A(H)))
+		= 1 + \mDep(\Box_A(H)) = 2 + \mDep(H) = 2 + 0 =  2$
 \end{itemize}
 
 Next, we build upon our logics to introduce the concepts updates and refinements as modal logics.
@@ -573,7 +638,8 @@ The interpretation of $\phi \in \langRefine$ ({\em refinement modal logic}) in t
 \]
 \end{defn}
 
-We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold".
+We read the formula $\forall_B \phi$ as ``for any $B$-refinement, $\phi$ will hold" (see Definition
+\ref{refinement} for a formal treatment on refinements).
 Its dual, $\exists_B \phi$ can be read as ``there is a $B$-refinement such that $\phi$ will hold".
 As in the previous operations, when $B = A$ we will write $\forall \phi$.
 In addition, when $B = \{b\}$ we write $\forall_b$ and $\exists_b$.
@@ -644,7 +710,7 @@ these two action models in the same epistemic situation, the resulting models ar
 These well-known definitions and results are shown by van der Hoek, Kooi and van Ditsmarsch in
 \cite{hoek2008dynamic}.\\
 \\
-As with before, bisimilarity is a strong condition --- it says that the effects of two bisimilar
+As with Kripke model bisimulation, action model bisimilarity is a strong condition --- it says that the effects of two bisimilar
 action models will be exactly the same.
 This is, perhaps, too strong a condition that we might not need.
 We thus introduce the idea of $n$-bisimilarity for action models.
@@ -767,72 +833,7 @@ such that $\evMo_\evt \sim_n \evMo'_{\evt'}$ and vice versa.
 \end{lemma}
 
 \begin{proof}
-We use an inductive proof on the complexity of $\phi$.
-We inductively show that $\evMo^1_{(t,\evs}) = \krMo_t \otimes \evMo_\evs \models \phi \iff \evMo^2_{(t,\evs')} = \krMo_t \otimes
-\evMo'_{\evs'} \models \phi$.\\
-\\
-We begin with a base case of $\phi = p$, a single atomic proposition.
-Suppose $\evMo^1_{(t,\evs)} \models \phi$.
-Then
-\begin{align}
-	& \Rightarrow p \in V^1_{(t,\evs)} \label{nBisEvbase1} \\
-	& \Rightarrow p \in V(t) \label{nBisEvbase2} \\
-	& \Rightarrow \krMo_t \models \evpr(\evs) \label{nBisEvbase4} \\
-	& \Rightarrow \krMo_t \models \evpr'(\evs') \label{nBisEvbase5} \\
-	& \Rightarrow p \in V^2_{(t,\evs')} \label{nBisEvbase6}\\
-	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
-\end{align}
-(\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
-(\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of action model execution (Definition
-\ref{evModelEx}).
-(\ref{nBisEvbase5}) follows from hypothesis and the definition of $n$-bisimilarity (Definition
-\ref{nBisimEvent}).
-(\ref{nBisEvbase6}) follows from the definition of action model execution (Definition
-\ref{evModelEx}).
-Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Definition
-\ref{propLogic}).\\
-\\
-We go through each of the inductive cases.
-Let $\phi = \neg \psi$, and suppose $\evMo^1_{(t,\evs)} \models \phi$.
-Then
-\begin{align}
-	& \Rightarrow \neg (\evMo^1_{(t,\evs)} \models \psi) \label{nBisEvNeg1} \\
-	& \Rightarrow \neg (\evMo^2_{(t,\evs')} \models \psi) \label{nBisEvNeg2} \\
-	& \Rightarrow \evMo^2_{(t,\evs')} \models \neg \psi \label{nBisEvNeg3} \\
-	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvNeg4}
-\end{align}
-(\ref{nBisEvNeg1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
-(\ref{nBisEvNeg2}) follows from the induction hypothesis.
-(\ref{nBisEvNeg3}) again follows from the semantics of propositional logic (Definition
-		\ref{propLogic}) and (\ref{nBisEvNeg4}) is obvious.\\
-\\
-Let $\phi = \psi_1 \land \psi_2$ and suppose $\evMo^1_{(t,\evs)} \models \phi$.
-Then
-\begin{align}
-	& \Rightarrow \evMo^1_{(t,\evs}) \models \psi_1 \label{nBisEvCon1} \\
-	& \Rightarrow \evMo^2_{(t,\evs'}) \models \psi_1 \label{nBisEvCon2}
-\end{align}
-(\ref{nBisEvCon1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
-(\ref{nBisEvCon2}) follows from the induction hypothesis.
-Employing a similar process allows us to show that $\evMo^2_{(t,\evs'}) \models \psi_2$ and together they 
-show that $\evMo^2_{(t,\evs')} \models \phi$.\\
-\\
-Our final inductive case is to let $a \in A$ and $\phi = \Diamond_a \psi$.
-Suppose that $\evMo^1_{(t,\evs)} \models \phi$.
-\begin{align}
-	& \iff \evMo^1_{(t,\evs)} \models \Diamond_a \psi \label{nBisEvMod1} \\
-	& \iff \evMo^1_{(v,\evu)} \models \psi \text{ for some $(v,\evu) \in (t,\evs) R^1_a$} \label{nBisEvMod2} \\
-	& \iff \evMo^1_{(v,\evu)} \models \psi \text{ for $v \in t R^\krMo_a$ and $\evu \in \evs R_a$ and $\krMo_t \models
-		\evpr(\evs)$ and $\krMo_v \models \evpr(\evu)$} \label{nBisEvMod3} \\
-\end{align}
-
-As $\evMo_\evs \sim_n \evMo'_{\evs'}$, then there is some $\evu' \in \evs R'_a$ such that $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}$.
-Then we have that $\krMo_v \models \evpr(\evu) \iff \krMo_v \models \evpr'(\evu)$, since $\evMo_\evu \sim_{n-1} \evMo'_{\evu'}
-\Rightarrow \evMo_\evu \sim_0 \evMo'_{\evu'}$.
-Then by our induction hypothesis we have that $\evMo^1_{(v,\evu)} \models \psi \iff \evMo^2_{(v, \evu')} \models
-\psi$.
-From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $\evMo^2_{(v,\evu')}
-\models \psi \Rightarrow \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
+	See the proof given in \ref{proof:nBisimilarEventExec} for the full proof.
 \end{proof}
 
 This result is very similar to Lemma \ref{eventModelEquivalent}.
@@ -874,6 +875,8 @@ formulae in cover disjunctive normal form.
 
 We note that the above has a base case when $\alpha = \pi$, that is when $B = \varnothing$ or for
 each $b \in B \Rightarrow \Gamma_b = \varnothing$.
+The original definition for cover disjunctive normal form was originally defined in
+\cite{van2010future}.
 
 \begin{lemma} \label{allInCoverNormal}
 Every formula of $\lang$ is equivalent to a formula in cover disjunctive normal form.
