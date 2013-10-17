@@ -70,11 +70,12 @@ need to specify models of updates, which we call {\em action models}.
 \begin{defn} \label{evModel}
 	Let $L$ be a logical language.
 	Let $F = (S, R)$ be a frame, and $A$ a set of agents.
-	An {\em action model} (also known as an {\em action model}) $\aMod{\evMo = (S, R, pre)}$ with preconditions defined on $\mathcal{L}$ consists of
+	An {\em action model} $\aMod{\evMo = (S, R, pre)}$ with preconditions defined
+  on $\lang$ consists of
 	\begin{itemize}
 		\item a domain $\aMod{S}$ of possible atomic action points
 		\item an accessibility function, $\aMod{R: A \to \mathcal{P}(S \times
-        S)}$, a function from agents to
+        S)}$ \footnote{$\mathcal{P}(S)$ is the powerset of $S$.}, a function from agents to
 		accessibility relations on $S$.\\
 		We refer to $\aMod{R(a)}$ as $\aMod{R_a}$.
 		We will refer to all accessible action points from $\aMod{s}$ as
