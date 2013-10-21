@@ -69,7 +69,7 @@ need to specify models of updates, which we call {\em action models}.
 
 \begin{defn} \label{evModel}
 	Let $L$ be a logical language.
-	Let $F = (S, R)$ be a frame, and $A$ a set of agents.
+	Let $F = (\evS, \evR)$ be a frame, and $A$ a set of agents.
 	An {\em action model} $\aMod{\evMo = (S, R, pre)}$ with preconditions defined
   on $\lang$ consists of
 	\begin{itemize}
@@ -83,8 +83,8 @@ need to specify models of updates, which we call {\em action models}.
 		can access $\aMod{t}$ as $\aMod{R_a t}$.
 		Furthermore, we say $\aMod{s R_a t}$ means $\aMod{t}$ is
     $\aMod{a}$-accessible from $\aMod{s}$.
-		\item a precondition function, $\aMod{pre: S} \to \mathcal{L}$ which maps an action point to a
-		sentence in $\mathcal{L}$
+		\item a precondition function, $\aMod{pre: S} \to L$ which maps an action point to a
+		sentence in $L$
 	\end{itemize}
 \end{defn}
 

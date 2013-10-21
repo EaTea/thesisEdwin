@@ -1,4 +1,4 @@
-\chapter{Multi-agent epistemic goal achievement in $\langArbAct$} \label{chapter:Multiagent}
+\chapter{Epistemic goal achievement in arbitrary action model logic} \label{chapter:Multiagent}
 
 In this chapter, we examine an algebra for constructing action models that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
@@ -613,19 +613,21 @@ We can summarise this approach as an algorithm, shown in Algorithm \ref{algo:myA
 
 \begin{algorithm}
 \begin{algorithmic}
-  \REQUIRE{$\evM_\evT$ is an action model and $n \geq 0$}
-    \STATE{$\evMM_\evU$ is the empty model}
-    \FORALL {$\evt \in \evT$}
-    \STATE{
+	\Function{createEquivalent}{$\evM_\evT$ is an action model, $n \geq 0$}
+    \State{$\evMM_\evU$ is the empty model}
+    \ForAll {$\evt \in \evT$}
+    \State{
       $\evM'_{\evt'} \in \insaneClass$ such that $\evpr'(\evt') = \evpr(\evt)$
-      \IF{$n > 0$}
-        \FORALL{$a \in A$}
-          \STATE{$\evM'_{\evt'} \gets \evM'_{\evt'} \to_a$ createEquivalent($\evM_{\evt \evR_a}$, $n-1$)}
-        \ENDFOR
-      \ENDIF
-      \STATE{$\evMM_\evU \gets \evMM_\evU \sqcup \evM'_{\evt'}$}}
-    \ENDFOR
-    \RETURN $\evMM_\evU$
+      \If{$n > 0$}
+        \ForAll{$a \in A$}
+				\State{$\evM'_{\evt'} \gets \evM'_{\evt'} \to_a$ \Call{createEquivalent}{$\evM_{\evt
+				\evR_a}$, $n-1$}}
+        \EndFor
+      \EndIf
+      \State{$\evMM_\evU \gets \evMM_\evU \sqcup \evM'_{\evt'}$}}
+    \EndFor\\
+		\Return {$\evMM_\evU$}
+	\EndFunction
 \end{algorithmic}
 \caption{The action model approximation algorithm that summarises our approach
 to constructing an action model $\evMM_\evU$ that is $n$-bisimilar to

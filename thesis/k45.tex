@@ -1,4 +1,4 @@
-\chapter{Constructing action models in $\AXKFF$} \label{chapter:k45}
+\chapter{Action model construction in $\AXKFF$} \label{chapter:k45}
 
 We have discussed models in the axiom system of $\AXK$.
 In particular, we have focused on approximating arbitrary action models.
@@ -12,8 +12,10 @@ If we are interested in reasoning about protocols or representing our updates in
 amenable to ``classical" knowledge, bases, we need to use an axiomatisation that is more
 appropriate.\\
 \\
-We thus will work in the axiomatisation of $\AXKFF$, allowing us to move far closer to constructing
-sensible epistemic updates.
+We thus will work in the axiomatisation of $\AXKFF$, a logic which constrains all model relations to
+be both transitive and Euclidean.
+These constraints make $\AXKFF$ much closer to systems such as {\bf KT45} and {\bf KD45}, which are
+classical systems of knowledge and belief.
 We will replicate a similar result of action model approximation in the axiomatic system
 of $\AXKFF$.
 This chapter details our results for constructing action models in $\AXKFF$, up to $n$-bisimilarity.\\
@@ -76,25 +78,26 @@ The axiomatisation $\AXKFF$ contains the axioms and rules from $\AXK$ (Definitio
 \end{alignat*}
 \end{defn}
 
-\begin{lemma} \label{axiomK45SoundComplete}
-The axiomatisation $\AXKFF$ is sound and complete with respect to the logic
-$\langKFF$.
-\end{lemma}
-
-This is indirectly shown by Blackburn, de Rijke and Venema \cite{blackburn2002modal} through Sahlqvist formulae, the Sahlqvist
-completeness theorem and Kracht's theorem \cite{2594394}, which we do not replicate in full for brevity.\\
+This \\
 \\
 The impact these axioms have on our models is not immediately obvious.
-We observe the following effects of the axioms
-\begin{itemize}
-	\item $\axFo$ causes every relation to be transitive --- that is, $A$ related to $B$ and $B$
-		related to $C$ ensures $A$ is related to $C$
-	\item $\axFi$ has more subtle consequences, but causes every relation to be Euclidean. This means
-		that if $A$ is related to $B$.
-    and $A$ is related to $C$, $B$ must also be related to $C$.
-\end{itemize}
+We observe the following effects of the axioms and formalise them as {\em frame conditions} in
+Definition \ref{lemma:k45frameconditions}.
 
-We demonstrate this in Figure \ref{k45VsKModels} by comparing models in $\AXK$ and $\AXKFF$ and how we need to change
+\begin{defn} \label{lemma:k45frameconditions}
+	Let $F = (S,R)$ be a frame.
+	We say that $F$ is a {\em $\AXKFF$ frame} if it fulfils the following conditions:
+	\begin{itemize}
+		\item if $R$ is a transitive relation, then $\axFo$ is valid in any model where $F$ is its
+			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \Rightarrow s R u$
+		\item if $R$ is a Euclidean relation, then $\axFi$ is valid in any model where $F$ is its
+			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \Rightarrow t R u$
+	\end{itemize}
+\end{defn}
+
+This is given by Fagin et. al in \cite{fagin1995reasoning}.\\
+\\
+We demonstrate the effects in Figure \ref{k45VsKModels} by comparing models in $\AXK$ and $\AXKFF$ and how we need to change
 our models to obey these axioms.
 
 \begin{figure}
@@ -167,29 +170,17 @@ By $\axFi$ for any formula $k \in \lang$ such that $\krMo'_\alpha \models
 This causes points $\beta, \gamma$ and $\delta$ to become a completely connected component,
 with an edge running to each one of them, as well as reflexive edges for each point.\\
 \\
-Our previous definitions give a well-defined idea for whether a Kripke model obeys the axioms of $\AXKFF$.
-Unfortunately, this does not translate well to action models due to the differences in their
-semantics.
-In order to determine if an action model obeys the axioms of $\AXKFF$, we will formalise the ``model"
-implications we previously discussed into conditions on the structure of the model (that is, the
-frame of the model --- see Definition \ref{frame}).
-These are the {\em frame conditions} of $\AXKFF$, and we will show that an action model that fulfils these
-frame conditions, when executed on a Kripke model that obeys the axioms of $\AXKFF$ will preserve
-these axioms post execution.
+A further result of soundness and completeness of $\AXKFF$ is indirectly shown by Blackburn, de Rijke and Venema
+\cite{blackburn2002modal} through Sahlqvist formulae, the Sahlqvist completeness theorem and Kracht's
+theorem \cite{2594394}, which we do not replicate in full for brevity..
 
-\begin{defn} \label{lemma:k45frameconditions}
-	Let $F = (S,R)$ be a frame.
-	We say that $F$ is a {\em $\AXKFF$ frame} if it fulfils the following conditions:
-	\begin{itemize}
-		\item if $R$ is a transitive relation, then $\axFo$ is valid in any model where $F$ is its
-			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \Rightarrow s R u$
-		\item if $R$ is a Euclidean relation, then $\axFi$ is valid in any model where $F$ is its
-			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \Rightarrow t R u$
-	\end{itemize}
-\end{defn}
+\begin{lemma} \label{axiomK45SoundComplete}
+The axiomatisation $\AXKFF$ is sound and complete with respect to the validities on all Euclidean
+and transitive frames.
+\end{lemma}
 
-This is given by Fagin et. al in \cite{fagin1995reasoning}.
-We can use the concept of an $\AXKFF$ frame to define a $\AXKFF$ action model.
+We can also use the idea of frame conditions of Kripke models to define a {\em $\AXKFF$ action
+model}.
 
 \begin{defn} \label{defn:k45eventModel}
 	Suppose $\evM = (\evS, \evR, \evpr)$ is an action model.
@@ -204,25 +195,30 @@ Secondly, we can show that if $\evM_\evT$ is a $\AXKFF$ action model then it pre
 $\AXKFF$.
 
 \begin{lemma} \label{lemma:k45preserved}
-	Let $\krMo_T = ((S,R,V),T)$ is a $\AXKFF$ Kripke model and $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ action model, then
-	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ Kripke model.
+	Let $\krMo_T = ((S,R,V),T)$ is a $\AXKFF$ model and $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $\AXKFF$ action model, then
+	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ model.
 \end{lemma}
 \begin{proof}
 	See \ref{proof:lemma:k45preserved} for the full proof.
 \end{proof}
 
 This shows us that what we consider a $\AXKFF$ action model behaves as we expect --- if we execute
-its update on a $\AXKFF$ Kripke model, the resulting Kripke model is also a $\AXKFF$ Kripke model.\\
+its update on a $\AXKFF$ model, the resulting Kripke model is also a $\AXKFF$ model.
+We have now specified a class of action models that preserve the axioms of $\AXKFF$, specifically by
+ensuring that the relations of the action models are both Euclidean and transitive.\\
 \\
 We can approximate informative updates using our previous method (detailed in Chapter
-\ref{chapter:Multiagent}, but these updates do not preserve
+\ref{chapter:Multiagent}), but these updates do not preserve
 axioms $\axFo$ and $\axFi$.
-The resulting model after execution barely resembles an epistemic model.
+The resulting model after execution is not an epistemic model.
 The approach in this chapter constructs action models that, after their execution on a model that
 fulfils the conditions of $\AXKFF$, will preserve those conditions.\\
 \\
 Lastly, we define what a $B$-insane action model is.
-It is a necessary type of action models that we require in order to generate our approximating $\AXKFF$ models.
+It is a necessary class of action models that we require as ``atomic" models in order to generate our approximating $\AXKFF$ models.
+The condition of $B$-insane multi-pointed action models are action models that where a group of agents, $B$ cannot
+reason about the points.
+This condition is useful for specifying action model construction in $\AXKFF$.
 
 \begin{defn} \label{binsane}
 	Let $\evM_\evT = ((\evS, \evR, \evpre), \evT)$ be a multi-pointed action model and $B \subseteq A$.
@@ -389,7 +385,7 @@ must hold
 		language
 \end{enumerate}
 
-Let us show that the first proposition --- that $\EM(\to,\sqcup,I)$ will construct $\AXKFF$ event
+We show that the first proposition --- that $\EM(\to,\sqcup,I)$ will construct $\AXKFF$ event
 models.
 
 \begin{lemma} \label{lemma:onlyK45Models}
@@ -401,7 +397,7 @@ models.
 	$\EM(\to,\sqcup,I)$ constructs a $\AXKFF$ action model.
 	We provide a sketch of the case-by-case proof below.
 	\begin{itemize}
-		\item We first examine the atoms using in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
+		\item We first examine the atoms used in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
 	models.\\
 	\\
 	Since the only atomic action models we use in $\EM(\to,\sqcup,I)$ are insanity models, we suppose
@@ -426,7 +422,7 @@ models.
 	\\
 	Then $\evs'', \evt'', \evu''$ must all originally be elements of either $\evS$ or $\evS'$ ---
 	without loss of generality, we say that they are elements of $\evS$.
-	Furthermore, then relation $\evs'' \evR''_a \evt''$ and $\evt'' \evR''_a \evu''$ also correspond
+	Furthermore, the relation $\evs'' \evR''_a \evt''$ and $\evt'' \evR''_a \evu''$ also correspond
 	to $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$.
 	Since $\evM_\evT$ is a $\AXKFF$ action model, then $\evs'' \evR_a \evt''$ and $\evt'' \evR_a \evu''$
 	yields that $\evs'' \evR_a \evu''$, which implies that $\evs'' \evR''_a \evu''$.
@@ -439,7 +435,7 @@ models.
 	We will show that $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT') = I_B(\evM_\evT)$ is an $\AXKFF$ action model, by showing the frame conditions in
 	Definition \ref{lemma:k45frameconditions}.\\
 	\\
-	Let us show that $\evR'$ is a transitive relation.
+	Next, we show that $\evR'$ is a transitive relation.
 	Suppose that $a \in A$ and $\evs', \evt', \evu' \in \evS'$ and $\evs' \evR'_a \evt'$ and $\evt'
 	\evR'_a \evu'$.
 	We must show that $\evs' \evR'_a \evu'$.
@@ -500,7 +496,7 @@ $\EM(\to,\sqcup,I)$ and $\krMo_T$ is a $\AXKFF$ Kripke model, $\krMo_T
 This shows that the constructions we use --- $\EM(\to, \sqcup, I)$ are
 sound, and only generate $\AXKFF$ action models.\\
 \\
-Let us turn to the second goal we have and suppose that we have an action model, $\evM_\evT
+We turn to the second goal we have and suppose that we have an action model, $\evM_\evT
 = ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed action model.
 Now, consider $n$ some positive integer.
 Can we construct an action model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
@@ -664,7 +660,7 @@ model, we can show that this submodel is $n$-bisimilar to $\evM_\evT$.
 	We must now show both of {\bf $k$-forth-$a$} and {\bf $k$-back-$a$} as in Definition
 	\ref{nBisimEvent}.\\
 	\\
-	Let us show {\bf $k$-forth-$a$}.
+	Next, we show {\bf $k$-forth-$a$}.
 	Let $a \in A$, and suppose that $\evs \in \evt \evR''_a$.
 	We want to show there is some $\evs' \in \evt \evR'_a$ such that $\evs' \sim_{k-1} \evs$.
 	To show that this is so, we would require that $\evs' \sim_{k-2} \evs$, and that {\bf
@@ -737,8 +733,8 @@ We will now show that we can actually construct any unwound $n$-model using $\EM
 		\item $\evS^k = \evs' \evp$, where $\evp \in \evS^\ast$ and $\evp$ is a string of length less
 			than $k$
 		\item $\evR^k_a = \evR'$ restricted to $\evS^k$ if $\evR'_a \evs'$ is empty
-		\item $\evR^k_a = \evR' \setminus \{\evs' \evR^k_a = \evR^k_a \evs'\}$,
-    restricted to $\evS^k$ if $\evR'_a \evs$ is nonempty
+		\item $\evR^k_a = \evR' \setminus \{\evR^k_a \evs'\}$,
+    restricted to $\evS^k$ if $\evR'_a \evs'$ is nonempty
 		\item $\evpr^k = \evpr'$ restricted to $\evS^k$
 	\end{itemize}
 
@@ -826,14 +822,22 @@ It is clear that if $\evp = \evs$ then this would be the unwound $2$-model of $\
   \\
   Then
   \[
-    \bigsqcup_{\evt' \in \evs' \evR'_{a'} \land \evM^{k'}_{\evq} \sim_k
-      \evM^k_\evt} \evM^{k'}_{\evt'}
+		\bigsqcup_{
+			\begin{array}{c}
+				\evt' \in \evs' \evR'_{a'} \land \\
+				\evM^{k'}_{\evq} \sim_k \evM^k_\evt
+			\end{array}
+		} \evM^{k'}_{\evt'}
   \]
   is also an $a'$-insane model (although we have not shown this previously, it
   is quite clear from the definition of $\sqcup$), which allows us to construct the model
   \[
-    \evM^{k'}_{\evT^{a'}} = I_{a'}(\bigsqcup_{\evt' \in \evs' \evR'_{a'} \land \evM^{k'}_{\evq} \sim_k
-      \evM^k_\evt} \evM^{k'}_{\evt'}) = ((\evS^{k'},\evR^{k'},\evpr^{k'}),\evT^{a'})
+    \evM^{k'}_{\evT^{a'}} = I_{a'}(\bigsqcup_{
+			\begin{array}{c}
+				\evt' \in \evs' \evR'_{a'} \land \\
+				\evM^{k'}_{\evq} \sim_k \evM^k_\evt
+			\end{array}
+		} \evM^{k'}_{\evt'}) = ((\evS^{k'},\evR^{k'},\evpr^{k'}),\evT^{a'})
   \]
 
   It is clear that for $\evq \in \evT'$, $\evq \evR^{k'}_{a'} = \evT^{a'}$, by the
@@ -853,7 +857,7 @@ It is clear that if $\evp = \evs$ then this would be the unwound $2$-model of $\
   \]
 
   This model is a $\AXKFF$ action model, since the operations used to construct
-  it were $\EM(\to,\sqcup,I)$.
+	it were the operations of $\EM(\to,\sqcup,I)$ (Lemma \ref{lemma:onlyK45Models}).
   It remains to be shown that $\evM^{k+1'}_{\evp} \sim \evM^{k+1}_{\evs'}$.\\
   \\
   We will construct the following relation $\sim$ over $\evS^{k+1'} \times
@@ -866,7 +870,7 @@ It is clear that if $\evp = \evs$ then this would be the unwound $2$-model of $\
   \evpr^{k+1}(\evt)$ since $\evM^{i'}_{\evt'}$ is bisimilar to $\evMM^{i}_{\evt}$.
   It remains to be shown that if $(\evt', \evt) \in \sim$ then both {\bf
   forth-$a$} and {\bf back-$a$} hold.
-		\item Let us show that {\bf forth-$a$} holds.
+		\item We show that {\bf forth-$a$} holds.
 	Suppose $(\evu',\evu) \in \sim$ and $\evu' \evR^{k+1'}_a \evv'$.
 	We must show that there is some $\evv \in \evS^{k+1}$ such that $\evv \in \evu \evR^{k+1}_a$ and
 	$(\evv',\evv) \in \sim$.\\
