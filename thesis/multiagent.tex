@@ -25,7 +25,8 @@ This chapter is arranged as follows:
 \begin{itemize}
 	\item Section \ref{subsec:Multi:techPrelim} presents the technical preliminaries and definitions
 		of the language for action model construction in $\AXK$
-	\item Section \ref{subsec:multi:completeness} proves that the language constructs tree-like event
+	\item Section \ref{subsec:multi:completeness} proves that the language
+  constructs tree-like action
 		models, which is the desired form for our constructions
 	\item Section \ref{subsec:multi:achievingGoals} presents our main results regarding constructing
 		action models for the purposes of epistemic goal achievement
@@ -88,7 +89,8 @@ We make an important note that insanity models are the most basic kind of tree-l
 \label{figure:exampleTree}
 \end{figure}
 
-It is clear that by our earlier definitions, an insanity action model is also a finite tree event
+It is clear that by our earlier definitions, an insanity action model is also a
+finite tree action
 model.\\
 \\
 Having established tree-like structures, it seems somewhat natural to also rigourously define a
@@ -115,7 +117,8 @@ We say that the class of finite forest action models is $\forestClass$.
 	That is, $\treeClass$ is contained within $\forestClass$.
 \end{lemma}
 
-Again, it is clear that by our earlier definitions, a finite tree action model is also a finite forest event
+Again, it is clear that by our earlier definitions, a finite tree action model
+is also a finite forest action
 model.\\
 \\
 Having defined a class of action models that are ``larger" than trees, it is also useful to be able
@@ -339,7 +342,8 @@ forest action models, as we show in the next section.
 
 \section{Completeness} \label{subsec:multi:completeness}
 
-Within this section, we will show that the operations we have selected, along with insanity event
+Within this section, we will show that the operations we have selected, along
+with insanity action
 models, will be able to generate all possible finite tree action models.
 This allows us to say that the language is complete.
 This is necessary to show that our operations will construct all possible trees.
@@ -591,7 +595,8 @@ formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\e
 \iff \exists_B \phi$.
 \end{proof}
 
-Within this chapter, our work has shown that we can, up to $n$-bisimilarity, construct any event
+Within this chapter, our work has shown that we can, up to $n$-bisimilarity,
+construct any action
 model.
 This ensures that we can realise the effects of any action model, and that we need only worry about
 the modal depth of the model to describe the action model.
@@ -741,7 +746,7 @@ Two open questions related to unifying Aucher and our own constructive approach 
 \begin{enumerate}
 	\item How can we build the smallest action model in terms of size that achieves $\phi$?
 		It is worth noting that ``size" is at this rudimentary stage unclear, and we are implicitly discussing the
-		number of event points.
+		number of action points.
 		However, ``size" might instead be number of relations, or some other measure.
 	\item How can we build the action model that minimally changes the epistemic situation and achieves
 		$\phi$?

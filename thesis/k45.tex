@@ -26,7 +26,8 @@ This chapter is arranged as follows:
 		need to use $\AXKFF$ for our action models
 	\item Section \ref{subsec:k45:techPrelims} presents our language for constructing action models in
 		$\AXKFF$
-	\item Section \ref{subsec:k45:goalAchievement} presents our main results with regards to event
+	\item Section \ref{subsec:k45:goalAchievement} presents our main results with
+  regards to action
 		model construction, approximation and goal achievement in $\AXKFF$
 \end{itemize}
 
@@ -253,14 +254,15 @@ This is demonstrated in Figure \ref{bInsaneExample}.
 \end{tikzpicture}
 \caption[$B$-insane action models]{Consider our action model $\evM$. Let $B$ and $C$ be mutually exclusive
   subsets of $A$. Here, $\evM_\gamma$
-  is $B$-insane, since there are no outgoing or incoming $B$-edges from these event points.
+  is $B$-insane, since there are no outgoing or incoming $B$-edges from these
+  action points.
 This is easily contrasted with $\evM_\alpha$, which has an outgoing $B$-edge, $\evM_\beta$, which
 has an incoming $B$-edge, and $\evM_\delta$ which has a reflexive $B$-edge.}
 \label{bInsaneExample}
 \end{figure}
 
 We can thus pose an open question related to our intent to construct $n$-bisimilar action models.
-If we have an $\AXKFF$ action model, can we construct a $\AXKFF$ event model that is able to achieve
+If we have an $\AXKFF$ action model, can we construct a $\AXKFF$ action model that is able to achieve
 the same epistemic effects, up to some modal depth $n$?
 
 \section{A $\AXKFF$ construction framework} \label{subsec:k45:techPrelims}
@@ -385,8 +387,8 @@ must hold
 		language
 \end{enumerate}
 
-We show that the first proposition --- that $\EM(\to,\sqcup,I)$ will construct $\AXKFF$ event
-models.
+We show that the first proposition --- that $\EM(\to,\sqcup,I)$ will construct
+$\AXKFF$ action models.
 
 \begin{lemma} \label{lemma:onlyK45Models}
 	Let $\evM_\evT$ be a pointed action model constructed from the language $\EM(\to,\sqcup,I)$.
@@ -397,8 +399,8 @@ models.
 	$\EM(\to,\sqcup,I)$ constructs a $\AXKFF$ action model.
 	We provide a sketch of the case-by-case proof below.
 	\begin{itemize}
-		\item We first examine the atoms used in $\EM(\to,\sqcup,I)$ and show that they are $\AXKFF$ event
-	models.\\
+		\item We first examine the atoms used in $\EM(\to,\sqcup,I)$ and show that
+    they are $\AXKFF$ action models.\\
 	\\
 	Since the only atomic action models we use in $\EM(\to,\sqcup,I)$ are insanity models, we suppose
 	that $\evM_{\evt} = ((\evS,\evR,\evpr),\{\evt\})$, where $\evS = \{\evt\}$ and $\evR =
@@ -428,7 +430,8 @@ models.
 	yields that $\evs'' \evR_a \evu''$, which implies that $\evs'' \evR''_a \evu''$.
 	This shows that the transitivity frame condition holds.
 	A similar argument can be made to show that $\evR''$ is a Euclidean relation.
-	Thus, we have shown that $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'}$ is a $\AXKFF$ event
+	Thus, we have shown that $\evM''_{\evT''} = \evM_\evT \sqcup \evM'_{\evT'}$ is
+  a $\AXKFF$ action  
 	model.
 		\item We next show that $I_B$ is an $\AXKFF$ action model for $B \subseteq A$.
 	Suppose that $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ is a $B$-insane $\AXKFF$ action model.
@@ -581,7 +584,8 @@ We show an example of this in Figure \ref{generatedTreeExample}
 							edge [bend left] node {$C$} (1);
 \end{tikzpicture}
 \caption{Our original $\AXKFF$ action model $\evMo$.
-It is somewhat more complex than our previous event models, but it is an $\AXKFF$ event model and
+It is somewhat more complex than our previous action models, but it is an
+  $\AXKFF$ action model and
 fulfils all the axioms.}
 \label{originalActionModel}
 \end{subfigure}
@@ -604,8 +608,8 @@ fulfils all the axioms.}
 					(4)	edge [ultra thick, loop right] node {$C$} (4);
 \end{tikzpicture}
 \caption{The unwound model of $\evMo$ which we call $\evM'$. Note that ellipse points which
-have thicker lines are actually an infinite event points that are all in the same equivalence class.
-We say that $\evs \evt \evS^\ast$ is all event points that can be reached from a path that starts at $\evs$ and
+have thicker lines are actually an infinite action points that are all in the same equivalence class.
+We say that $\evs \evt \evS^\ast$ is all action points that can be reached from a path that starts at $\evs$ and
 goes through $\evt$ using only $B$-relations.}
 \label{unwoundActionModel}
 \end{subfigure}
@@ -1008,8 +1012,8 @@ We restate this result in terms of goal achievement in Corollary
 \end{proof}
 
 This result (Corollary \ref{corr:k45GoalAchievement}) states
-that if we have an action model that guarantees the realisation of a goal $\phi$, we can build an event
-model that also guarantees the realisation of $\phi$.
+that if we have an action model that guarantees the realisation of a goal
+$\phi$, we can build an action model that also guarantees the realisation of $\phi$.
 This difference is small, but powerful --- it progresses beyond ``there is some model that realises
 $\phi$".
 We can now say that if we have that model, we can construct it in a meaningful language, and the
