@@ -1,64 +1,89 @@
 \chapter{Introduction} \label{chapter:intro}
 
-Suppose Alice and Bob are two share traders who fervently watch the stock market. They
+Suppose Angeline and Ben are two share traders who fervently watch the stock market. They
 are particularly concerned about the fate of company ABC and are waiting for news on whether ABC is
-doing well or poorly. In the middle of their stock market vigil, Alice is given a letter that says
-ABC has done particularly well. Bob sees her open the letter and read its contents, but he does not
+doing well or poorly. In the middle of their stock market vigil, Angeline is given a letter that says
+ABC has done particularly well. Ben sees her open the letter and read its contents, but he does not
 know what the letter is about.\\
 \\
-If we wish to formally model Alice and Bob's stock situation, we must consider how we can model
+Our interest in Angeline and Ben's predicament centers mainly around their knowledge of company ABC.
+We might ask questions, such as
+\begin{itemize}
+	\item What can we say about Angeline and Ben's knowledge before the letter arrives?
+	\item What could we say about their knowledge after the letter's arrival?
+	\item What about Ben in particular --- what does he know, and what does he not know or is unsure about?
+\end{itemize}
+An epistemic model of this situation concerns itself with the information regarding company ABC, and
+what each of our agents knows or believes about the situation.\\
+\\
+If we wish to formally model Angeline and Ben's stock situation, we must consider how we can model
 \begin{enumerate}
-	\item the facts Alice and Bob know or believe before Alice obtained the letter
-	\item the change in belief or knowledge described by Alice's letter and Bob's observations
-	\item the updated facts Alice and Bob know or believe after the letter has been opened
+	\item The facts Angeline and Ben know or believe before Angeline obtained the letter
+	\item The change in belief or knowledge described by Angeline's letter and Ben's observations; and
+	\item The updated facts Angeline and Ben know or believe after the letter has been opened
 \end{enumerate}
 
 Epistemic modal logic is particularly concerned with modelling item one --- the study of knowledge,
 belief and the interplays of uncertainty.
-The facts and beliefs that Alice and Bob have within their possession prior to an update are well-studied phenomena.
-For example, epistemic models of the situation prior to Alice seeing her letter are that both Alice
-and Bob consider it feasible that company ABC is doing poorly, and they also consider it feasible
+For example, an epistemic model can model the possibilities that Angeline and Ben believe --- a
+possibility where the company ABC has done well, and a possibility where the company ABC is
+performing poorly.\\
+\\
+The epistemic models of the situation prior to Angeline seeing her letter further model how both Angeline
+and Ben do not know whether company ABC is doing poorly, and that they also do not know whether
 that company ABC is doing well.
+The facts and beliefs that Angeline and Ben have within their possession prior to an update are well-studied phenomena.
 However they cannot tell the difference between either of these possibilities.\\
 \\
 Modelling epistemic situations, in accordance with axiomatic schemes that
 formally model knowledge, is a well-studied field.
 The work in this area has been used in financial trading and games to reason about the knowledge
 that agents in these systems have, as well as model checking and automated theorem proving.
+Automated reasoning about knowledge, and maintaining it in a consistent state are two important 
 Epistemic modal logic thus finds its uses when logical deductions about knowledge and belief must be
 made, as well as proving that an agent knows or believes exactly some set of propositions at a
 particular time step.\\
 \\
-This work is particularly concerned with items two and  three --- the update that Alice receives and Bob
-indirectly infers from Alice's reading, as well as the new knowledge and beliefs that Alice and Bob
-possess after the update.
+This work is particularly concerned with how we model the letter that Angeline receives and Ben
+indirectly infers from Angeline's reading of it.
+Furthermore, we are interested in the new knowledge and beliefs that Angeline and Ben possess after the update.
+What does Ben know after Angeline has read the letter?
+How can we model the information in the letter so that Angeline is informed of company ABC's success,
+and Ben is not?\\
+\\
+These questions that are related to items two and three --- changes in knowledge, and how we can
+model the results of changes.
 Work in this area is relatively new, and dynamic epistemic modal logic is of particular concern
 within this paper.
-We are concerned with modelling changes and the effects of those changes.
 In particular, being able to reason about the effects of changes, and to prove their properties and
 effects is desirable.\\
 \\
-Updates can be represented using a relatively new concept --- action models, as
+One method of representing updates is the concept of action models, as
 introduced by Baltag, Moss and Solecki \cite{baltag1998lpa}.
-Most of the work has been centred on specifying action models and reasoning
+A large body of work has been centred on specifying action models and reasoning
 about their properties.
-However, very little has been done in constructing action models.
-The difference between specification and construction is subtle, but has great
-implications.
-It is the difference between saying ``an update exists that reaches an epistemic
-state" and ``this is how we construct the update that fulfils our epistemic state".\\
+Our work looks at a different aspect of action models --- how to compose smaller action models
+into larger ones under the constraints of a meaningful framework.\\
 \\
-Being able to construct action models offers us the ability to construct provable 
-updates in automated systems.
-Model checking and game theory systems would be much improved by formal methods
-to construct updates that are provably correct.
-These additional features for automated systems are useful in maintaining
-a provable level of correctness and consistency of systems that deal with facts, knowledge and
-beliefs.\\
+In the case of Angeline and Ben, we might consider composition as a taking a series of sentences
+regarding the performance of company ABC, such as ``Angeline knows that ABC is doing well", ``Angeline
+believes that Ben believes ABC is doing poorly" or simply ``ABC is doing poorly".
+Those sentences are composed together into a meaningful and useful letter that Angeline and Ben can
+understand regarding the performance of company ABC (e.g. ``Angeline knows that ABC is doing well
+and Angeline believes that Ben believes ABC is doing poorly").
+These letters might in turn be sent to Angeline and Ben in bulk, as one large update to their knowledge
+about ABC.\\
+\\
+Composition unifies some approaches to representing changes in knowledge with action models, namely
+around representing action models as formulae and providing a language for updating action models.
+Updates (the letters in the ABC example) can be written in terms of atomic updates (the sentences)
+and operations which compose them together.
+We specify a meaningful language that constructs larger action models out of atomic updates, and
+show that it can effectively construct all updates.\\
 \\
 This work will document the different languages and the operations used in them to construct
 different epistemic updates.
-We will show a complementary work to Hales' work that constructs updates in the weakest modal logic,
+We will show a complementary work to Hales' \cite{hales13synthesis} work that constructs updates in the weakest modal logic,
 $\AXK$, which is far removed from epistemic modal logic.
 We then change axiom systems to a modal logic that reflects typical properties of knowledge,
 $\AXKFF$, and show how we can construct updates in that logic.\\
