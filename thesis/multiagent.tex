@@ -671,7 +671,30 @@ Within this chapter, our work has shown that we can, up to $n$-bisimilarity,
 construct any action
 model.
 This ensures that we can realise the effects of any action model, and that we need only worry about
-the modal depth of the model to describe the action model.
+the modal depth of the model to describe the action model.\\
+\\
+Our final result shows how our work is well-embedded within the existing action model logic.
+Indeed, the semantics of action model logic can be shown to work equivalently with $\EM(\{\to,
+\sqcup\}, \insaneClass)$, as shown in Lemma \ref{lemma:sameSemantics}.
+
+\begin{defn} \label{defn:actionModelComposition}
+	The language of action model composition is defined as in action model logic (Definition
+	\ref{actModelLogic:syntax}), with the additional inductive definition for an action model
+	$\evM_\evT$ as given in $\EM(\{\to, \sqcup\}, \insaneClass)$ (Definition \cite{axKLanguage}).
+\end{defn}
+
+\begin{lemma} \label{lemma:sameSemantics}
+The semantics of $\langActEx$ are the same as the semantics of action model composition.
+\end{lemma}
+\begin{proof}
+	The only case we need show that the semantics are equivalent is $\sqex{\evM_\evT} \phi$.
+	Suppose $\mDep(\phi) = n$.
+	From Lemma \ref{approximatingEventModel}, there is an $\EM(\{\to,\sqcup\}, \insaneClass)$ composable action model,
+	$\evM'_{\evT'}$ that is $n$-bisimilar to $\evM_\evT$, and substituting that model into the
+	sentence will be semantically equivalent.
+	A similar result holds in the other direction by the virtue of $\evM'_{\evT'}$ being an action
+	model.
+\end{proof}
 
 \section{Analysis and open questions} \label{subsec:multi:sequentCalc}
 
