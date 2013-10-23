@@ -54,20 +54,6 @@ indistinguishable from another, then they can access each other.
 Lastly, let $V$ be a valuation function that maps a formula to the set of worlds
 where that formula is true, so $V(H) = \{\eta\}$ and $V(T) = \{\tau\}$.\\
 \\
-
-\begin{defn}
-	The tuple
-	\[
-		M = (W, R = R_A \cup R_B, V)
-	\]
-	is an epistemic model of our game of heads and tails.
-\end{defn}
-
-These definitions, as well as a more formal, in-depth treatment of modal logic and
-the possible worlds model, is given in reference texts by Blackburn, de Rijke and Venema \cite{blackburn2002modal},
-as well as van Ditmarsch, van der Hoek and Kooi \cite{hoek2008dynamic}.
-We also redefine models formally in Definition \ref{model}.
-
 We can represent this model graphically as shown in Figure \ref{htkripkefigure},
 where our possible worlds $(W)$ are nodes and our binary relations $(R$) are edges in the
 graph.
@@ -90,86 +76,118 @@ graph.
 
 The possible worlds models form a semantics allowing us to construct meaningful
 models that reflect an epistemic state.
+Hintikka \cite{hintikka1962knowledge}, referred to somewhat as the father of epistemic modal logic,
+constructed this ``possible worlds" model at the same time as Kripke \cite{MALQ:MALQ19630090502}.
 It is the semantics and models that allow us to reason about relations between the possible worlds in
-an internal sense, from $A$ and $B$'s perspectives \cite{blackburn2002modal}.
-We can define an operator to formally represent the modality of ``knowing"
-a proposition or formula to be true.
-
-\begin{defn}
-	The operator $\Box_a H$ stands for ``Agent $a$ knows $H$ is true".
-	$\Box_a \phi$ is true at a possible world $w$ if for all accessibility relations $(w,
-	w')$, $\phi$ is true.
-\end{defn}
-
-We also define the dual operator of knowing, which is to consider something
-possible.
-
-\begin{defn}
-	The operator $\Diamond_a T$ stands for ``Agent $a$ considers $T$ to be possible".
-	$\Diamond_a \phi$ is true at a possible world $w$ if there is one
-	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.
-\end{defn}
-
-Notice that we can define $\Diamond$ in terms of $\Box$, where $\Diamond_a
-\phi \iff \neg \Box_a \neg \phi$.\\
+an internal sense, from $A$ and $B$'s perspectives \cite{blackburn2002modal}.\\
 \\
-The definitions for $\Box_a$ and $\Diamond_a$ are given a more formal treatment in
-Fagan et. al in \cite{fagin1995reasoning} and van der Hoek, Kooi and Ditsmarsch in
-\cite{hoek2008dynamic}.\\
-\\
-We will omit the name of the agent for operators $\Box_a$ and $\Diamond_a$ when we
-discuss a single-agent case, as follows.
-We now show, without proof, four axioms that must hold for our modality of
-knowledge.
-
-\begin{propn}
-	The following are true at any world of an epistemic model
-	\cite{hoek2008dynamic}.
-	\begin{enumerate}
-		\item $\Box (\phi \implies \theta) \implies (\Box \phi \implies \Box
-				\theta)$, known as {\bf K}
-		\item $\Box \phi \implies \phi$, known as {\bf T}
-		\item $\Box \phi \implies \Box \Box \phi$, known as {\bf 4}
-		\item $\neg \Box \phi \implies \Box (\neg \Box \phi))$, known as {\bf 5}
-	\end{enumerate}
-\end{propn}
-
-In order to satisfy these conditions, binary relations between possible worlds
-in our epistemic models become equivalence relations.
-The knowledge of an agent can thus be characterised in terms of three
-conditions.
-
+Modal logic thus gives us the tools to model the state of knowledge, and to reason about an agent's
+state of knowledge at a particular point.
+Epistemic modal logic places conditions upon how knowledge is represented for each agent.
+These conditions include
 \begin{itemize}
-  \item positive introspection: if an agent knows a fact, then it knows that it knows the fact (from
-      {\bf 4})
-  \item negative introspection: if an agent does not know a fact, then it knows that it does not know a
-  fact (from {\bf 5})
-  \item if an agent knows a fact, then that fact is true at that world (from
-      {\bf T})
+	\item if an agent knows a fact, they know that they know the fact ({\em positive introspection})
+	\item if an agent does not know a fact, they know that they do not know the fact ({\em negative
+		introspection})
+	\item if an agent knows a fact, then it must be a true fact of that possible world (truth)
 \end{itemize}
 
-If we replaced {\bf T} with an axiom {\bf D} which states $\Box \phi
-\implies \Diamond \phi$, then we can model doxastic models of belief, instead of
-epistemic models of knowledge.
-{\bf D} states that an agent who knows a fact must consider it a possibility.\\
+These axioms hold for our modalities of knowledge, and Fagin et. al \cite{fagin1995reasoning} show
+how an agent's knowledge can be characterised in terms of these properties.
+This logic is referred to as {\bf S5}, the logic of epistemic modal logic.\\
 \\
-Another important modal logic system involves only axioms {\bf K}, {\bf 4} and
-{\bf 5}.
-It preserves positive and negative introspection, but the lack of axioms {\bf D} or
-{\bf T} causes the logic to allow agents to hold inconsistent beliefs.
-The models in this logic resemble epistemic models of knowledge and doxastic
-models of belief.\\
+If the condition of {\em truth} was replaced by {\em seriality}, which states that every agent, at
+any particular world must believe in some fact, then we can model the modality of belief.
+This is the logic of doxastic modal logic, {\bf KD45}.\\
 \\
-We can now make formal reasonings, such as deciding that $\Box_A H$ and $\Box_A
-T$ are both false.
-We note that $\Box_B (H \lor T)$ is true and $\Box_A \Box_B (H \lor T)$ is
-true.\\
+Another interesting logic which features heavily in this paper's later results if {\bf K45}, which
+has neither {\em seriality} or {\em truth} and only preserves positive and negative introspection.
+Due to this, it allows an agent to hold a set of inconsistent beliefs, but nevertheless the models
+in this logic resemble epistemic and doxastic models of knowledge and belief respectively.\\
 \\
-{\bf K}, {\bf T}, {\bf 4} and {\bf 5} allow us to model epistemic state and
-uncertainty in our game of heads and tails.
-We have defined on our models that allows us to make formal reasonings and
-decide if formulae are true at possible worlds.\\
+Modal logic, the possible worlds model and these constraints of knowledge and belief allow us to
+discuss what each agent knows at a possible world, and what is true or untrue at each world.
+We can say that at each point in the model, neither $A$ or $B$ know whether $H$ or $T$ is true, and
+that at $\eta$, $H$ is true.\\
 \\
+%We can define an operator to formally represent the modality of ``knowing"
+%a proposition or formula to be true.
+%
+%
+%\begin{defn}
+%	The operator $\Box_a H$ stands for ``Agent $a$ knows $H$ is true".
+%	$\Box_a \phi$ is true at a possible world $w$ if for all accessibility relations $(w,
+%	w')$, $\phi$ is true.
+%\end{defn}
+%
+%We also define the dual operator of knowing, which is to consider something
+%possible.
+%
+%\begin{defn}
+%	The operator $\Diamond_a T$ stands for ``Agent $a$ considers $T$ to be possible".
+%	$\Diamond_a \phi$ is true at a possible world $w$ if there is one
+%	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.
+%\end{defn}
+%
+%Notice that we can define $\Diamond$ in terms of $\Box$, where $\Diamond_a
+%\phi \iff \neg \Box_a \neg \phi$.\\
+%\\
+%The definitions for $\Box_a$ and $\Diamond_a$ are given a more formal treatment in
+%Fagan et. al in \cite{fagin1995reasoning} and van der Hoek, Kooi and Ditsmarsch in
+%\cite{hoek2008dynamic}.\\
+%\\
+%We will omit the name of the agent for operators $\Box_a$ and $\Diamond_a$ when we
+%discuss a single-agent case, as follows.
+%We now show, without proof, four axioms that must hold for our modality of
+%knowledge.
+%
+%\begin{propn}
+%	The following are true at any world of an epistemic model
+%	\cite{hoek2008dynamic}.
+%	\begin{enumerate}
+%		\item $\Box (\phi \implies \theta) \implies (\Box \phi \implies \Box
+%				\theta)$, known as {\bf K}
+%		\item $\Box \phi \implies \phi$, known as {\bf T}
+%		\item $\Box \phi \implies \Box \Box \phi$, known as {\bf 4}
+%		\item $\neg \Box \phi \implies \Box (\neg \Box \phi))$, known as {\bf 5}
+%	\end{enumerate}
+%\end{propn}
+%
+%In order to satisfy these conditions, binary relations between possible worlds
+%in our epistemic models become equivalence relations.
+%The knowledge of an agent can thus be characterised in terms of three
+%conditions.
+%
+%\begin{itemize}
+%  \item positive introspection: if an agent knows a fact, then it knows that it knows the fact (from
+%      {\bf 4})
+%  \item negative introspection: if an agent does not know a fact, then it knows that it does not know a
+%  fact (from {\bf 5})
+%  \item if an agent knows a fact, then that fact is true at that world (from
+%      {\bf T})
+%\end{itemize}
+%
+%If we replaced {\bf T} with an axiom {\bf D} which states $\Box \phi
+%\implies \Diamond \phi$, then we can model doxastic models of belief, instead of
+%epistemic models of knowledge.
+%{\bf D} states that an agent who knows a fact must consider it a possibility.\\
+%\\
+%Another important modal logic system involves only axioms {\bf K}, {\bf 4} and
+%{\bf 5}.
+%It preserves positive and negative introspection, but the lack of axioms {\bf D} or
+%{\bf T} causes the logic to allow agents to hold inconsistent beliefs.
+%The models in this logic resemble epistemic models of knowledge and doxastic
+%models of belief.\\
+%\\
+%We can now make formal reasonings, such as deciding that $\Box_A H$ and $\Box_A
+%T$ are both false.
+%We note that $\Box_B (H \lor T)$ is true and $\Box_A \Box_B (H \lor T)$ is
+%true.\\
+%\\
+%{\bf K}, {\bf T}, {\bf 4} and {\bf 5} allow us to model epistemic state and
+%uncertainty in our game of heads and tails.
+%We have defined on our models that allows us to make formal reasonings and
+%decide if formulae are true at possible worlds.\\
 But what if their friend, $C$, announces ``The coin is Heads up"?
 As they are, our epistemic models cannot describe the change in knowledge that
 $C$'s announcement will entail.
@@ -239,26 +257,24 @@ We will demonstrate the execution of that update upon our model in Figure
 
 Public announcements capture changes in information, such as $C$ saying to
 $A$ and $B$ that the coin is $H$.
-Another possible update is $A$ being allowed to see the coin's state, and
-telling $B$ ``I guess you didn't know that the coin is actually heads up".\\
+Another possible update is $C$ telling $A$ and $B$ ``I guess you didn't know that the coin is actually heads up".\\
 \\
 These changes can be successful or unsuccessful, depending on whether the fact
 that was announced is true after its announcement.
 For example, if $A$ makes the (truthful) announcement that $H$, then this
 announcement is successful since $H$ will be true after the announcement.\\
 \\
-Conversely, an announcement from $A$ to $B$ that ``I know that you {\em don't} know $H$
+Conversely, consider an announcement from $A$ to $B$ that ``I know that you {\em don't} know $H$
 is true, but the coin is actually $H$".
-We can write this as the announcement of the formula $H \land \neg \Box_B H$.
 We can again refer to Figure \ref{pakripkefigure} to graphically show the models
 before (Figure \ref{beforefigure}) and after (Figure \ref{afterfigure}) the update.
 This update is interesting in that its announcement causes itself to be false.\\
 \\
-When $A$ publicly announces that the coin is $H$ and that $B$ does not know that
-the coin is $H$ her announcement is now false, since $B$ now knows that $H$
+When $C$ publicly announces that the coin is $H$ and that $A$ and $B$ do not know that
+the coin is $H$, her announcement is now false, since $B$ now knows that $H$
 actually is true.
-Examining Figure \ref{afterfigure}, we can see that $H \land \neg \Box_B H$ is
-untrue after its announcement in Figure \ref{beforefigure}.
+Examining Figure \ref{afterfigure}, we can see that the claim ``$A$ and $B$ do not know that $H$ is
+true" is untrue after its announcement in Figure \ref{beforefigure}.
 This is an example of an unsuccessful public announcement.\\
 \\
 By using public announcement logic we can describe these announcements of
@@ -288,7 +304,7 @@ model them raises more questions:
 \end{itemize}
 
 \section{Epistemic actions and action models} \label{estAct}
-We can now successfully capture the simple act of announcing a fact.
+Public announcements can capture the simple act of announcing a fact.
 However, in public announcements, we cannot capture certain updates to the
 epistemic state, such as
 \begin{itemize} 
@@ -307,21 +323,23 @@ We will examine two contrasting approaches to model these epistemic updates.
 Our investigation will show the main differences in terms of what the frameworks
 can describe and how we can use them to reason about updates.
 \subsection{Epistemic relational actions} \label{epi_acts}
-van Ditmarsch approaches epistemic actions from a syntactical point of view,
+van Ditmarsch approaches epistemic updates from a syntactical point of view,
 aiming to create a language to specify actions in.
 His work in constructing an epistemic action syntax extends some of the
 syntax of established languages such as propositional dynamic
-logic \cite{ditmarsch99knowledge,ditmarsch2002dga}.\\
+logic \cite{ditmarsch99knowledge,ditmarsch2002dga}.
+Epistemic actions are van Ditmarsc's approach to modelling informative updates.\\
 \\
 van Ditmarsch provides operations to construct dynamic epistemic formulae, and
 further extends the language with dynamic or action-oriented constructs.
 These include the ability to test a proposition, to update a group of agents'
 knowledge and to make a non-deterministic choice between actions.
 Thus, van Ditmarsch presents a way to describe complex actions, and indeed we can
-express and describe all the actions we've discussed in the previous sections.
+express and describe the public annoucnements discussed in the previous sections.
 We can formally describe actions such as cheating, or a private
 announcement to $B$ that $H$ is true that's seen by $A$.\\
 \\
+By design, epistemic relational actions are composable and offer a strong syntax and proof system.
 However, reasoning about epistemic actions in their current form is difficult.
 Indeed, the interpretations of an epistemic action are non-trivial to
 understand.
@@ -525,7 +543,7 @@ implementable series of messages.\\
 \\
 It is in their reasoning that action models and relational epistemic actions
 differ most.
-action models give us a notion of uncertainty between actions in a manner
+Action models give us a notion of uncertainty between actions in a manner
 similar to the possible worlds model, allowing us to use a formally established framework
 to reason about dynamic updates.
 This allows us to reason about our updates and their effects in a more natural
@@ -533,8 +551,13 @@ and well-understood way.\\
 \\
 Conversely, van Ditmarsch's relational epistemic actions give us a syntax that
 is perhaps more natural than the one Baltag and Moss define.
-Baltag and Moss are note that it is non-standard to use the modelling structures
-inside a syntax \cite{baltag2005programs}.
+It has a composable nature (by design) that allow a large action to be built up from smaller ones, which is
+something that action models lack.
+The syntactical perspective of action models is somewhat confused, due to using a modelling
+structure within the syntax.
+Baltag and Moss are note that it is non-standard to use such structures
+within a syntax \cite{baltag2005programs}.\\
+\\
 In the context of interpreting and making sensible updates, however, it is
 perhaps less useful to have abstraction at the cost of useful interpretations,
 suggesting that action models are a more interesting way to model epistemic
@@ -623,8 +646,10 @@ the technical details of the work, due to its tangentiality.\\
 The state of the art in action models and this section of dynamic epistemic
 logic is thus focused on improving descriptions of information updates, or how
 we can use them to achieve a given epistemic state.
-These works focus on action model specification and existence, with very little regard given to
-realising their construction in an algorithmic sense.
+These works focus on action model specification and existence.
+It is notable that the idea of composing action models, or synthesising action models from atomic
+actions has not been well-studied, and the idea of effective action model composition is seemingly
+unexplored.
 
 \section{Belief revision}
 
@@ -646,7 +671,8 @@ This field is ``belief revision", where what agents believe to be true can be
 revised to match the new state of the world.
 Belief revision was first properly introduced by Alchourr{\'o}n in \cite{theLogicOfTheoryChange} and also
 expanded on by G{\"a}rdenfors \cite{gairdenfors1988knowledge}.
-They discussed the AGM approach, named after Alchourr{\'o}n, G{\"a}rdenfors and Makinson.
+They discussed the AGM approach, named after Alchourr{\'o}n, G{\"a}rdenfors and Makinson
+\cite{theLogicOfTheoryChange}.
 AGM captures three concepts --- the ability to {\em expand} the beliefs of agents, to {\em contract}
 or reject some subset of their beliefs, or to {\em revise} their beliefs using the smallest, minimal
 change to their set of beliefs.
@@ -706,6 +732,8 @@ However, very little work has been done on the construction of action models.
 This has limited their usefulness in automated multi-agent systems, and there is little research
 with regards to constructing provably correct updates.\\
 \\
-The question of ``can we construct provably correct updates?" has thus been well-studied.
-However, there is still the open question of ``how do we construct provably correct updates?"
-The results of this paper are a step towards an answer in this area.
+Furthermore, we identify a gap in the literature with regards to action model composition.
+Using smaller, ``atomic" action models to construct and synthesise larger actions is a somewhat
+unexplored area.
+The results of this paper are a contribution toward action model composition and how to construct
+action models through action model composition.
