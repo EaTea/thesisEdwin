@@ -39,7 +39,7 @@
 \newcommand{\cover}{\bigtriangledown}
 \newcommand{\sqex}[1]{[{#1}]}
 \newcommand{\anex}[1]{\langle {#1} \rangle}
-\newcommand{\lang}{\ensuremath{K}}
+\newcommand{\lang}{\ensuremath{L}}
 \newcommand{\langRefine}{\ensuremath{\lang_{\forall}}}
 \newcommand{\langActEx}{\ensuremath{\lang_{\otimes}}}
 \newcommand{\langArbAct}{\ensuremath{\lang_{\otimes\forall}}}
@@ -143,11 +143,10 @@ correct are extremely helpful.
 Other areas include game theory, finances, model checking and formal methods in
 software engineering, where updates and dynamics are finding increasing applicability.\\
 \\
-Very little has been done in the way of constructing and synthesising action
-models in a provable manner.
-This work aims to contribute to this area, by specifying languages for
-constructing and action models.
-Within this paper, two different frameworks for two logics will be shown, one in
+Very little has been done in the way of composing action models --- that is, combining smaller,
+``atomic" action models into a larger one through the means of meaningful operations.
+This work contributes to this area, by specifying languages for action model composition.
+Within this paper, two different composition frameworks for two logics will be shown, one in
 the $\lang$ and one in $\langKFF$.
 We prove that these action models are able to realise the same after effects of
 any other action model in these logics.
