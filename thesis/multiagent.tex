@@ -1,6 +1,6 @@
 \chapter{Epistemic goal achievement in arbitrary action model logic} \label{chapter:Multiagent}
 
-In this chapter, we examine an algebra for constructing action models that will, if possible, achieve
+In this chapter, we specify an algebra for action model composition that will, if possible, achieve
 epistemic goals or cause a model to crash in the process.
 We examine this goal achievement for a subset of agents $B \subseteq A$.\\
 \\
@@ -8,7 +8,7 @@ In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine 
 finite epistemic goal can be achieved.
 Furthermore, if it is achievable Hales specifies action models that will realise
 that goal.
-We will focus on defining a framework that goes beyond specification by constructing similar action models in a
+We will focus on defining a framework that goes utilises action model composition by constructing similar action models in a
 recursive manner.
 This facilitates an automated method for updating knowledge models to reflect a
 knowledge state.\\
@@ -50,11 +50,10 @@ their beliefs, at any world where $\phi$ is true.
 $\insaneClass = \{\aMod{\evMo} \text{ } | \text{ } \phi \in L\}$ is the class of all such action models.
 We call this class of models {\em insanity models}.\\
 \\
-We will use $\phi \dag$ to represent the insanity action model with $\phi$ as the precondition.
+We denote the insanity model with $\phi$ as its precondition as $\phi \dag$.
 \end{defn}
 
-This is because after the execution of an insanity model, all agents have renounced every belief
-they hold.
+After the execution of an insanity model, all agents have renounced every belief they hold.
 They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
 Allowing them to believe such contradictions means that they have no consistent beliefs, and we
 loosely associate this condition with ``insanity" for ease of referencing.
@@ -170,7 +169,6 @@ We say the pointed action model $\evM^{\evr} = ((\evS^{\evr}, \evR^{\evr}, \evpr
 is a {\em subtree} of $\evM$ if
 \begin{itemize}
 	\item $\evr \in \evS \cap \evS^\evr = \evS^\evr$
-	\item $\evS^\evr \subseteq \evS$
 	\item $\forall a \in A \Rightarrow \evR_a^\evr \subseteq \evR_a$
 	\item $\forall \evs \in \evS^\evr \Rightarrow \evpr(\evs) = \evpr^\evr(\evs) $
 	\item $\evM^\evr$ is a finite tree action model
@@ -392,7 +390,24 @@ Finally, if $\evt, \evt' \in \evT$, each $\evM^\evt$ is disjoint from any other 
 %\]
 %\end{proof}
 
-We can use the operations for choice and considers to construct finite tree and
+We now have a formal definition for a language for action model composition.
+We can parameterise it as a language using the following notation: $\EM(O, \evU)$, where $O$ is a
+set of operators and $\evU$ is a class of atomic action models.
+
+\begin{defn} \label{axKLanguage}
+	Let $A$ be a finite set of agents.
+	We say $\EM(\{\to,\sqcup\}, \insaneClass)$ is a language for action model inductively defined by
+\[
+	\evM_\evT ::= \phi \dag \text{ } | \text{ } \evM_\evT \to_B \evM'_{\evT'} \text{ } | \text{ }
+	\evM_\evT \sqcup \evM'_{\evT'}
+\]
+where $B \subseteq A$, $\phi$ is some sentence in $\lang$.
+\end{defn}
+
+Furthermore, we can say that an action model $\evM_\evT$ is {\em composable} by $\EM((\to, \sqcup),
+\insaneClass)$ if it can be constructed by this language, and hence $\evM_\evT \in \EM((\to,
+\sqcup), \insaneClass)$.
+We can use our language $\EM((\to, \sqcup), \insaneClass)$ to  construct finite tree and
 forest action models, as we show in the next section.
 
 \section{Completeness} \label{subsec:multi:completeness}
@@ -662,8 +677,16 @@ the modal depth of the model to describe the action model.
 
 We have shown that we can approximate action models according to what
 post-conditions are realised by an action models execution.
-This is achieved through the construction of a particular action model that fulfils
-our desired post-conditions.\\
+This is achieved through the construction (via action model composition) of a particular action model that fulfils
+our desired post-condition.\\
+\\
+With regards to composition, this approach retains the semantic benefits of action models,
+particularly because they are based on action models.
+However, they combine some of the composable aspects of building up larger actions from smaller
+models, a characteristic that is seen in the syntactical approach of van Ditmarsch's relational
+actions \cite{ditmarsch99knowledge,ditmarsch2002dga}.
+In this way, we unify the strong semantics of action models with a syntactical approach that
+improves action model logic.\\
 \\
 This approach is powerful in guaranteeing the construction of an action model
 that will always sure an epistemic goal state is fulfilled or that the Kripke
