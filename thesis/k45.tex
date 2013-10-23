@@ -104,10 +104,10 @@ Definition \ref{lemma:k45frameconditions}.
 	Let $F = (S,R)$ be a frame.
 	We say that $F$ is a {\em $\AXKFF$ frame} if it fulfils the following conditions:
 	\begin{itemize}
-		\item if $R$ is a transitive relation, then $\axFo$ is valid in any model where $F$ is its
-			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land t R u \Rightarrow s R u$
-		\item if $R$ is a Euclidean relation, then $\axFi$ is valid in any model where $F$ is its
-			underlying structure --- that is, for $s, t, u \in S$ then $s R t \land s R u \Rightarrow t R u$
+		\item for all $a \in A$, $R_a$ is a transitive relation (i.e. $s, t, u \in S$ and $s R_a t$ and $t R_a u \Rightarrow
+			s R_a u$
+		\item for all $a \in A$, $R_a$ is a Euclidean relation (i.e. $s, t, u \in S$ and $s R_a t$ and
+			$s R_a u \Rightarrow t R_a u$
 	\end{itemize}
 \end{defn}
 
@@ -215,7 +215,7 @@ $\AXKFF$.
 	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ model.
 \end{lemma}
 \begin{proof}
-	See \ref{proof:lemma:k45preserved} for the full proof.
+	See Appendix \ref{proof:lemma:k45preserved} for the full proof.
 \end{proof}
 
 This shows us that what we consider a $\AXKFF$ action model behaves as we expect --- if we execute
@@ -277,7 +277,7 @@ has an incoming $B$-edge, and $\evM_\delta$ which has a reflexive $B$-edge.}
 \end{figure}
 
 We can thus pose an open question related to our intent to construct $n$-bisimilar action models.
-If we have an $\AXKFF$ action model, can we construct a $\AXKFF$ action model that is able to achieve
+If we have a $\AXKFF$ action model, can we construct a $\AXKFF$ action model that is able to achieve
 the same epistemic effects, up to some modal depth $n$?
 
 \section{A $\AXKFF$ construction framework} \label{subsec:k45:techPrelims}
@@ -302,8 +302,7 @@ purposes of realising a post condition.
 \end{defn}
 
 We will say that $I_B$ is an operation that makes all the action
-points in a ``distinguished" set of a multi-pointed action model ``equivalent" to a
-group of agents $B$.
+points in a ``distinguished" set of a multi-pointed action model ``equivalent" for a group of agents $B$.
 That is, any agent in $B$ considers each action point $\evs \in \evT$ to be the
 same.
 We show an example of applying $I_B$ to an action model in Figure \ref{beforeAfterI}.
@@ -389,16 +388,16 @@ where $\aMod{M_s} \in \insaneClass, \evM_\evT, \evM'_{\evT'}$ are multi-pointed 
 A$ is a subset of agents.
 We will refer to our language as $\EM(\to,\sqcup,I)$. \\
 \\
-We will now show that this language always constructs models that preserve $\AXKFF$, and that any
-action model that preserves the axioms of $\AXKFF$ can be constructed by our language.
+We will now show that this language always constructs $\AXKFF$ action models, and that any
+$\AXKFF$ action model can be constructed by our language, up to $n$-bisimilarity.
 
 \section{Action model construction and goal achievement in $\AXKFF$} \label{subsec:k45:goalAchievement}
 
-To show that we can construct action models that preserve $\AXKFF$, there are two propositions that
+To show that we can construct $\AXKFF$ action models, there are two propositions that
 must hold
 \begin{enumerate}
-	\item we can use our language to construct action models that will preserve $\AXKFF$
-	\item an action model that preserves $\AXKFF$ can be constructed (up to $n$-bisimilarity) by our
+	\item we can use our language to construct $\AXKFF$ action models
+	\item a $\AXKFF$ action model can be constructed (up to $n$-bisimilarity) by our
 		language
 \end{enumerate}
 
