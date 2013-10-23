@@ -25,15 +25,14 @@ Then
 	& \Rightarrow p \in V^2_{(t,\evs')} \label{nBisEvbase6}\\
 	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvbase7}
 \end{align}
-(\ref{nBisEvbase1}) follows from the semantics for propositional logic (Definition \ref{propLogic}).
+(\ref{nBisEvbase1}) follows from the semantics for propositional logic.
 (\ref{nBisEvbase2}) and (\ref{nBisEvbase4}) follows from the definition of action model execution (Definition
 \ref{evModelEx}).
 (\ref{nBisEvbase5}) follows from hypothesis and the definition of $n$-bisimilarity (Definition
 \ref{nBisimEvent}).
 (\ref{nBisEvbase6}) follows from the definition of action model execution (Definition
 \ref{evModelEx}).
-Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic (Definition
-\ref{propLogic}).\\
+Thus, (\ref{nBisEvbase7}) follows from the semantics of propositional logic.\\
 \\
 We go through each of the inductive cases.
 Let $\phi = \neg \psi$, and suppose $\evMo^1_{(t,\evs)} \models \phi$.
@@ -44,10 +43,9 @@ Then
 	& \Rightarrow \evMo^2_{(t,\evs')} \models \neg \psi \label{nBisEvNeg3} \\
 	& \Rightarrow \evMo^2_{(t,\evs')} \models \phi \label{nBisEvNeg4}
 \end{align}
-(\ref{nBisEvNeg1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
+(\ref{nBisEvNeg1}) follows from the semantics of propositional logic.
 (\ref{nBisEvNeg2}) follows from the induction hypothesis.
-(\ref{nBisEvNeg3}) again follows from the semantics of propositional logic (Definition
-		\ref{propLogic}) and (\ref{nBisEvNeg4}) is obvious.\\
+(\ref{nBisEvNeg3}) again follows from the semantics of propositional logic and (\ref{nBisEvNeg4}) is obvious.\\
 \\
 Let $\phi = \psi_1 \land \psi_2$ and suppose $\evMo^1_{(t,\evs)} \models \phi$.
 Then
@@ -55,7 +53,7 @@ Then
 	& \Rightarrow \evMo^1_{(t,\evs}) \models \psi_1 \label{nBisEvCon1} \\
 	& \Rightarrow \evMo^2_{(t,\evs'}) \models \psi_1 \label{nBisEvCon2}
 \end{align}
-(\ref{nBisEvCon1}) follows from the semantics of propositional logic (Lemma \ref{propLogic}).
+(\ref{nBisEvCon1}) follows from the semantics of propositional logic.
 (\ref{nBisEvCon2}) follows from the induction hypothesis.
 Employing a similar process allows us to show that $\evMo^2_{(t,\evs'}) \models \psi_2$ and together they 
 show that $\evMo^2_{(t,\evs')} \models \phi$.\\
@@ -74,7 +72,7 @@ Then we have that $\krMo_v \models \evpr(\evu) \iff \krMo_v \models \evpr'(\evu)
 \Rightarrow \evMo_\evu \sim_0 \evMo'_{\evu'}$.
 Then by our induction hypothesis we have that $\evMo^1_{(v,\evu)} \models \psi \iff \evMo^2_{(v, \evu')} \models
 \psi$.
-From this we have (by the semantics of modal logic, in Definition \ref{modalLogic}) $\evMo^2_{(v,\evu')}
+From this we have (by the semantics of modal logic, in Definition \ref{modalLogic:semantics}) $\evMo^2_{(v,\evu')}
 \models \psi \Rightarrow \evMo^2_{(t,\evs')} \models \Diamond_a \psi$.
 \end{proof}
 
