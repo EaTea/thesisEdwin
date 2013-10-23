@@ -1,0 +1,227 @@
+\chapter{Project Proposal}
+
+This is the revised project proposal of this dissertation and final year project.
+
+\section{Aim}
+%Now state explicitly the hypothesis you aim to
+%test. Make references to the items listed in the Reference section
+%that back up your arguments for why this is a reasonable
+%hypothesis to test, for example the work of Knuth~\cite{knuth}.
+%Explain what you expect will be accomplished by undertaking this
+%particular project.  Moreover, is it likely to have any other
+%applications?
+Multi-agent systems are found in many different fields, including
+communications, artificial intelligence, game theory and economics.
+Modelling these systems as models of Epistemic Logic, we can make formal and
+verifiable reasonings about what agents in these systems know, are uncertain
+about and are unaware of.
+Share trading and auctions are some of the areas where these models are being
+applied and further improved.\\
+\\
+Actions Models are one way to specify an informative update for a multi-agent
+system.
+They encapsulate the uncertainty between, and potential outcomes of taking an
+action.
+In a similar way to Epistemic Models, we can make formal and verifiable
+reasonings about the updates that agents can employ and what Actions they are
+uncertain about.\\
+\\
+When executed on an Epistemic Model of a multi-agent system, an Action Model
+uses the informative update it specifies to change the state of knowledge in the
+multi-agent system model.
+Recent investigations have yielded methods to synthesise Action Models that can
+update an Action Model to ensure that a given condition is true in the updated
+Epistemic Model.\\
+\\
+As a modelling tool for an external user, Action Models are appropriate and
+afford a high level of specificity and precision.
+However, it is unclear how we can translate an Action Model, which is a formally
+specified model applicable to Epistemic Models into a real-world implementation.
+How agents involved in a game might use an Action Model or actually realise it
+has not been explored.
+To come closer to resolving this, we aim to
+\begin{itemize}
+  \item investigate a formal language that can specify informative updates in
+  multi-agent systems
+  \item transform Action Models into a series of local informative updates
+  between individual agents in a multi-agent system
+  \item determining if specific Action Model executions may be made less expensive in
+  terms of number of messages, size of messages and complexity of execution
+\end{itemize}
+%\begin{itemize}
+%  \item Discuss action model updates
+%  \item Discuss taking an action model that updates many local agents
+%  \item Outline how we will derive a series of local updates for agents
+%  \item Outline how we this will be implemented
+%  \item Outline how we'd like to implement the model
+%  \item We want to investigate whether this is a feasibly computed model
+%  \item We want to investigate whether an intermediate specification of updates
+%    makes action models useful
+%\end{itemize}
+
+\section{Background}
+%In this section you should give some background to your
+%research area. What is the problem you are tackling, and why is it
+%worthwhile solving? Who has already done some work in this area,
+%and what have they achieved?
+
+Epistemology, in the philosophical sense, concerns the study of knowledge.
+Answering questions and issues about the nature, potential and semantics of knowledge have been explored since the times of Ancient Greece.
+To answer these questions in an objective fashion, we turn to epistemic logic, the logic of knowledge.
+Epistemic logic provides axiomatisations of knowledge that capture its properties.
+We can formally reason about an agent's knowledge, its knowledge of its knowledge and (in a system with multiple agents) other agents' knowledge. \cite{van2008dynamic}\\
+\\
+Agents can be be uncertain about the value for a proposition, resulting in multiple worlds that are consistent with the state of the world.
+This ``multiple worlds" agent model is a description of the Kripke model that can be described succintly by a Kripke model.\footnote{Kripke models can describe more logics than just epistemic logic, depending upon the properties of the relation $R$.}
+Kripke models are theoretical constructs that describe for a set of agents $A = \{a_1, a_2, \ldots\}$ and propositions $P = \{p_1, p_2, \ldots \}$
+\begin{itemize}
+  \item a finite set of states, $S$
+  \item a function $R: A \to S \times S$ that yields a relation between states (the accessibility relation for an agent $a$)
+  \item a valuation function $V: P \to \mathbb{P}(S)$ that yields for a proposition $p$ the subset of $S$ where $p$ is true
+\end{itemize}
+Kripke models can be written as a tuple $(S, R, V)$.\\
+\\
+Epistemic logc only allows us to reason about the state of knowledge, but does not provide us with tools to change or update knowledge.
+The study of how the state of information changes is Dynamic Epistemic Logic.
+It provides a logical framework of reasoning about how an agent's information and knowledge have changed due to actions.
+Recent work in this area includes reasoning about revising beliefs (where an agent's knowledge is invalidated).
+Other concepts in this area include public announcements and epistemic actions.
+These are informative updates that have specified methods of changing the state of knowledge.
+We will focus on a different kind of update: an action model.\\
+\\
+An epistemic update consists of some action that produces, from model $M = (S, R, V)$ an updated model $M' = (S', R', V')$.
+We can encode our action into an action model.
+Action models resemble Kripke models in their structure, and consist of a tuple $A = (\bar(S), \bar(R), \bar(pre))$ where
+\begin{itemize}
+  \item $\bar{S}$ is the set of action model states
+  \item $\bar{R}$ is the accessibility relations that for that action; semantically, they represent the uncertainty in taking an action
+  \item $\bar{pre}$ is a function that maps a state $s \in \bar{S}$ to a propositional formula that represents the preconditions for that action state to be fulfilled
+\end{itemize}
+The execution of an action model $A$ to update a Kripke model $M$ to produce $M'$ is a well-understood process.
+An update involves taking the Cartesian Product $\bar{S} \times S$ to form the
+states of $M'$. \cite{baltag2005programs,baltag1998lpa}
+The number of states then dramatically decreases by reduction of the valid states.
+This presents a problem in utilising action models to represent an informative update in a computer, due to the expensive nature of an operation like the Cartesian product.\\
+\\
+There have been attempts to specify formalisations of message passing.
+Sietsma suggests a modal logic for reasoning about communication and message passing. \cite{Sietsma:2011:MPD:2000378.2000404}
+$\pi$-calculus is another method for program specification and communication in a multi-agent system. \cite{Milner91thepolyadic}
+$\pi$-calculus allows us to discuss how programs pass messages between themselves.
+%
+%\begin {itemize}
+%  \item What is epistemic logic?
+%  \item What is a Kripke model?
+%  \item What is an informative update?
+%  \item What is an action model?
+%  \item What are the problems with action models?
+%\end {itemize}
+ 
+\section{Method}
+%In this section you should outline how you intend to go
+%about accomplishing the aims you have set in the previous
+%section. Try to break your grand aims down into small,
+%achievable tasks. Try to estimate how long you will
+%spend on each task, and draw up a timetable for each
+%sub-task.
+
+We decompose our project outcomes into four separate tasks.
+We believe that these separate tasks will together allow us to come closer to
+resolving the differences between executing an Action Model on a model of
+Epistemic Logic, and executing an Action Model as a series of messages in a game
+or message-passing communications system.\\
+\\
+Firstly, we would like to determine if a generating set exists for action
+models, and if not whether there are specific action classes of action models
+that we can generate.
+Questions that might be resolved include
+\begin{itemize}
+	\item can we generate all action models?
+	\item what is the generating set and what operations would we need to generate
+	all action models?
+	\item if we cannot generate all action models, what can we not construct and
+	would we want to construct it?
+\end{itemize}
+
+Secondly, we will investigate how to specify a recursive execution of an action
+model.
+We will explore how an action model can be realised in a multi-agent system by
+first specifying a theoretical way based on pointed action models.
+We will attempt to use notions acquired during investigating the generation of
+action models to exploit in this recursive execution.
+If such a framework cannot be constructed, we will look at what we can execute,
+why we cannot execute certain models and decide whether these are updates we
+would want to execute.\\
+\\
+Thirdly, we will implement our recursive framework of action model execution.
+This will allow us to perform experimentation and look into the cost of our
+action model execution framework.
+It would also be desirable to construct our action model generation framework
+for experimentation purposes.\\
+\\
+Finally, using our framework, we will experimentally model how costly our
+updates are.
+We would like to measure this in terms of time complexity, the time cost to an agent to update
+their agent state and the size of the communications made to an agent.
+It would be desirable to use these implementation results to reflect theoretical
+results about cost of action model execution, and thus allow us to provide some
+basis for whether an action model can be executed in a real-world system.
+%\begin{enumerate}
+%  \item list out different action models, exploring how they update
+%    different agents (see Baltag and Moss for a similar exercise)
+%  \item specify a model in $\pi$-calculus to update agents
+%  \item try and verify model's correctness in replicating action model update
+%  \item implement model
+%  \item demonstrate its results with the initially explored action models
+%  \item test models and find out disadvantages and advantages of models
+%\end{enumerate}
+%
+\section{Software and Hardware Requirements}
+%Outline what your specific requirements will be with regard
+%to software and hardware, but note that any special requests
+%might need to be approved by your supervisor and the Head of
+%Department.
+At this time, my project does not appear to require any special software or hardware.
+
+\section{Timeline}
+
+\begin{center}
+	\begin{tabular}{ | l | p{10cm} |}
+		\hline
+		Date & Task \\
+		\hline
+		25 April 2013 & Hand in draft Literature Review and Project Proposal;
+    this should allow time to discuss and edit my project proposal as necessary\\
+		\hline
+		2 May 2013 & Construct a draft introduction that succintly describes the project purpose and background.\\
+		\hline
+		16 May 2013 & Edit literature review in line with revised proposal.\\
+		\hline
+		23 May 2013 & Resubmit literature review \\
+		\hline
+		7 June 2013 & Draft current ideas about generating sets and operations into
+		written work\\
+		\hline
+		21 June 2013 & Find a generating set and operations for action models \\
+		\hline
+		28 June 2013 & Re-formalise generation ideas about action models\\
+		\hline
+		15 July 2013 & Specify a recursive method for executing epistemic updates\\
+		\hline
+		3 August 2013 & Implement the informative update framework and a framework
+		for generating action models\\
+		\hline
+		10 August 2013 & Draft details about implementation and action model
+		execution into written work\\
+		\hline
+		17 August 2013 & Experiment upon informative updates to measure their cost
+		and complexity \\
+		\hline
+		30 August 2013 & Employ previous experimental results to make claims about
+		cost of update execution and formalise them \\
+		\hline
+		31 August 2013 & Begin writing about specification and the results we have achieved \\
+		\hline
+		20 September 2013 & Draft thesis due \\
+		\hline
+	\end{tabular}
+\end{center}
