@@ -1,43 +1,45 @@
 \chapter{Conclusion}
 
-We have shown methods to construct epistemic action models (that is, epistemic updates) in two different axiom systems --- $\AXK$
+We have shown methods to compose action models from smaller ones in two different axiom systems --- $\AXK$
 and $\AXKFF$.
-We have employed a set of meaningful operations in both systems in order to construct action models.
-In doing so, we have also shown that if there is an appropriate epistemic goal, then
+We have employed a set of meaningful operations in both systems for action model composition.
+In both systems, we have shown that our languages ($\EM(\to,\sqcup)$ in $\AXK$ and
+$\EM(\to,\sqcup,I)$ in $\AXKFF$) are complete with respect to all action models, up to
+$n$-bisimilarity.\\
+\\
+In addition, we have shown complimentary results with regards to epistemic goal achievement in both
+of our axiomatic systems.
+We note that
 \begin{itemize}
-	\item in $\AXK$ we can construct an action model that will achieve that epistemic goal
-	\item in $\AXKFF$, if an update model exists that achieves the epistemic goal, we can construct an
-$\AXKFF$ action model that will have also achieve this goal
+	\item In $\AXK$ we can construct an action model that will achieve an epistemic goal
+	\item In $\AXKFF$, if an update model exists that achieves the epistemic goa, we can construct a
+		$\AXKFF$ action model that also achieves this goal
 \end{itemize}
 
-It is important to note that action models, their synthesis, and their practical applications in
-developing protocols have not been well examined.
-Our work has specified operations that are meaningful in their axiomatic systems, and we have proven
-that for some action model $\evM_\evT$ we can use our operations to form action models that will
-achieve the same post-conditions as $\evM_\evT$ after execution.\\
+Our results are novel with regards to the ideas behind action model composition.
+In particular, we unify the strong semantics behind action models with a syntax reminiscent of van
+Ditmarsch's \cite{ditmarsch2002dga} epistemic relational actions.
+This unification provides some of the strengths of both approaches, whilst maintaining the
+meaningful semantics of action model updates.\\
 \\
-This is a first step in employing action models as updates in knowledge base systems, especially
-games, model checking and financial systems.
-This is due to our operations provide a high-level, theoretical way to construct updates which are
-provably correct.
-Furthermore, we know that the updates we can construct are complete --- that is, they can achieve
-all the same epistemic goals as other updates.\\
+Beyond the semantics and syntax of action models, this paper contributes towards action model
+composition frameworks.
+To the author's knowledge, this is a novel approach to action models and contributes toward ensuring
+that updates can be constructed in a logical fashion and in a manner that preserves the consistency
+of the knowledge base.
+This consistency is desirable in epistemic games, model checking and security, where reasoning about
+the change in knowledge of agents is a useful ability.\\
 \\
-We have yet to further explore how succinct our updates are.
-Can we make the smallest update?
-Can we make update that represents a minimal change to the knowledge base?
-Furthermore, even if we can construct so many different kinds of updates, what updates are the most
-useful?
+We have yet to further explore how succint our updates are, in terms of their size or the changes
+they make.
+Furthermore, even if we can construct different kinds of updates, what updates are the most useful?
 Which action models or updates might we be most interested in constructing, and if so are there
-better methods of constructing them?\\
+better composition methods that can construct them?\\
 \\
-The work in this paper outlines an approach to action model construction that is rudimentary, but is,
-to the author's knowledge, one of the first steps in an unexplored area.
-These constructions yield action models with provable properties that can be reasoned about in a
-well-understood manner.
-By having action model construction tools, we have the first steps towards employing action models and
-the updates they represent in dynamic automated multi-agent systems.
-
+This approach is thus rudimentary, but appear to be one of the first steps in an unexplored area.
+These constructions yield all action models, up to $n$-bisimilarity, and provide the first necessary
+tools towards employing action models and the updates they represent in dynamic automated
+multi-agent systems.
 % Every research paper should answer the following questions:
 % 
 % \begin{itemize}
