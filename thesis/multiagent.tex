@@ -36,6 +36,43 @@ This chapter is arranged as follows:
 
 \section{Construction framework and definitions} \label{subsec:Multi:techPrelim}
 
+We define what our atomic action models are for our construction.
+We label them {\em insanity models}.
+Their flexibility as action models due to having no empty relations is useful in being the atoms to
+use for our constructions.
+
+\begin{defn} \label{insanity}
+Let $\aMod{\evMo = (\{ s \}, R, \{(s, \phi)\})}$ be an action model
+where $\phi \in L$ and $\aMod{s}$ is an action point.
+For all $a \in A$, $R_a = \varnothing$.
+$\aMod{\evMo}$ represents the announcement of $\bot$ (false) causing all agents to renounce all
+their beliefs, at any world where $\phi$ is true.
+$\insaneClass = \{\aMod{\evMo} \text{ } | \text{ } \phi \in L\}$ is the class of all such action models.
+We call this class of models {\em insanity models}.\\
+\\
+We will use $\phi \dag$ to represent the insanity action model with $\phi$ as the precondition.
+\end{defn}
+
+This is because after the execution of an insanity model, all agents have renounced every belief
+they hold.
+They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
+Allowing them to believe such contradictions means that they have no consistent beliefs, and we
+loosely associate this condition with ``insanity" for ease of referencing.
+They have the same form as the action model shown in Figure \ref{figure:exampleInsane}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+
+    \node[vertex] (1) {$\evs$};
+\end{tikzpicture}
+\caption[Insanity action model form]{The form of every insanity model, where for $\evM^I_\evs =
+((\evS^I,\varnothing,\evpr^I),\evs)$ we have that $\evpr^I(\evs)$ is some sentence in $\lang$
+Note the lack of a reflexive edge, unlike in Figure \ref{figure:exampleAnnounce}.}
+\label{figure:exampleInsane}
+\end{figure}
+
 The action models that Hales employs in \cite{hales13synthesis} resemble finite trees.
 In order to give a good approximation of these models, we must define these tree-like structures and
 give some ideas with regards to what properties they have.
@@ -48,7 +85,7 @@ $\evM_\evs$ is a {\em finite tree action model} if
 	\item $\evS$, the set of action points is finite
 	\item $\evs$ is the root of the tree and is not accessible from any other action point
 	\item for each $\evt \in \evS \setminus \{ \evs \}$ there is a unique agent $a \in A$ and a unique
-	action $\evpr \in \evS$ such that $\aMod{(p,s)} \in \evR_a$
+	action $\evp \in \evS$ such that $\aMod{(p,s)} \in \evR_a$
 	\item for each $\evt \in \evS$ there exists a unique sequence of actions in $\evS$, $\evs = \evs_0,
 	\evs_1, \ldots, \evs_n = \evt$ and a sequence of agents $a_1, a_2, \ldots, a_n$ such that $\evs_0
 	\evR_{a_1}
@@ -64,7 +101,7 @@ We make an important note that insanity models are the most basic kind of tree-l
 
 \begin{lemma} \label{insaneIsTree}
 	Any insanity action model (Definition \ref{insanity}) is also a tree action model.
-	That is, $\insaneClass$ is contained within $\treeClass$.
+	That is, $\insaneClass \subseteq \treeClass$.
 \end{lemma}
 
 \begin{figure}
@@ -129,10 +166,10 @@ example in Figure \ref{figure:subtreeExample}.
 
 \begin{defn} \label{subtree}
 Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a finite forest action model.
-We say the pointed action model $\evM^{\evr} = ((\evS^{\evr}, \evR^{\evr}, \evpr^{\evr}), \evr)$ is a {\em subtree} of $\evM$ if
+We say the pointed action model $\evM^{\evr} = ((\evS^{\evr}, \evR^{\evr}, \evpr^{\evr}), \evr)$
+is a {\em subtree} of $\evM$ if
 \begin{itemize}
-	\item $\evr \in \evS$
-	\item $\evr \in \evS^\evr$
+	\item $\evr \in \evS \cap \evS^\evr = \evS^\evr$
 	\item $\evS^\evr \subseteq \evS$
 	\item $\forall a \in A \Rightarrow \evR_a^\evr \subseteq \evR_a$
 	\item $\forall \evs \in \evS^\evr \Rightarrow \evpr(\evs) = \evpr^\evr(\evs) $
@@ -206,10 +243,11 @@ We define an operation to describe a group of agents' belief with regards to the
 of one action model instead of another.
 
 \begin{defn} \label{considers}
-Let $\evM^1$ and $\evM^2$ be multi-pointed action models, and without loss of
-generality let $\evM^1$ and $\evM^2$ be disjoint.
-Let $B$ be a subset of agents participating in $\evM^1$ and $\evM^2$.
-We define $\evM = \evM^1 \to_B \evM^2$ as 
+Let $\evM^1_{\evT^1} = ((\evS^1, \evR^1, \evpr^1), \evT^1)$ and $\evM^2_{\evT^2} = ((\evS^2,
+	\evR^2, \evpr^2),\evT^2)$ be multi-pointed action models, and without loss of generality let $\evM^1$ and
+$\evM^2$ be disjoint.
+Let $B$ be a subset of agents participating in $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$.
+We define $\evM^1 \to_B \evM^2 = \evM$ as 
 \begin{itemize}
   \item $\evS = \evS^1 \cup \evS^2$
   \item $\evR_a = \evR^1_a \cup \evR^2_a \text{if } a \notin B$
@@ -227,11 +265,20 @@ The $\to$ operator will be referred to as {\em ``considers"}.
 $\evM^1 \to_B \evM^2$ indicates that if $\evM^1$ was executed, an agent in $B$ considers $\evM^2$ as another
 possible update.
 In the case that $B = A$, we will denote this by $\to$, and if $B = \{a\}$, then
-we will write $\to_a$.
+we will write $\to_a$.\\
+\\
+As an example, let $\phi!$ be the public announcement of $\phi$ and $\psi!$ be the public announcement
+of $\psi$.
+Let $B \subseteq A$ be a subset of agents.
+Then $\phi! \to_B \psi!$ says that the agents in $B$ are consider that either $\phi$ was publicly
+announced, or $\psi$ was publicly announced.
+However, the agents in $B$ do not consider $\phi!$ to be a possibility if $\psi!$ occurs.\\
+\\
 We also present the disjoint union operator defined by Baltag and Moss in \cite{baltag2005programs}.
 
 \begin{defn} \label{disjoint}
-Let $\evM^1$ and $\evM^2$ be multi-pointed action models, and without loss of generality let $\evM^1$ and
+	Let $\evM^1_{\evT^1} = ((\evS^1, \evR^1, \evpr^1), \evT^1)$ and $\evM^2_{\evT^2} = ((\evS^2,
+	\evR^2, \evpr^2),\evT^2)$ be multi-pointed action models, and without loss of generality let $\evM^1$ and
 $\evM^2$ be disjoint.
 We define $\evM = \evM^1 \sqcup \evM^2$ as
 \begin{itemize}
@@ -241,10 +288,18 @@ We define $\evM = \evM^1 \sqcup \evM^2$ as
 	\item $\evT = \evT^1 \cup \evT^2$
 \end{itemize}
 The $\sqcup$ operator will be referred to as {\em ``chooses"}.
+For a finite set of action models $\evU = \{ \evM^1_{\evT^1}, \evM^2_{\evT^2}, \ldots \}$ we can write
+\[
+	\evM_\evT = \bigsqcup_{\evM^k_{\evT^k} \in \evU} \evM^k_{\evT^k} = \evM^1_{\evT^1} \sqcup
+	\evM^2_{\evT^2} \sqcup \ldots
+\]
 \end{defn}
 
 This is the disjoint union of the two action models, which we can refer to as the agents in $A$
 knowing that one of the two models has occurred.
+To use our previous example, consider $\phi!$ and $\psi!$ again.
+There is a subtle difference in $\phi! \sqcup \psi!$ --- here, all agents are aware that one of the
+public announcements is executed, but they are unsure which one.
 Baltag and Moss call this a non-deterministic choice \cite{baltag2005programs}.\\
 \\
 We now will show some miscellaneous results that we rely upon later in this chapter.
@@ -266,7 +321,7 @@ We must show each of the following
 	\item for each $\evs, \evt \in \evT$, $\evS^\evs$ and $\evS^\evt$ are disjoint \label{subtreeStatesDisjoint}
 \end{enumerate}
 
-We note that $\evT = \evT^1 \sqcup \evT^2$.
+We note that $\evT = \evT^1 \cup \evT^2$.
 Thus $\evt \in \evT \Rightarrow (\evt \in \evT^1 \lor \evt \in \evT^2)$.
 Since $\evM^1_{\evT^1}$ and $\evM^2_{\evT^2}$ are both finite forest action models then there must be some
 subtree action model $\evM^\evt \in \treeClass$ that corresponds to $\evt$.
@@ -345,21 +400,23 @@ forest action models, as we show in the next section.
 Within this section, we will show that the operations we have selected, along
 with insanity action
 models, will be able to generate all possible finite tree action models.
-This allows us to say that the language is complete.
-This is necessary to show that our operations will construct all possible trees.
-We will also show that using a tree, any kind of action model can be constructed, up to $n$-bisimilarity.
+This allows us to say that the language is complete with respect to all tree and forest action
+models.
+This is necessary to show that our operations will construct all possible forests.
+We will also show that using a forest, any kind of action model can be constructed, up to $n$-bisimilarity.
 
 \begin{lemma} \label{finTreeConstruct}
 Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree action model.
 $\evM$ can be constructed using insanity action models and $\to$.
 \end{lemma}
 \begin{proof}
-Let $\evM'_{\evr'} = ((\evS', \evR', \evpr'), \evr')$ be a subtree of $\evM$.
-We will show by induction that for any $\evM'$ we can use insanity action models and $\to$ to
+Let $\evM^{\evr'} = ((\evS^{\evr'}, \evR^{\evr'}, \evpr^{\evr'}), \evr')$ be a subtree (Definition
+\ref{subtree}) of $\evM_\evr$.
+We will show by induction that for any $\evM'^{\evr'}$ we can use insanity action models and $\to$ to
 construct $\evM'$.\\
 \\
-Suppose that $\evM'_{\evr'} = ((\evS', \evR', \evpr'), \evr')$ is a leaf node.
-Let $\evpr'(\evr') = \phi$, a formula in our logical language.
+Suppose that $\evM^{\evr'} = ((\evS^{\evr'}, \evR^{\evr'}, \evpr^{\evr'}), \evr')$ is a leaf node.
+Let $\evpr^{\evr'}(\evr') = \phi$, a formula in our logical language.
 $\evM'$ is an insanity action model by definition.
 Thus, we can construct $\evM'$ using insanity action models when $\evM'$ is a leaf node of $\evM$.\\
 \\
@@ -370,7 +427,7 @@ Suppose that each of $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ fulfi
 Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $\evr' \evR_{a_1} \evr^1$, $\evr'
 \evR_{a_2} \evr^2, \ldots, \evr' \evR_{a_n} \evr^n$.\\
 \\
-Consider the $\evM^\evt = (\{ \evt \}, \evR^\evt, \evpr^\evt, \evt) \in \insaneClass$.
+Consider the insanity action model $\evM^\evt = (\{ \evt \}, \evR^\evt, \evpr^\evt, \evt) \in \insaneClass$.
 Let $\evpr^\evt(\evt) = \phi$.
 Consider the action model 
 \[
@@ -435,17 +492,17 @@ With this, we show that our constructive operations are able to be used to build
 and achieve the same effects as any other action model, up to a some specified modal depth.
 
 \begin{thm} \label{approximatingEventModel}
-Let $\evM_\evT \in \eventClass$ and $n$ be some non-negative integer.
+Let $\evM_\evT \in \eventClass$ and $n \geq 0$ be some non-negative integer.
 Then there is some $\evM'_{\evT'} \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
 \end{thm}
 
 \begin{proof}
 Without loss of generality, for each pair $\evt, \evt' \in \evT$, we say that they are
-$n$-disjoint.
+$n$-unreachable.
 That is there is no sequence of $n$ action points $\evt = \evs_1, \evs_2, \ldots,
 \evs_n = \evt'$ and agents $a_1, a_2, \ldots, a_{n-1}$ such that $\evs_1 \evR_{a_1} \evs_2,
     \ldots, \evs_{n-1} \evR_{a_{n-1}} \evs_n$.
-We will show inductively that for any $n$, the following two conditions hold
+We will show by induction on $n$ that the following two conditions hold
 \begin{itemize}
 \item there is a forest action model $\evM'_{\evT'} \in \forestClass$ such that $\evM'_{\evT'} \sim_n \evM_\evT$
 \item for each $\evt \in \evT$, there is a $\evt' \in \evT'$ and subtree of $\evM'_{\evT'}$, $\evM^{\evt'}_{\evt'}$ such that
