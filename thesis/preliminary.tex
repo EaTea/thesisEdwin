@@ -517,7 +517,7 @@ Action model execution gives us a well-defined framework to reason about how the
 
 \begin{defn} \label{actModelLogic:syntax}
 	The {\em language of action model logic}, $\langActEx$ is $\lang$ (Definition
-	\ref{modalLogic:syntax} with the additional inductive case for $\sqex{\evM_\evs}$, where
+	\ref{modalLogic:syntax}) with the additional inductive case for $\sqex{\evM_\evs}$, where
 	$\evM_\evs$ is an action model.
 \end{defn}
 
@@ -526,7 +526,7 @@ Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model and $\aMod{\evMo
   = (S, R, pre)} \in
 \eventClass$ a multi-pointed action model for a group of agents $A$.
 The interpretation of $\phi \in \langActEx$ --- that is, the {\em language of action model execution} ---  is the same as its interpretation in $\lang$
-(\ref{modalLogic:semantics}), but with the additional
+(Definition \ref{modalLogic:semantics}), but with the additional
 inductive cases
 \begin{itemize}
 	\item $\krMo_s \models \sqex{\aMod{\evMo_s}} \phi$ iff $\krMo_s \models
@@ -555,14 +555,14 @@ Refinement modal logic allows for the quantification over refinements, which in 
 
 \begin{defn} \label{refineLogic:syntax}
 {\em Refinement modal logic}, $\langRefine$ is $\lang$ (Definition
-\ref{modalLogic:syntax} with the additional inductive case for $\forall_B$, for $B \subseteq A$
+\ref{modalLogic:syntax}) with the additional inductive case for $\forall_B$, for $B \subseteq A$
 where $A$ and $B$ are finite groups of agents.
 \end{defn}
 
 \begin{defn} \label{refineLogic:semantics}
 Let $\krMo = (S, R, V) \in \kripkeClass$ be a Kripke model for a group of agents $A$.
 The interpretation of $\phi \in \langRefine$ ({\em refinement modal logic}) in the logic $K_\forall$ is the same as $\lang$
-(\ref{modalLogic:semantics}), but with the additional inductive case
+(Definition \ref{modalLogic:semantics}), but with the additional inductive case
 \[
 	\krMo_s \models \forall_B \phi \text{ iff for every } \krMo'_{s'} \in
   \eventClass \text{ such that } \krMo'_{s'}
