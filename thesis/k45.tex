@@ -1,9 +1,10 @@
 \chapter{Action model construction in $\AXKFF$} \label{chapter:k45}
 
 We have discussed models in the axiom system of $\AXK$.
-In particular, we have focused on approximating arbitrary action models.
+In particular, we have focused on constructing action models through composing multiple action
+models together.
 Our approximations can fulfil post-conditions and the effects of action model execution, up to modal
-depth $n$.\\
+depth $n$, by combining the composition approach with arbitrary action model logic.\\
 \\
 This result was particularly useful in showing that we could construct an action model, but because
 it does not preserve many of the axioms necessary for discussing and reasoning about knowledge, its
@@ -40,7 +41,7 @@ This chapter is arranged as follows:
 	\item Section \ref{subsec:k45:background} discusses the background of $\AXKFF$ and motivates the
 		need to use $\AXKFF$ for our action models
 	\item Section \ref{subsec:k45:techPrelims} presents our language for constructing action models in
-		$\AXKFF$
+		$\AXKFF$, by again using action model composition
 	\item Section \ref{subsec:k45:goalAchievement} presents our main results with
   regards to action
 		model construction, approximation and goal achievement in $\AXKFF$
@@ -70,8 +71,8 @@ We can immediately see the concept of a ``root" node and ``leaf" nodes.}
 \label{exampleModelConstruct}
 \end{figure}
 
-However, the models we previously generated are not so sensible under an epistemic interpretation.
-Indeed, although we can approximate an epistemic action model and the informative update that it
+However, the composable models we previously generated are not so sensible under an epistemic interpretation.
+Although we can approximate an epistemic action model and the informative update that it
 encodes, our resultant model is not so easily interpreted within the original logical systems we
 used.
 At present, we can thus approximate any action model, whether it is interpretable under epistemic
@@ -94,8 +95,6 @@ The axiomatisation $\AXKFF$ contains the axioms and rules from $\AXK$ (Definitio
 \end{alignat*}
 \end{defn}
 
-This \\
-\\
 The impact these axioms have on our models is not immediately obvious.
 We observe the following effects of the axioms and formalise them as {\em frame conditions} in
 Definition \ref{lemma:k45frameconditions}.
@@ -111,8 +110,7 @@ Definition \ref{lemma:k45frameconditions}.
 	\end{itemize}
 \end{defn}
 
-This is given by Fagin et. al in \cite{fagin1995reasoning}.\\
-\\
+This is given by Fagin et. al in \cite{fagin1995reasoning}.
 We demonstrate the effects in Figure \ref{k45VsKModels} by comparing models in $\AXK$ and $\AXKFF$ and how we need to change
 our models to obey these axioms.
 
@@ -276,7 +274,8 @@ has an incoming $B$-edge, and $\evM_\delta$ which has a reflexive $B$-edge.}
 \label{bInsaneExample}
 \end{figure}
 
-We can thus pose an open question related to our intent to construct $n$-bisimilar action models.
+We can thus pose an open question related to our intent to construct $n$-bisimilar action models
+through action model composition.
 If we have a $\AXKFF$ action model, can we construct a $\AXKFF$ action model that is able to achieve
 the same epistemic effects, up to some modal depth $n$?
 
@@ -390,19 +389,19 @@ where $\phi \in \lang, \evM_\evT, \evM'_{\evT'}$ are multi-pointed action models
 A$ is a subset of agents.
 \end{defn}
 
-We say that an action model is {\em composable} by $\EM(\{\to, \sqcup, I\}, \insaneClass)$ if it is
+We say that an action model is {\em composable} in $\EM(\{\to, \sqcup, I\}, \insaneClass)$ if it is
 inside the language.
 We will now show that $\EM(\{\to, \sqcup, I\}, \insaneClass)$ always constructs $\AXKFF$ action models, and that any
-$\AXKFF$ action model is composable by $\EM(\{\to,\sqcup,I\},\insaneClass)$, up to $n$-bisimilarity.
+$\AXKFF$ action model is composable in $\EM(\{\to,\sqcup,I\},\insaneClass)$, up to $n$-bisimilarity.
 
 \section{Action model construction and goal achievement in $\AXKFF$} \label{subsec:k45:goalAchievement}
 
 To show that we can construct $\AXKFF$ action models, there are two propositions that
 must hold
 \begin{enumerate}
-	\item we can use our language to construct $\AXKFF$ action models
-	\item a $\AXKFF$ action model can be constructed (up to $n$-bisimilarity) by our
-		language
+	\item we can use $\EM(\{\to, \sqcup, I\}, \insaneClass)$ to construct $\AXKFF$ action models
+	\item a $\AXKFF$ action model can be constructed (up to $n$-bisimilarity) by a $\EM(\{\to, \sqcup,
+		I\}, \insaneClass)$ composable action model
 \end{enumerate}
 
 We show that the first proposition --- that $\EM(\{\to,\sqcup,I\}, \insaneClass)$ will construct
@@ -508,7 +507,7 @@ $\AXKFF$ action models.
   constructs $\AXKFF$ action models.
 \end{proof}
 
-We have shown that any composable action models of $\EM(\{\to,\sqcup,I\}, \insaneClass)$ is a
+We have shown that any composable action models in $\EM(\{\to,\sqcup,I\}, \insaneClass)$ is a
 $\AXKFF$ action models.
 Thus, we can guarantee that if $\evM_\evT$ is a model generated by
 $\EM(\{\to,\sqcup,I\}, \insaneClass)$ and $\krMo_T$ is a $\AXKFF$ Kripke model, $\krMo_T
@@ -521,7 +520,7 @@ We turn to the second goal we have and suppose that we have an action model, $\e
 = ((\evS,\evR,\evpr),\evT)$ that is a $\AXKFF$ multi-pointed action model.
 Now, consider $n$ some positive integer.
 Is there an action model $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$
-that is composable using $\EM(\{\to,\sqcup,I\}, \insaneClass)$ and is $n$-bisimilar to $\evM_\evT$?\\
+that is composable in $\EM(\{\to,\sqcup,I\}, \insaneClass)$ and is $n$-bisimilar to $\evM_\evT$?\\
 \\
 In order to show this to be possible, we must first conceptualise several
 transformations to our models.

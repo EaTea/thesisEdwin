@@ -8,14 +8,14 @@ In \cite{hales13synthesis}, Hales demonstrates that it is possible to determine 
 finite epistemic goal can be achieved.
 Furthermore, if it is achievable Hales specifies action models that will realise
 that goal.
-We will focus on defining a framework that goes utilises action model composition by constructing similar action models in a
-recursive manner.
+We will focus on defining a framework that utilises action model composition to construct
+larger action models through combining smaller action models.
 This facilitates an automated method for updating knowledge models to reflect a
 knowledge state.\\
 \\
 Our framework complements Hales' work by providing meaningful, constructive operations
 that can be used to create action models.
-Furthermore, we specify methods for constructing actual action models using these languages, rather
+Furthermore, we specify methods for composing actual action models using these languages, rather
 than simply proving their existence.
 Our work is thus a step forward in constructing updates that we can reason about and prove to
 accomplish the same effects as any theoretical model that we can specify.\\
@@ -24,10 +24,10 @@ This chapter is arranged as follows:
 
 \begin{itemize}
 	\item Section \ref{subsec:Multi:techPrelim} presents the technical preliminaries and definitions
-		of the language for action model construction in $\AXK$
+		of the language for action model composition in $\AXK$
 	\item Section \ref{subsec:multi:completeness} proves that the language
   constructs tree-like action
-		models, which is the desired form for our constructions
+		models, which is the desired form for the action models composed by our framework
 	\item Section \ref{subsec:multi:achievingGoals} presents our main results regarding constructing
 		action models for the purposes of epistemic goal achievement
 	\item Section \ref{subsec:multi:sequentCalc} discusses our work in the context of goal
@@ -36,10 +36,10 @@ This chapter is arranged as follows:
 
 \section{Construction framework and definitions} \label{subsec:Multi:techPrelim}
 
-We define what our atomic action models are for our construction.
+We define what our atomic action models are for our action model construction.
 We label them {\em insanity models}.
-Their flexibility as action models due to having no empty relations is useful in being the atoms to
-use for our constructions.
+Their flexibility as action models due to having no empty relations is useful in acting as the atoms to
+use for further composition.
 
 \begin{defn} \label{insanity}
 Let $\aMod{\evMo = (\{ s \}, R, \{(s, \phi)\})}$ be an action model
@@ -126,8 +126,7 @@ We make an important note that insanity models are the most basic kind of tree-l
 \end{figure}
 
 It is clear that by our earlier definitions, an insanity action model is also a
-finite tree action
-model.\\
+finite tree action model.\\
 \\
 Having established tree-like structures, it seems somewhat natural to also rigourously define a
 forest action model.
@@ -235,7 +234,7 @@ We outline the leaves of a finite tree action model in Figure \ref{figure:exampl
 	\label{figure:exampleLeaves}
 \end{figure}
 
-In order to generate these models, we must construct an algebra that can construct action models.
+In order to generate these models, we must construct an algebra for action model composition.
 However, we are unaware of any operations that are appropriate for building tree models.
 We define an operation to describe a group of agents' belief with regards to the possible execution
 of one action model instead of another.
@@ -297,7 +296,8 @@ This is the disjoint union of the two action models, which we can refer to as th
 knowing that one of the two models has occurred.
 To use our previous example, consider $\phi!$ and $\psi!$ again.
 There is a subtle difference in $\phi! \sqcup \psi!$ --- here, all agents are aware that one of the
-public announcements is executed, but they are unsure which one.
+public announcements is executed, and after execution, they can distinguish the updates apart, but
+they are unsure which update occurred.
 Baltag and Moss call this a non-deterministic choice \cite{baltag2005programs}.\\
 \\
 We now will show some miscellaneous results that we rely upon later in this chapter.
@@ -404,10 +404,10 @@ set of operators and $\evU$ is a class of atomic action models.
 where $B \subseteq A$, $\phi$ is some sentence in $\lang$.
 \end{defn}
 
-Furthermore, we can say that an action model $\evM_\evT$ is {\em composable} by $\EM((\to, \sqcup),
-\insaneClass)$ if it can be constructed by this language, and hence $\evM_\evT \in \EM((\to,
-\sqcup), \insaneClass)$.
-We can use our language $\EM((\to, \sqcup), \insaneClass)$ to  construct finite tree and
+Furthermore, we can say that an action model $\evM_\evT$ is {\em composable} in $\EM(\{\to,\sqcup\},
+\insaneClass)$ if it can be constructed by this language, and hence $\evM_\evT \in
+\EM(\{\to,\sqcup\}, \insaneClass)$.
+We can use our language $\EM(\{\to,\sqcup\}, \insaneClass)$ to  construct finite tree and
 forest action models, as we show in the next section.
 
 \section{Completeness} \label{subsec:multi:completeness}
@@ -421,7 +421,8 @@ This is necessary to show that our operations will construct all possible forest
 We will also show that using a forest, any kind of action model can be constructed, up to $n$-bisimilarity.
 
 \begin{lemma} \label{finTreeConstruct}
-Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree action model.
+Suppose $\evM_\evr = ((\evS, \evR, \evpr), \evr)$ is a finite tree action model that is composable
+in $\EM(\{\to, \sqcup\}, \insaneClass)$.
 $\evM$ can be constructed using insanity action models and $\to$.
 \end{lemma}
 \begin{proof}
@@ -503,7 +504,7 @@ Then
 
 We now present our main result --- that the language we have specified is able to, up to
 $n$-bisimilarity, construct any action model in $\AXK$.
-With this, we show that our constructive operations are able to be used to build useful action models
+With this, we show that our operations for action model construction are able to be used to build useful action models
 and achieve the same effects as any other action model, up to a some specified modal depth.
 
 \begin{thm} \label{approximatingEventModel}
@@ -643,7 +644,7 @@ to $\evM_\evT$.
 Thus we have $\evM_\evT \sim_k \evM'_{\evT'}$ and our induction hypothesis holds for $n = k$.
 \end{proof}
 
-We have shown that any action model can be constructed by our language, up to $n$-bisimilarity.
+We have shown that any action model can be constructed by $\EM(\{\to, \sqcup\}, \insaneClass)$, up to $n$-bisimilarity.
 If we focus on specific action models which can realise epistemic goals, as Hales
 \cite{hales13synthesis} shows, then we can complement that work by constructing action models
 specifically for the purpose of epistemic goal-achievement.
@@ -680,7 +681,7 @@ Indeed, the semantics of action model logic can be shown to work equivalently wi
 \begin{defn} \label{defn:actionModelComposition}
 	The language of action model composition is defined as in action model logic (Definition
 	\ref{actModelLogic:syntax}), with the additional inductive definition for an action model
-	$\evM_\evT$ as given in $\EM(\{\to, \sqcup\}, \insaneClass)$ (Definition \cite{axKLanguage}).
+	$\evM_\evT$ as given in $\EM(\{\to, \sqcup\}, \insaneClass)$ (Definition \ref{axKLanguage}).
 \end{defn}
 
 \begin{lemma} \label{lemma:sameSemantics}
@@ -700,11 +701,11 @@ The semantics of $\langActEx$ are the same as the semantics of action model comp
 
 We have shown that we can approximate action models according to what
 post-conditions are realised by an action models execution.
-This is achieved through the construction (via action model composition) of a particular action model that fulfils
+This is achieved through the construction (through combining action models that are composable in
+$\EM(\{\to, \sqcup\}, \insaneClass)$ of a particular action model that fulfils
 our desired post-condition.\\
 \\
-With regards to composition, this approach retains the semantic benefits of action models,
-particularly because they are based on action models.
+With regards action model composability, this approach retains the semantic benefits of action models.
 However, they combine some of the composable aspects of building up larger actions from smaller
 models, a characteristic that is seen in the syntactical approach of van Ditmarsch's relational
 actions \cite{ditmarsch99knowledge,ditmarsch2002dga}.
@@ -750,7 +751,7 @@ $k$ agents involved in the action model and there are $m$ accessibilities from
 each action point, the resulting action model would have an approximate size of
 $O((mk)^n)$ action points.\\
 \\
-These action models thus have an exponential cost to construct.
+This approach of action model construction thus has an exponential cost to construct.
 Since each action point must be inspected once during construction we can conclude that in
 terms of size and time, this algorithm's has an $O((mk)^n)$ complexity.
 This is an expensive update to construct.\\
