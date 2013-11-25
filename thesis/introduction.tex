@@ -23,7 +23,7 @@ If we wish to formally model Angeline and Ben's stock situation, we must conside
 	\item The updated facts Angeline and Ben know or believe after the letter has been opened
 \end{enumerate}
 
-Epistemic modal logic is particularly concerned with modelling item one --- the study of knowledge,
+Epistemic modal logic is particularly concerned with modelling item 1 --- the study of knowledge,
 belief and the interplays of uncertainty.
 For example, an epistemic model can model the possibilities that Angeline and Ben believe --- a
 possibility where the company ABC has done well, and a possibility where the company ABC is
@@ -35,15 +35,17 @@ that company ABC is doing well.
 However they cannot tell the difference between either of these possibilities.\\
 \\
 Modelling epistemic situations, in accordance with axiomatic schemes that
-formally model knowledge, is a well-studied field.
+formally model knowledge, is a well-studied field; see Fagin et. al \cite{fagin1995reasoning} for
+further reading.
 The work in this area has been used in financial trading and games to reason about the knowledge
 that agents in these systems have, as well as model checking and automated theorem proving.
-Automated reasoning about knowledge, and maintaining it in a consistent state are two important 
+Automated reasoning about knowledge, and maintaining knowledge bases in a consistent state are two important
+applications.
 Epistemic modal logic thus finds its uses when logical deductions about knowledge and belief must be
-made, as well as proving that an agent knows or believes exactly some set of propositions at a
-particular time step.\\
+made, as well as proving that an agent knows or believes exactly some set of propositions in a
+static situation.\\
 \\
-This work is particularly concerned with how we model the letter that Angeline receives and Ben
+This work is particularly concerned with how we model the letter that Angeline receives and what Ben
 indirectly infers from Angeline's reading of it.
 Furthermore, we are interested in the new knowledge and beliefs that Angeline and Ben possess after the update.
 What does Ben know after Angeline has read the letter?
@@ -52,7 +54,7 @@ and Ben is not?\\
 \\
 These questions that are related to items two and three --- changes in knowledge, and how we can
 model the results of changes.
-Work in this area is relatively new, and dynamic epistemic modal logic is of particular concern
+Work in this area is relatively new, called dynamic epistemic modal logic is of particular concern
 within this paper.
 In particular, being able to reason about the effects of changes, and to prove their properties and
 effects is desirable.\\
@@ -84,7 +86,7 @@ This work will document the different languages and the operations used in actio
 and the construction of different epistemic updates.
 We will show a complementary work to Hales' \cite{hales13synthesis} work that uses composition to
 construct updates in the weakest modal logic,
-$\AXK$, which is far removed from epistemic modal logic.
+$\AXK$, which lacks many of the constraints for modelling knowledge that are present in epistemic modal logic.
 We then change axiom systems to a modal logic that reflects typical properties of knowledge,
 $\AXKFF$, and show how we can compose updates in that logic.\\
 \\
