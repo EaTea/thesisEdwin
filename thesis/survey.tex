@@ -315,7 +315,8 @@ epistemic state, such as
 Let us aim to generalise the ideas behind public announcements to capture other
 informative updates.\\
 \\
-We will now constrain our agents' behaviours to only being able to accept facts.
+We will now constrain our agents' behaviours to only being able to accept basic facts about the
+state of the world.
 They will not worry about changing facts, and if facts do change we will take it
 as something that causes our agents knowledge systems to simply crash.\\
 \\
@@ -555,7 +556,7 @@ It has a composable nature (by design) that allow a large action to be built up 
 something that action models lack.
 The syntactical perspective of action models is somewhat confused, due to using a modelling
 structure within the syntax.
-Baltag and Moss are note that it is non-standard to use such structures
+Baltag and Moss note that it is non-standard to use such structures
 within a syntax \cite{baltag2005programs}.\\
 \\
 In the context of interpreting and making sensible updates, however, it is
@@ -616,8 +617,7 @@ This shows that we can use action models to ensure a condition is true
 in a new epistemic state, if it is at all possible.
 As an example, if in our game of coins $A$ and $B$ are unsure whether $H$ or $T$
 are true, we would be able to determine if an action model exists such that
-after its execution, $\Box_A H \land \Box_B H$ was true at a
-specific world.
+after its execution, $A$ knows $H$ and $B$ knows $H$ at a specific world.
 Employing the work of Hales' would allow us to synthesise this action model.\\
 \\
 An alternative approach is shown by Aucher in
@@ -693,7 +693,7 @@ know and what we have observed.
 
 A final, seemingly tangential approach to dynamic epistemic logic is to consider the concept of refinements.
 Refinements are a relation between two epistemic Kripke models where the amount of knowledge about
-the facts captured in a situation are constant.
+the basic facts --- propositions that agents are certain about --- captured in a situation are constant.
 Instead, refinements vary the negative knowledge --- the things that agents are uncertain about ---
 between the two epistemic situations.
 They are a way of describing a partial ordering of the uncertainty in a set of epistemic models.\\
