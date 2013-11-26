@@ -38,7 +38,7 @@ This chapter is arranged as follows:
 
 We define what our atomic action models are for our action model construction.
 We label them {\em insanity models}.
-Their flexibility as action models due to having no empty relations is useful in acting as the atoms to
+Their flexibility as action models, due to having empty relations, is useful in acting as the atoms to
 use for further composition.
 
 \begin{defn} \label{insanity}
@@ -53,7 +53,8 @@ We call this class of models {\em insanity models}.\\
 We denote the insanity model with $\phi$ as its precondition as $\phi \dag$.
 \end{defn}
 
-After the execution of an insanity model, all agents have renounced every belief they hold.
+After the execution of an insanity model, all agents have renounced every possibility they consider;
+that is, they do not consider any worlds possible after the execution.
 They thus believe in everything --- that both propositions $p$ and $\neg p$ hold.
 Allowing them to believe such contradictions means that they have no consistent beliefs, and we
 loosely associate this condition with ``insanity" for ease of referencing.
@@ -83,8 +84,6 @@ $\evM_\evs$ is a {\em finite tree action model} if
 \begin{itemize}
 	\item $\evS$, the set of action points is finite
 	\item $\evs$ is the root of the tree and is not accessible from any other action point
-	\item for each $\evt \in \evS \setminus \{ \evs \}$ there is a unique agent $a \in A$ and a unique
-	action $\evp \in \evS$ such that $\aMod{(p,s)} \in \evR_a$
 	\item for each $\evt \in \evS$ there exists a unique sequence of actions in $\evS$, $\evs = \evs_0,
 	\evs_1, \ldots, \evs_n = \evt$ and a sequence of agents $a_1, a_2, \ldots, a_n$ such that $\evs_0
 	\evR_{a_1}
@@ -135,7 +134,7 @@ forest action model.
 Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a multi-pointed action model.
 $\evM_\evT$ is a {\em finite forest action model} if
 \begin{itemize}
-	\item each point $\evt$ in $\evT$ is the root of a finite tree action model $\evM^\evt =
+	\item each point $\evt$ in $\evT$ is the root of a finite tree action model $\evM_\evt =
 	(\evS^\evt, \evR^\evt,
 	\evpr^\evt, \evt)$
   \item $\evS = \bigcup_{\evt \in \evT} \evS^\evt$
@@ -167,8 +166,9 @@ Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a finite forest action model.
 We say the pointed action model $\evM^{\evr} = ((\evS^{\evr}, \evR^{\evr}, \evpr^{\evr}), \evr)$
 is a {\em subtree} of $\evM$ if
 \begin{itemize}
-	\item $\evr \in \evS \cap \evS^\evr = \evS^\evr$
-	\item $\forall a \in A \Rightarrow \evR_a^\evr \subseteq \evR_a$
+	\item $\evr \in \evS^\evr \subseteq \evS$
+	\item $\forall a \in A \Rightarrow \evR_a^\evr \subseteq \evR_a$; that is, $\evR^\evr_a = \evR_a$,
+		restricted to $\evS^\evr$
 	\item $\forall \evs \in \evS^\evr \Rightarrow \evpr(\evs) = \evpr^\evr(\evs) $
 	\item $\evM^\evr$ is a finite tree action model
 \end{itemize}
@@ -251,7 +251,7 @@ We define $\evM^1 \to_B \evM^2 = \evM$ as
 	\item $\evR_a =
       \evR^1_a \cup
       \evR^2_a \cup
-      \{(\evs,\evt) | \evs \in \evT^1 \land \evt \in \evT^2 \}
+      \{(\evs,\evt) | \evs \in \evT^1$ and $\evt \in \evT^2 \}
     \text{if } a \in B $
   \item $\evpr = \evpr^1 \cup \evpr^2$
   \item $\evT = \evT^1$
@@ -396,7 +396,7 @@ set of operators and $\evU$ is a class of atomic action models.
 
 \begin{defn} \label{axKLanguage}
 	Let $A$ be a finite set of agents.
-	We say $\EM(\{\to,\sqcup\}, \insaneClass)$ is a language for action model inductively defined by
+	We say $\EM(\{\to,\sqcup\}, \insaneClass)$ is a language for action models, inductively defined by
 \[
 	\evM_\evT ::= \phi \dag \text{ } | \text{ } \evM_\evT \to_B \evM'_{\evT'} \text{ } | \text{ }
 	\evM_\evT \sqcup \evM'_{\evT'}
@@ -713,7 +713,7 @@ In this way, we unify the strong semantics of action models with a syntactical a
 improves action model logic.\\
 \\
 This approach is powerful in guaranteeing the construction of an action model
-that will always sure an epistemic goal state is fulfilled or that the Kripke
+that will always ensure an epistemic goal state is fulfilled or that the Kripke
 model is destroyed as a result of the execution.
 We do not need to give any regard to the Kripke model that we are executing our
 action model on.\\
