@@ -27,7 +27,9 @@ that are true at a world, and {\bf KD45}, which ensures an agent believes in
 some fact.
 Both of these axiomatic systems enforce that an agent's beliefs or knowledge are
 entirely consistent.
-Due to the technical difficulties of preserving {\bf D} and {\bf T}, we will
+However, composing action models to preserve {\bf D} and {\bf T} is nontrivial, due to the
+structures required being no longer tree-like in their overall shape.
+Due to these technical difficulties of preserving {\bf D} and {\bf T}, we will
 avoid working in {\bf KT45} or {\bf KD45}.\\
 \\
 Nevertheless, the preservation of positive and negative introspection in
@@ -186,7 +188,7 @@ with an edge running to each one of them, as well as reflexive edges for each po
 \\
 A further result of soundness and completeness of $\AXKFF$ is indirectly shown by Blackburn, de Rijke and Venema
 \cite{blackburn2002modal} through Sahlqvist formulae, the Sahlqvist completeness theorem and Kracht's
-theorem \cite{2594394}, which we do not replicate in full for brevity..
+theorem \cite{2594394}, which we do not replicate in full for brevity.
 
 \begin{lemma} \label{axiomK45SoundComplete}
 The axiomatisation $\AXKFF$ is sound and complete with respect to the validities on all Euclidean
@@ -213,7 +215,7 @@ $\AXKFF$.
 	$\krMo_T \otimes \evM_\evT$ is a $\AXKFF$ model.
 \end{lemma}
 \begin{proof}
-	See Appendix \ref{proof:lemma:k45preserved} for the full proof.
+	See Appendix \ref{proof:lemma:k45preserved} for the proof.
 \end{proof}
 
 This shows us that what we consider a $\AXKFF$ action model behaves as we expect --- if we execute
@@ -368,7 +370,8 @@ are not $\AXKFF$ action models.
 	Suppose $B \subseteq A$ is a subset of agents.
 	Let $\evM_\evT = ((\evS,\evR,\evpr),\evT)$ and $\evM'_{\evT'} = ((\evS',\evR',\evpr'),\evT')$ be $\AXKFF$ action models.
 	Furthermore, $\evM_\evT$ is a $B$-insane action model, and $\evM'_{\evT'}$ is defined such that for
-	all $b$ in $B$, for all $\evt \in \evT'$, $\evt \evR'_b \subseteq \evT'$.
+	all $b$ in $B$, for all $\evt \in \evT'$, $\evt \evR'_b = \evT'$ (that is, all action points in
+	$\evT'$ appear indistinguishable to agents in $B$).
 	$\evM_\evT \to_B \evM'_{\evT'}$ is defined as in Definition \ref{considers}.
 \end{defn}
 
@@ -389,8 +392,8 @@ where $\phi \in \lang, \evM_\evT, \evM'_{\evT'}$ are multi-pointed action models
 A$ is a subset of agents.
 \end{defn}
 
-We say that an action model is {\em composable} in $\EM(\{\to, \sqcup, I\}, \insaneClass)$ if it is
-inside the language.
+We say that an action model is {\em composable} in $\EM(\{\to, \sqcup, I\}, \insaneClass)$ if
+corresponds with some term in the language.
 We will now show that $\EM(\{\to, \sqcup, I\}, \insaneClass)$ always constructs $\AXKFF$ action models, and that any
 $\AXKFF$ action model is composable in $\EM(\{\to,\sqcup,I\},\insaneClass)$, up to $n$-bisimilarity.
 
@@ -404,8 +407,7 @@ must hold
 		I\}, \insaneClass)$ composable action model
 \end{enumerate}
 
-We show that the first proposition --- that $\EM(\{\to,\sqcup,I\}, \insaneClass)$ will construct
-$\AXKFF$ action models.
+We first show that $\EM(\{\to,\sqcup,I\}, \insaneClass)$ will construct $\AXKFF$ action models.
 
 \begin{lemma} \label{lemma:onlyK45Models}
 	Let $\evM_\evT$ be a pointed action model constructed from the language $\EM(\{\to,\sqcup,I\}, \insaneClass)$.
