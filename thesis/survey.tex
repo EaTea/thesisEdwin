@@ -10,21 +10,21 @@ differing approaches and strengths.\\
 \\
 To explore the techniques used to model information and the change of information, we introduce an
 example of a game of information.
-Consider a game being played between two friends (agents), Angeline $(A)$
-and Ben $(B)$.
-The game involves flipping a coin, hiding the result from both $A$ and $B$ and
+Consider a game being played between two friends (agents), Angeline $(a)$
+and Ben $(b)$.
+The game involves flipping a coin, hiding the result from both $a$ and $b$ and
 having both of them guess whether the coin is Heads $(H)$ or the coin is Tails
-$(T)$.
+$(\neg H)$.
 The game is refereed by a mutually trusted (and usually impartial) friend, Carol
-$(C)$ who knows if the coin is $H$ or $T$.\\
+$(C)$ who knows if the coin is $H$ or $\neg H$.\\
 \\
-$A$ and $B$ know that either $H$ is true or $T$ is true.
-They also know that $H$ and $T$ cannot both occur simultaneously together.
+$a$ and $b$ know that either $H$ is true or $\neg H$ is true.
+They also know that $H$ and $\neg H$ cannot both occur simultaneously together.
 An agent's knowledge (which is inclusive of, but not limited to the previous
 statements) is called the epistemic state.
 Furthermore, there are two possibilities for the coin's outcome: that it is $H$
-or $T$.
-Neither $A$ or $B$ as they are can distinguish between them; that is, they are
+or $\neg H$.
+Neither $a$ or $b$ as they are can distinguish between them; that is, they are
 uncertain which of the outcomes is true.
 Agent uncertainty in this multi-agent system is another aspect we must attempt
 to capture.
@@ -32,27 +32,27 @@ to capture.
 \section{Epistemic modal logic}\label{survey_epistemic_modal_logic}
 In our coin-flipping game, we can make the following observations.
 \begin{itemize}
-	\item $A$ considers $H$ to be possible, as well as $T$ to be possible
-	\item $B$ also considers $H$ to be possible, and also considers $T$ to be possible
+	\item $a$ considers $H$ to be possible, as well as $\neg H$ to be possible
+	\item $b$ also considers $H$ to be possible, and also considers $\neg H$ to be possible
 \end{itemize}
 We claim that there are two possible worlds that differ in one way ---
-in one of these worlds, $H$ is true, and in the other world $T$ is true.
-Furthermore, these worlds are the same from $A$ and $B$'s perspectives.
-$A$ would not be able to distinguish the world where $H$ was true from either of
-the world where $H$ was true or the world where $T$ was true, since she cannot
+in one of these worlds, $H$ is true, and in the other world $\neg H$ is true.
+Furthermore, these worlds are the same from $a$ and $b$'s perspectives.
+$a$ would not be able to distinguish the world where $H$ was true from either
+itself or the world where $\neg H$ was true, since she cannot
 see the coin.\\
 \\
 We can represent this uncertainty between what world is true as relations
 between worlds.
-In this case, let $W = \{ \eta, \tau\}$ be our set of possible worlds, where $H$ is true
-at $\eta$ and $T$ is true at $\tau$.
-Let $R_A = R_B = \{(\tau,\tau), (\tau,\eta), (\eta, \tau), (\eta,\eta)\}$ be
+In this case, let $W = \{ s, t\}$ be our set of possible worlds, where $H$ is true
+at $s$ and $\neg H$ is true at $t$.
+Let $R_a = R_b = \{(t,t), (t,s), (s, t), (s,s)\}$ be
 binary relations on $W$ representing indistinguishability between two possible
 worlds.
 We call these relations ``accessibility relations"; we say if one world is
 indistinguishable from another, then they can access each other.
 Lastly, let $V$ be a valuation function that maps a formula to the set of worlds
-where that formula is true, so $V(H) = \{\eta\}$ and $V(T) = \{\tau\}$.\\
+where that formula is true, so $V(H) = \{s\}$ and $V(\neg H) = \{t\}$.\\
 \\
 We can represent this model graphically as shown in Figure \ref{htkripkefigure},
 where our possible worlds $(W)$ are nodes and our binary relations $(R$) are edges in the
@@ -63,15 +63,18 @@ graph.
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
 
-    \node[vertex] (1) {$\eta$};
-    \node[vertex] (2) [right of=1] {$\tau$};
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$t$};
     \path[edge]
-          (1) edge node {$A,B$} (2)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$a,b$} (2)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-              edge [loop right] node {$A,B$} (2);
+              edge [loop right] node {$a,b$} (2);
 \end{tikzpicture}
-\caption[Possible worlds game of heads and tails.]{A graph representation of our game of heads and tails.}\label{htkripkefigure}
+\caption[Possible worlds game of heads and tails.]{a graph representation of our game of heads and
+tails. Within our game, $H$ is true at $s$ and $\neg H$ is true at $t$. Here, $a$ knows that $b$
+is unsure whether $H$ or $\neg H$ is true. Similarly, $b$ knows that $a$ is unsure whether $H$ or
+$\neg H$ is true.}\label{htkripkefigure}
 \end{figure}
 
 The possible worlds models form a semantics allowing us to construct meaningful
@@ -79,7 +82,7 @@ models that reflect an epistemic state.
 Hintikka \cite{hintikka1962knowledge}, referred to somewhat as the father of epistemic modal logic,
 constructed this ``possible worlds" model at the same time as Kripke \cite{MALQ:MALQ19630090502}.
 It is the semantics and models that allow us to reason about relations between the possible worlds in
-an internal sense, from $A$ and $B$'s perspectives \cite{blackburn2002modal}.\\
+an internal sense, from $a$ and $b$'s perspectives \cite{blackburn2002modal}.\\
 \\
 Modal logic thus gives us the tools to model the state of knowledge, and to reason about an agent's
 state of knowledge at a particular point.
@@ -107,8 +110,8 @@ in this logic resemble epistemic and doxastic models of knowledge and belief res
 \\
 Modal logic, the possible worlds model and these constraints of knowledge and belief allow us to
 discuss what each agent knows at a possible world, and what is true or untrue at each world.
-We can say that at each point in the model, neither $A$ or $B$ know whether $H$ or $T$ is true, and
-that at $\eta$, $H$ is true.\\
+We can say that at each point in the model, neither $a$ or $b$ know whether $H$ or $\neg H$ is true, and
+that at $s$, $H$ is true.\\
 \\
 %We can define an operator to formally represent the modality of ``knowing"
 %a proposition or formula to be true.
@@ -124,7 +127,7 @@ that at $\eta$, $H$ is true.\\
 %possible.
 %
 %\begin{defn}
-%	The operator $\Diamond_a T$ stands for ``Agent $a$ considers $T$ to be possible".
+%	The operator $\Diamond_a \neg H$ stands for ``Agent $a$ considers $\neg H$ to be possible".
 %	$\Diamond_a \phi$ is true at a possible world $w$ if there is one
 %	accessibility relation $(w,w')$ such that $\phi$ is true at $w'$.
 %\end{defn}
@@ -147,7 +150,7 @@ that at $\eta$, $H$ is true.\\
 %	\begin{enumerate}
 %		\item $\Box (\phi \implies \theta) \implies (\Box \phi \implies \Box
 %				\theta)$, known as {\bf K}
-%		\item $\Box \phi \implies \phi$, known as {\bf T}
+%		\item $\Box \phi \implies \phi$, known as {\bf \neg H}
 %		\item $\Box \phi \implies \Box \Box \phi$, known as {\bf 4}
 %		\item $\neg \Box \phi \implies \Box (\neg \Box \phi))$, known as {\bf 5}
 %	\end{enumerate}
@@ -164,10 +167,10 @@ that at $\eta$, $H$ is true.\\
 %  \item negative introspection: if an agent does not know a fact, then it knows that it does not know a
 %  fact (from {\bf 5})
 %  \item if an agent knows a fact, then that fact is true at that world (from
-%      {\bf T})
+%      {\bf \neg H})
 %\end{itemize}
 %
-%If we replaced {\bf T} with an axiom {\bf D} which states $\Box \phi
+%If we replaced {\bf \neg H} with an axiom {\bf D} which states $\Box \phi
 %\implies \Diamond \phi$, then we can model doxastic models of belief, instead of
 %epistemic models of knowledge.
 %{\bf D} states that an agent who knows a fact must consider it a possibility.\\
@@ -175,16 +178,16 @@ that at $\eta$, $H$ is true.\\
 %Another important modal logic system involves only axioms {\bf K}, {\bf 4} and
 %{\bf 5}.
 %It preserves positive and negative introspection, but the lack of axioms {\bf D} or
-%{\bf T} causes the logic to allow agents to hold inconsistent beliefs.
+%{\bf \neg H} causes the logic to allow agents to hold inconsistent beliefs.
 %The models in this logic resemble epistemic models of knowledge and doxastic
 %models of belief.\\
 %\\
-%We can now make formal reasonings, such as deciding that $\Box_A H$ and $\Box_A
-%T$ are both false.
-%We note that $\Box_B (H \lor T)$ is true and $\Box_A \Box_B (H \lor T)$ is
+%We can now make formal reasonings, such as deciding that $\Box_a H$ and $\Box_a
+%\neg H$ are both false.
+%We note that $\Box_b (H \lor \neg H)$ is true and $\Box_a \Box_b (H \lor \neg H)$ is
 %true.\\
 %\\
-%{\bf K}, {\bf T}, {\bf 4} and {\bf 5} allow us to model epistemic state and
+%{\bf K}, {\bf \neg H}, {\bf 4} and {\bf 5} allow us to model epistemic state and
 %uncertainty in our game of heads and tails.
 %We have defined on our models that allows us to make formal reasonings and
 %decide if formulae are true at possible worlds.\\
@@ -216,7 +219,7 @@ Public announcements are informational updates of true facts that change the
 knowledge state amongst multiple agents.\\
 \\
 In the context of our card game, let us consider if our external trusted party
-$C$ publicly announces to $A$ and $B$ that $H$ is true.
+$C$ publicly announces to $a$ and $b$ that $H$ is true.
 We will demonstrate the execution of that update upon our model in Figure
 \ref{pakripkefigure}.
 
@@ -226,13 +229,13 @@ We will demonstrate the execution of that update upon our model in Figure
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
-    \node[vertex] (1) {$\eta$};
-    \node[vertex] (2) [right of=1] {$\tau$};
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$t$};
     \path[edge]
-          (1) edge node {$A,B$} (2)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$a,b$} (2)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-              edge [loop right] node {$A,B$} (2);
+              edge [loop right] node {$a,b$} (2);
 \end{tikzpicture}
 \caption{Our model before $H$ is announced to be true.}
 \label{beforefigure}
@@ -243,37 +246,37 @@ We will demonstrate the execution of that update upon our model in Figure
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
 
-    \node[vertex] (1) {$\eta$};
+    \node[vertex] (1) {$s$};
     \path[edge]
-          (1) edge [loop left] node {$A,B$} (1);
+          (1) edge [loop left] node {$a,b$} (1);
 \end{tikzpicture}
 \caption{Our model after $H$ is announced to be true.}
 \label{afterfigure}
 \end{subfigure}
-\caption[Public announcement: before and after]{The differences before and after the public announcements of $H$ to $A$ and
-	$B$.}
+\caption[Public announcement: before and after]{The differences before and after the public announcements of $H$ to $a$ and
+	$b$.}
 \label{pakripkefigure}
 \end{figure}
 
 Public announcements capture changes in information, such as $C$ saying to
-$A$ and $B$ that the coin is $H$.
-Another possible update is $C$ telling $A$ and $B$ ``I guess you didn't know that the coin is actually heads up".\\
+$a$ and $b$ that the coin is $H$.
+Another possible update is $C$ telling $a$ and $b$ ``I guess you didn't know that the coin is actually heads up".\\
 \\
 These changes can be successful or unsuccessful, depending on whether the fact
 that was announced is true after its announcement.
-For example, if $A$ makes the (truthful) announcement that $H$, then this
+For example, if $a$ makes the (truthful) announcement that $H$, then this
 announcement is successful since $H$ will be true after the announcement.\\
 \\
-Conversely, consider an announcement from $A$ to $B$ that ``I know that you {\em don't} know $H$
+Conversely, consider an announcement from $a$ to $b$ that ``I know that you {\em don't} know $H$
 is true, but the coin is actually $H$".
 We can again refer to Figure \ref{pakripkefigure} to graphically show the models
 before (Figure \ref{beforefigure}) and after (Figure \ref{afterfigure}) the update.
 This update is interesting in that its announcement causes itself to be false.\\
 \\
-When $C$ publicly announces that the coin is $H$ and that $A$ and $B$ do not know that
-the coin is $H$, her announcement is now false, since $B$ now knows that $H$
+When $C$ publicly announces that the coin is $H$ and that $a$ and $b$ do not know that
+the coin is $H$, her announcement is now false, since $b$ now knows that $H$
 actually is true.
-Examining Figure \ref{afterfigure}, we can see that the claim ``$A$ and $B$ do not know that $H$ is
+Examining Figure \ref{afterfigure}, we can see that the claim ``$a$ and $b$ do not know that $H$ is
 true" is untrue after its announcement in Figure \ref{beforefigure}.
 This is an example of an unsuccessful public announcement.\\
 \\
@@ -281,7 +284,7 @@ By using public announcement logic we can describe these announcements of
 information.
 We have a framework to describe and change the state of information amongst our
 agents before and after announcements of facts.
-Public announcement logic will allow us to model $C$ telling $A$ and $B$ in a
+Public announcement logic will allow us to model $C$ telling $a$ and $b$ in a
 public fashion that $H$ is true.
 This scales to modelling broadcasts in multi-agent systems, and allowing us to
 update our models of the epistemic state of agents in such mass, public communications.\\
@@ -291,9 +294,9 @@ updates that we have yet to consider.
 Re-examining our game of heads and tails yields scenarios that we cannot
 describe:
 \begin{itemize}
-	\item What about $A$ cheating and learning $H$ or $T$ without $B$'s knowledge?
-	\item What if $C$ was to whisper (in front of $B$) whether the coin was $H$
-	or $T$?
+	\item What about $a$ cheating and learning $H$ or $\neg H$ without $b$'s knowledge?
+	\item What if $C$ was to whisper (in front of $b$) whether the coin was $H$
+	or $\neg H$?
 \end{itemize}
 These are things public announcement logic cannot describe, and our inability to
 model them raises more questions:
@@ -308,9 +311,9 @@ Public announcements can capture the simple act of announcing a fact.
 However, in public announcements, we cannot capture certain updates to the
 epistemic state, such as
 \begin{itemize} 
-  \item $C$ whispers to $A$ that $H$ is true and $B$ sees her whisper
-  \item $C$ whispers to $A$ that $H$ is true without $B$ seeing
-  \item $B$ suspects $A$ of cheating, but he isn't sure if she's cheated
+  \item $C$ whispers to $a$ that $H$ is true and $b$ sees her whisper
+  \item $C$ whispers to $a$ that $H$ is true without $b$ seeing
+  \item $b$ suspects $a$ of cheating, but he isn't sure if she's cheated
 \end{itemize}
 Let us aim to generalise the ideas behind public announcements to capture other
 informative updates.\\
@@ -338,7 +341,7 @@ knowledge and to make a non-deterministic choice between actions.
 Thus, van Ditmarsch presents a way to describe complex actions, and indeed we can
 express and describe the public announcements discussed in the previous sections.
 We can formally describe actions such as cheating, or a private
-announcement to $B$ that $H$ is true that's seen by $A$.\\
+announcement to $b$ that $H$ is true that's seen by $a$.\\
 \\
 By design, epistemic relational actions are composable and offer a strong syntax and proof system.
 However, reasoning about epistemic actions in their current form is difficult.
@@ -346,7 +349,7 @@ Indeed, the interpretations of an epistemic action are non-trivial to
 understand.
 Moreover, van Ditmarsch, van der Hoek and Kooi present problems with
 representing complex uncertainties with van Ditmarsch's epistemic actions that make it difficult
-to reason about what $A$ and $B$ know after an action takes place.\\
+to reason about what $a$ and $b$ know after an action takes place.\\
 \\
 In the next section, we review a different framework to model epistemic updates
 which can describe as many updates as van Ditmarsch's language.
@@ -366,11 +369,11 @@ actions and their outcomes using van Ditmarsch's framework, as discussed in
 Section \ref{epi_acts} \cite{hoek2008dynamic}.\\
 \\
 We will consider the following situation, where our game of heads and tails
-begins with both $A$ and $B$ unable to discern if the coin is $H$ or $T$ (Figure
+begins with both $a$ and $b$ unable to discern if the coin is $H$ or $\neg H$ (Figure
 \ref{ambeforefigure}).
-However, $B$ leaves the room to use the bathroom and when he returns he is unable
-to tell if $A$ has looked at the coin and learned that it is $H$, $T$ or whether
-$A$ has not looked and nothing has changed \ref{amafterfigure}.
+However, $b$ leaves the room to use the bathroom and when he returns he is unable
+to tell if $a$ has looked at the coin and learned that it is $H$, $\neg H$ or whether
+$a$ has not looked and nothing has changed \ref{amafterfigure}.
 The graphical models for each situation are presented in Figure
 \ref{amkripkefigure}.\\
 
@@ -381,15 +384,15 @@ The graphical models for each situation are presented in Figure
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
 
-    \node[vertex] (1) {$\eta$};
-    \node[vertex] (2) [right of=1] {$\tau$};
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$t$};
     \path[edge]
-          (1) edge node {$A,B$} (2)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$a,b$} (2)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-              edge [loop right] node {$A,B$} (2);
+              edge [loop right] node {$a,b$} (2);
 \end{tikzpicture}
-\caption{Our model before $B$ temporarily left the game.}
+\caption{Our model before $b$ temporarily left the game.}
 \label{ambeforefigure}
 \end{subfigure}
 ~
@@ -398,54 +401,54 @@ The graphical models for each situation are presented in Figure
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
       thick]
 
-    \node[vertex] (1) {$\eta$};
-    \node[vertex] (2) [right of=1] {$\tau$};
-    \node[vertex] (3) [below of=1] {$\eta'$};
-    \node[vertex] (4) [right of=3] {$\tau'$};
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$t$};
+    \node[vertex] (3) [below of=1] {$s'$};
+    \node[vertex] (4) [right of=3] {$t'$};
     \path[edge]
-          (1) edge node {$A,B$} (2)
-              edge [loop left] node {$A,B$} (1)
-							edge node {$B$} (3)
+          (1) edge node {$a,b$} (2)
+              edge [loop left] node {$a,b$} (1)
+							edge node {$b$} (3)
 							edge node {} (4)
           (2) edge node {} (1)
-              edge [loop right] node {$A,B$} (2)
-							edge node [above,pos = 0.33] {$B$} (3)
-							edge node {$B$} (4)
+              edge [loop right] node {$a,b$} (2)
+							edge node [above,pos = 0.33] {$b$} (3)
+							edge node {$b$} (4)
 					(3) edge node {} (1)
 							edge node {} (2)
-							edge node {$B$} (4)
-							edge [loop left] node {$A,B$} (3)
-					(4) edge node [above, pos = 0.66] {$B$} (1)
+							edge node {$b$} (4)
+							edge [loop left] node {$a,b$} (3)
+					(4) edge node [above, pos = 0.66] {$b$} (1)
 							edge node {} (2)
 							edge node {} (3)
-							edge [loop right] node {$A,B$} (4);
+							edge [loop right] node {$a,b$} (4);
 \end{tikzpicture}
-\caption{Our model after $B$ returns and is unsure about whether $A$ has looked
+\caption{Our model after $b$ returns and is unsure about whether $a$ has looked
 	at the coin.
-$\tau$ and $\eta$ are worlds where $A$ has not cheated while $\tau'$ and $\eta'$
-are worlds where $A$ has cheated and looked at the coin.}
+$t$ and $s$ are worlds where $a$ has not cheated while $t'$ and $s'$
+are worlds where $a$ has cheated and looked at the coin.}
 \label{amafterfigure}
 \end{subfigure}
-\caption[Kripke model changes after an informative update]{The differences before and after $B$'s temporary departure.}
+\caption[Kripke model changes after an informative update]{The differences before and after $b$'s temporary departure.}
 \label{amkripkefigure}
 \end{figure}
 
-In Figure \ref{amkripkefigure}, we can say that $H$ is true at $\{\eta,\eta'\}$ and $T$ is
-true at $\{\tau,\tau'\}$, but that in $\eta'$ and $\tau'$ $A$ has taken a look
-at the coin and can distinguish between $\eta'$ and $\tau'$.
+In Figure \ref{amkripkefigure}, we can say that $H$ is true at $\{s,s'\}$ and $\neg H$ is
+true at $\{t,t'\}$, but that in $s'$ and $t'$ $a$ has taken a look
+at the coin and can distinguish between $s'$ and $t'$.
 Our change in epistemic state is a change that we cannot model with public
 announcement logic.
-It is a private announcement such that $B$ is aware of the announcement, but not
+It is a private announcement such that $b$ is aware of the announcement, but not
 of its contents.\\
 \\
 This update is one we can capture with an action model.
-$B$ considers it possible that an action where $A$ looks at the coin and learns
+$b$ considers it possible that an action where $a$ looks at the coin and learns
 $H$ occurs.
-He also considers the action where $A$ looks at the coin and learns $T$ possible
+He also considers the action where $a$ looks at the coin and learns $\neg H$ possible
 as well.
-Lastly, he considers that $A$ did not look at the coin and thus the state of the
+Lastly, he considers that $a$ did not look at the coin and thus the state of the
 world remains the same, signified by {\bf tr}.
-As $B$ cannot tell which one of them occurred, but is aware that one of them did
+As $b$ cannot tell which one of them occurred, but is aware that one of them did
 occur, he considers them indistinguishable.
 We can represent them as a ``possible actions" model, as we show in Figure
 \ref{amprivatea}.
@@ -459,22 +462,22 @@ Baltag, Moss and Solecki define an operation to execute the model in Figure
       thick]
 
     \node[vertex] (1) {$H$};
-    \node[vertex] (2) [right of=1] {$T$};
+    \node[vertex] (2) [right of=1] {$\neg H$};
     \node[vertex] (3) [below of=1] {{\bf tr}};
     \path[edge]
-          (1) edge node {$B$} (2)
-							edge node {$B$} (3)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$b$} (2)
+							edge node {$b$} (3)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-							edge node {$B$} (3)
-              edge [loop right] node {$A,B$} (2)
-					(3) edge [loop below] node {$A,B$} (3)
+							edge node {$b$} (3)
+              edge [loop right] node {$a,b$} (2)
+					(3) edge [loop below] node {$a,b$} (3)
 							edge node {} (1)
 							edge node {} (2);
 \end{tikzpicture}
-\caption[Example action model]{An example of an action model; in this example, the update models $B$
-becoming suspicious of $A$ having learnt whether $H$ or $T$ is true, but not
-knowing whether the $A$ actually has not learnt anything and the world remains
+\caption[Example action model]{An example of an action model; in this example, the update models $b$
+becoming suspicious of $a$ having learnt whether $H$ or $\neg H$ is true, but not
+knowing whether the $a$ actually has not learnt anything and the world remains
 as it was before (signified {\bf tr}).}
 \label{amprivatea}
 \end{figure}
@@ -505,8 +508,8 @@ be refined.
 \subsection{Comparison to relational epistemic actions} \label{epi_compare}
 Both relational epistemic actions \cite{hoek2008dynamic} and action models
 \cite{baltag1998lpa} describe a larger range of epistemic updates for our game of heads and tails.
-The examples we chose earlier, regarding $C$ telling $A$ about the state of the
-coin, or $B$ becoming suspicious of $A$ can be expressed using either framework.
+The examples we chose earlier, regarding $C$ telling $a$ about the state of the
+coin, or $b$ becoming suspicious of $a$ can be expressed using either framework.
 What, then, is the real difference between employing action models, as opposed
 to relational epistemic actions?\\
 \\
@@ -519,15 +522,15 @@ motivate this with an example.\\
 \\
 They consider the non-deterministic choice of 3 possible actions which are
 indistinguishable externally.
-As an example, $B$ might learn that $A$ knows either of $H$ or $T$, or has
+As an example, $b$ might learn that $a$ knows either of $H$ or $\neg H$, or has
 learnt nothing at all.
-Since $B$ does not know which of these actions could occur, each of these
+Since $b$ does not know which of these actions could occur, each of these
 epistemic updates is a possible action.\\
 \\
 They show that it is possible to express this uncertainty in a manner quite similar
 to an action model.
-Similarly, the corresponding action model of whether $B$ learns of $A$'s
-knowledge of $H$, $T$ or nothing new is quite easily interpreted in a manner
+Similarly, the corresponding action model of whether $b$ learns of $a$'s
+knowledge of $H$, $\neg H$ or nothing new is quite easily interpreted in a manner
 akin to relational epistemic actions.
 Their general result is that relational actions can be expressed as action
 models, and vice versa.
@@ -581,9 +584,9 @@ Baltag and Moss \cite{baltag2005programs} define a powerful syntax for construct
 Their syntax is as powerful as van Ditmarsch's in relational epistemic actions,
 being able to express sequences of epistemic actions or make a non-deterministic
 choice between two established action models.
-In our game, we would be able to model sequences of actions, such as $A$ finding
-out whether $H$ is true or $T$ is true while $B$ watches, then $B$ finding out
-whether $H$ or $T$ is true but without $A$ being aware of $B$ learning this.\\
+In our game, we would be able to model sequences of actions, such as $a$ finding
+out whether $H$ is true or $\neg H$ is true while $b$ watches, then $b$ finding out
+whether $H$ or $\neg H$ is true but without $a$ being aware of $b$ learning this.\\
 \\
 The only objection to their syntax, as raised earlier, is the curious use of
 the semantic structures within a syntax.
@@ -615,9 +618,9 @@ epistemic logic, to any modal logic system.\\
 \\
 This shows that we can use action models to ensure a condition is true
 in a new epistemic state, if it is at all possible.
-As an example, if in our game of coins $A$ and $B$ are unsure whether $H$ or $T$
+As an example, if in our game of coins $a$ and $b$ are unsure whether $H$ or $\neg H$
 are true, we would be able to determine if an action model exists such that
-after its execution, $A$ knows $H$ and $B$ knows $H$ at a specific world.
+after its execution, $a$ knows $H$ and $b$ knows $H$ at a specific world.
 Employing the work of Hales' would allow us to synthesise this action model.\\
 \\
 An alternative approach is shown by Aucher in
@@ -653,11 +656,11 @@ unexplored.
 
 \section{Belief revision}
 
-Suppose that $A$ and $B$ are playing the heads-or-tails game with $C$ again.
+Suppose that $a$ and $b$ are playing the heads-or-tails game with $C$ again.
 $C$ checks the coin and announces ``The coin is heads up".
-$A$ and $B$ now believe that the coin $C$ is holding is heads up.
+$a$ and $b$ now believe that the coin $C$ is holding is heads up.
 But $C$ rechecks the coin and realises it is actually {\em tails}.
-She apologetically announces to $A$ and $B$ that the coin is actually tails.\\
+She apologetically announces to $a$ and $b$ that the coin is actually tails.\\
 \\
 Our current update frameworks cannot deal with the world being inconsistent with
 our knowledge.
@@ -691,7 +694,7 @@ know and what we have observed.
 
 \section{Refinement quantified modal logics} \label{section:refineModalLogics}
 
-A final, seemingly tangential approach to dynamic epistemic logic is to consider the concept of refinements.
+a final, seemingly tangential approach to dynamic epistemic logic is to consider the concept of refinements.
 Refinements are a relation between two epistemic Kripke models where the amount of knowledge about
 the basic facts --- propositions that agents are certain about --- captured in a situation are constant.
 Instead, refinements vary the negative knowledge --- the things that agents are uncertain about ---
