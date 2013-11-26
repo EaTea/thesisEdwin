@@ -26,14 +26,14 @@ information.
 	Let $L$ be a logical language.
 	Let $F = (S, R)$ be a frame, and $A$ a finite set of agents.
 	In the context of epistemic modal logic, $S$ is a set of atomic knowledge points.
-	Let $V: L \to \mathcal{P}(S)$ \footnote{$\mathcal{P}(S)$ is the powerset of $S$.} be a function mapping any
-	well-formed	sentence in $L$ to a subset of $S$.
+	Let $V: L \to \mathcal{P}(S)$ \footnote{$\mathcal{P}(S)$ is the powerset of $S$.} be a
+	well-defined function mapping all well-formed	sentences in $L$ to a subset of $S$.
 	We say $V$ is a valuation function on $F$.\\
 	\\
 	Then $\krMo = (F, V) = (S, R, V)$ is a {\em Kripke model}.
 \end{defn}
 
-In a similar manner to Kripke frames, we might refer to Kripke models as simply models.\\
+In a similar manner to Kripke frames, we refer to Kripke models as simply models.\\
 \\
 A multi-pointed model is a model $\krMo_T = ((S, R, V), T)$ where $T$ is a set of designated states.
 When $T = \{s\}$ is a single state, we say that the model is a pointed model and write $M_s$.
@@ -44,8 +44,8 @@ We say $\kripkeClass$ is the class of all Kripke models.
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
 
-    \node[vertex] (1) {$\eta$};
-    \node[vertex] (2) [right of=1] {$\tau$};
+    \node[vertex] (1) {$s$};
+    \node[vertex] (2) [right of=1] {$u$};
     \path[edge]
           (1) edge node {$A,B$} (2)
               edge [loop left] node {$A,B$} (1)
@@ -53,21 +53,21 @@ We say $\kripkeClass$ is the class of all Kripke models.
               edge [loop right] node {$A,B$} (2);
 \end{tikzpicture}
 \caption[Kripke model example of coin-game]{An example of a Kripke model, $\krMo = (S,R,V)$, as a graph. Here, we can see that
-$\eta R_A \tau$, $\tau R_A \eta$, $\eta R_A \eta$ and $\tau R_A \tau$. The same relations apply for
+$s R_A u$, $u R_A s$, $s R_A s$ and $u R_A u$. The same relations apply for
 $R_B$.}
 \label{figure:exampleModel}
 \end{figure}
 
 An example of a Kripke model is given in Figure \ref{figure:exampleModel}.
-Here, we have two agents, $A$ and $B$, and two states in $S$ ($\eta$ and $\tau$), which we can think
+Here, we have two agents, $A$ and $B$, and two states in $S$ ($s$ and $u$), which we can think
 of as possible worlds.
 We can frame this example in terms of the coin-tossing game that we discussed earlier, by saying
-that $V(\tau) \Rightarrow H$ and $V(\eta) \Rightarrow T$, where $H$ stands for ``the coin is heads"
+that $V(u) \Rightarrow H$ and $V(s) \Rightarrow T$, where $H$ stands for ``the coin is heads"
 and $T$ stands for ``the coin is tails".
-Both $A$ and $B$ are aware that there is one world where the coin is heads ($\tau$), and one
-world where the coin is tails ($\eta$).
-However, as if the coin is hidden from their view, they cannot distinguish between whether $\tau$ or
-$\eta$ is the actual state of the world.\\
+Both $A$ and $B$ are aware that there is one world where the coin is heads ($u$), and one
+world where the coin is tails ($s$).
+However, as if the coin is hidden from their view, they cannot distinguish between whether $u$ or
+$s$ is the actual state of the world.\\
 \\
 Kripke models are useful in describing a static situation, but they are not appropriate descriptions
 of change.
@@ -240,7 +240,7 @@ is uncertain about.
 Let $B \subseteq A$ and $\krMo$ and $\krMo'$ be Kripke models. A non-empty relation $\lesssim \subseteq S
 \times S'$ is a {\em $B$-simulation} if and only if it satisfies {\bf atoms}, {\bf forth-$a$} for
 every $a \in A$ and {\bf back-$a$} for every $a \in A \setminus B$.
-If $(s, s') \in \lesssim$ then we say $\krMo'_{s'}$ is a
+If also $(s, s') \in \lesssim$ then we say $\krMo'_{s'}$ is a
 $B$-simulation of $\krMo_s$ and
 $\krMo_s$ a {\em $B$-refinement} of $\krMo'_{s'}$.
 We write $\krMo_{s} \lesssim \krMo'_{s'}$ or equivalently
@@ -392,7 +392,7 @@ We also note that $M_s \models \Diamond_A H \lor \Diamond_A T$, and $M_t \models
 In addition to $\Box_a$ we introduce the cover operator $\cover_a$, following the definition used in
 \cite{venemaproofsystems}.
 The cover operator forms the basis for the axiomatisations for refinement modal logic, which we use
-later.
+later \cite{hales2012refinement}.
 
 \begin{defn} \label{coverDef}
 Let $\Gamma \subseteq \lang$ be a finite set of formulae.
@@ -438,7 +438,7 @@ Within the context of our coin game involving Angeline and Ben, modal depth can 
 		= 1 + \mDep(\Box_A(H)) = 2 + \mDep(H) = 2 + 0 =  2$
 \end{itemize}
 
-Next, we build upon our logics to introduce the concepts updates and refinements as modal logics.
+Next, we build upon our logics to introduce the concepts of updates and refinements as modal logics.
 We begin by introducing action model logic, as first defined by Baltag, Moss and Solecki in
 \cite{baltag1998lpa}.
 These give us the semantics for discussing action models in a language context, and we can now start
@@ -456,7 +456,7 @@ Firstly, we define action model execution.\\
 The result of executing $\evMo$ on the model $\krMo$ is denoted by $M \otimes N = M' = (S', R', V')$ where
 \begin{itemize}
 	\item $S' = \{(s,\aMod{u}) | s \in S, \aMod{u \in
-    S} \text{ such that } M_s \models \aMod{pre(u)}\}$
+		S} \text{ such that } M_s \models \aMod{pre(u)}$, that is $\evs \in V(\evpr(\evu))\}$
 	\item $(s, \aMod{u}) R_a' (t, \aMod{v}) \iff s R_a t \text{ and } \aMod{u R_a v}$
 	\item $V'((s,\aMod{u})) = V(s)$
 \end{itemize}
@@ -510,8 +510,8 @@ of the coin.}
 
 In Figure \ref{figure:eventModelPostExecution} we use our previous figures to
 demonstrate action model execution.
-We can see that $s$ would have been the result of executing $\evp$ on $\tau$, whilst executing
-$\evu$ on $\tau$ resulted in $s'$.
+We can see that $s$ would have been the result of executing $\evp$ on $u$, whilst executing
+$\evu$ on $u$ resulted in $s'$.
 Action model execution gives us a well-defined framework to reason about how the Kripke model
 (the model of the epistemic situation) changes after an informative update.
 
@@ -565,7 +565,7 @@ The interpretation of $\phi \in \langRefine$ ({\em refinement modal logic}) in t
 (Definition \ref{modalLogic:semantics}), but with the additional inductive case
 \[
 	\krMo_s \models \forall_B \phi \text{ iff for every } \krMo'_{s'} \in
-  \eventClass \text{ such that } \krMo'_{s'}
+  \kripkeClass \text{ such that } \krMo'_{s'}
 	\lesssim_B \krMo_s : \krMo'_{s'} \models \phi
 \]
 \end{defn}
@@ -620,7 +620,7 @@ where $a \in A$ and $B \subseteq A$, for $A$ a finite set of agents and $p \in \
 \end{defn}
 
 \begin{defn} \label{arbActLogic:semantics}
-	Let $\krMo_s = ((S,R,T),s)$ and $\evM_\evt = ((\evS,\evR,\evT)\evt)$.
+	Let $\krMo_s = ((S,R,T),s)$ and $\evM_\evt = ((\evS,\evR,\evT),\evt)$.
 	The interpretation of $\phi \in \langArbAct$ is the same as action model logic (Definition
 	\ref{actModelLogic:semantics}), with the additional inductive case for $\forall_B$ as defined in
 	refinement modal logic (Definition \ref{refineLogic:semantics}).
@@ -658,8 +658,8 @@ In Definition \ref{bisimKripke} we discussed bisimulation for Kripke models.
 We will extend this now to also cover bisimulation for action models.
 
 \begin{defn} \label{bisimEvent}
-	Let $\aMod{\evMo, \evMo'} \in \eventClass$ with preconditions defined on $\langArbAct$.
-	A non-empty relation $\mathcal{R}$ on $\aMod{\evMo} \times \aMod{\evMo'}$ is a {\em bisimulation} if and only if for every $a \in A$
+	Let $\aMod{\evMo = (S, R, T), \evMo' = (S', R', T')} \in \eventClass$ with preconditions defined on $\langArbAct$.
+	A non-empty relation $\mathcal{R}$ on $\aMod{\evS} \times \aMod{\evS'}$ is a {\em bisimulation} if and only if for every $a \in A$
 	and $\aMod{(s, s') \in \mathcal{R}}$, the following three conditions hold:
 	\begin{itemize}
 		\item {\bf pre}: $\aMod{pre(s)} \iff \aMod{pre'(s')}$
@@ -669,9 +669,10 @@ We will extend this now to also cover bisimulation for action models.
       \in s R_a}$ such that $\aMod{(v,v')} \in
 		\mathcal{R}$
 	\end{itemize}
-	If $\aMod{(s, s') \in \mathcal{R}}$ we write $\aMod{\evMo_s \mathcal{R} \evMo'_{s'}}$ to
+	If $\aMod{(s, s') \in \mathcal{R}}$ we write $\aMod{\evMo_s \mathcal{R} \evMo'_{s'}}$ or
+	$\aMod{\evMo_s \sim \evMo'_{s'}}$ to
   denote that $\evMo_s$ and $\evMo'_{s'}$ are bisimilar and
-	that there is a bisimulation between $\evMo_s$ and $\evMo'_{s'}$.
+	that there is a bisimulation $\mathcal{R}$ between $\evMo_s$ and $\evMo'_{s'}$.
 \end{defn}
 
 \begin{lemma} \label{eventModelEquivalent}
@@ -683,12 +684,12 @@ Then $\krMo_s \otimes \aMod{\evMo_s} \sim \krMo_s \otimes \aMod{\evMo'_{s'}}$.
 
 Lemma \ref{eventModelEquivalent} allows us to compare two action models and say ``after executing
 these two action models in the same epistemic situation, the resulting models are bisimilar".
-These well-known definitions and results are shown by van der Hoek, Kooi and van Ditsmarsch in
+These definitions and results are shown by van der Hoek, Kooi and van Ditsmarsch in
 \cite{hoek2008dynamic}.\\
 \\
 As with Kripke model bisimulation, action model bisimilarity is a strong condition --- it says that the effects of two bisimilar
 action models will be exactly the same.
-This is, perhaps, too strong a condition that we might not need.
+This is sometimes too strong a condition that we do not always need.
 We thus introduce the idea of $n$-bisimilarity for action models.
 
 %\begin{lemma} \label{nBisimilarKripkeExec}
@@ -814,7 +815,7 @@ such that $\evMo_\evt \sim_n \evMo'_{\evt'}$ and vice versa.
 
 This result is very similar to Lemma \ref{eventModelEquivalent}.
 However, instead of having all the same effects, we say that two $n$-bisimilar action models will
-have the same effects, for all effects with a modal depth of up to a modal depth of $n$.\\
+have the same effects, for all effects with a modal depth of up to $n$.\\
 \\
 Simulations and refinements are powerful because they have a mapping to action models --- that is,
 action models and their execution can be characterised by refinements, as shown in Lemma
