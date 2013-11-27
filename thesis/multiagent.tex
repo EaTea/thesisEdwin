@@ -269,8 +269,47 @@ of $\psi$.
 Let $B \subseteq A$ be a subset of agents.
 Then $\phi! \to_B \psi!$ says that the agents in $B$ are consider that either $\phi$ was publicly
 announced, or $\psi$ was publicly announced.
-However, the agents in $B$ do not consider $\phi!$ to be a possibility if $\psi!$ occurs.\\
-\\
+However, the agents in $B$ do not consider $\phi!$ to be a possibility if $\psi!$ occurs.
+We demonstrate this concept in Figure \ref{figure:considersExample}.
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+    \node[vertex] (1) {$\phi!$};
+		\node[vertex] (2) [right of=1] {$\psi!$};
+    \path[edge]
+          (1) edge [loop left] node {} (1)
+					(2) edge [loop right] node {} (2);
+\end{tikzpicture}
+\caption{$\phi!$ and $\psi!$ are the public announcements of facts $\phi$ and $\psi$.}
+\label{subfigure:beforeConsiders}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.45\textwidth}
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+      thick]
+    \node[vertex] (1) {$\phi!$};
+		\node[vertex] (2) [right of=1] {$\psi!$};
+    \path[edge]
+          (1) edge [loop left] node {A} (1)
+							edge node {B} (2)
+					(2) edge [loop right] node {A} (2);
+\end{tikzpicture}
+\caption{After applying the considers operator for the agents in $B$.}
+\label{subfigure:afterConsiders}
+\end{subfigure}
+\caption[Applying the considers operator]{$\phi! \to_B \psi!$ adds a relation from $\phi!$
+to $\psi!$, as shown in subfigures \ref{subfigure:beforeConsiders} and
+\ref{subfigure:afterConsiders}. In doing so, we can see how agents in $B$ consider $\psi!$ as a
+potential state, but the asymmetric relation indicates that agents do not consider $\phi!$ a
+possibility if $\psi!$ occurs.}
+\label{figure:considersExample}
+\end{figure}
+
 We also present the disjoint union operator defined by Baltag and Moss in \cite{baltag2005programs}.
 
 \begin{defn} \label{disjoint}
@@ -436,9 +475,11 @@ Let $\evpr^{\evr'}(\evr') = \phi$, a formula in our logical language.
 $\evM'$ is an insanity action model by definition.
 Thus, we can construct $\evM'$ using insanity action models when $\evM'$ is a leaf node of $\evM$.\\
 \\
-Let $\evM^{\evr'} = ((\evS^{\evr'}, \evR^{\evr'}, \evpr^{\evr'}), \evr')$ be an arbitrary subtree of $\evM$.
+Let $\evM^{\evr'} = ((\evS^{\evr'}, \evR^{\evr'}, \evpr^{\evr'}), \evr')$ be a non-leaf subtree of
+$\evM_r$.
 Suppose $\evpr'(\evr') = \phi$, where $\phi$ is a formula in our logical language.
-Let $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ be all the disjoint subtrees of $\evM'$.
+Let $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ be all the immediate disjoint subtrees of
+$\evM^{\evr'}$.
 Suppose that each of $\evM^{\evr_1}, \evM^{\evr_2}, \ldots, \evM^{\evr_n}$ fulfil the induction hypothesis.
 Furthermore, let there be agents $a_1, a_2, \ldots, a_n$ such that $\evr' \evR_{a_1} \evr^1$, $\evr'
 \evR_{a_2} \evr^2, \ldots, \evr' \evR_{a_n} \evr^n$.\\
@@ -549,7 +590,7 @@ $\evM^\evt \sim_{k-1} \evM_\evt$.
 Consider $\evM^\evs \in \insaneClass \subseteq \forestClass$ such that $\evpr'(\evs) \iff
 \evpr(\evs)$.
 By the definition of $n$-bisimilarity (Definition \ref{nBisimEvent}), $\evM'_{\evs}
-\sim_0 \evM_\evs$.\\
+\sim_0 \evM^\evs$.\\
 \\
 Then, let
 \[
@@ -656,14 +697,16 @@ $\vdash \anex{\evM_\evT} \phi \iff \exists_B \phi$ is valid.
 \end{corr}
 
 \begin{proof}
-Suppose $\phi \in \langArbAct$ and $MD(\phi) = n$.
-By Lemma \ref{allInCoverNormal} and Lemma \ref{thm:AAMLExpressivelyEquivalent} there is a translation of $\phi$ from $\langArbAct$ to $\lang$.
+Suppose $\phi \in \langArbAct$.
+By Lemma \ref{allInCoverNormal} and Lemma \ref{thm:AAMLExpressivelyEquivalent} there is a
+translation of $\phi$ from $\langArbAct$ to $\lang$, $\phi'$, where $\mDep(\phi') = k$.
 Furthermore, Lemma \ref{allInCoverNormal} allows us to translate it into cover disjunctive normal form.
 From \cite{hales13synthesis}, Hales synthesises an action model $\evM'_{\evT'}$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT}
 \phi \iff \exists_B \phi$.\\
 \\
-We construct $\evM_\evT \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$.
-Since $MD(\phi) \leq n$ and $\evM_\evT \sim_n \evM'_{\evT'}$ we have by \ref{nBisimilarEventExec} that any
+We construct $\evM_\evT \in \forestClass$ such that $\evM_\evT \sim_n \evM'_{\evT'}$, where $n \geq
+k = \mDep(\phi')$.
+Since $MD(\phi') \leq n$ and $\evM_\evT \sim_n \evM'_{\evT'}$ we have by \ref{nBisimilarEventExec} that any
 formula $\phi \in \lang$ can be achieved by $\evM_\evT$ such that $\sqex{\evM_\evT} \phi$ and $\anex{\evM_\evT} \phi
 \iff \exists_B \phi$.
 \end{proof}
@@ -685,7 +728,8 @@ Indeed, the semantics of action model logic can be shown to work equivalently wi
 \end{defn}
 
 \begin{lemma} \label{lemma:sameSemantics}
-The semantics of $\langActEx$ are the same as the semantics of action model composition.
+The semantics of $\langActEx$ are the same as the semantics of action model composition, up to
+$n$-bisimulation.
 \end{lemma}
 \begin{proof}
 	The only case we need show that the semantics are equivalent is $\sqex{\evM_\evT} \phi$.
