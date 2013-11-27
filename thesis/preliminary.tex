@@ -27,7 +27,7 @@ information.
 	Let $F = (S, R)$ be a frame, and $A$ a finite set of agents.
 	In the context of epistemic modal logic, $S$ is a set of atomic knowledge points.
 	Let $V: L \to \mathcal{P}(S)$ \footnote{$\mathcal{P}(S)$ is the powerset of $S$.} be a
-	well-defined function mapping all well-formed	sentences in $L$ to a subset of $S$.
+	well-defined function mapping all propositional atoms in $L$ to a subset of $S$.
 	We say $V$ is a valuation function on $F$.\\
 	\\
 	Then $\krMo = (F, V) = (S, R, V)$ is a {\em Kripke model}.
@@ -38,6 +38,8 @@ In a similar manner to Kripke frames, we refer to Kripke models as simply models
 A multi-pointed model is a model $\krMo_T = ((S, R, V), T)$ where $T$ is a set of designated states.
 When $T = \{s\}$ is a single state, we say that the model is a pointed model and write $M_s$.
 We say $\kripkeClass$ is the class of all Kripke models.
+We also introduce the notation $V_s = \{ \phi | s \in V(\phi)\}$ to indicate the set of sentences
+that are true at a state.
 
 \begin{figure}
 \centering
@@ -45,34 +47,35 @@ We say $\kripkeClass$ is the class of all Kripke models.
       thick]
 
     \node[vertex] (1) {$s$};
-    \node[vertex] (2) [right of=1] {$u$};
+    \node[vertex] (2) [right of=1] {$t$};
     \path[edge]
-          (1) edge node {$A,B$} (2)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$a,b$} (2)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-              edge [loop right] node {$A,B$} (2);
+              edge [loop right] node {$a,b$} (2);
 \end{tikzpicture}
 \caption[Kripke model example of coin-game]{An example of a Kripke model, $\krMo = (S,R,V)$, as a graph. Here, we can see that
-$s R_A u$, $u R_A s$, $s R_A s$ and $u R_A u$. The same relations apply for
-$R_B$.}
+$s R_a u$, $u R_a s$, $s R_a s$ and $u R_a u$. The same relations apply for
+$R_b$.}
 \label{figure:exampleModel}
 \end{figure}
 
 An example of a Kripke model is given in Figure \ref{figure:exampleModel}.
-Here, we have two agents, $A$ and $B$, and two states in $S$ ($s$ and $u$), which we can think
+Here, we have two agents, $a$ and $b$, and two states in $S$ ($s$ and $t$), which we can think
 of as possible worlds.
 We can frame this example in terms of the coin-tossing game that we discussed earlier, by saying
-that $V(u) \Rightarrow H$ and $V(s) \Rightarrow T$, where $H$ stands for ``the coin is heads"
-and $T$ stands for ``the coin is tails".
-Both $A$ and $B$ are aware that there is one world where the coin is heads ($u$), and one
-world where the coin is tails ($s$).
-However, as if the coin is hidden from their view, they cannot distinguish between whether $u$ or
-$s$ is the actual state of the world.\\
+that $V(H) = \{s\}$ and $V(\neg H) = \{t\}$, where $H$ stands for ``the coin is heads"
+and $\neg H$ represents ``the coin is not heads", or rather ``the coin is tails".
+Both $a$ and $b$ are aware that there is one world where the coin is heads ($s$), and one
+world where the coin is tails ($t$).
+However, as if the coin is hidden from their view, they cannot distinguish between whether $s$ or
+$t$ is the actual state of the world.\\
 \\
 Kripke models are useful in describing a static situation, but they are not appropriate descriptions
 of change.
 They cannot describe an informative update that we can formally reason about, which motivates the
-need to specify models of updates, which we call {\em action models}.
+need to specify models of updates, which we call {\em action models}, explained less formally in
+\ref{act_mods}.
 
 \begin{defn} \label{evModel}
 	Let $L$ be a logical language.
@@ -103,6 +106,10 @@ pre^1, T^1)}$ and $\aMod{\evMo^\alpha =
   (S^\alpha,R^\alpha,pre^\alpha,T^\alpha)}$.
 We say $\eventClass$ is the class of all action models.\\
 \\
+We do not yet introduce the concepts for action model execution until section
+\ref{subsec:prelim:semantics}.
+To properly define this requires a framework of other definitions that must first be introduced.\\
+\\
 Figure \ref{figure:eventModelExample} gives us an example of an action model, in terms of Angeline, Ben and
 their coin-tossing game.
 Here, we model the update where Angeline may have cheated and learnt which side up the coin is, or she might not have.
@@ -112,24 +119,26 @@ Here, we model the update where Angeline may have cheated and learnt which side 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
 
-    \node[vertex] (1) {$\evp$};
-    \node[vertex] (2) [above right of=1] {$\evu$};
-		\node[vertex] (3) [below right of=1] {$\evv$};
+    \node[vertex] (1) {$\evs$};
+    \node[vertex] (2) [above right of=1] {$\evt$};
+		\node[vertex] (3) [below right of=1] {$\evu$};
     \path[edge]
-          (1) edge node {$A,B$} (2)
-							edge node {$A,B$} (3)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$b$} (2)
+							edge node {$b$} (3)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-              edge [loop right] node {$A,B$} (2)
-              edge [loop right] node {$A,B$} (3)
+              edge [loop right] node {$a,b$} (2)
+              edge node {$b$} (3)
 					(3) edge node {} (1)
-							edge [loop right] node {$A,B$} (3)
-							edge node {} (2);
+							edge node {} (2)
+							edge [loop right] node {$a,b$} (3);
 \end{tikzpicture}
-\caption[Action model example of coin-game update]{An example of an action model, $\evM = (\evS,\evR,\evpr)$ which we frame in terms of our previous coin-tossing example.
-Here, Angeline ($A$) may have learnt whether the coin was heads ($H$) or tails ($T$), or she did not
+\caption[Action model example of coin-game update]{In this action model, $\evM = (\evS,\evR,\evpr)$
+	which is identical to Figure \ref{amprivatea},
+$\evpr(\evs) = \top$, $\evpr(\evt) = H$ and $\evpr(\evu) = \neg H$. We frame the example in terms of our previous coin-tossing example.
+Here, Angeline ($a$) may have learnt whether the coin was heads ($H$) or tails ($\neg H$), or she did not
 cheat and learnt nothing at all ($\top$).
-We say that $\evpr(\evp) = \top$, $\evpr(\evu) = H$ and $\evpr(\evv) = T$.}
+We say that $\evpr(\evs) = \top$, $\evpr(\evt) = H$ and $\evpr(\evu) = \neg H$.}
 \label{figure:eventModelExample}
 \end{figure}
 
@@ -178,11 +187,12 @@ structure and characteristics possibly being different.
 	Let $\krMo = (S,R,V)$, $\krMo' = (S',R',V')$ be Kripke models and $\mathcal{R} \subseteq S \times S'$ be a non-empty binary
 	relation such that
 	\begin{itemize}
-		\item {\bf atoms}: for each $s \in S$ and $s' \in S'$ such that $s \mathcal{R} s'$, $V(s) = V'(s')$
+		\item {\bf atoms}: for each $s \in S$ and $s' \in S'$ such that $s \mathcal{R} s'\Rightarrow
+			(V_s = V'_{s'})$
 		\item {\bf front-$a$}: for each $s \in S$ such that $s \mathcal{R} s'$, for each $t$ such that
-		$s R_a t$ then there exists $t'$ such that $s' R_a' t'$ and $t \mathcal{R} t'$
+		$s R_a t$ there exists $t'$ such that $s' R_a' t'$ and $t \mathcal{R} t'$
 		\item {\bf back-$a$}: for each $s' \in S'$ such that $s \mathcal{R} s'$, for each $t$ such that
-		$s' R_a' r'$ then there exists $t$ such that $s R_a t$ and $t \mathcal{R} t'$
+		$s' R_a' r'$ there exists $t$ such that $s R_a t$ and $t \mathcal{R} t'$
 	\end{itemize}
 	$\mathcal{R}$ is a {\em bisimulation} between $M$ and $M'$ if and only if {\bf atoms} holds and {\bf front-$a$}
 	and {\bf back-$a$} hold for each $a \in A$.
@@ -212,7 +222,7 @@ subset will be true reasonings for another model.
 \begin{defn} \label{nBisimKripke}
 Let $\krMo_s, \krMo'_{s'} \in \kripkeClass$.
 We define {\em $n$-bisimilarity} inductively as follows.
-We say that $\krMo_s$ is {\em $0$-bisimilar} to $\krMo'_{s'}$ if and only if $V(s) = V'(s)$.
+We say that $\krMo_s$ is {\em $0$-bisimilar} to $\krMo'_{s'}$ if and only if $V_s = V'_{s'}$.
 Then for $n > 0$ we say that $\krMo_s$ is {\em $n$-bisimilar} to $\krMo'_{s'}$ if and only if for every $a \in A$
 \begin{itemize}
 	\item $M_s$ is $n-1$-bisimilar to $M'_{s'}$
@@ -335,7 +345,7 @@ The interpretation of $\phi \in \lang$ in the logic $\axK$ is inductively define
 
 \begin{itemize}
 	\item $\krMo_s \models p$ iff $p \in V(s)$
-	\item $\krMo_s \models \neg \phi$ iff $\krMo_s \not \models \phi$
+	\item $\krMo_s \models \neg \phi$ iff not $\krMo_s \models \phi$
 	\item $\krMo_s \models \phi \land \psi$ iff $\krMo_s \models \phi$ and $\krMo_s \models \psi$
 	\item $\krMo_s \models \Box_a \phi \text{ iff for every }t \in s R_a: \krMo_t \models \phi$
 \end{itemize}
@@ -343,9 +353,9 @@ The interpretation of $\phi \in \lang$ in the logic $\axK$ is inductively define
 for $a \in A$ and $s \in S$.
 \end{defn}
 
-The Kripke semantics for modal logic are well-known.
-We will adopt the standard abbreviations for Kripke semantics, such as $\phi \lor \phi =
-\neg(\neg \phi \land \neg \phi)$ --- see \cite{blackburn2002modal}.
+Such Kripke semantics for modal logic are well-known.
+We will adopt standard abbreviations, such as $\phi_1 \lor \phi_2 =
+\neg(\neg \phi_1 \land \neg_2 \phi)$ --- see \cite{blackburn2002modal}.
 We note that $\langProp$, the language of propositional logic, is simply $\lang$ without $\Box_a$.\\
 \\
 In epistemic logics, the formula $\Box_a \phi$ is often read as ``$a$ knows/believes $\phi$", while
@@ -354,7 +364,8 @@ We also employ the abbreviation $\Box_B \phi$ where $B \subseteq A$ to be $\bigw
 \Box_b \phi$.
 In the case where $B = A$ we write $\krMo_s \models \Box \phi$.
 For some integer $n$ and $a \in A$, we will take $\Box^n_a \phi$ to be $\Box_a \Box^{n-1}_a \phi$,
-and for $\Box^1_a \phi = \Box_a \phi$.\\
+and for $\Box^1_a \phi = \Box_a \phi$.
+We also define $\Box^0_a \phi = \phi$.\\
 \\
 We say that a formula $\phi$ is {\em satisfied} by a pointed model Kripke model $\krMo_s \in \kripkeClass$ iff
 $\krMo_s \models \phi$.
@@ -476,48 +487,49 @@ Thus pointed model execution is only sensible if and only if $M_s \models
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
       thick]
 
-    \node[vertex] (1) {$s'$};
-    \node[vertex] (2) [right of=1] {$t'$};
-		\node[vertex] (3) [below of=1] {$s$};
-		\node[vertex] (4) [below of=2] {$t$};
+		\node[vertex] (1) {($s, \evt$)};
+		\node[vertex] (2) [right of=1] {($t, \evu$)};
+		\node[vertex] (3) [below of=1] {($s, \evs$)};
+		\node[vertex] (4) [below of=2] {($t, \evs$)};
     \path[edge]
-          (1) edge node {$B$} (2)
-							edge node {$B$} (3)
-							edge node {$B$} (4)
-              edge [loop left] node {$A,B$} (1)
+          (1) edge node {$b$} (2)
+							edge node {$b$} (3)
+							edge node {$b$} (4)
+              edge [loop left] node {$a,b$} (1)
           (2) edge node {} (1)
-							edge node {$B$} (3)
-							edge node {$B$} (4)
-              edge [loop right] node {$A,B$} (2)
+							edge node {$b$} (3)
+							edge node {$b$} (4)
+              edge [loop right] node {$a,b$} (2)
 					(3) edge node {} (1)
 							edge node {} (2)
 							edge node {} (4)
-							edge [loop left ] node {$A,B$} (3)
+							edge [loop left ] node {$a,b$} (3)
 					(4) edge node {} (1)
 							edge node {} (2)
-							edge node {$A,B$} (3)
-							edge [loop right] node {$A,B$} (4);
+							edge node {$a,b$} (3)
+							edge [loop right] node {$a,b$} (4);
 \end{tikzpicture}
 \caption[Kripke model after action model execution]{After executing $\evM$ (Figure \ref{figure:eventModelExample}) on $M$ (Figure
 \ref{figure:exampleModel}), we get a new action model $M' = (S',R',V') = M \otimes \evM$.
-Here $\evs,\evt,\evs',\evt'$ are the new possible worlds, where $V'(s') = V'(s) = H$ and $V'(t') =
-V'(t) = T$.
-However, we note that in this Kripke model $B$ cannot distinguish any of these worlds apart, whilst
-$A$ can distinguish between $s'$ and $t'$ --- this represents $A$ knowing in $s'$ and $t'$ the state
+Here $(s, \evt), (t, \evu), (s, \evs), (t, \evs)$ are the new possible worlds, where $V'_{(s, \evs)}
+= V'_{(s, \evt)} = H$ and $V'_{(t, \evs)} = V'_{(t, \evu)} = \neg H$.
+However, we note that in this Kripke model only $b$ cannot distinguish any of these worlds apart, whilst
+$a$ can distinguish between $(s, \evt)$ and $(t, \evu)$ --- this represents $a$ knowing in $(s,
+\evt)$ and $(t, \evu)$ the state
 of the coin.}
 \label{figure:eventModelPostExecution}
 \end{figure}
 
 In Figure \ref{figure:eventModelPostExecution} we use our previous figures to
 demonstrate action model execution.
-We can see that $s$ would have been the result of executing $\evp$ on $u$, whilst executing
-$\evu$ on $u$ resulted in $s'$.
+We can see that $(s, \evs)$ would have been the result of executing $\evs$ on $s$, whilst executing
+$\evt$ on $s$ resulted in $(s, \evt)$.
 Action model execution gives us a well-defined framework to reason about how the Kripke model
 (the model of the epistemic situation) changes after an informative update.
 
 \begin{defn} \label{actModelLogic:syntax}
 	The {\em language of action model logic}, $\langActEx$ is $\lang$ (Definition
-	\ref{modalLogic:syntax}) with the additional inductive case for $\sqex{\evM_\evs}$, where
+	\ref{modalLogic:syntax}) with the additional inductive case for $\sqex{\evM_\evs}\phi$, where
 	$\evM_\evs$ is an action model.
 \end{defn}
 
