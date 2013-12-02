@@ -1,10 +1,9 @@
 %-----------------------------------------------------------------------------%
 %Packages%
-\documentclass[12pt, a4paper, titlepage]{article}
+\documentclass{cshonours}
 \usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
 \usepackage{mathtools}
-\usepackage[usenames, dvipsnames]{color} %Color naming packages
-\usepackage[margin=1.5cm]{geometry}
+\usepackage{geometry}
 \usepackage{float}
 \usepackage{verbatim} %for code
 \usepackage[pdftex]{graphics}
@@ -13,9 +12,10 @@
 \usepackage{tikz}
 \usepackage{comment}
 \usepackage[nottoc]{tocbibind}
-%\usepackage[square]{natbib}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \usetikzlibrary{arrows,shapes}
 
@@ -25,71 +25,125 @@
 
 % Predefined things such as commands, etc.
 
-\newtheorem{defn}{Definition}[subsection]
-\newtheorem{thm}{Theorem}[subsection]
-\newtheorem{lemma}{Lemma}[subsection]
-\newtheorem{corr}{Corrollary}[subsection]
+\newtheorem{defn}{Definition}[chapter]
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corr}{Corollary}[chapter]
+\newtheorem{propn}{Proposition}[chapter]
 \newtheorem*{remrk}{Remark}
+\newcommand{\note}[1]{\textsc{\textbf{#1}}}
 
-\numberwithin{equation}{section}
+\numberwithin{equation}{chapter}
 
 \newcommand{\cover}{\bigtriangledown}
 \newcommand{\sqex}[1]{[{#1}]}
 \newcommand{\anex}[1]{\langle {#1} \rangle}
-\newcommand{\lang}{\mathcal{L}}
-\newcommand{\langRefine}{\lang_{\forall}}
-\newcommand{\langActEx}{\lang_{\otimes}}
-\newcommand{\langArbAct}{\lang_{\otimes\forall}}
-\newcommand{\langProp}{\lang_0}
+\newcommand{\lang}{\ensuremath{L}}
+\newcommand{\langRefine}{\ensuremath{\lang_{\forall}}}
+\newcommand{\langActEx}{\ensuremath{\lang_{\otimes}}}
+\newcommand{\langArbAct}{\ensuremath{\lang_{\otimes\forall}}}
+\newcommand{\langProp}{\ensuremath{\lang_0}}
 
-\newcommand{\AXK}{{\bf K}}
-\newcommand{\AXAML}{${\bf AML_{\AXK}}$}
-\newcommand{\AXRML}{${\bf RML_{\AXK}}$}
-\newcommand{\AXAAML}{${\bf AAML_{\AXK}}$}
+\newcommand{\langKFF}{\ensuremath{K45}}
+\newcommand{\lKFFRefine}{\ensuremath{\langKFF_{\forall}}}
+\newcommand{\lKFFActEx}{\ensuremath{\langKFF_{\otimes}}}
+\newcommand{\lKFFArbAct}{\ensuremath{\langKFF_{\otimes\forall}}}
+\newcommand{\lKFFProp}{\ensuremath{\langKFF_0}}
 
-\newcommand{\axP}{{\bf P}}
-\newcommand{\axK}{{\bf K}}
-\newcommand{\axMP}{{\bf MP}}
-\newcommand{\axNecK}{{\bf NecK}}
-\newcommand{\axAN}{{\bf AN}}
-\newcommand{\axAP}{{\bf AP}}
-\newcommand{\axAC}{{\bf AC}}
-\newcommand{\axAK}{{\bf AK}}
-\newcommand{\axAU}{{\bf AU}}
-\newcommand{\axNecA}{{\bf NecA}}
-\newcommand{\axR}{{\bf R}}
-\newcommand{\axRP}{{\bf RP}}
-\newcommand{\axRK}{{\bf RK}}
-\newcommand{\axRComm}{{\bf RComm}}
-\newcommand{\axRDist}{{\bf RDist}}
-\newcommand{\axNecR}{{\bf NecR}}
+\newcommand{\AXK}{\ensuremath{\bf K}}
+\newcommand{\AXKFF}{\ensuremath{\bf K45}}
+\newcommand{\AXAML}{\ensuremath{\bf AML_{\AXK}}}
+\newcommand{\AXRML}{\ensuremath{\bf RML_{\AXK}}}
+\newcommand{\AXAAML}{\ensuremath{\bf AAML_{\AXK}}}
+
+\newcommand{\axP}{\ensuremath{\bf P}}
+\newcommand{\axK}{\ensuremath{\bf K}}
+\newcommand{\axFo}{\ensuremath{\bf 4}}
+\newcommand{\axFi}{\ensuremath{\bf 5}}
+\newcommand{\axMP}{\ensuremath{\bf MP}}
+\newcommand{\axNecK}{\ensuremath{\bf NecK}}
+\newcommand{\axAN}{\ensuremath{\bf AN}}
+\newcommand{\axAP}{\ensuremath{\bf AP}}
+\newcommand{\axAC}{\ensuremath{\bf AC}}
+\newcommand{\axAK}{\ensuremath{\bf AK}}
+\newcommand{\axAU}{\ensuremath{\bf AU}}
+\newcommand{\axNecA}{\ensuremath{\bf NecA}}
+\newcommand{\axR}{\ensuremath{\bf R}}
+\newcommand{\axRP}{\ensuremath{\bf RP}}
+\newcommand{\axRK}{\ensuremath{\bf RK}}
+\newcommand{\axRComm}{\ensuremath{\bf RComm}}
+\newcommand{\axRDist}{\ensuremath{\bf RDist}}
+\newcommand{\axNecR}{\ensuremath{\bf NecR}}
+
+\newcommand{\krMo}{M}
+\newcommand{\aMod}[1]{
+  \ensuremath {\mathrm{\mathsf{#1}}}
+}
+\newcommand{\evMo}{\aMod{N}}
+\newcommand{\evM}{\evMo}
+\newcommand{\evMM}{\aMod{M}}
+\newcommand{\evS}{\aMod{S}}
+\newcommand{\evR}{\aMod{R}}
+\newcommand{\evpr}{\aMod{pre}}
+\newcommand{\evpre}{\evpr}
+\newcommand{\evT}{\aMod{T}}
+\newcommand{\evU}{\aMod{U}}
+\newcommand{\evr}{\aMod{r}}
+\newcommand{\evs}{\aMod{s}}
+\newcommand{\evt}{\aMod{t}}
+\newcommand{\evu}{\aMod{u}}
+\newcommand{\evv}{\aMod{v}}
+\newcommand{\evp}{\aMod{p}}
+\newcommand{\evq}{\aMod{q}}
 
 \newcommand{\kripkeClass}{\mathcal{K}}
 \newcommand{\eventClass}{\mathcal{AM}}
+\newcommand{\EM}{\ensuremath{\eventClass}}
 \newcommand{\insaneClass}{\eventClass_{IN}}
 \newcommand{\publicAnnClass}{\eventClass_{PA}}
 \newcommand{\treeClass}{\eventClass_{TR}}
 \newcommand{\forestClass}{\eventClass_{FOR}}
 
+\newcommand{\mDep}{ {\bf MD}}
+
 \newcommand{\FIXME}{{\bf FIXME}}
 % Drawings of frames
 
-\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{vertex}=[circle,draw=black!100,thick,fill=black!25,minimum size=20pt,inner sep=0pt]
 \tikzstyle{selected vertex} = [vertex, fill=red!24]
 \tikzstyle{edge} = [draw,thick,->]
 \tikzstyle{weight} = [font=\small]
+
+\captionsetup{width=0.8\textwidth}
 
 %-----------------------------------------------------------------------------%
 %Document%
 
 \begin{document}
 
-\tableofcontents
-
-\include{../aucher}
-% appendices
-%
-%\bibliographystyle{ieeetr}
-%\bibliography{thesis}
+We want to develop a language that can compose all action models, up to $n$-bisimilarity.
+The aim is to maintain the axioms $\axK, \axD, \axFo$ and $\axFi$.\\
+\\
+Current problems with my approach centre around difficulty in showing $n$-bisimilarity, particularly
+because of adding in new relations onto existing states.
+Example: suppose $\evM_\evs = ((\evS, \evR, \evpr), \evs)$ and $\evM'_{\evs'} = ((\evS', \evR',
+\evpr'), \evs')$ are action models.
+Then $\evM_\evs \to \evM'_{\evs'}$ adds relations into $\evR_a$ for every $a \in A$.
+This can become increasingly difficult to show $n$-bisimilarity in a complex structure such as those
+defined in my thesis.\\
+\\
+Another problem involves the atoms in this language.
+Currently, they do not fulfill $\axD$.
+We need a new atomic action model --- a prime candidate is the public announcement.
+However, it is difficult to achieve the right level of granularity in KD45.
+(Sometimes we do not want reflexive edges on a node at all, other times we want some agens to have
+reflexive edges).\\
+\\
+Addressing the atoms issue is best done by switching to secret announcements.
+\FIXME add in diagram
+\\
+\\
+Addressing the second issue is more involves, may require operator changes.
+More coming tomorrow.
 
 \end{document}
