@@ -121,6 +121,9 @@
 
 \begin{document}
 
+Note: Assume $A$ is a finite set of agents and $L$ is a logical language for the purposes of these
+notes.\\
+\\
 We want to develop a language that can compose all action models, up to $n$-bisimilarity.
 The aim is to maintain the axioms $\axK, \axD, \axFo$ and $\axFi$.\\
 \\
@@ -140,10 +143,28 @@ However, it is difficult to achieve the right level of granularity in KD45.
 reflexive edges).\\
 \\
 Addressing the atoms issue is best done by switching to secret announcements.
-\FIXME add in diagram
+We define secret announcements as follows.
+\begin{defn}
+	Let $B \subseteq A$ be some finite set of agents and $\phi \in L$ be some sentence in $L$.
+	Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a multi-pointed action model such that
+	\begin{itemize}
+		\item $\evS = \{\evs, \evt\}$
+		\item $\evR_a = \{(\evs, \evs), (\evt, \evt)\}$ if $a \in B$
+		\item $\evR_a = \{(\evs, \evt), (\evt, \evt)\}$ if $a \notin B$
+		\item $\evpr(\evs) = \phi$ and $\evpr(\evt) = \top$
+		\item $\evT = \{\evs\}$
+	\end{itemize}
+	We say $\evM_\evT$ is the {\em secret announcement of \phi to $B$}.
+	We denote this as $\phi!_B$.
+\end{defn}
+
+These secret announcements are more flexible than public announcements (the set of secret
+announcements does not contain the set of public announcements, since $\phi!_A$ still contains two
+action points and will result in the simultaneous (?) announcement of $\top$ and $\phi$ to all
+agents).\\
 \\
-\\
-Addressing the second issue is more involves, may require operator changes.
-More coming tomorrow.
+To address the first issue, try changing operations?
+Maintain the $I_B$ operator used in my thesis.
+Add a new operator $\mathcal{S}_B$ as follows.
 
 \end{document}
