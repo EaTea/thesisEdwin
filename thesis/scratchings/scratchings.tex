@@ -1,6 +1,6 @@
 %-----------------------------------------------------------------------------%
 %Packages%
-\documentclass{cshonours}
+\documentclass[12pt, a4paper]{article}
 \usepackage{amsmath, amsfonts, listings, amssymb, mathtools, amsthm} %Mathematical Expressions package
 \usepackage{mathtools}
 \usepackage{geometry}
@@ -13,7 +13,6 @@
 \usepackage{comment}
 \usepackage[nottoc]{tocbibind}
 \usepackage{caption}
-\usepackage{subcaption}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
@@ -121,6 +120,8 @@
 
 \begin{document}
 
+\section{Scratches}
+
 Note: Assume $A$ is a finite set of agents and $L$ is a logical language for the purposes of these
 notes.\\
 \\
@@ -154,7 +155,7 @@ We define secret announcements as follows.
 		\item $\evpr(\evs) = \phi$ and $\evpr(\evt) = \top$
 		\item $\evT = \{\evs\}$
 	\end{itemize}
-	We say $\evM_\evT$ is the {\em secret announcement of \phi to $B$}.
+	We say $\evM_\evT$ is the {\em secret announcement} of $\phi$ to $B$.
 	We denote this as $\phi!_B$.
 \end{defn}
 
