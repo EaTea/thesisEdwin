@@ -167,4 +167,30 @@ To address the first issue, try changing operations?
 Maintain the $I_B$ operator used in my thesis.
 Add a new operator $\mathcal{S}_B$ as follows.
 
+\begin{defn}
+  Let $\evM_\evT = ((\evS, \evR, \evpr), \evT)$ be a multipointed action model,
+  $B \subseteq A$ and $\phi \in L$.
+  Then $\evM'_{\evs'} = \mathcal{S}(\evM_\evT, \phi) = ((\evS', \evR', \evpr'),
+      {\evs'})$ is an action model such that
+  \begin{itemize}
+    \item $\evS' = \evS \cup \{\evs', \evt'\}$
+    \item $\evpr'(\evs) = \evpr(\evs)$ if $\evs \in \evS$
+    \item $\evpr'(\evs') = \phi$
+    \item $\evpr'(\evt') = \top$
+    \item $\evR'_a = \evR_a \cup \{ (\evs', \evt) | \evt \in \evT \text{ and }
+      \evt \evR_a \evt \} \cup \{(\evs', \evt')\}$ for all $a \in A$
+  \end{itemize}
+  This operation {\em joins} a number of action points together, based upon what
+  an agent already considers possible.
+\end{defn}
+
+This operation is semantically hard to justify/make meaning of.
+However, I think it does ascribe to the ``design philosophy" James suggested, in
+the sense that it is adding relations to new states only.\\
+\\
+I believe this operation will be fine for ensuring we can build all
+$\axK\axD\axFo\axFi$ action models, up to $n$-bisimilarity, but I am not
+convinced (or unsure) that it will build only $\axK\axD\axFo\axFi$ action models
+at this stage.
+
 \end{document}
